@@ -3,6 +3,8 @@
 This is the repository for the book *Introduction to Data Analytics for Business and Economics*,
 written for the Data Analytics course at the University of Namur (UNamur).
 
+[![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+
 **[Read the book online, for free →](https://matthbogaert.github.io/IDAFBE-book/)**
 
 A paperback and ebook edition are also planned via Amazon KDP.
@@ -58,5 +60,11 @@ If you spot a mistake, typo, or bug in the code, please
 
 ## License
 
-© Matthias Bogaert. All rights reserved. This material is made freely available online for
-students and readers; redistribution or commercial use requires permission from the author.
+This book is licensed under a
+[Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+(see [LICENSE.txt](LICENSE.txt)).
+
+You are free to share and adapt this material for any noncommercial purpose, as long as you give
+appropriate credit and release your adaptation under the same license. Commercial use, including
+resale, requires permission from the author. The paperback/ebook edition sold via Amazon KDP is
+the author's own authorized commercial edition of this same content.
