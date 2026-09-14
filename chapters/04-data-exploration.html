@@ -1,0 +1,2605 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>4&nbsp; Data Exploration – Introduction to Data Analytics for Business and Economics</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/05-data-preparation.html" rel="next">
+<link href="../chapters/03-data-understanding.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-5ccb035bea26c1e21f80f44cf7c27909.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/04-data-exploration.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Exploration</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Introduction to Data Analytics for Business and Economics</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-python-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Python Basics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-data-understanding.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Understanding</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-data-exploration.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Exploration</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-data-preparation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Preparation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/06-model-evaluation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Model Evaluation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-installation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Installation Guide</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#why-visualize" id="toc-why-visualize" class="nav-link active" data-scroll-target="#why-visualize"><span class="header-section-number">4.1</span> Why visualize</a>
+  <ul class="collapse">
+  <li><a href="#matplotlib-basics" id="toc-matplotlib-basics" class="nav-link" data-scroll-target="#matplotlib-basics"><span class="header-section-number">4.1.1</span> Matplotlib basics</a></li>
+  </ul></li>
+  <li><a href="#the-core-chart-types" id="toc-the-core-chart-types" class="nav-link" data-scroll-target="#the-core-chart-types"><span class="header-section-number">4.2</span> The core chart types</a>
+  <ul class="collapse">
+  <li><a href="#comparing-groups-bar-charts" id="toc-comparing-groups-bar-charts" class="nav-link" data-scroll-target="#comparing-groups-bar-charts"><span class="header-section-number">4.2.1</span> Comparing groups: bar charts</a></li>
+  <li><a href="#showing-a-trend-line-charts" id="toc-showing-a-trend-line-charts" class="nav-link" data-scroll-target="#showing-a-trend-line-charts"><span class="header-section-number">4.2.2</span> Showing a trend: line charts</a></li>
+  <li><a href="#showing-relationships-scatter-plots" id="toc-showing-relationships-scatter-plots" class="nav-link" data-scroll-target="#showing-relationships-scatter-plots"><span class="header-section-number">4.2.3</span> Showing relationships: scatter plots</a></li>
+  <li><a href="#showing-a-distribution-histograms-and-box-plots" id="toc-showing-a-distribution-histograms-and-box-plots" class="nav-link" data-scroll-target="#showing-a-distribution-histograms-and-box-plots"><span class="header-section-number">4.2.4</span> Showing a distribution: histograms and box plots</a></li>
+  </ul></li>
+  <li><a href="#data-quality-multicollinearity" id="toc-data-quality-multicollinearity" class="nav-link" data-scroll-target="#data-quality-multicollinearity"><span class="header-section-number">4.3</span> Data quality: multicollinearity</a></li>
+  <li><a href="#data-quality-missing-values" id="toc-data-quality-missing-values" class="nav-link" data-scroll-target="#data-quality-missing-values"><span class="header-section-number">4.4</span> Data quality: missing values</a>
+  <ul class="collapse">
+  <li><a href="#a-churn-model-with-missing-values" id="toc-a-churn-model-with-missing-values" class="nav-link" data-scroll-target="#a-churn-model-with-missing-values"><span class="header-section-number">4.4.1</span> A churn model with missing values</a></li>
+  <li><a href="#treating-missing-values" id="toc-treating-missing-values" class="nav-link" data-scroll-target="#treating-missing-values"><span class="header-section-number">4.4.2</span> Treating missing values</a></li>
+  <li><a href="#doing-this-properly-fitting-only-on-training-data" id="toc-doing-this-properly-fitting-only-on-training-data" class="nav-link" data-scroll-target="#doing-this-properly-fitting-only-on-training-data"><span class="header-section-number">4.4.3</span> Doing this properly: fitting only on training data</a></li>
+  </ul></li>
+  <li><a href="#data-quality-outliers" id="toc-data-quality-outliers" class="nav-link" data-scroll-target="#data-quality-outliers"><span class="header-section-number">4.5</span> Data quality: outliers</a>
+  <ul class="collapse">
+  <li><a href="#detecting-outliers" id="toc-detecting-outliers" class="nav-link" data-scroll-target="#detecting-outliers"><span class="header-section-number">4.5.1</span> Detecting outliers</a></li>
+  <li><a href="#treating-outliers" id="toc-treating-outliers" class="nav-link" data-scroll-target="#treating-outliers"><span class="header-section-number">4.5.2</span> Treating outliers</a></li>
+  </ul></li>
+  <li><a href="#saving-your-progress" id="toc-saving-your-progress" class="nav-link" data-scroll-target="#saving-your-progress"><span class="header-section-number">4.6</span> Saving your progress</a></li>
+  <li><a href="#where-we-go-from-here" id="toc-where-we-go-from-here" class="nav-link" data-scroll-target="#where-we-go-from-here"><span class="header-section-number">4.7</span> Where we go from here</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Exploration</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>The previous chapter discussed the <strong>variable level</strong> of data understanding: once you know which tables you have and what type each column is, the next question is what each variable actually <em>looks like</em>, and whether it has quality issues you’ll need to deal with before you can trust a model built on it. That’s what this chapter covers: visualizing individual variables to spot patterns, and detecting and treating the most common data quality issues: multicollinearity, missing values, and outliers.</p>
+<p>We’ll continue with NPC’s customers and subscriptions tables from the previous chapter.</p>
+<section id="why-visualize" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="why-visualize"><span class="header-section-number">4.1</span> Why visualize</h2>
+<p>Summary statistics alone can be dangerously misleading. <strong>Anscombe’s quartet</strong> <span class="citation" data-cites="anscombe1973graphs">(<a href="#ref-anscombe1973graphs" role="doc-biblioref">Anscombe 1973</a>)</span> is the classic illustration: four small datasets that share the same mean, variance, and correlation for <code>x</code> and <code>y</code> and yet look completely different when plotted. One is a clean linear relationship, one is a clear curve with a straight line fits poorly due to an outlier, one is a vertical line of points plus one outlier. <code>.describe()</code> can’t tell these apart. A scatter plot can immediatly visualizes the differences. That’s the whole point of visual exploration: it shows patterns, outliers, and relationships that summary statistics alone can hide.</p>
+<div id="02ae4128" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display" data-execution_count="1">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">mean_x</th>
+<th data-quarto-table-cell-role="th">mean_y</th>
+<th data-quarto-table-cell-role="th">std_x</th>
+<th data-quarto-table-cell-role="th">std_y</th>
+<th data-quarto-table-cell-role="th">corr</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">dataset</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">I</th>
+<td>9.0</td>
+<td>7.5</td>
+<td>3.32</td>
+<td>2.03</td>
+<td>0.82</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">II</th>
+<td>9.0</td>
+<td>7.5</td>
+<td>3.32</td>
+<td>2.03</td>
+<td>0.82</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">III</th>
+<td>9.0</td>
+<td>7.5</td>
+<td>3.32</td>
+<td>2.03</td>
+<td>0.82</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">IV</th>
+<td>9.0</td>
+<td>7.5</td>
+<td>3.32</td>
+<td>2.03</td>
+<td>0.82</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="6f0eef8e" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04-data-exploration_files/figure-html/cell-3-output-1.png" width="951" height="757" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>It’s worth being clear about what kind of visualization this chapter is about. Visualization serves two different purposes:</p>
+<ul>
+<li><strong>Explore</strong>: you’re the analyst, and the goal is discovering insights in the data as fast as possible. Speed and discovery matter more than polish.</li>
+<li><strong>Explain</strong>: someone else is the audience, and the goal is communicating a specific finding or message clearly. It is also more about creating a compelling narrative and conveying your message in the proper way.</li>
+</ul>
+<p>This chapter is entirely about the first one. The charts you’ll build here are working tools, not fancy presentation slides.</p>
+<p>The charts covered in this chapter are what you need for exploration, but they’re a small fraction of what’s out there. For examlpe, treemaps, Sankey diagrams, spatial maps, slope charts, and dozens of others each have situations where they’re the right option. Once your goal shifts from <em>exploring</em> to <em>explaining</em> the chart itself is only half the job; the other half is design choices (how to remove clutter, where the attention should go, what to cut) that turn a chart into a story. That’s a large enough topic that it deserves books of its own. Two excellent reading materials, if you want to go deeper: Cole Nussbaumer Knaflic’s <a href="https://www.storytellingwithdata.com/"><em>Storytelling with Data</em></a> and Brent Dykes’s <a href="https://www.effectivedatastorytelling.com/"><em>Effective Data Storytelling</em></a>.</p>
+<section id="matplotlib-basics" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="matplotlib-basics"><span class="header-section-number">4.1.1</span> Matplotlib basics</h3>
+<p>Python’s core plotting library is <code>matplotlib</code>. Almost everything in <code>matplotlib</code> follows the same three-part structure:</p>
+<ul>
+<li>A <strong>figure</strong> is the overall canvas.</li>
+<li>One or more <strong>axes</strong> are the actual plotting areas inside that pane (confusingly, one “axes” is a single plot, not an axis line).</li>
+<li>An <strong>artist</strong> is everything else you can see (e.g., lines, text, bars, points) .</li>
+</ul>
+<p>In practice, you’ll almost always start a plot the same way: create a figure and axes together with <code>plt.subplots()</code>, draw onto the axes using a specific chart type, then label it.</p>
+<div id="0c8f4fb9" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>]</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> [<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">25</span>, <span class="dv">30</span>, <span class="dv">35</span>, <span class="dv">40</span>, <span class="dv">45</span>, <span class="dv">50</span>, <span class="dv">55</span>, <span class="dv">60</span>]</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>ax.scatter(x, y, label<span class="op">=</span><span class="st">"Example"</span>, color<span class="op">=</span><span class="st">"blue"</span>, marker<span class="op">=</span><span class="st">"o"</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Simple Scatter Plot"</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"X-axis"</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Y-axis"</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04-data-exploration_files/figure-html/cell-4-output-1.png" width="585" height="451" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We’ll also use <code>seaborn</code>, a library built on top of <code>matplotlib</code> that trades some of its flexibility for far more concise syntax and better default styling, especially for statistical plots like regression lines, heatmaps, and pair plots.</p>
+</section>
+</section>
+<section id="the-core-chart-types" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="the-core-chart-types"><span class="header-section-number">4.2</span> The core chart types</h2>
+<p>There are dozens of chart types, but for data exploration a small toolkit covers almost everything: <strong>bar charts</strong>, <strong>line charts</strong>, <strong>scatter plots</strong>, <strong>histograms</strong>, and <strong>box plots</strong>.</p>
+<p>To demonstrate these, we will load the NPC data we saved at the end of the previous chapter.</p>
+<div id="5db35f9c" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>subscriptions <span class="op">=</span> pd.read_parquet(<span class="st">"../data/raw/subscriptions.parquet"</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>customers <span class="op">=</span> pd.read_parquet(<span class="st">"../data/raw/customers.parquet"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<section id="comparing-groups-bar-charts" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="comparing-groups-bar-charts"><span class="header-section-number">4.2.1</span> Comparing groups: bar charts</h3>
+<p>A bar chart represents each category’s value or frequency as a vertical or horizontal rectangular bar and is useful whenever you want to compare discrete categories against each other.</p>
+<div id="d13dadd7" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>payment_counts <span class="op">=</span> subscriptions[<span class="st">"PaymentStatus"</span>].value_counts()</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>ax.bar(payment_counts.index, payment_counts.values, color<span class="op">=</span><span class="st">"lightblue"</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Payment Status Frequency"</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Payment Status"</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Count"</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04-data-exploration_files/figure-html/cell-6-output-1.png" width="760" height="566" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Whereas a vertical bar chart is often the default, a horizontal one, with the counts written directly on the bars, is often easier to read once category labels get long:</p>
+<div id="0bad2077" class="cell" data-execution_count="6">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>payment_counts <span class="op">=</span> subscriptions[<span class="st">"PaymentStatus"</span>].value_counts(ascending<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>bars <span class="op">=</span> ax.barh(payment_counts.index, payment_counts.values, color<span class="op">=</span><span class="st">"lightblue"</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> bar, value <span class="kw">in</span> <span class="bu">zip</span>(bars, payment_counts.values):</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    ax.text(bar.get_width() <span class="op">+</span> <span class="dv">5</span>, bar.get_y() <span class="op">+</span> bar.get_height() <span class="op">/</span> <span class="dv">2</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>            <span class="bu">str</span>(value), ha<span class="op">=</span><span class="st">"left"</span>, va<span class="op">=</span><span class="st">"center"</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Payment Status Distribution"</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Frequency"</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Payment Status"</span>)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04-data-exploration_files/figure-html/cell-7-output-1.png" width="953" height="566" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Bar chart ground rules
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Always plot bars against a zero baseline. Starting the axis somewhere else exaggerates differences and misleads the reader, even if you didn’t mean to. And be cautious with pie and donut charts as an alternative: humans are much better at comparing bar <em>length</em> than comparing angles or areas, so a bar chart usually communicates the same information more clearly.</p>
+</div>
+</div>
+<p>A <strong>lollipop chart</strong>, a thin line plus a single dot instead of a full bar, communicates the same comparison with noticeably less visual noise. With a fraction of the ink of a bar chart, it’s often easier for the eye (and brain) to parse (lower noise-to-ink ratio), since there’s less shape to take in per category:</p>
+<div id="cfabc191" class="cell" data-execution_count="7">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>ax.hlines(y<span class="op">=</span><span class="bu">range</span>(<span class="bu">len</span>(payment_counts)), xmin<span class="op">=</span><span class="dv">0</span>, xmax<span class="op">=</span>payment_counts.values,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>          color<span class="op">=</span><span class="st">"lightblue"</span>, linewidth<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>ax.scatter(payment_counts.values, <span class="bu">range</span>(<span class="bu">len</span>(payment_counts)), color<span class="op">=</span><span class="st">"blue"</span>, s<span class="op">=</span><span class="dv">100</span>, zorder<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>ax.set_yticks(<span class="bu">range</span>(<span class="bu">len</span>(payment_counts)))</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>ax.set_yticklabels(payment_counts.index)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>ax.set_ylim(<span class="op">-</span><span class="fl">0.5</span>, <span class="bu">len</span>(payment_counts) <span class="op">-</span> <span class="fl">0.5</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Payment Status Distribution: Lollipop Chart"</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Count"</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">"top"</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">"right"</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04-data-exploration_files/figure-html/cell-8-output-1.png" width="953" height="566" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="showing-a-trend-line-charts" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="showing-a-trend-line-charts"><span class="header-section-number">4.2.2</span> Showing a trend: line charts</h3>
+<p>A line chart connects data points to show how a variable changes across an ordered sequence, almost always time but not necessarily.</p>
+<p>To show that a line chart can be used to visualize any ordere series, let’s look at a simple example.Plotting <code>TotalPrice</code>’s sorted values against their rank position isn’t a true time series, but it’s a quick way to see the overall shape of a distribution and spot outliers at either end:</p>
+<div id="213236c3" class="cell" data-execution_count="8">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>sorted_prices <span class="op">=</span> np.sort(subscriptions[<span class="st">"TotalPrice"</span>].dropna())</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>ax.plot(<span class="bu">range</span>(<span class="bu">len</span>(sorted_prices)), sorted_prices, color<span class="op">=</span><span class="st">"blue"</span>, linewidth<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Sorted Total Price"</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Index"</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Total Price"</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04-data-exploration_files/figure-html/cell-9-output-1.png" width="817" height="525" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>For an actual time series, plot against real dates. Here’s the average subscription price by month:</p>
+<div id="bb130d2e" class="cell" data-execution_count="9">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>subscriptions_monthly <span class="op">=</span> subscriptions.copy()</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>subscriptions_monthly[<span class="st">"StartDate"</span>] <span class="op">=</span> pd.to_datetime(subscriptions_monthly[<span class="st">"StartDate"</span>])</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>subscriptions_monthly[<span class="st">"YearMonth"</span>] <span class="op">=</span> subscriptions_monthly[<span class="st">"StartDate"</span>].dt.to_period(<span class="st">"M"</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>monthly_avg <span class="op">=</span> subscriptions_monthly.groupby(<span class="st">"YearMonth"</span>)[<span class="st">"TotalPrice"</span>].mean()</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>ax.plot(monthly_avg.index.astype(<span class="bu">str</span>), monthly_avg.values, color<span class="op">=</span><span class="st">"blue"</span>, linewidth<span class="op">=</span><span class="dv">2</span>, marker<span class="op">=</span><span class="st">"o"</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Average Total Price by Month"</span>)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Month"</span>)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Average Total Price"</span>)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">45</span>)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04-data-exploration_files/figure-html/cell-10-output-1.png" width="1143" height="568" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>A couple of practical rules of thumb: pick a measurement interval that’s neither so long you lose the trend nor so short the chart is dominated by noise. Also, avoid cramming more than about 5–7 lines onto one chart. If you have more than that, split it into several smaller charts instead.</p>
+</section>
+<section id="showing-relationships-scatter-plots" class="level3" data-number="4.2.3">
+<h3 data-number="4.2.3" class="anchored" data-anchor-id="showing-relationships-scatter-plots"><span class="header-section-number">4.2.3</span> Showing relationships: scatter plots</h3>
+<p>A scatter plot places one point per observation on two numeric axes, making it easy to spot correlations, clusters, and outliers between two variables at once.</p>
+<div id="1340bff2" class="cell" data-execution_count="10">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>ax.scatter(subscriptions[<span class="st">"NbrNewspapers"</span>], subscriptions[<span class="st">"TotalPrice"</span>], alpha<span class="op">=</span><span class="fl">0.6</span>, color<span class="op">=</span><span class="st">"blue"</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Number of Newspapers vs Total Price"</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Number of Newspapers"</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Total Price"</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04-data-exploration_files/figure-html/cell-11-output-1.png" width="817" height="525" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Adding a trend line makes the relationship easier to read at a glance. This is where <code>seaborn</code> starts to pay off against plain <code>matplotlib</code>. <code>sns.regplot()</code> draws the scatter plot and fits a line in one call:</p>
+<div id="cd70a4a8" class="cell" data-execution_count="11">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>sns.regplot(data<span class="op">=</span>subscriptions, x<span class="op">=</span><span class="st">"NbrNewspapers"</span>, y<span class="op">=</span><span class="st">"TotalPrice"</span>, ax<span class="op">=</span>ax)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Number of Newspapers vs Total Price (with Linear Regression)"</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04-data-exploration_files/figure-html/cell-12-output-1.png" width="817" height="525" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>If the relationship isn’t linear, a <strong>LOESS</strong> (locally estimated scatterplot smoothing) curve, a nonparametric fit built from many small local regressions, can reveal a nonlinear trend a straight line would miss:</p>
+<div id="b7a56f76" class="cell" data-execution_count="12">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>sns.regplot(data<span class="op">=</span>subscriptions, x<span class="op">=</span><span class="st">"NbrNewspapers"</span>, y<span class="op">=</span><span class="st">"TotalPrice"</span>,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>            lowess<span class="op">=</span><span class="va">True</span>, scatter_kws<span class="op">=</span>{<span class="st">"alpha"</span>: <span class="fl">0.6</span>}, ax<span class="op">=</span>ax)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Number of Newspapers vs Total Price (with LOESS Smoother)"</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04-data-exploration_files/figure-html/cell-13-output-1.png" width="817" height="525" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>In practice, you rarely want just one scatter plot in data exploration. You want to see every pair of numeric variables at once to understand their relationships. <code>seaborn</code>’s <code>pairplot()</code> builds that whole grid in a single call, with histograms of each individual variable down the diagonal:</p>
+<div id="37b16826" class="cell" data-execution_count="13">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>numeric_cols <span class="op">=</span> [<span class="st">"GrossFormulaPrice"</span>, <span class="st">"NetFormulaPrice"</span>, <span class="st">"NetNewspaperPrice"</span>,</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"TotalDiscount"</span>, <span class="st">"TotalPrice"</span>]</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>sns.pairplot(subscriptions[numeric_cols].dropna(), diag_kind<span class="op">=</span><span class="st">"hist"</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>             plot_kws<span class="op">=</span>{<span class="st">"alpha"</span>: <span class="fl">0.6</span>, <span class="st">"s"</span>: <span class="dv">10</span>})</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04-data-exploration_files/figure-html/cell-14-output-1.png" width="1183" height="1181" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>As with any correlation, keep in mind that a strong relationship in a scatter plot doesn’t imply causation: it’s a pattern worth investigating, not a conclusion on its own.</p>
+</section>
+<section id="showing-a-distribution-histograms-and-box-plots" class="level3" data-number="4.2.4">
+<h3 data-number="4.2.4" class="anchored" data-anchor-id="showing-a-distribution-histograms-and-box-plots"><span class="header-section-number">4.2.4</span> Showing a distribution: histograms and box plots</h3>
+<p>A histogram groups a variable’s values into bins and shows how many observations fall into each one. It is considered the standard way to see a variable’s distribution, shape, spread, and skew.</p>
+<div id="f9a0a6d3" class="cell" data-execution_count="14">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>ax.hist(subscriptions[<span class="st">"TotalPrice"</span>].dropna(), bins<span class="op">=</span><span class="dv">30</span>, color<span class="op">=</span><span class="st">"lightblue"</span>,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>        edgecolor<span class="op">=</span><span class="st">"black"</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Distribution of Total Price"</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Total Price"</span>)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Frequency"</span>)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04-data-exploration_files/figure-html/cell-15-output-1.png" width="825" height="525" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>If you don’t specify the bins, <code>matplotlib</code> picks a bin width automatically (<code>(max - min) / number of bins</code>). You can also fix the bin width directly:</p>
+<div id="14e65411" class="cell" data-execution_count="15">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>min_price <span class="op">=</span> subscriptions[<span class="st">"TotalPrice"</span>].<span class="bu">min</span>()</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>max_price <span class="op">=</span> subscriptions[<span class="st">"TotalPrice"</span>].<span class="bu">max</span>()</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>bins <span class="op">=</span> np.arange(min_price, max_price <span class="op">+</span> <span class="dv">10</span>, <span class="dv">10</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>ax.hist(subscriptions[<span class="st">"TotalPrice"</span>].dropna(), bins<span class="op">=</span>bins, color<span class="op">=</span><span class="st">"lightblue"</span>,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>        edgecolor<span class="op">=</span><span class="st">"black"</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Distribution of Total Price (Binwidth = 10)"</span>)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Total Price"</span>)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Frequency"</span>)</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04-data-exploration_files/figure-html/cell-16-output-1.png" width="825" height="525" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><code>seaborn</code> offers the same thing with a nicer default look, and lets you set <code>binwidth</code> directly:</p>
+<div id="acc8b901" class="cell" data-execution_count="16">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>sns.histplot(data<span class="op">=</span>subscriptions, x<span class="op">=</span><span class="st">"TotalPrice"</span>, binwidth<span class="op">=</span><span class="dv">10</span>, ax<span class="op">=</span>ax)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Distribution of Total Price (Binwidth = 10, Seaborn)"</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04-data-exploration_files/figure-html/cell-17-output-1.png" width="825" height="525" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>A <strong>box plot</strong> packs a variable’s median, quartiles, and potential outliers into one compact shape, and is especially useful for comparing a distribution and the basic statistics across groups. <a href="#fig-boxplot-anatomy" class="quarto-xref">Figure&nbsp;<span>4.1</span></a> summarizes the key elements of a box plot.</p>
+<div id="fig-boxplot-anatomy" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Diagram of a single vertical box plot, labeled from bottom to top: lower whisker, first quartile (bottom of box), median (line inside box), third quartile (top of box), upper whisker, with two dots above the upper whisker marked as outliers, and a bracket showing the interquartile range spanning the box.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-boxplot-anatomy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../images/ch04-fig-boxplot-anatomy.png" class="img-fluid figure-img" alt="Diagram of a single vertical box plot, labeled from bottom to top: lower whisker, first quartile (bottom of box), median (line inside box), third quartile (top of box), upper whisker, with two dots above the upper whisker marked as outliers, and a bracket showing the interquartile range spanning the box.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-boxplot-anatomy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.1: Anatomy of a box plot: the box spans the interquartile range (IQR = Q3 − Q1), the line inside marks the median, and the whiskers extend to the most extreme point within 1.5×IQR of the box. Points beyond that are flagged as potential outliers.
+</figcaption>
+</figure>
+</div>
+<p>Building this by hand in <code>matplotlib</code> needs the data reshaped into one list per group, which gets verbose fast:</p>
+<div id="362f9d6f" class="cell" data-execution_count="17">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>data_for_boxplot <span class="op">=</span> [group[<span class="st">"TotalPrice"</span>].dropna().values</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>                     <span class="cf">for</span> name, group <span class="kw">in</span> subscriptions.groupby(<span class="st">"PaymentType"</span>)]</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> subscriptions[<span class="st">"PaymentType"</span>].dropna().unique()</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>ax.boxplot(data_for_boxplot, tick_labels<span class="op">=</span>labels, patch_artist<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>           boxprops<span class="op">=</span><span class="bu">dict</span>(facecolor<span class="op">=</span><span class="st">"lightblue"</span>))</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Total Price by Payment Type"</span>)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Payment Type"</span>)</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Total Price"</span>)</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04-data-exploration_files/figure-html/cell-18-output-1.png" width="951" height="566" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><code>seaborn</code> does the grouping for you, with no reshaping required:</p>
+<div id="351ebc3a" class="cell" data-execution_count="18">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>subscriptions, x<span class="op">=</span><span class="st">"PaymentType"</span>, y<span class="op">=</span><span class="st">"TotalPrice"</span>, color<span class="op">=</span><span class="st">"lightblue"</span>, ax<span class="op">=</span>ax)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Total Price by Payment Type"</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04-data-exploration_files/figure-html/cell-19-output-1.png" width="817" height="524" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="data-quality-multicollinearity" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="data-quality-multicollinearity"><span class="header-section-number">4.3</span> Data quality: multicollinearity</h2>
+<p>Now that you have a toolkit of charts, it’s time to put it to use on the three data quality issues that come up in almost every dataset: multicollinearity, missing values, and outliers.</p>
+<p><strong>Multicollinearity</strong> occurs when two or more independent variables are highly correlated with each other. It matters because it makes individual coefficients unstable and hard to interpret in a causal model, and it inflates confidence intervals. Even though, as we saw in the introduction, a purely predictive model can often tolerate it from a pure predictive perspective, it can still cause issues in interpretation and make the model less robust. <code>pandas</code> computes a full correlation matrix in one call:</p>
+<div id="13083f89" class="cell" data-execution_count="19">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>numeric_cols <span class="op">=</span> subscriptions.select_dtypes(include<span class="op">=</span>[np.number])</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>correlation_matrix <span class="op">=</span> numeric_cols.corr()</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>correlation_matrix.<span class="bu">round</span>(<span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">SubscriptionID</th>
+<th data-quarto-table-cell-role="th">CustomerID</th>
+<th data-quarto-table-cell-role="th">ProductID</th>
+<th data-quarto-table-cell-role="th">Pattern</th>
+<th data-quarto-table-cell-role="th">NbrNewspapers</th>
+<th data-quarto-table-cell-role="th">NbrStart</th>
+<th data-quarto-table-cell-role="th">FormulaID</th>
+<th data-quarto-table-cell-role="th">GrossFormulaPrice</th>
+<th data-quarto-table-cell-role="th">NetFormulaPrice</th>
+<th data-quarto-table-cell-role="th">NetNewspaperPrice</th>
+<th data-quarto-table-cell-role="th">ProductDiscount</th>
+<th data-quarto-table-cell-role="th">FormulaDiscount</th>
+<th data-quarto-table-cell-role="th">TotalDiscount</th>
+<th data-quarto-table-cell-role="th">TotalPrice</th>
+<th data-quarto-table-cell-role="th">TotalCredit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">SubscriptionID</th>
+<td>1.00</td>
+<td>0.19</td>
+<td>-0.21</td>
+<td>-0.05</td>
+<td>-0.32</td>
+<td>-0.34</td>
+<td>0.79</td>
+<td>-0.28</td>
+<td>-0.29</td>
+<td>0.21</td>
+<td>-0.01</td>
+<td>0.08</td>
+<td>0.02</td>
+<td>-0.30</td>
+<td>0.08</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">CustomerID</th>
+<td>0.19</td>
+<td>1.00</td>
+<td>-0.46</td>
+<td>-0.04</td>
+<td>-0.12</td>
+<td>0.02</td>
+<td>0.11</td>
+<td>-0.13</td>
+<td>-0.14</td>
+<td>-0.05</td>
+<td>0.01</td>
+<td>0.07</td>
+<td>0.04</td>
+<td>-0.14</td>
+<td>-0.03</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">ProductID</th>
+<td>-0.21</td>
+<td>-0.46</td>
+<td>1.00</td>
+<td>0.02</td>
+<td>0.11</td>
+<td>0.08</td>
+<td>-0.14</td>
+<td>0.12</td>
+<td>0.12</td>
+<td>-0.05</td>
+<td>-0.04</td>
+<td>-0.01</td>
+<td>-0.04</td>
+<td>0.12</td>
+<td>0.03</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Pattern</th>
+<td>-0.05</td>
+<td>-0.04</td>
+<td>0.02</td>
+<td>1.00</td>
+<td>0.11</td>
+<td>0.14</td>
+<td>-0.03</td>
+<td>0.11</td>
+<td>0.11</td>
+<td>0.03</td>
+<td>0.00</td>
+<td>0.03</td>
+<td>0.01</td>
+<td>0.10</td>
+<td>-0.01</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">NbrNewspapers</th>
+<td>-0.32</td>
+<td>-0.12</td>
+<td>0.11</td>
+<td>0.11</td>
+<td>1.00</td>
+<td>-0.01</td>
+<td>-0.20</td>
+<td>0.99</td>
+<td>0.99</td>
+<td>-0.26</td>
+<td>0.12</td>
+<td>-0.01</td>
+<td>0.10</td>
+<td>0.90</td>
+<td>-0.08</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">NbrStart</th>
+<td>-0.34</td>
+<td>0.02</td>
+<td>0.08</td>
+<td>0.14</td>
+<td>-0.01</td>
+<td>1.00</td>
+<td>-0.15</td>
+<td>-0.05</td>
+<td>-0.07</td>
+<td>-0.09</td>
+<td>0.00</td>
+<td>0.17</td>
+<td>0.07</td>
+<td>-0.05</td>
+<td>-0.06</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">FormulaID</th>
+<td>0.79</td>
+<td>0.11</td>
+<td>-0.14</td>
+<td>-0.03</td>
+<td>-0.20</td>
+<td>-0.15</td>
+<td>1.00</td>
+<td>-0.17</td>
+<td>-0.18</td>
+<td>0.04</td>
+<td>0.01</td>
+<td>0.15</td>
+<td>0.07</td>
+<td>-0.21</td>
+<td>0.06</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">GrossFormulaPrice</th>
+<td>-0.28</td>
+<td>-0.13</td>
+<td>0.12</td>
+<td>0.11</td>
+<td>0.99</td>
+<td>-0.05</td>
+<td>-0.17</td>
+<td>1.00</td>
+<td>0.99</td>
+<td>-0.24</td>
+<td>0.12</td>
+<td>-0.00</td>
+<td>0.11</td>
+<td>0.90</td>
+<td>-0.07</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">NetFormulaPrice</th>
+<td>-0.29</td>
+<td>-0.14</td>
+<td>0.12</td>
+<td>0.11</td>
+<td>0.99</td>
+<td>-0.07</td>
+<td>-0.18</td>
+<td>0.99</td>
+<td>1.00</td>
+<td>-0.19</td>
+<td>0.13</td>
+<td>-0.12</td>
+<td>0.07</td>
+<td>0.90</td>
+<td>-0.07</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">NetNewspaperPrice</th>
+<td>0.21</td>
+<td>-0.05</td>
+<td>-0.05</td>
+<td>0.03</td>
+<td>-0.26</td>
+<td>-0.09</td>
+<td>0.04</td>
+<td>-0.24</td>
+<td>-0.19</td>
+<td>1.00</td>
+<td>-0.42</td>
+<td>-0.40</td>
+<td>-0.55</td>
+<td>-0.07</td>
+<td>0.11</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">ProductDiscount</th>
+<td>-0.01</td>
+<td>0.01</td>
+<td>-0.04</td>
+<td>0.00</td>
+<td>0.12</td>
+<td>0.00</td>
+<td>0.01</td>
+<td>0.12</td>
+<td>0.13</td>
+<td>-0.42</td>
+<td>1.00</td>
+<td>-0.02</td>
+<td>0.92</td>
+<td>-0.13</td>
+<td>0.01</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">FormulaDiscount</th>
+<td>0.08</td>
+<td>0.07</td>
+<td>-0.01</td>
+<td>0.03</td>
+<td>-0.01</td>
+<td>0.17</td>
+<td>0.15</td>
+<td>-0.00</td>
+<td>-0.12</td>
+<td>-0.40</td>
+<td>-0.02</td>
+<td>1.00</td>
+<td>0.38</td>
+<td>-0.11</td>
+<td>0.01</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">TotalDiscount</th>
+<td>0.02</td>
+<td>0.04</td>
+<td>-0.04</td>
+<td>0.01</td>
+<td>0.10</td>
+<td>0.07</td>
+<td>0.07</td>
+<td>0.11</td>
+<td>0.07</td>
+<td>-0.55</td>
+<td>0.92</td>
+<td>0.38</td>
+<td>1.00</td>
+<td>-0.16</td>
+<td>0.01</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">TotalPrice</th>
+<td>-0.30</td>
+<td>-0.14</td>
+<td>0.12</td>
+<td>0.10</td>
+<td>0.90</td>
+<td>-0.05</td>
+<td>-0.21</td>
+<td>0.90</td>
+<td>0.90</td>
+<td>-0.07</td>
+<td>-0.13</td>
+<td>-0.11</td>
+<td>-0.16</td>
+<td>1.00</td>
+<td>-0.03</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">TotalCredit</th>
+<td>0.08</td>
+<td>-0.03</td>
+<td>0.03</td>
+<td>-0.01</td>
+<td>-0.08</td>
+<td>-0.06</td>
+<td>0.06</td>
+<td>-0.07</td>
+<td>-0.07</td>
+<td>0.11</td>
+<td>0.01</td>
+<td>0.01</td>
+<td>0.01</td>
+<td>-0.03</td>
+<td>1.00</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>A heatmap makes the same information much easier to scan than a table of numbers:</p>
+<div id="6974817d" class="cell" data-execution_count="20">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">10</span>))</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>sns.heatmap(correlation_matrix, annot<span class="op">=</span><span class="va">True</span>, cmap<span class="op">=</span><span class="st">"coolwarm"</span>, center<span class="op">=</span><span class="dv">0</span>,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>            square<span class="op">=</span><span class="va">True</span>, linewidths<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Correlation Matrix Heatmap"</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04-data-exploration_files/figure-html/cell-21-output-1.png" width="1082" height="971" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>A <strong>cluster map</strong> goes one step further, automatically reordering rows and columns so that similar variables sit next to each other, with a dendrogram showing how they were grouped. Dot heatmaps, where a dot’s size or color, rather than a cell’s fill color, encodes the correlation, are another common variant.</p>
+<div id="306c3998" class="cell" data-execution_count="21">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>sns.clustermap(correlation_matrix, annot<span class="op">=</span><span class="va">True</span>, cmap<span class="op">=</span><span class="st">"coolwarm"</span>, center<span class="op">=</span><span class="dv">0</span>,</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>               square<span class="op">=</span><span class="va">True</span>, linewidths<span class="op">=</span><span class="fl">0.5</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">10</span>))</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>/Users/matthiasbogaert/anaconda3/envs/DA2026/lib/python3.11/site-packages/seaborn/matrix.py:1124: UserWarning: ``square=True`` ignored in clustermap
+  warnings.warn(msg)</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04-data-exploration_files/figure-html/cell-22-output-2.png" width="1148" height="956" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>A common rule of thumb is to consider correlation problematic if it’s above <strong>0.75</strong>. Two heuristics are often used to decide which variables to drop:</p>
+<ol type="1">
+<li><strong>Highest average correlation</strong>: find the two most correlated variables, drop whichever of the two has the higher <em>average</em> correlation with everything else, and repeat until nothing is left above the threshold.</li>
+<li><strong>Highest correlation pairs</strong>: scan variables in order of appearance, and for each one, drop any <em>later</em> variable that’s correlated with it above the threshold. This means that you keep the first occurrence and removing the rest.</li>
+</ol>
+<p>The <code>feature_engine</code> library implements the second heuristic directly:</p>
+<div id="a85861de" class="cell" data-execution_count="22">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> feature_engine.selection <span class="im">import</span> DropCorrelatedFeatures</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>dcf <span class="op">=</span> DropCorrelatedFeatures(variables<span class="op">=</span><span class="va">None</span>, method<span class="op">=</span><span class="st">"pearson"</span>, threshold<span class="op">=</span><span class="fl">0.75</span>)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>dcf.fit(numeric_cols.dropna())</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Features to remove: </span><span class="sc">{</span>dcf<span class="sc">.</span>features_to_drop_<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Features to remove: ['SubscriptionID', 'NbrNewspapers', 'NetFormulaPrice', 'TotalPrice', 'TotalDiscount']</code></pre>
+</div>
+</div>
+<p>A plain <code>pandas</code> version of the same idea is just as easy to write yourself:</p>
+<div id="1b29aec2" class="cell" data-execution_count="23">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> find_correlated_features(corr_matrix, threshold<span class="op">=</span><span class="fl">0.75</span>):</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    upper <span class="op">=</span> corr_matrix.where(np.triu(np.ones(corr_matrix.shape), k<span class="op">=</span><span class="dv">1</span>).astype(<span class="bu">bool</span>))</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [column <span class="cf">for</span> column <span class="kw">in</span> upper.columns <span class="cf">if</span> <span class="bu">any</span>(upper[column].<span class="bu">abs</span>() <span class="op">&gt;</span> threshold)]</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>find_correlated_features(correlation_matrix, threshold<span class="op">=</span><span class="fl">0.75</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="23">
+<pre><code>['FormulaID',
+ 'GrossFormulaPrice',
+ 'NetFormulaPrice',
+ 'TotalDiscount',
+ 'TotalPrice']</code></pre>
+</div>
+</div>
+<p>For the first heuristic, you can also easily write your own function:</p>
+<div id="d5a40d6f" class="cell" data-execution_count="24">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> drop_highest_avg_correlation(corr_matrix, threshold<span class="op">=</span><span class="fl">0.75</span>):</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    corr_matrix <span class="op">=</span> corr_matrix.<span class="bu">abs</span>().copy()</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    to_drop <span class="op">=</span> []</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>        upper <span class="op">=</span> corr_matrix.where(np.triu(np.ones(corr_matrix.shape), k<span class="op">=</span><span class="dv">1</span>).astype(<span class="bu">bool</span>))</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>        max_corr <span class="op">=</span> upper.<span class="bu">max</span>().<span class="bu">max</span>()</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> pd.isna(max_corr) <span class="kw">or</span> max_corr <span class="op">&lt;=</span> threshold:</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>        col1, col2 <span class="op">=</span> upper.stack().idxmax()</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>        avg_corr <span class="op">=</span> corr_matrix.mean()</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>        drop_col <span class="op">=</span> col1 <span class="cf">if</span> avg_corr[col1] <span class="op">&gt;</span> avg_corr[col2] <span class="cf">else</span> col2</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>        to_drop.append(drop_col)</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>        corr_matrix <span class="op">=</span> corr_matrix.drop(index<span class="op">=</span>drop_col, columns<span class="op">=</span>drop_col)</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> to_drop</span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>drop_highest_avg_correlation(correlation_matrix, threshold<span class="op">=</span><span class="fl">0.75</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="24">
+<pre><code>['NetFormulaPrice',
+ 'NbrNewspapers',
+ 'TotalDiscount',
+ 'GrossFormulaPrice',
+ 'SubscriptionID']</code></pre>
+</div>
+</div>
+<p>We won’t actually drop these variables at this stage. Better feature-selection tools, like regularization, are covered later in the book. But knowing how to detect multicollinearity, and having these heuristics on hand, is worth having before you get there.</p>
+</section>
+<section id="data-quality-missing-values" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="data-quality-missing-values"><span class="header-section-number">4.4</span> Data quality: missing values</h2>
+<p>Missing values show up in almost every real dataset, and the right way to handle them depends a lot on <em>why</em> they’re missing in the first place:</p>
+<ul>
+<li><strong>Structurally missing</strong>: the value was never recorded for a structural reason (e.g., a date-of-birth field that simply wasn’t collected).</li>
+<li><strong>Non-applicable</strong>: the field doesn’t apply to this record at all (e.g., “time until churn” is meaningless for a customer who hasn’t left).</li>
+<li><strong>Informative missing</strong>: the fact that a value is missing is itself a signal (e.g., a social media user who hides their hometown may be more privacy-conscious than average and this <em>absence</em> of the value carries information).</li>
+</ul>
+<p>It’s also worth distinguishing missing data from <strong>censored data</strong>: with censored data, you don’t observe the true value, but you do have partial information about it. It often happens when you have a situation where the true value is not available at the time of observation. For example, a tenancy agreement that’still ongoing when your observation window ends isn’t “missing” its length. You just don’t know the actual end date in the future and you will consider the true length at least as long as what you’ve observed so far. Hence, in predictive analytics, censored values are usually just used as-is (e.g., treating “still ongoing” as the observed length) rather than treated as missing.</p>
+<div id="91d30233" class="cell" data-execution_count="25">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(subscriptions.isnull().<span class="bu">sum</span>())</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Total missing values: </span><span class="sc">{</span>subscriptions<span class="sc">.</span>isnull()<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>SubscriptionID          0
+CustomerID              0
+ProductID               0
+Pattern                 0
+StartDate               0
+EndDate                 0
+NbrNewspapers           0
+NbrStart               21
+RenewalDate          2020
+PaymentType             0
+PaymentStatus           0
+PaymentDate           421
+FormulaID               0
+GrossFormulaPrice     161
+NetFormulaPrice       161
+NetNewspaperPrice     161
+ProductDiscount       161
+FormulaDiscount       161
+TotalDiscount         161
+TotalPrice            161
+TotalCredit           161
+dtype: int64
+
+Total missing values: 3750</code></pre>
+</div>
+</div>
+<div id="d3e89039" class="cell" data-execution_count="26">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(customers.isnull().<span class="bu">sum</span>())</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Total missing values: </span><span class="sc">{</span>customers<span class="sc">.</span>isnull()<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>CustomerID      0
+Gender        223
+DOB             0
+District        0
+ZIP             0
+StreeID         0
+dtype: int64
+
+Total missing values: 223</code></pre>
+</div>
+</div>
+<p>The number of missing values matters as much as the reason: a variable with very few missing values is worth fixing, but one that’s mostly empty (like a <code>RenewalDate</code> column with over 2,000 missing values here) might be better dropped entirely, or replaced with a simple indicator for “was this ever renewed?”, which amounts to the same thing as flagging missingness directly.</p>
+<section id="a-churn-model-with-missing-values" class="level3" data-number="4.4.1">
+<h3 data-number="4.4.1" class="anchored" data-anchor-id="a-churn-model-with-missing-values"><span class="header-section-number">4.4.1</span> A churn model with missing values</h3>
+<p>To demonstrate missing-value handling on a realistic dataset, we’ll switch to a customer-level table, <code>SubCust</code>, that’s already been built from NPC’s raw tables for a churn model. It comes from joining the <code>subscriptions</code> and <code>customers</code> tables and aggregating to one row per customer, using an <strong>independent period</strong> to compute predictors from and a <strong>dependent period</strong> to check whether a customer actually churned. Building a table like this is its own topic. For now we’ll treat <code>SubCust</code> as a given and load it directly.</p>
+<div id="1dac045f" class="cell" data-execution_count="27">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>SubCust <span class="op">=</span> pd.read_csv(<span class="st">"../data/raw/SubCust.csv"</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Dataset shape: </span><span class="sc">{</span>SubCust<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>SubCust.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Dataset shape: (1178, 40)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="27">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">CustomerID</th>
+<th data-quarto-table-cell-role="th">ProductID_1_sum</th>
+<th data-quarto-table-cell-role="th">ProductID_2_sum</th>
+<th data-quarto-table-cell-role="th">ProductID_3_sum</th>
+<th data-quarto-table-cell-role="th">ProductID_4_sum</th>
+<th data-quarto-table-cell-role="th">ProductID_5_sum</th>
+<th data-quarto-table-cell-role="th">ProductID_6_sum</th>
+<th data-quarto-table-cell-role="th">ProductID_7_sum</th>
+<th data-quarto-table-cell-role="th">ProductID_8_sum</th>
+<th data-quarto-table-cell-role="th">Pattern_0000010_sum</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">FormulaDiscount_mean</th>
+<th data-quarto-table-cell-role="th">TotalDiscount_mean</th>
+<th data-quarto-table-cell-role="th">TotalPrice_mean</th>
+<th data-quarto-table-cell-role="th">TotalCredit_mean</th>
+<th data-quarto-table-cell-role="th">Gender</th>
+<th data-quarto-table-cell-role="th">District</th>
+<th data-quarto-table-cell-role="th">ZIP</th>
+<th data-quarto-table-cell-role="th">StreeID</th>
+<th data-quarto-table-cell-role="th">Age</th>
+<th data-quarto-table-cell-role="th">churn</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>100139</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>5</td>
+<td>0</td>
+<td>...</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>134.800000</td>
+<td>0.0</td>
+<td>M</td>
+<td>5</td>
+<td>3740</td>
+<td>44349</td>
+<td>46</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>100246</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>3</td>
+<td>0</td>
+<td>...</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>247.666667</td>
+<td>0.0</td>
+<td>M</td>
+<td>5</td>
+<td>3740</td>
+<td>44448</td>
+<td>76</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>1004392</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>0</td>
+<td>1</td>
+<td>...</td>
+<td>6.24</td>
+<td>6.24</td>
+<td>29.840000</td>
+<td>0.0</td>
+<td>M</td>
+<td>1</td>
+<td>2560</td>
+<td>23762</td>
+<td>51</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>1005451</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>...</td>
+<td>72.00</td>
+<td>72.00</td>
+<td>72.000000</td>
+<td>0.0</td>
+<td>M</td>
+<td>1</td>
+<td>2980</td>
+<td>30445</td>
+<td>70</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>1005543</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>...</td>
+<td>72.00</td>
+<td>72.00</td>
+<td>72.000000</td>
+<td>0.0</td>
+<td>M</td>
+<td>1</td>
+<td>2620</td>
+<td>24963</td>
+<td>61</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
+<p>5 rows × 40 columns</p>
+</div>
+</div>
+</div>
+<div id="7f3d0194" class="cell" data-execution_count="28">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>missing_counts <span class="op">=</span> SubCust.isnull().<span class="bu">sum</span>()</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>missing_pct <span class="op">=</span> (SubCust.isnull().<span class="bu">sum</span>() <span class="op">/</span> <span class="bu">len</span>(SubCust)) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>missing_summary <span class="op">=</span> pd.DataFrame({<span class="st">"Missing_Count"</span>: missing_counts, <span class="st">"Missing_Percentage"</span>: missing_pct})</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>missing_summary[missing_summary[<span class="st">"Missing_Count"</span>] <span class="op">&gt;</span> <span class="dv">0</span>].<span class="bu">round</span>(<span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="28">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Missing_Count</th>
+<th data-quarto-table-cell-role="th">Missing_Percentage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">RenewalDate_rec</th>
+<td>154</td>
+<td>13.07</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">PaymentDate_rec</th>
+<td>4</td>
+<td>0.34</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Gender</th>
+<td>211</td>
+<td>17.91</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="treating-missing-values" class="level3" data-number="4.4.2">
+<h3 data-number="4.4.2" class="anchored" data-anchor-id="treating-missing-values"><span class="header-section-number">4.4.2</span> Treating missing values</h3>
+<p>There are two broad options once you know what’s missing and why: <strong>delete</strong> the missing rows or columns, or <strong>impute</strong>. Imputation implies replacing the missing values with a reasonable estimate. Since the missing percentages here are fairly low, imputation is the better choice; deletion mainly makes sense when a column is missing so often it’s barely usable, or a row is missing so much it isn’t worth keeping.</p>
+<p>Imputation itself comes in two flavors:</p>
+<ul>
+<li><strong>Univariate (simple) imputation</strong>: fill missing values with a single summary statistic, like the median for continuous variables, the mode for categorical ones.</li>
+<li><strong>Multivariate imputation</strong>: model each variable with missing values as a function of the <em>other</em> variables, and use that model’s predictions to fill the gaps.</li>
+</ul>
+<p>Univariate imputation with <code>SimpleImputer</code> is the natural starting point:</p>
+<div id="f1ae0189" class="cell" data-execution_count="29">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.impute <span class="im">import</span> SimpleImputer</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>numerical_cols_missing <span class="op">=</span> SubCust.select_dtypes(include<span class="op">=</span>[np.number]).columns[</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    SubCust.select_dtypes(include<span class="op">=</span>[np.number]).isnull().<span class="bu">any</span>()</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>].tolist()</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>categorical_cols_missing <span class="op">=</span> SubCust.select_dtypes(include<span class="op">=</span>[<span class="st">"object"</span>]).columns[</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>    SubCust.select_dtypes(include<span class="op">=</span>[<span class="st">"object"</span>]).isnull().<span class="bu">any</span>()</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>].tolist()</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Missing values in </span><span class="sc">{</span><span class="bu">len</span>(numerical_cols_missing)<span class="sc">}</span><span class="ss"> numerical and "</span></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>      <span class="ss">f"</span><span class="sc">{</span><span class="bu">len</span>(categorical_cols_missing)<span class="sc">}</span><span class="ss"> categorical columns"</span>)</span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>numerical_imputer <span class="op">=</span> SimpleImputer(strategy<span class="op">=</span><span class="st">"median"</span>)</span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>categorical_imputer <span class="op">=</span> SimpleImputer(strategy<span class="op">=</span><span class="st">"most_frequent"</span>)</span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>SubCust_simple <span class="op">=</span> SubCust.copy()</span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>SubCust_simple[numerical_cols_missing] <span class="op">=</span> numerical_imputer.fit_transform(SubCust[numerical_cols_missing])</span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>SubCust_simple[categorical_cols_missing] <span class="op">=</span> categorical_imputer.fit_transform(SubCust[categorical_cols_missing])</span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a>SubCust_simple[numerical_cols_missing <span class="op">+</span> categorical_cols_missing].isnull().<span class="bu">sum</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Missing values in 2 numerical and 1 categorical columns</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="29">
+<pre><code>RenewalDate_rec    0
+PaymentDate_rec    0
+Gender             0
+dtype: int64</code></pre>
+</div>
+</div>
+<p><strong>Multivariate imputation</strong> is more sophisticated: scikit-learn’s <code>IterativeImputer</code> implements <em>Multiple Imputation by Chained Equations</em> (MICE). The idea is to loop over every variable that has missing values, treating it as the target of a small regression model built from the other variables, and repeat until the imputed values stabilize:</p>
+<ol type="1">
+<li>Fill every missing value with a quick univariate estimate (mean/mode), so every variable has complete data to start from.</li>
+<li>Pick one variable with missing values as the target; train a model to predict it from the other variables, using only the rows where there were no missing values originally.</li>
+<li>Use that model to re-predict the missing values for this variable, replacing the placeholder estimate from step 1.</li>
+<li>Move to the next variable and repeat, now using the freshly updated values as predictors.</li>
+<li>Cycle through all variables repeatedly (10 times, by default) until the imputed values stop changing much.</li>
+</ol>
+<div id="3ce45259" class="cell" data-execution_count="30">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.experimental <span class="im">import</span> enable_iterative_imputer</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.impute <span class="im">import</span> IterativeImputer</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>numerical_cols <span class="op">=</span> SubCust.select_dtypes(include<span class="op">=</span>[np.number]).columns</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>SubCust_numerical <span class="op">=</span> SubCust[numerical_cols].copy()</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>iterative_imputer <span class="op">=</span> IterativeImputer(random_state<span class="op">=</span><span class="dv">42</span>, max_iter<span class="op">=</span><span class="dv">10</span>, verbose<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>SubCust_iterative <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>    iterative_imputer.fit_transform(SubCust_numerical),</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>numerical_cols,</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span>SubCust.index,</span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>In practice, simple imputation is usually preferred when only a handful of values are missing since it’s fast and easy to reason about. Multivariate imputation earns its extra cost when a larger share of the data is missing and there’s real structure among the variables for it to exploit.</p>
+</section>
+<section id="doing-this-properly-fitting-only-on-training-data" class="level3" data-number="4.4.3">
+<h3 data-number="4.4.3" class="anchored" data-anchor-id="doing-this-properly-fitting-only-on-training-data"><span class="header-section-number">4.4.3</span> Doing this properly: fitting only on training data</h3>
+<p>So far we’ve imputed using the <em>entire</em> dataset. That’s fine for a first look, but it hides a real risk once you’re building a predictive model: if the imputation model learns anything from observations you’ll later use to <em>test</em> that model, information has quietly leaked from the test set into training. This is called <strong>data leakage</strong> and will make your test performance look better than the model would actually achieve on genuinely unseen data.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>A preview of the train/test split
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We’ll cover train/test splitting properly in the Model Evaluation chapter, but for now the short version is: before doing anything that <em>learns</em> from the data (fitting an imputer, training a model), split your data into a <strong>training set</strong> to learn from and a <strong>test set</strong> you hold back untouched, so you have a fair, unseen sample to check performance on later. Any transformation you <em>fit</em>, including an imputer, gets fit on the training set only, then applied or <em>transformed</em> to the test set.</p>
+</div>
+</div>
+<p>Let’s redo the imputation the proper way using the <code>SimpleImputer</code>. First, split the data, keeping the target variable (<code>churn</code>) and <code>CustomerID</code> aside:</p>
+<div id="8f5d0bfb" class="cell" data-execution_count="31">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> SubCust[<span class="st">"churn"</span>]</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> SubCust.drop(columns<span class="op">=</span>[<span class="st">"churn"</span>, <span class="st">"CustomerID"</span>])</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>    X, y, test_size<span class="op">=</span><span class="fl">0.5</span>, random_state<span class="op">=</span><span class="dv">100</span>, stratify<span class="op">=</span>y</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Training set: </span><span class="sc">{</span>X_train<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Test set: </span><span class="sc">{</span>X_test<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Training set: (589, 38)
+Test set: (589, 38)</code></pre>
+</div>
+</div>
+<p>Before imputing anything, it’s worth keeping a record of <em>which</em> values were originally missing, since that’s information in its own right, and it can’t be recovered once the gaps are filled in:</p>
+<div id="9f340ecf" class="cell" data-execution_count="32">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>train_missing_flags <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>    {<span class="ss">f"</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">_missing"</span>: X_train[col].isnull() <span class="cf">for</span> col <span class="kw">in</span> X_train.columns <span class="cf">if</span> X_train[col].isnull().<span class="bu">any</span>()},</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span>X_train.index,</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>test_missing_flags <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>    {<span class="ss">f"</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">_missing"</span>: X_test[col].isnull() <span class="cf">for</span> col <span class="kw">in</span> X_test.columns <span class="cf">if</span> X_test[col].isnull().<span class="bu">any</span>()},</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span>X_test.index,</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Created </span><span class="sc">{</span>train_missing_flags<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> missing value indicators"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Created 3 missing value indicators</code></pre>
+</div>
+</div>
+<p>Now fit the simple imputers on the training set only, and apply them to both sets:</p>
+<div id="072b5f1c" class="cell" data-execution_count="33">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>numerical_cols <span class="op">=</span> X_train.select_dtypes(include<span class="op">=</span>[np.number]).columns</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>categorical_cols <span class="op">=</span> X_train.select_dtypes(include<span class="op">=</span>[<span class="st">"object"</span>, <span class="st">"category"</span>]).columns</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>numerical_imputer <span class="op">=</span> SimpleImputer(strategy<span class="op">=</span><span class="st">"median"</span>)</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>categorical_imputer <span class="op">=</span> SimpleImputer(strategy<span class="op">=</span><span class="st">"most_frequent"</span>)</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>numerical_imputer.fit(X_train[numerical_cols])</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>categorical_imputer.fit(X_train[categorical_cols])</span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>X_train_simple <span class="op">=</span> X_train.copy()</span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>X_test_simple <span class="op">=</span> X_test.copy()</span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>X_train_simple[numerical_cols] <span class="op">=</span> numerical_imputer.transform(X_train[numerical_cols])</span>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>X_test_simple[numerical_cols] <span class="op">=</span> numerical_imputer.transform(X_test[numerical_cols])</span>
+<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a>X_train_simple[categorical_cols] <span class="op">=</span> categorical_imputer.transform(X_train[categorical_cols])</span>
+<span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a>X_test_simple[categorical_cols] <span class="op">=</span> categorical_imputer.transform(X_test[categorical_cols])</span>
+<span id="cb42-18"><a href="#cb42-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-19"><a href="#cb42-19" aria-hidden="true" tabindex="-1"></a><span class="co"># add the missing-value indicators back in</span></span>
+<span id="cb42-20"><a href="#cb42-20" aria-hidden="true" tabindex="-1"></a>train_data <span class="op">=</span> pd.concat([X_train_simple, train_missing_flags], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb42-21"><a href="#cb42-21" aria-hidden="true" tabindex="-1"></a>test_data <span class="op">=</span> pd.concat([X_test_simple, test_missing_flags], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb42-22"><a href="#cb42-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-23"><a href="#cb42-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Final training set with indicators: </span><span class="sc">{</span>train_data<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb42-24"><a href="#cb42-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Final test set with indicators: </span><span class="sc">{</span>test_data<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Final training set with indicators: (589, 41)
+Final test set with indicators: (589, 41)</code></pre>
+</div>
+</div>
+<p>The same fit-on-train, transform-to-both pattern works for <code>IterativeImputer</code> too (but only for numerical variables). The only difference is <code>.fit()</code> learns the per-variable regression models from the training set, and <code>.transform()</code> applies them to new rows without re-learning anything:</p>
+<div id="bea834cc" class="cell" data-execution_count="34">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>iterative_imputer <span class="op">=</span> IterativeImputer(random_state<span class="op">=</span><span class="dv">42</span>, max_iter<span class="op">=</span><span class="dv">10</span>, verbose<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>iterative_imputer.fit(X_train[numerical_cols])</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>X_train_numerical_imputed <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>    iterative_imputer.transform(X_train[numerical_cols]),</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>numerical_cols, index<span class="op">=</span>X_train.index,</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>X_test_numerical_imputed <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>    iterative_imputer.transform(X_test[numerical_cols]),</span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>numerical_cols, index<span class="op">=</span>X_test.index,</span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>From here on, we’ll use <code>train_data</code> and <code>test_data</code>, the simple-imputation version, with missing-value indicators attached, as our working datasets.</p>
+</section>
+</section>
+<section id="data-quality-outliers" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="data-quality-outliers"><span class="header-section-number">4.5</span> Data quality: outliers</h2>
+<p>An <strong>outlier</strong> is a data point that sits exceptionally far from the rest of the observations. Not every outlier is a mistake: a genuine CEO salary of €3 million is a <em>valid</em> extreme value, while an age of 270 is clearly <em>invalid</em>. With a small sample, what looks like an outlier can just be the tail of a skewed distribution, or a handful of points from a different population entirely.</p>
+<section id="detecting-outliers" class="level3" data-number="4.5.1">
+<h3 data-number="4.5.1" class="anchored" data-anchor-id="detecting-outliers"><span class="header-section-number">4.5.1</span> Detecting outliers</h3>
+<p>Detection is either visual (scatter plots, histograms, box plots) or numerical (checking the min/max, or computing a <strong>z-score</strong> to check how many standard deviations a value sits from the mean). Under a roughly normal distribution, about 95% of values fall within 2 standard deviations of the mean, and 99.7% within 3. So a z-score beyond about ±3 is a common threshold for flagging a point as a potential outlier.</p>
+<p>As with imputation, outlier detection should also be done on the training data only, so that whatever rule you land on is validated against data the model hasn’t seen. We’ll also restrict this to numeric variables, since the notion of an “outlier” is mostly a continuous-data concept.</p>
+<div id="548b9f27" class="cell" data-execution_count="35">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>X_train_numeric <span class="op">=</span> train_data.select_dtypes(include<span class="op">=</span>[np.number])</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Dimensions of the training data: </span><span class="sc">{</span>X_train_numeric<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Dimensions of the training data: (589, 37)</code></pre>
+</div>
+</div>
+<div id="2fb9a779" class="cell" data-execution_count="36">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>n_vars <span class="op">=</span> <span class="bu">len</span>(X_train_numeric.columns)</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>n_cols <span class="op">=</span> <span class="dv">4</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>n_rows <span class="op">=</span> (n_vars <span class="op">+</span> n_cols <span class="op">-</span> <span class="dv">1</span>) <span class="op">//</span> n_cols</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(n_rows, n_cols, figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">5</span> <span class="op">*</span> n_rows))</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>axes <span class="op">=</span> axes.flatten()</span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, column <span class="kw">in</span> <span class="bu">enumerate</span>(X_train_numeric.columns):</span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>    sns.boxplot(data<span class="op">=</span>X_train_numeric, y<span class="op">=</span>column, ax<span class="op">=</span>axes[i])</span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>    axes[i].set_title(<span class="ss">f"Boxplot: </span><span class="sc">{</span>column<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a>    axes[i].set_xlabel(<span class="st">""</span>)</span>
+<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-13"><a href="#cb47-13" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb47-14"><a href="#cb47-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04-data-exploration_files/figure-html/cell-37-output-1.png" width="1914" height="4790" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="ef8d93a6" class="cell" data-execution_count="37">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(n_rows, n_cols, figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">5</span> <span class="op">*</span> n_rows))</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>axes <span class="op">=</span> axes.flatten()</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, column <span class="kw">in</span> <span class="bu">enumerate</span>(X_train_numeric.columns):</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>    axes[i].hist(X_train_numeric[column].dropna(), bins<span class="op">=</span><span class="dv">30</span>, alpha<span class="op">=</span><span class="fl">0.7</span>,</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>                 color<span class="op">=</span><span class="st">"skyblue"</span>, edgecolor<span class="op">=</span><span class="st">"black"</span>)</span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>    axes[i].set_title(<span class="ss">f"Histogram: </span><span class="sc">{</span>column<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>    axes[i].set_xlabel(column)</span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>    axes[i].set_ylabel(<span class="st">"Frequency"</span>)</span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04-data-exploration_files/figure-html/cell-38-output-1.png" width="1913" height="4790" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The plots are a starting point, not the analysis itself and it’s worth putting a number on what they show. The box plot rule (anything past 1.5×IQR from the box) gives a quick count of flagged points per variable:</p>
+<div id="286d9cb9" class="cell" data-execution_count="38">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>Q1 <span class="op">=</span> X_train_numeric.quantile(<span class="fl">0.25</span>)</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>Q3 <span class="op">=</span> X_train_numeric.quantile(<span class="fl">0.75</span>)</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>IQR <span class="op">=</span> Q3 <span class="op">-</span> Q1</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>lower_bound <span class="op">=</span> Q1 <span class="op">-</span> <span class="fl">1.5</span> <span class="op">*</span> IQR</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>upper_bound <span class="op">=</span> Q3 <span class="op">+</span> <span class="fl">1.5</span> <span class="op">*</span> IQR</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>iqr_outliers <span class="op">=</span> (X_train_numeric.lt(lower_bound) <span class="op">|</span> X_train_numeric.gt(upper_bound)).<span class="bu">sum</span>()</span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>iqr_outlier_pct <span class="op">=</span> (iqr_outliers <span class="op">/</span> <span class="bu">len</span>(X_train_numeric) <span class="op">*</span> <span class="dv">100</span>).<span class="bu">round</span>(<span class="dv">1</span>)</span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a>pd.DataFrame({<span class="st">"n_flagged"</span>: iqr_outliers, <span class="st">"pct_flagged"</span>: iqr_outlier_pct}).query(<span class="st">"n_flagged &gt; 0"</span>).sort_values(<span class="st">"pct_flagged"</span>, ascending<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="38">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">n_flagged</th>
+<th data-quarto-table-cell-role="th">pct_flagged</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Age</th>
+<td>267</td>
+<td>45.3</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">NetNewspaperPrice_mean</th>
+<td>181</td>
+<td>30.7</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Pattern_1111110_sum</th>
+<td>169</td>
+<td>28.7</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">PaymentType_BT_sum</th>
+<td>165</td>
+<td>28.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">PaymentStatus_Paid_sum</th>
+<td>162</td>
+<td>27.5</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">TotalCredit_mean</th>
+<td>127</td>
+<td>21.6</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">TotalDiscount_mean</th>
+<td>106</td>
+<td>18.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">FormulaDiscount_mean</th>
+<td>105</td>
+<td>17.8</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">NbrStart_mean</th>
+<td>89</td>
+<td>15.1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">ProductID_6_sum</th>
+<td>86</td>
+<td>14.6</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">ProductID_4_sum</th>
+<td>82</td>
+<td>13.9</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">RenewalDate_rec</th>
+<td>62</td>
+<td>10.5</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">ProductID_2_sum</th>
+<td>56</td>
+<td>9.5</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">PaymentStatus_Not.Paid_sum</th>
+<td>55</td>
+<td>9.3</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">StartDate_rec</th>
+<td>53</td>
+<td>9.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">ProductID_8_sum</th>
+<td>40</td>
+<td>6.8</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">PaymentDate_rec</th>
+<td>39</td>
+<td>6.6</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">ProductID_1_sum</th>
+<td>39</td>
+<td>6.6</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">ProductID_7_sum</th>
+<td>38</td>
+<td>6.5</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">PaymentType_DD_sum</th>
+<td>28</td>
+<td>4.8</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">ProductID_3_sum</th>
+<td>26</td>
+<td>4.4</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">ZIP</th>
+<td>25</td>
+<td>4.2</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">ProductID_5_sum</th>
+<td>24</td>
+<td>4.1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">ProductDiscount_mean</th>
+<td>19</td>
+<td>3.2</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">StreeID</th>
+<td>9</td>
+<td>1.5</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Pattern_0000010_sum</th>
+<td>7</td>
+<td>1.2</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Pattern_1000010_sum</th>
+<td>2</td>
+<td>0.3</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Pattern_0010000_sum</th>
+<td>1</td>
+<td>0.2</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Pattern_0001000_sum</th>
+<td>1</td>
+<td>0.2</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Pattern_0000100_sum</th>
+<td>1</td>
+<td>0.2</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>On some variables, this flags well over 10% of all training rows which is far too many to all be genuine data errors. The <strong>z-score</strong> rule (flag anything with <span class="math inline">\(|z| &gt; 3\)</span>) is a useful second opinion, since it reacts differently to skew:</p>
+<div id="7862b7ea" class="cell" data-execution_count="39">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>z_scores <span class="op">=</span> (X_train_numeric <span class="op">-</span> X_train_numeric.mean()) <span class="op">/</span> X_train_numeric.std()</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>z_outliers <span class="op">=</span> (z_scores.<span class="bu">abs</span>() <span class="op">&gt;</span> <span class="dv">3</span>).<span class="bu">sum</span>()</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>z_outlier_pct <span class="op">=</span> (z_outliers <span class="op">/</span> <span class="bu">len</span>(X_train_numeric) <span class="op">*</span> <span class="dv">100</span>).<span class="bu">round</span>(<span class="dv">1</span>)</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>pd.DataFrame({<span class="st">"n_flagged"</span>: z_outliers, <span class="st">"pct_flagged"</span>: z_outlier_pct}).query(<span class="st">"n_flagged &gt; 0"</span>).sort_values(<span class="st">"pct_flagged"</span>, ascending<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="39">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">n_flagged</th>
+<th data-quarto-table-cell-role="th">pct_flagged</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">ZIP</th>
+<td>24</td>
+<td>4.1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">FormulaDiscount_mean</th>
+<td>23</td>
+<td>3.9</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">NetNewspaperPrice_mean</th>
+<td>20</td>
+<td>3.4</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">ProductDiscount_mean</th>
+<td>16</td>
+<td>2.7</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">TotalDiscount_mean</th>
+<td>15</td>
+<td>2.5</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">PaymentType_BT_sum</th>
+<td>12</td>
+<td>2.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">ProductID_6_sum</th>
+<td>12</td>
+<td>2.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Pattern_1111110_sum</th>
+<td>10</td>
+<td>1.7</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">PaymentStatus_Paid_sum</th>
+<td>10</td>
+<td>1.7</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">PaymentType_DD_sum</th>
+<td>10</td>
+<td>1.7</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">ProductID_2_sum</th>
+<td>10</td>
+<td>1.7</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">ProductID_1_sum</th>
+<td>10</td>
+<td>1.7</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">PaymentStatus_Not.Paid_sum</th>
+<td>9</td>
+<td>1.5</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">StreeID</th>
+<td>8</td>
+<td>1.4</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">NbrStart_mean</th>
+<td>7</td>
+<td>1.2</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">ProductID_7_sum</th>
+<td>7</td>
+<td>1.2</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">ProductID_3_sum</th>
+<td>7</td>
+<td>1.2</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">ProductID_4_sum</th>
+<td>6</td>
+<td>1.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">TotalCredit_mean</th>
+<td>5</td>
+<td>0.8</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Pattern_0000010_sum</th>
+<td>4</td>
+<td>0.7</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">ProductID_5_sum</th>
+<td>3</td>
+<td>0.5</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Pattern_1000010_sum</th>
+<td>2</td>
+<td>0.3</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">RenewalDate_rec</th>
+<td>2</td>
+<td>0.3</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">ProductID_8_sum</th>
+<td>2</td>
+<td>0.3</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Age</th>
+<td>2</td>
+<td>0.3</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Pattern_0010000_sum</th>
+<td>1</td>
+<td>0.2</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Pattern_0001000_sum</th>
+<td>1</td>
+<td>0.2</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Pattern_0000100_sum</th>
+<td>1</td>
+<td>0.2</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>The z-score rule flags far fewer points overall, and not always the same variables: <code>Age</code> tops the IQR list at over 45%, yet doesn’t show up in the z-score table at all. Its few negative values skew the quartiles enough to flag a big chunk of otherwise ordinary ages, without being extreme enough (relative to <code>Age</code>’s overall spread) to trip the ±3 z-score threshold. That gap is the point: neither rule is simply “right” and a mechanical threshold, on its own, doesn’t tell you whether a flagged point is a data error or a genuinely extreme (but valid) observation. That judgment call needs the shape of the distribution, which is exactly what the histograms above show and, in <code>Age</code>’s case, some domain knowledge (negative ages aren’t valid, full stop).</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Box plots and histograms can tell different stories
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>As noticed above, box plots flag anything past 1.5×IQR from the box as a potential outlier. On some variables here, that flags a <em>lot</em> of points as problematic. But look at the matching histograms: several of those distributions are just genuinely skewed (a long right tail of high spenders, say), not full of data errors. The box plot rule is a mechanical threshold, not a verdict. The take-away is: always check the actual shape of the distribution before deciding a flagged point is really a problem.</p>
+</div>
+</div>
+<p>To be clear, none of this outlier treatment is used to modify <code>train_data</code> or <code>test_data</code>: it’s purely diagnostic, showing what each rule <em>would</em> flag.</p>
+</section>
+<section id="treating-outliers" class="level3" data-number="4.5.2">
+<h3 data-number="4.5.2" class="anchored" data-anchor-id="treating-outliers"><span class="header-section-number">4.5.2</span> Treating outliers</h3>
+<p>How much outliers matter depends on the model you’re planning to build. Non-parametric models (decision trees, for instance) are often fairly insensitive to them; parametric models (linear and logistic regression) can be thrown off by a handful of extreme points. Once you’ve decided a point is worth addressing:</p>
+<ul>
+<li><strong>Invalid observations</strong> (like the negative ages above): treat them as missing values, and impute them.</li>
+<li><strong>Valid but extreme observations</strong>: you have three options. Leave them as-is, <strong>cap</strong> them (also called truncating or winsorizing: clamp any value beyond a chosen lower/upper limit back to that limit), or convert the variable into categories, which we’ll cover in the next chapter.</li>
+</ul>
+<p>In our case, the <code>Age</code> variable needs to be treated, since it includes some negative values. These are invalid since nobody has a negative age. That’s a case where the fix is simple: treat the invalid values as missing, and impute them like any other missing value.</p>
+<div id="dbfb7fbb" class="cell" data-execution_count="40">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>age_median <span class="op">=</span> train_data[<span class="st">"Age"</span>][train_data[<span class="st">"Age"</span>] <span class="op">&gt;=</span> <span class="dv">0</span>].median()</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>train_data.loc[train_data[<span class="st">"Age"</span>] <span class="op">&lt;</span> <span class="dv">0</span>, <span class="st">"Age"</span>] <span class="op">=</span> np.nan</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>train_data[<span class="st">"Age"</span>] <span class="op">=</span> train_data[<span class="st">"Age"</span>].fillna(age_median)</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>plt.hist(train_data[<span class="st">"Age"</span>], bins<span class="op">=</span><span class="dv">30</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, edgecolor<span class="op">=</span><span class="st">"black"</span>)</span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Age Distribution After Negative Value Treatment"</span>)</span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Age"</span>)</span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Frequency"</span>)</span>
+<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a>plt.axvline(age_median, color<span class="op">=</span><span class="st">"red"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, label<span class="op">=</span><span class="ss">f"Median: </span><span class="sc">{</span>age_median<span class="sc">:.1f}</span><span class="ss">"</span>)</span>
+<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04-data-exploration_files/figure-html/cell-41-output-1.png" width="676" height="450" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="saving-your-progress" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="saving-your-progress"><span class="header-section-number">4.6</span> Saving your progress</h2>
+<p>We’ll pick this up again in the next chapter, so let’s save the cleaned, imputed training and test sets including the target variable as <code>parquet</code> files.</p>
+<div id="c22f0f04" class="cell" data-execution_count="41">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>train_complete <span class="op">=</span> train_data.copy()</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>train_complete[<span class="st">"target"</span>] <span class="op">=</span> y_train</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>test_complete <span class="op">=</span> test_data.copy()</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>test_complete[<span class="st">"target"</span>] <span class="op">=</span> y_test</span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>train_complete.to_parquet(<span class="st">"../data/raw/train_complete.parquet"</span>, index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>test_complete.to_parquet(<span class="st">"../data/raw/test_complete.parquet"</span>, index<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="where-we-go-from-here" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="where-we-go-from-here"><span class="header-section-number">4.7</span> Where we go from here</h2>
+<p>We’ve now covered every level of data understanding: table, data, and variable. The next chapter, <strong>Data Preparation</strong>, picks up right where this one leaves off with transforming, encoding, and engineering the cleaned <code>train_data</code> and <code>test_data</code> into a model-ready basetable.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-anscombe1973graphs" class="csl-entry" role="listitem">
+Anscombe, Francis J. 1973. <span>“Graphs in Statistical Analysis.”</span> <em>The American Statistician</em> 27 (1): 17–21.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/03-data-understanding.html" class="pagination-link" aria-label="Data Understanding">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Understanding</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/05-data-preparation.html" class="pagination-link" aria-label="Data Preparation">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Preparation</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

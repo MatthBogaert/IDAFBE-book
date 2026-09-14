@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>1&nbsp; Introduction – Introduction to Data Analytics for Business and Economics</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/02-python-basics.html" rel="next">
+<link href="../index.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-5ccb035bea26c1e21f80f44cf7c27909.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/01-intro.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Introduction to Data Analytics for Business and Economics</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-intro.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-python-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Python Basics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-data-understanding.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Understanding</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-data-exploration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Exploration</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-data-preparation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Preparation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/06-model-evaluation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Model Evaluation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-installation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Installation Guide</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#why-data-analytics-now" id="toc-why-data-analytics-now" class="nav-link active" data-scroll-target="#why-data-analytics-now"><span class="header-section-number">1.1</span> Why data analytics now?</a></li>
+  <li><a href="#what-is-data-analytics" id="toc-what-is-data-analytics" class="nav-link" data-scroll-target="#what-is-data-analytics"><span class="header-section-number">1.2</span> What is data analytics?</a>
+  <ul class="collapse">
+  <li><a href="#the-four-types-of-analytics" id="toc-the-four-types-of-analytics" class="nav-link" data-scroll-target="#the-four-types-of-analytics"><span class="header-section-number">1.2.1</span> The four types of analytics</a></li>
+  <li><a href="#ai-machine-learning-and-data-analytics" id="toc-ai-machine-learning-and-data-analytics" class="nav-link" data-scroll-target="#ai-machine-learning-and-data-analytics"><span class="header-section-number">1.2.2</span> AI, machine learning, and data analytics</a></li>
+  <li><a href="#machine-learning-vs.-statistics" id="toc-machine-learning-vs.-statistics" class="nav-link" data-scroll-target="#machine-learning-vs.-statistics"><span class="header-section-number">1.2.3</span> Machine learning vs.&nbsp;statistics</a></li>
+  <li><a href="#big-data-and-generative-ai" id="toc-big-data-and-generative-ai" class="nav-link" data-scroll-target="#big-data-and-generative-ai"><span class="header-section-number">1.2.4</span> Big data and generative AI</a></li>
+  <li><a href="#what-makes-a-good-analytical-model" id="toc-what-makes-a-good-analytical-model" class="nav-link" data-scroll-target="#what-makes-a-good-analytical-model"><span class="header-section-number">1.2.5</span> What makes a good analytical model</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data"><span class="header-section-number">1.2.6</span> Data</a></li>
+  <li><a href="#supervised-and-unsupervised-learning" id="toc-supervised-and-unsupervised-learning" class="nav-link" data-scroll-target="#supervised-and-unsupervised-learning"><span class="header-section-number">1.2.7</span> Supervised and unsupervised learning</a></li>
+  </ul></li>
+  <li><a href="#the-data-analytics-process-crisp-dm" id="toc-the-data-analytics-process-crisp-dm" class="nav-link" data-scroll-target="#the-data-analytics-process-crisp-dm"><span class="header-section-number">1.3</span> The data analytics process: CRISP-DM</a></li>
+  <li><a href="#where-data-analytics-shows-up" id="toc-where-data-analytics-shows-up" class="nav-link" data-scroll-target="#where-data-analytics-shows-up"><span class="header-section-number">1.4</span> Where data analytics shows up</a></li>
+  <li><a href="#why-python" id="toc-why-python" class="nav-link" data-scroll-target="#why-python"><span class="header-section-number">1.5</span> Why Python</a></li>
+  <li><a href="#how-this-book-is-organized" id="toc-how-this-book-is-organized" class="nav-link" data-scroll-target="#how-this-book-is-organized"><span class="header-section-number">1.6</span> How this book is organized</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Analytics has taken on a pivotal role in modern society, and we rely on it on a daily basis often without realizing it. The omnipresence of and reliance on analytics has increased sharply over the past few years, with the introduction of large language models and generative AI into everyday products. This book itself could even serve as a small example of that shift: like most writing and coding today, parts of it were co-produced and polished with the help of a generative AI assistant working with a human in the loop. The boom in LLMs and generative AI has understandably pulled artificial intelligence into the public conversation and even the kitchen table.</p>
+<p>But generative AI is only the most visible recent chapter of a much longer history of analytics. Long before ChatGPT, Gemini and Claude, data analytical models were already quietly shaping the everyday decisions businesses make about their customers and products. When scanning your loyalty card (or mobile app nowadays) at the supermarket, a model decides which promotional folder lands in your inbox next. When scrolling through your social media feed, a ranking algorithm determines which posts are most likely to keep you engaged. On streaming services a recommender system has quietly reshuffled its entire catalogue around what it predicts you’ll want to watch or listen to next. If you apply for a loan or an insurance policy, a risk model estimates how likely you are to default or file a claim, and a bank or insurer uses that estimate to decide whether to approve your application and at what price. However, you might now assume that the realm of analytics is limited to business-to-consumer applications. It’s not! In industrial settings, analytics is used to optimize production processes, reduce energy consumption, and improve product quality. On the factory floor, sensor data feeds predictive maintenance models that monitor when a machine is likely to fail before it actually does, such that preventive actions can be taken. These models also help to decide how many spare parts to keep in stock for (unexpected) breakdowns. On a broader supply chain level, demand forecasting models also assist on how much raw material to order, how to design the manufacturing site layout, how much inventory to hold, and how many to reorder weeks in advance.</p>
+<p>This chapter introduces what data analytics actually is, why it has become central to business decision-making, and how the rest of this book is organized around the process of turning raw data into a working analytical model.</p>
+<section id="why-data-analytics-now" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="why-data-analytics-now"><span class="header-section-number">1.1</span> Why data analytics now?</h2>
+<p>Three things happened at roughly the same time: the amount of data organizations collect exploded, computing power to process it became cheap, and the algorithms to make sense of it matured. <span class="citation" data-cites="mortenson2015operational">Mortenson et al. (<a href="#ref-mortenson2015operational" role="doc-biblioref">2015</a>)</span> call this convergence the <strong>sixth period</strong> in the century-long evolution of operational research and analytics (running from the mid-2000s to today). Given the prevalence of online data sources, businesses had continuous access to data from customers, competitors, and the general public via social networks. Even their own machines and products were being connected and continuously monitored, in the “internet of things”. That data quickly outgrew traditional databases and business intelligence architecture, giving rise to an entire new ecosystem of technologies such as Hadoop, NoSQL and NewSQL databases, and cloud computing. All these systems were built specifically to store, process, and analyze data at scale. The result is that analytical models now sit behind decisions that used to rely purely on human judgment and increasingly outperform it.</p>
+<p>A <strong>seventh period</strong> arguably began with the arrival of generative AI — though this is our own extension, not part of <span class="citation" data-cites="mortenson2015operational">Mortenson et al. (<a href="#ref-mortenson2015operational" role="doc-biblioref">2015</a>)</span>’s original 2015 framework, which predates the release of ChatGPT by several years. The shift from models that <em>describe and predict</em> to models that <em>generate and respond</em> (a distinction we return to later in this chapter), and, with agentic AI, even <em>act on their own</em>, marks as sharp a break with the analytics period as the analytics period itself marked with what came before it.</p>
+<p>A few examples make this concrete. In late December 2019, an AI system monitoring news reports and airline ticketing data flagged unusual pneumonia activity in Wuhan, China, days before public health authorities issued their own warnings. A nice illustration of how analytics can act as an early detection system for a signal humans hadn’t yet noticed. That signal, of course, would go on to become COVID-19 — and everything else from there is history. Around the same period, revelations about Cambridge Analytica showed how predictive models built on Facebook data (e.g., likes, comments, status updates, groups, etc.) could infer personality traits and how these personality traits could be used to target voters individually. Progress has only accelerated since: modern large language models now routinely match or exceed professional-level performance on standardized exams in law and medicine, and in 2025 both OpenAI and Google DeepMind’s reasoning models achieved a gold-medal-level score at the International Mathematical Olympiad, solving 5 of the 6 contest problems under official conditions. OpenAI’s result was graded by former IMO medalists, DeepMind’s performance was independently verified by official IMO coordinators. <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> In medicine specifically, deep learning models have been shown to match or outperform radiologists at detecting breast cancer in screening mammograms.</p>
+<p>These capabilities cut both ways. As analytical models are given more influence over decisions that affect people’s lives (e.g., credit, hiring, medical diagnosis, criminal justice) regulators have started drawing hard lines around how they can be used. One notable example of careless use of AI systems was the COMPAS (Correctional Offender Management Profiling for Alternative Sanctions) algorithm, used across the U.S. to assess a defendant’s risk of recidivism for general and violent crime. An investigation found the tool was biased against Black defendants, who were flagged as high-risk more often despite not reoffending at a higher rate. What makes the case genuinely instructive, though, is not just <em>that</em> the model was biased, but <em>why</em>: <span class="citation" data-cites="Lagioia2022">Lagioia et al. (<a href="#ref-Lagioia2022" role="doc-biblioref">2022</a>)</span> show that COMPAS was, overall, roughly equally accurate for Black and White defendants — yet it still made one particular kind of mistake, wrongly flagging someone as high-risk who never went on to reoffend, far more often for Black defendants. Trying to remove that specific problem can, in turn, make a different imbalance worse elsewhere, because the two groups didn’t reoffend at the same rate to begin with. In other words, “being fair” isn’t a single, clear-cut target a data scientist can just optimize for — different, equally reasonable ideas of what counts as fair can pull in different directions, so choosing between them ends up being as much a value judgment as a technical one.</p>
+<p>The EU has responded to cases like this in stages. GDPR <span class="citation" data-cites="http://data.europa.eu/eli/reg/2016/679/oj">(<a href="#ref-http://data.europa.eu/eli/reg/2016/679/oj" role="doc-biblioref">European Parliament and Council of the European Union 2016</a>)</span>, which became enforceable in 2018, was a first step. It doesn’t target AI specifically, but it sets out several key principles for processing personal data — among them fairness, purpose limitation, and data minimisation — together with a right to meaningful information about automated decisions made about you. We’ll come back to these principles in more detail later in this book, once we start working with real personal data ourselves. The EU AI Act <span class="citation" data-cites="http://data.europa.eu/eli/reg/2024/1689/oj">(<a href="#ref-http://data.europa.eu/eli/reg/2024/1689/oj" role="doc-biblioref">European Parliament and Council of the European Union 2024</a>)</span> builds on that foundation with a comprehensive, risk-based framework specifically for AI systems: it classifies applications into risk tiers, from “unacceptable” (e.g., real-time biometric scoring for social credit purposes) down to “minimal” (e.g., spam filters), with correspondingly stricter requirements for higher risks (e.g., high-stakes criminal-justice risk scoring like COMPAS).</p>
+<div id="fig-ai-risk" class="quarto-float quarto-figure quarto-figure-center anchored" alt="The EU AI Act risk pyramid,  showing four tiers from top to bottom: Unacceptable Risk, High Risk, Limited Risk (AI systems with  specific transparency obligations), and Minimal Risk.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ai-risk-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../images/ch01-fig-ai-risk-pyramid.jpg" class="img-fluid figure-img" alt="The EU AI Act risk pyramid,  showing four tiers from top to bottom: Unacceptable Risk, High Risk, Limited Risk (AI systems with  specific transparency obligations), and Minimal Risk.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ai-risk-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.1: EU AI Act risk pyramid — unacceptable, high, limited, and minimal risk tiers. Source: European Commission.
+</figcaption>
+</figure>
+</div>
+<p>In sum, data analytics is no longer a specialized department that runs in the back-office. It shapes what products get built, what prices get charged, who gets a loan, and increasingly, what rules govern all of the above, which is exactly why it is crucial to business and economics.</p>
+</section>
+<section id="what-is-data-analytics" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="what-is-data-analytics"><span class="header-section-number">1.2</span> What is data analytics?</h2>
+<p>In essence, <strong>data analytics is about transforming raw data into actionable insights for business</strong>. It does so by applying descriptive, diagnostic, predictive, and prescriptive models to heterogeneous — and often large — data sources, so that organizations can make quicker, better, and more intelligent decisions that create business value.</p>
+<p>Business analytics sits at the intersection of several disciplines: operations research, information systems, and machine learning all contribute methods. However, domain knowledge and understanding of the actual business problem determine whether those methods produce anything useful for business <span class="citation" data-cites="mortenson2015operational hindle2020business">(<a href="#ref-mortenson2015operational" role="doc-biblioref">Mortenson et al. 2015</a>; <a href="#ref-hindle2020business" role="doc-biblioref">Hindle et al. 2020</a>)</span>. That combination is exactly what makes it a natural fit for business and economics students: your training gives you the technical grounding, and your business and economic mindset gives you the domain framing to point that technique at a problem worth solving.</p>
+<div id="fig-analytics-intersection" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Venn diagram showing Analytics at the center of three overlapping circles: Technologies (Electrical Engineering, Computer Science), Decision Making (Psychology, Behavioural Science), and Quantitative Methods (Mathematics, Statistics, Economics/Econometrics), with pairwise overlaps labeled Information Systems, Artificial Intelligence (Machine Learning), and Operational Research.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-analytics-intersection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../images/ch01-fig-analytics-intersection.jpg" class="img-fluid figure-img" alt="Venn diagram showing Analytics at the center of three overlapping circles: Technologies (Electrical Engineering, Computer Science), Decision Making (Psychology, Behavioural Science), and Quantitative Methods (Mathematics, Statistics, Economics/Econometrics), with pairwise overlaps labeled Information Systems, Artificial Intelligence (Machine Learning), and Operational Research.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-analytics-intersection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.2: Business analytics. Source: Figure 1 in <span class="citation" data-cites="mortenson2015operational">Mortenson et al. (<a href="#ref-mortenson2015operational" role="doc-biblioref">2015</a>)</span>, licensed under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.
+</figcaption>
+</figure>
+</div>
+<p>A long list of near-synonyms for this field have been used throughout the years (mainly depending on the hype of that moment): artificial intelligence (AI), big data, machine learning, data mining, data science, deep learning, and in the old days knowledge discovery, pattern recognition. In practice, these terms overlap heavily and are often used interchangeably, though later in this chapter we’ll draw out a few real distinctions (particularly between AI, machine learning and statistics) that matter once you start building models yourself.</p>
+<section id="the-four-types-of-analytics" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="the-four-types-of-analytics"><span class="header-section-number">1.2.1</span> The four types of analytics</h3>
+<p>Data analytics is usually broken down into four types, distinguished by the kind of question they answer:</p>
+<ul>
+<li><strong>Descriptive analytics</strong> describes historical trends or <em>what</em> happened. Reporting dashboards, business intelligence tools, and services like Google Analytics are almost entirely descriptive.</li>
+<li><strong>Diagnostic analytics</strong> explains <em>why</em> something happened, digging into the causes behind a trend that descriptive analytics only shows you.</li>
+<li><strong>Predictive analytics</strong> estimates what <em>will</em> happen in the future, based on patterns in historical data.</li>
+<li><strong>Prescriptive analytics</strong> recommends the best next <em>action</em> or decision to take, given a predicted outcome.</li>
+</ul>
+<p>Let’s consider a simple example to make the distinction more concrete. Imagine tracking a product’s yearly sales. Descriptive analytics plots the historical sales curve. Diagnostic analytics explains why sales dropped two years ago (a competitor launched a similar, cheaper product). Predictive analytics forecasts that, on the current trajectory, sales will keep declining next year. Prescriptive analytics recommends a concrete intervention (e.g., a price adjustment or a product redesign) to reverse that trend.</p>
+<div id="fig-analytics-types" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Three stacked line charts sharing the same two series (blue and grey) across time points t-15 through t or t+1. Top panel, titled 'Descriptive analytics describes the historic trends', ends at t. Middle panel, titled 'Predictive analytics estimates the future trend', extends both series one period further to t+1, continuing their decline. Bottom panel, titled 'Prescriptive analytics tries to reverse this trend', is identical except the grey series ticks upward at t+1 instead of continuing to decline.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-analytics-types-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../images/ch01-fig-analytics-types.png" class="img-fluid figure-img" alt="Three stacked line charts sharing the same two series (blue and grey) across time points t-15 through t or t+1. Top panel, titled 'Descriptive analytics describes the historic trends', ends at t. Middle panel, titled 'Predictive analytics estimates the future trend', extends both series one period further to t+1, continuing their decline. Bottom panel, titled 'Prescriptive analytics tries to reverse this trend', is identical except the grey series ticks upward at t+1 instead of continuing to decline.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-analytics-types-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.3: Sales trend of two products across three analytics stages. Top: descriptive analytics plots the historical trend through the present (t). Middle: predictive analytics extends that trend one period into the future (t+1), forecasting a continued decline for both products. Bottom: prescriptive analytics shows the outcome of an prescriptive action: one product’s trend (grey line) is reversed at t+1, turning the forecasted decline back upward.
+</figcaption>
+</figure>
+</div>
+<p>A slightly more elaborate version of the same idea: a B2C e-commerce platform wants to optimize its pricing strategy. Descriptive analytics tells it how prices and sales have historically moved together. Diagnostic analytics uncovers why prices had an impact on sales in the past (e.g., perhaps a past price cut drove a spike in demand). Predictive analytics forecasts how a proposed price change would affect future sales. Prescriptive analytics goes one step further and recommends the actual pricing strategy (e.g., dynamic pricing, product bundling) that maximizes profit given that forecast.</p>
+<p>These four types are also hierarchical in complexity and organizational maturity: most organizations start with descriptive analytics, move into predictive analytics as their data and modeling capabilities mature, and only later exploit prescriptive analytics — the analytics equivalent of asking not just “what will happen,” but “what should I do about it,” using optimization, simulation, and decision modeling techniques <span class="citation" data-cites="delen2018research">(<a href="#ref-delen2018research" role="doc-biblioref">Delen and Ram 2018</a>)</span>. In practice the boundaries blur: an organization can be firmly in descriptive-analytics territory for most of its reporting while already piloting predictive models in one specific area.</p>
+<div id="fig-taxonomy" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A curve rising from bottom-left to top-right, with four points marked along it: Descriptive ('What happened?'), Diagnostic ('Why did it happen?'), Predictive ('What will happen?'), and Prescriptive ('What should we do?'), showing both computational sophistication and business value increasing together.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-taxonomy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../images/ch01-fig-taxonomy.png" class="img-fluid figure-img" alt="A curve rising from bottom-left to top-right, with four points marked along it: Descriptive ('What happened?'), Diagnostic ('Why did it happen?'), Predictive ('What will happen?'), and Prescriptive ('What should we do?'), showing both computational sophistication and business value increasing together.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-taxonomy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.4: The analytics maturity ladder: descriptive, diagnostic, predictive, and prescriptive analytics plotted against computational sophistication and business value, each paired with the question it answers.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="ai-machine-learning-and-data-analytics" class="level3" data-number="1.2.2">
+<h3 data-number="1.2.2" class="anchored" data-anchor-id="ai-machine-learning-and-data-analytics"><span class="header-section-number">1.2.2</span> AI, machine learning, and data analytics</h3>
+<p>These three terms are related but not identical:</p>
+<ul>
+<li><strong>Artificial intelligence (AI)</strong> is the broad field of computer science dedicated to solving problems that would otherwise require human intelligence.</li>
+<li><strong>Machine learning</strong> is a subfield of AI: the study of algorithms that build a mathematical model from sample (training) data in order to make predictions or decisions, without being explicitly programmed for the task. Much like a person improves at an instrument through repeated practice, a machine learning model improves its predictions as it’s given more training data.</li>
+<li><strong>Data analytics</strong> uses big data and mathematical models (often, but not exclusively, machine learning models) to explain or predict a business outcome and support (and preferably improve) decision-making.</li>
+</ul>
+<p>Within that space, <strong>predictive analytics</strong> deserves a closer look, since much of this book is about building predictive models. It has been defined as “the process by which a model is created or chosen to try to best predict the probability of an outcome” <span class="citation" data-cites="geisser1993predictive">(<a href="#ref-geisser1993predictive" role="doc-biblioref">Geisser 1993</a>)</span> and, more generally, as “the process of developing a mathematical model that generates an accurate prediction” <span class="citation" data-cites="kuhn2013applied">(<a href="#ref-kuhn2013applied" role="doc-biblioref">Kuhn and Johnson 2013</a>)</span>. In recent years predictive analytics, data mining, and machine learning have been used almost interchangeably, but if you want a precise distinction: predictive analytics is about predicting the <em>future</em>, while machine learning is about predicting <em>unseen data</em> more generally (which is often, but not always, in the future). Under that reading, predictive analytics is a subfield of machine learning, even though the underlying algorithms are frequently identical only the setup differs.</p>
+</section>
+<section id="machine-learning-vs.-statistics" class="level3" data-number="1.2.3">
+<h3 data-number="1.2.3" class="anchored" data-anchor-id="machine-learning-vs.-statistics"><span class="header-section-number">1.2.3</span> Machine learning vs.&nbsp;statistics</h3>
+<p>It’s tempting to think that you don’t need to know statistics to do machine learning. That’s not quite right, since machine learning builds on statistical foundations. The difference between them matters for how you’ll approach modeling problems throughout this book.</p>
+<ul>
+<li><strong>Machine learning</strong> is interested in maximizing prediction accuracy (or, equivalently, minimizing error) on unseen data. It is generally <em>not</em> interested in explaining <em>why</em> something happens. Although interpretable machine learning is an active research area <span class="citation" data-cites="DeBock2024">(<a href="#ref-DeBock2024" role="doc-biblioref">Bock et al. 2024</a>)</span>, the objective function being optimized is still accuracy.</li>
+<li><strong>Statistics</strong>, by contrast, is often more concerned with the <em>explanatory power</em> of a model: how do the independent variables influence the dependent variable, and by how much? This goal is rather <em>causal analysis</em> rather than pure prediction.</li>
+</ul>
+<p>This distinction between prediction and causal analysis has practical consequences for how you build and evaluate a model. Take customer churn as a running example: a bank might build a model to <em>predict</em> which customers are about to leave, or a model to <em>explain</em> what actually <em>causes</em> customers to leave in the first place. Same data, sometimes even the same techniques, but the goal changes what you should worry about, along at least three dimensions:</p>
+<ol type="1">
+<li><strong>Omitted variables.</strong> If you’re <em>explaining</em> churn, leaving out a variable that both drives churn and correlates with a variable already in your model will distort your other coefficients. For example, you might conclude that high monthly charges cause churn, when really both are driven by something you failed to include, like contract type. If you’re <em>predicting</em> churn, that same omission only matters if adding the missing variable would have made your predictions more accurate. A distorted coefficient is irrelevant if you were never trying to isolate one variable’s true effect to begin with.</li>
+<li><strong>Accuracy.</strong> A <em>causal</em> churn model can have fairly low explanatory power and still be useful. Even if it only accounts for a small share of the variation in churn, you can still say with confidence that a specific driver (e.g., a recent price change) has a genuine effect, especially with a large enough sample. A <em>predictive</em> churn model doesn’t get that amount of slack: if it can’t accurately flag which customers are actually about to leave, it’s useless for prioritizing retention offers, no matter how large the training data was.</li>
+<li><strong>Multicollinearity.</strong> Suppose tenure and number of products owned are highly correlated across your customers. For a <em>causal</em> model, that’s a real problem since it becomes hard to say how much of the churn effect is really due to tenure vs product count, since the two are so intertwined. For a <em>predictive</em> model, that ambiguity barely matters: as long as the correlated variables jointly improve how well you flag at-risk customers, you don’t need to cleanly separate out each one’s individual contribution. We’ll return to multicollinearity once we dive into data preprocessing later in this book.</li>
+</ol>
+</section>
+<section id="big-data-and-generative-ai" class="level3" data-number="1.2.4">
+<h3 data-number="1.2.4" class="anchored" data-anchor-id="big-data-and-generative-ai"><span class="header-section-number">1.2.4</span> Big data and generative AI</h3>
+<p>Two developments are worth calling out explicitly, since they shape almost everything else in this field.</p>
+<p><strong>Big data</strong> is usually characterized by four Vs: <strong>volume</strong> (the total amount of data), <strong>velocity</strong> (how fast the data is generated and needs to be processed), <strong>variety</strong> (how many different forms the data takes, like structured, text, image, or network data), and <strong>veracity</strong> (how uncertain or noisy the data is, especially when it comes from many different, unchecked sources). In this book, we propose adding a fifth V: <strong>value</strong>. We see this as a one of the core Vs rather than an optional add-on: data that doesn’t create value for a business, in any of its processes, simply isn’t worth collecting, storing, or analyzing in the first place. Extracting that value is arguably the point of this entire book. Most routine business activity now generates data that can be stored, visualized, and analyzed, and as storage and compute keep getting cheaper, previously uneconomical analyses now become viable and create value.</p>
+<div id="fig-bigdata" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Five core elements arranged around the concepts of 'Big Data': Volume (amount), Velocity (speed), Variety (forms), Veracity (uncertainty), and Value (impact), with Value added as a distinct element.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-bigdata-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../images/ch01-fig-bigdata-4vs.png" class="img-fluid figure-img" alt="Five core elements arranged around the concepts of 'Big Data': Volume (amount), Velocity (speed), Variety (forms), Veracity (uncertainty), and Value (impact), with Value added as a distinct element.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bigdata-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.5: The 5 Vs of big data: volume, velocity, variety, veracity, and value — the impact on your firm.
+</figcaption>
+</figure>
+</div>
+<p><strong>Generative AI</strong> has pushed analytics from <em>describing and predicting</em> into <em>responding and creating</em>. Generative models produce text, images, audio, or video from a user-supplied prompt, after being trained on very large amounts of data. Whereas these models can respond without supplying the prompt without any training data, under the hood they’re still built on a predictive learning task: a large language model is, at its core, repeatedly predicting “given this context, what’s the most likely next word?”; an image diffusion model is repeatedly predicting “given this noisy image, what does a slightly less noisy version look like?” In this book, you should use LLMs as a <em>learning aid</em>. For example, as a way to generate extra practice exercises once you already understand the underlying concept. Don’t use them as a substitute for understanding the material yourself, since a tool that merely reproduces patterns it has seen before is a poor foundation on its own.</p>
+</section>
+<section id="what-makes-a-good-analytical-model" class="level3" data-number="1.2.5">
+<h3 data-number="1.2.5" class="anchored" data-anchor-id="what-makes-a-good-analytical-model"><span class="header-section-number">1.2.5</span> What makes a good analytical model</h3>
+<p>Not every model that achieves good accuracy on a test set is actually a <em>good</em> model for the business. Five requirements tend to come up again and again <span class="citation" data-cites="Baesens2014">(<a href="#ref-Baesens2014" role="doc-biblioref">Baesens 2014</a>)</span>:</p>
+<ul>
+<li><strong>Relevance.</strong> Does the model actually solve the business problem it was built for? A telecom’s data science team might build a churn model that flags customers at-risk six months before they leave only to discover the retention budget can only fund targeting customers in their final 30 days. The model is accurate but irrelevant, because nobody agreed on the decision it actually needed to support before anyone started building it.</li>
+<li><strong>Performance.</strong> Does the model generalize well to new, unseen cases and not just the data it was trained on? A credit-scoring model might reach 95% accuracy on the applicants it was trained on, and then barely beat a coin flip on next month’s applicants. This concept is called <em>overfitting</em>: the model memorized its training data instead of learning a pattern that actually holds up. What “good performance” means varies by problem type (discrimination power for classification, cluster homogeneity for clustering). We’ll cover the relevant metrics in the chapter on model evaluation.</li>
+<li><strong>Interpretability and justifiability.</strong> Interpretability means you can understand the patterns the model has captured; justifiability means those patterns are consistent with prior business knowledge and intuition <span class="citation" data-cites="martens2011performance">(<a href="#ref-martens2011performance" role="doc-biblioref">Martens et al. 2011</a>)</span>. Amazon famously scrapped an internal AI recruiting tool after discovering it had taught itself to downgrade résumés containing words like “women’s” (e.g., “women’s chess club captain”). This is a pattern that helped predict who’d historically been hired, but one no HR department could ever justify using for obvious reasons.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> High-performing models (e.g., neural networks) are often black boxes; simpler, transparent models trade some performance for interpretability, and how much that trade-off matters depends on the setting. For example, hiring and credit decisions usually demand interpretable models, while a spam filter can happily stay a black box. However, thorough feature engineering and careful model evaluation can often produce interpretable models that are almost as accurate as black-box alternatives, so the trade-off isn’t always inevitable.</li>
+<li><strong>Operational efficiency.</strong> How much effort does it take to collect the data, prepare it, evaluate the model, put it into production and afterward, to monitor it, backtest it, and re-estimate it as conditions change? For example, a fraud-detection model that takes three days to score a transaction is worthless no matter how accurate it is, since the decision to approve or block a payment has to happen in milliseconds.</li>
+<li><strong>Regulatory compliance.</strong> Especially for models using personal or sensitive data, does the model comply with data protection and AI regulation, like GDPR, the EU AI Act, or sector-specific rules? For example, a lending model that never uses race as an input can still be found discriminatory if it leans heavily on a variable like zip code that correlates strongly with it. In sum, following the letter of the law isn’t enough if the outcome still discriminates in practice.</li>
+</ul>
+</section>
+<section id="data" class="level3" data-number="1.2.6">
+<h3 data-number="1.2.6" class="anchored" data-anchor-id="data"><span class="header-section-number">1.2.6</span> Data</h3>
+<section id="terminology-and-structure" class="level4" data-number="1.2.6.1">
+<h4 data-number="1.2.6.1" class="anchored" data-anchor-id="terminology-and-structure"><span class="header-section-number">1.2.6.1</span> Terminology and structure</h4>
+<p>Before working with data hands-on in the next chapters, it helps to fix some vocabulary about a data set that you’ll see used more or less interchangeably throughout this book and elsewhere:</p>
+<ul>
+<li><strong>Independent variables</strong>: also called features, predictors, inputs, attributes, or descriptors. These are the variables you use to predict something.</li>
+<li><strong>Dependent variable</strong>: also called the target, outcome, output, response, or (in classification) the label or class. This is the thing you’re trying to predict.</li>
+<li><strong>Data point</strong>: a single observation, instance, or record.</li>
+<li><strong>Modeling</strong>: also called model building, or training.</li>
+<li><strong>Prediction</strong>: also called estimation, or inference.</li>
+</ul>
+<p>Data itself comes in a few standard shapes:</p>
+<ul>
+<li><strong>Cross-sectional data</strong> captures many units at a single point in time: one row per observation, useful for estimating a model that applies at “this moment.”</li>
+<li><strong>Time series data</strong> tracks a single variable over time at regular intervals: rainfall, stock prices, sales, energy prices.</li>
+<li><strong>Panel data</strong> (also called longitudinal data) combines both: repeated observations of the same units (households, products, firms) across repeated time periods.</li>
+</ul>
+<p>Regardless of which of these shapes your data takes, how you <em>arrange</em> it also matters. <strong>Tidy data</strong> <span class="citation" data-cites="wickham2014tidy">(<a href="#ref-wickham2014tidy" role="doc-biblioref">Wickham 2014</a>)</span> is the standard way to structure a dataset so that later analysis (descriptive statistics, visualizations, further processing) is easy: each variable forms a column, each observation forms a row, and each type of observational unit forms its own table. A “messy” table with one column per store and one row per year, versus a “tidy” table with one row per store-year combination, contain the same information — but only one of them is easy to filter, aggregate, and model. We’ll come back to tidying data concretely once we start working with <code>pandas</code>.</p>
+<p>Be aware that all data is tabular! Text, images, audio, and networks are increasingly common data sources. They require dedicated modeling approaches, though generative AI has made working with some of them (especially text and images) far more approachable than it used to be. And no dataset, tabular or not, arrives clean: missing values, outliers, and messy relationships between variables are the norm, which is exactly why data preparation and preprocessing gets its own chapter later in this book.</p>
+</section>
+<section id="data-samples-are-always-biased" class="level4" data-number="1.2.6.2">
+<h4 data-number="1.2.6.2" class="anchored" data-anchor-id="data-samples-are-always-biased"><span class="header-section-number">1.2.6.2</span> Data samples are always biased</h4>
+<p>Every data sample you work with is biased in some way, and it’s worth internalizing this before you trust a model’s output. The classic illustration in this case is <strong>survivorship bias</strong>. In WWII engineers were studying where returning bomber aircrafts had been hit in order to know where to add armor. The natural instinct is to reinforce the areas with the most bullet holes. However, those planes <em>made it back</em>! The planes that didn’t survive were hit somewhere else entirely, and that data was never collected. The correct conclusion was the opposite of the intuitive one: reinforce the spots with <em>no</em> damage on the survivors, since those are the hits that bring a plane down.</p>
+<div id="fig-survivorship" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A World War II bomber aircraft seen from above, covered in red dots marking a hypothetical hit pattern concentrated on the wings, tail, and fuselage, with the engines and cockpit conspicuously free of dots.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-survivorship-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../images/ch01-fig-survivorship-bias.png" class="img-fluid figure-img" alt="A World War II bomber aircraft seen from above, covered in red dots marking a hypothetical hit pattern concentrated on the wings, tail, and fuselage, with the engines and cockpit conspicuously free of dots.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-survivorship-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.6: WWII bomber survivorship bias: hypothetical damage pattern on a returning aircraft. The areas <em>without</em> red dots are the ones that actually bring a plane down, since planes hit there never made it back. Source: Martin Grandjean, McGeddon, and the US Air Force, licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.
+</figcaption>
+</figure>
+</div>
+<p>The business analogy is straightforward. If you build a model of “what makes a store successful” using only data from your current top-performing stores, you’ll miss out on the factors that made other locations fail and your conclusions will be biased toward the survivors. Because any sample is collected at a particular point in time, under a particular strategy and economic climate, it’s worth asking not just “is this sample biased,” but “biased in what way, and does that bias matter for the decision I’m about to make?”. For example, a model trained on pre-COVID-19 retail data might be biased toward in-store shopping behavior, and a model trained on 2020-2021 data might be biased toward online shopping behavior. If you use either of those models to make decisions about the post-pandemic retail landscape, you’ll likely make mistakes.</p>
+</section>
+</section>
+<section id="supervised-and-unsupervised-learning" class="level3" data-number="1.2.7">
+<h3 data-number="1.2.7" class="anchored" data-anchor-id="supervised-and-unsupervised-learning"><span class="header-section-number">1.2.7</span> Supervised and unsupervised learning</h3>
+<p>Machine learning methods are split into two broad families, depending on whether you have a dependent variable to predict.</p>
+<p><strong>Supervised learning</strong> aims to approximate reality with a function: given inputs, infer a reliable pattern that maps them onto a known output. This inferred function is designed in a way that generalizes to new, unseen cases. This requires a response variable, and splits further by the type of that response:</p>
+<ul>
+<li><strong>Classification</strong>, for a categorical or discrete response (binary, multiclass, multilabel, or ordinal).</li>
+<li><strong>Regression</strong>, for a continuous or numerical response (predicting either an absolute value or a change (delta) in value).</li>
+</ul>
+<p>Supervised models are also commonly grouped by how they represent the underlying relationship:</p>
+<ul>
+<li><strong>Parametric models</strong> first assume a functional form for the relationship (e.g., linear), then estimate a fixed number of parameters for that form. This is much easier to estimate, but performs poorly if the assumed functional form doesn’t match reality.</li>
+<li><strong>Nonparametric models</strong> make no such assumption and let the data determine the shape of the relationship. This is far more flexible and can be more accurate, but typically needs substantially more data. The danger is that it can end up fitting noise rather than signal (“too accurate” on the training data, at the expense of generalization on the test data).</li>
+</ul>
+<p><strong>Unsupervised learning</strong> has no dependent variable, only independent variables, and is correspondingly more subjective to evaluate. Its goals include:</p>
+<ul>
+<li><strong>Clustering</strong>: finding homogeneous subgroups in the data.</li>
+<li><strong>Dimensionality reduction</strong>: compressing many variables down to two or three for visualization.</li>
+<li><strong>Association rule mining</strong>: finding “if antecedent, then consequent” rules that describe co-occurring patterns (e.g., market basket analysis).</li>
+<li><strong>Anomaly detection</strong>: finding outliers or anomalies that don’t fit the rest of the data.</li>
+</ul>
+</section>
+</section>
+<section id="the-data-analytics-process-crisp-dm" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="the-data-analytics-process-crisp-dm"><span class="header-section-number">1.3</span> The data analytics process: CRISP-DM</h2>
+<p>Producing a reliable, robust analytical model isn’t something you improvise — practitioners follow a fixed framework that lets a project be carefully defined, organized, and structured. The two best-known frameworks are KDD or Knowledge Discovery in Databases <span class="citation" data-cites="fayyad1996from">(<a href="#ref-fayyad1996from" role="doc-biblioref">Fayyad et al. 1996</a>)</span> and, more widely used today, <strong>CRISP-DM</strong> or the Cross-Industry Standard Process for Data Mining <span class="citation" data-cites="chapman2000crisp">(<a href="#ref-chapman2000crisp" role="doc-biblioref">Chapman et al. 2000</a>)</span>.</p>
+<div id="fig-crispdm" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A circular diagram with six boxes — Business Understanding, Data Understanding, Data Preparation, Modeling, Evaluation, and Deployment — arranged around a central 'Data' hub, connected by arrows showing the typical sequence between adjacent phases, with an outer arrow looping from Deployment back to Business Understanding.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-crispdm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../images/ch01-fig-crispdm.png" class="img-fluid figure-img" alt="A circular diagram with six boxes — Business Understanding, Data Understanding, Data Preparation, Modeling, Evaluation, and Deployment — arranged around a central 'Data' hub, connected by arrows showing the typical sequence between adjacent phases, with an outer arrow looping from Deployment back to Business Understanding.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-crispdm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.7: The CRISP-DM process: business understanding, data understanding, data preparation, modeling, evaluation, and deployment, cycling back around a central data store.
+</figcaption>
+</figure>
+</div>
+<p>CRISP-DM organizes an analytics project into six phases:</p>
+<ol type="1">
+<li><strong>Business understanding</strong>: determine the business objectives and translate them into data mining goals.</li>
+<li><strong>Data understanding</strong>: describe and explore the available data, and identify data quality issues.</li>
+<li><strong>Data preparation</strong>: select, clean, construct, aggregate, and integrate data into a single basetable containing every variable you’ll model with.</li>
+<li><strong>Modeling</strong>: set up a proper test design, select an appropriate modeling technique, and build and interpret the model.</li>
+<li><strong>Evaluation</strong>: evaluate the model using appropriate performance metrics.</li>
+<li><strong>Deployment</strong>: put the model into production.</li>
+</ol>
+<p>CRISP-DM is considered the gold standard process because it’s well documented, widely adopted, and more clearly organized than competing processes. Two things are worth knowing before you start your own first project. First, data understanding and preparation are consistently the most time-consuming steps: often cited as taking up to 80% of total project time! Second, the process is <em>iterative</em>, not linear. You will regularly find yourself going back a step (or several) once something you learn in modeling changes what you thought you understood about the data.</p>
+<p>This same six-phase structure maps directly onto how the rest of this book is organized: the coming chapters on data understanding, data preparation, model evaluation, and modeling each correspond to one phase of CRISP-DM, applied in a business setting.</p>
+</section>
+<section id="where-data-analytics-shows-up" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="where-data-analytics-shows-up"><span class="header-section-number">1.4</span> Where data analytics shows up</h2>
+<p>Data analytics is genuinely everywhere in modern business, not just in usual tech companies, and well beyond the handful of examples already mentioned in this chapter’s opening. A streaming platform’s next-series recommendations, the dynamically adjusted fare prices on a ride-hailing app, a spam filter quietly sorting your inbox, an automatic reorder triggered the moment a warehouse’s stock dips below a threshold, a warning signal when the condition of an industrial asset deteriorates: all of these are analytics applications running in the background of ordinary business operations.</p>
+<p>More systematically, applications span nearly every business function:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Marketing</th>
+<th>Finance</th>
+<th>Manufacturing &amp; Operations</th>
+<th>Supply Chain &amp; Logistics</th>
+<th>Public Sector</th>
+<th>Digital &amp; Other</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Response and uplift modeling</td>
+<td>Credit scoring</td>
+<td>Predictive maintenance</td>
+<td>Demand forecasting</td>
+<td>Tax fraud detection</td>
+<td>Web and social media analytics</td>
+</tr>
+<tr class="even">
+<td>Customer churn</td>
+<td>Fraud detection</td>
+<td>Condition monitoring</td>
+<td>Route and network optimization</td>
+<td>Social benefit fraud detection</td>
+<td>A/B and multivariate testing</td>
+</tr>
+<tr class="odd">
+<td>Customer segmentation</td>
+<td>Market risk modeling</td>
+<td>Spare-parts inventory optimization</td>
+<td>Warehouse and inventory management</td>
+<td>Money laundering detection</td>
+<td>Misinformation and rumor detection</td>
+</tr>
+<tr class="even">
+<td>Market basket analysis</td>
+<td>Operational risk modeling</td>
+<td>Personnel and shift scheduling</td>
+<td></td>
+<td>Security and terrorism risk detection</td>
+<td>Hospitality and tourism analytics</td>
+</tr>
+<tr class="odd">
+<td>Recommender systems</td>
+<td></td>
+<td>Quality control and defect detection</td>
+<td></td>
+<td></td>
+<td>HR analytics</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>Healthcare analytics</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>Learning analytics</td>
+</tr>
+</tbody>
+</table>
+<p>Two applications are worth walking through in a bit more detail, since they recur throughout this book.</p>
+<p><strong>Customer churn prediction.</strong> Analytical customer relationship management (CRM) uses modeling techniques on customer characteristics and behavior to support cost-effective, targeted marketing for acquisition modeling, up-sell and cross-sell modeling, customer lifetime value estimation, and churn modeling. Churn, defined as the loss of a customer, matters because acquiring a new customer typically costs five to six times more than retaining an existing one <span class="citation" data-cites="Bhattacharya1998">(<a href="#ref-Bhattacharya1998" role="doc-biblioref">Bhattacharya 1998</a>)</span>, and established customers tend to be more profitable and more likely to refer others <span class="citation" data-cites="VandenPoel2004">(<a href="#ref-VandenPoel2004" role="doc-biblioref">Poel and Larivière 2004</a>)</span>. Churn prediction models assign each customer an individual propensity to churn, so the company can proactively target the highest-risk customers with a retention offer <em>before</em> they leave, rather than reactively after the fact. Useful features typically include demographic variables, relationship variables (tenure, number of products), and RFM variables (Recency, Frequency, and Monetary value) of past purchases. Because comprehensibility lets business experts sanity-check a churn model and understand what’s actually driving churn, logistic regression is often treated as the gold standard here: easy to interpret, reasonably accurate, and well understood in both research and practice.</p>
+<p><strong>Credit risk modeling.</strong> Credit scoring is concerned with assessing financial risk and informing lending decisions: a credit score is a model-based estimate of the probability that a borrower will default and fail to meet their financial obligations <span class="citation" data-cites="Lessmann2015">(<a href="#ref-Lessmann2015" role="doc-biblioref">Lessmann et al. 2015</a>)</span>. Consumer loans and mortgages often exceed corporate lending in total volume at the country level, which is exactly why credit scoring has been called “one of the most successful applications of statistics and OR in industry” <span class="citation" data-cites="Crook2007">(<a href="#ref-Crook2007" role="doc-biblioref">Crook et al. 2007</a>)</span>. It’s also one of the most mature and heavily benchmarked applications of predictive analytics in business. Despite a steady stream of more complex algorithms, logistic regression has remained a surprisingly hard baseline to beat in practice <span class="citation" data-cites="Lessmann2015">(<a href="#ref-Lessmann2015" role="doc-biblioref">Lessmann et al. 2015</a>)</span>. There are two main types of credit scoring models: application scorecards and behavioral scorecards. <em>Application scorecards</em> score new credit applications for creditworthiness, typically built from two snapshots; application data and credit bureau data. Both snapshots are taken at loan origination matched against whether the applicant actually defaulted 12 or 18 months later. <em>Behavioral scorecards</em> go further, scoring the existing customer portfolio using both application data and behavioral trends (account balance movement, delinquency history,credit limit changes), and tend to outperform application scorecards since they have more (and more current) information to work with.</p>
+</section>
+<section id="why-python" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="why-python"><span class="header-section-number">1.5</span> Why Python</h2>
+<p>The data, AI, analytics, and machine learning tooling landscape is enormous. Ranging from off-the-shelf business-intelligence (BI) tools optimized for point-and-click visual analysis on one end, to full programming languages on the other. As a business student, you’ll mostly work with the programming-language end of that spectrum, since it’s what gives you the flexibility to go beyond what an off-the-shelf BI tool can do.</p>
+<p>Among programming languages, Python and R have long been the two dominant choices for data science, but Python has clearly emerged as the winner in recent years when measured by job postings, community size, and package ecosystem maturity. Python wasn’t originally designed as a data science language, but it became the standard one for several reasons:</p>
+<ul>
+<li>its syntax is logical and comparatively easy to learn;</li>
+<li>it’s genuinely general-purpose, useful for everything from short scripts to full enterprise applications;</li>
+<li>its ecosystem includes a handful of foundational packages this book relies on directly (<code>numpy</code>, <code>pandas</code>, <code>matplotlib</code>, <code>scikit-learn</code>, among others);</li>
+<li>and it has an enormous community across Stack Overflow, GitHub, and beyond, so help is rarely far away.</li>
+</ul>
+<p>One more note before you start writing Python yourself: large language models (LLMs) are useful coding <em>assistants</em> for debugging, for explaining unfamiliar code, for generating extra practice exercises, but they are not a substitute for understanding the fundamentals. An LLM doesn’t reason about your code from first principles; it produces output based on patterns it has seen before, and that output is often subtly wrong. The proper order is to learn the basics and write the code yourself first, and use an LLM to accelerate that process second and not the other way around.</p>
+</section>
+<section id="how-this-book-is-organized" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="how-this-book-is-organized"><span class="header-section-number">1.6</span> How this book is organized</h2>
+<p>The chapters that follow mirror the CRISP-DM process introduced above, applied consistently to a single running business case so techniques build on each other instead of feeling like disconnected exercises:</p>
+<ul>
+<li><strong>Python Basics</strong>: the Python fundamentals used throughout the rest of the book.</li>
+<li><strong>Data Understanding</strong>: manipulating, and making sense of raw datasets.</li>
+<li><strong>Data Exploration</strong>: visualizing data to find patterns and relationships and quality issues. In CRISP-DM terms, this is part of the data understanding phase, but we separate it out because it’s a distinct skill set that deserves its own chapter.</li>
+<li><strong>Data Preparation</strong>: cleaning, and transforming data so it’s ready for modeling.</li>
+<li><strong>Model Evaluation</strong>: how to set up a fair experiment and measure whether a model is any good, <em>before</em> worrying about which model to use.</li>
+<li><strong>Modeling</strong>: building and interpreting linear and logistic regression models.</li>
+</ul>
+<p>If you’re setting up Python and an IDE for the first time, see the installation guide in the appendix.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-Baesens2014" class="csl-entry" role="listitem">
+Baesens, Bart. 2014. <em>Analytics in a Big Data World: The Essential Guide to Data Science and Its Applications</em>. Wiley. <a href="https://doi.org/10.1002/9781119204183">https://doi.org/10.1002/9781119204183</a>.
+</div>
+<div id="ref-Bhattacharya1998" class="csl-entry" role="listitem">
+Bhattacharya, C. B. 1998. <span>“When Customers Are Members: Customer Retention in Paid Membership Contexts.”</span> <em>Journal of the Academy of Marketing Science 1998 26:1</em> 26: 31–44. <a href="https://doi.org/10.1177/0092070398261004">https://doi.org/10.1177/0092070398261004</a>.
+</div>
+<div id="ref-DeBock2024" class="csl-entry" role="listitem">
+Bock, Koen W. De, Kristof Coussement, Arno De Caigny, et al. 2024. <span>“Explainable AI for Operational Research: A Defining Framework, Methods, Applications, and a Research Agenda.”</span> <em>European Journal of Operational Research</em> 317 (September): 249–72. <a href="https://doi.org/10.1016/J.EJOR.2023.09.026">https://doi.org/10.1016/J.EJOR.2023.09.026</a>.
+</div>
+<div id="ref-chapman2000crisp" class="csl-entry" role="listitem">
+Chapman, Pete, Julian Clinton, Randy Kerber, et al. 2000. <em><span>CRISP-DM</span> 1.0: Step-by-Step Data Mining Guide</em>. SPSS Inc.
+</div>
+<div id="ref-Crook2007" class="csl-entry" role="listitem">
+Crook, Jonathan N., David B. Edelman, and Lyn C. Thomas. 2007. <span>“Recent Developments in Consumer Credit Risk Assessment.”</span> <em>European Journal of Operational Research</em> 183: 1447–65.
+</div>
+<div id="ref-delen2018research" class="csl-entry" role="listitem">
+Delen, Dursun, and Sudha Ram. 2018. <span>“Research Challenges and Opportunities in Business Analytics.”</span> <em>Journal of Business Analytics</em> 1 (1): 2–12.
+</div>
+<div id="ref-http://data.europa.eu/eli/reg/2016/679/oj" class="csl-entry" role="listitem">
+European Parliament and Council of the European Union. 2016. <em>Regulation (EU) 2016/679 of the European Parliament and of the Council of 27 April 2016 on the Protection of Natural Persons with Regard to the Processing of Personal Data and on the Free Movement of Such Data, and Repealing Directive 95/46/EC (General Data Protection Regulation) (Text with EEA Relevance)</em>. No. 119.
+</div>
+<div id="ref-http://data.europa.eu/eli/reg/2024/1689/oj" class="csl-entry" role="listitem">
+European Parliament and Council of the European Union. 2024. <em>Regulation (EU) 2024/1689 of the European Parliament and of the Council of 13 June 2024 Laying down Harmonised Rules on Artificial Intelligence and Amending Regulations (EC) No 300/2008, (EU) No 167/2013, (EU) No 168/2013, (EU) 2018/858, (EU) 2018/1139 and (EU) 2019/2144 and Directives 2014/90/EU, (EU) 2016/797 and (EU) 2020/1828 (Artificial Intelligence Act) (Text with EEA Relevance)</em>. No. 1689.
+</div>
+<div id="ref-fayyad1996from" class="csl-entry" role="listitem">
+Fayyad, Usama, Gregory Piatetsky-Shapiro, and Padhraic Smyth. 1996. <span>“From Data Mining to Knowledge Discovery in Databases.”</span> <em>AI Magazine</em> 17 (3): 37–54.
+</div>
+<div id="ref-geisser1993predictive" class="csl-entry" role="listitem">
+Geisser, Seymour. 1993. <em>Predictive Inference: An Introduction</em>. Chapman; Hall/CRC.
+</div>
+<div id="ref-hindle2020business" class="csl-entry" role="listitem">
+Hindle, Giles, Martin Kunc, Michael Mortensen, Asil Oztekin, and Richard Vidgen. 2020. <span>“Business Analytics: Defining the Field and Identifying a Research Agenda.”</span> In <em>European Journal of Operational Research</em>, No. 3, vol. 281. Elsevier.
+</div>
+<div id="ref-kuhn2013applied" class="csl-entry" role="listitem">
+Kuhn, Max, and Kjell Johnson. 2013. <em>Applied Predictive Modeling</em>. Springer.
+</div>
+<div id="ref-Lagioia2022" class="csl-entry" role="listitem">
+Lagioia, Francesca, Riccardo Rovatti, and Giovanni Sartor. 2022. <span>“Algorithmic Fairness Through Group Parities? The Case of COMPAS-SAPMOC.”</span> <em>AI &amp; SOCIETY 2022 38:2</em> 38 (April): 459–78. <a href="https://doi.org/10.1007/S00146-022-01441-Y">https://doi.org/10.1007/S00146-022-01441-Y</a>.
+</div>
+<div id="ref-Lessmann2015" class="csl-entry" role="listitem">
+Lessmann, Stefan, Bart Baesens, Hsin Vonn Seow, and Lyn C. Thomas. 2015. <span>“Benchmarking State-of-the-Art Classification Algorithms for Credit Scoring: An Update of Research.”</span> <em>European Journal of Operational Research</em> 247 (November): 124–36. <a href="https://doi.org/10.1016/J.EJOR.2015.05.030">https://doi.org/10.1016/J.EJOR.2015.05.030</a>.
+</div>
+<div id="ref-martens2011performance" class="csl-entry" role="listitem">
+Martens, David, Jan Vanthienen, Wouter Verbeke, and Bart Baesens. 2011. <span>“Performance of Classification Models from a User Perspective.”</span> <em>Decision Support Systems</em> 51 (4): 782–93.
+</div>
+<div id="ref-mortenson2015operational" class="csl-entry" role="listitem">
+Mortenson, Michael J, Neil F Doherty, and Stewart Robinson. 2015. <span>“Operational Research from Taylorism to Terabytes: A Research Agenda for the Analytics Age.”</span> <em>European Journal of Operational Research</em> 241 (3): 583–95.
+</div>
+<div id="ref-VandenPoel2004" class="csl-entry" role="listitem">
+Poel, Dirk Van den, and Bart Larivière. 2004. <span>“Customer Attrition Analysis for Financial Services Using Proportional Hazard Models.”</span> <em>European Journal of Operational Research</em> 157 (August): 196–217. <a href="https://doi.org/10.1016/S0377-2217(03)00069-9">https://doi.org/10.1016/S0377-2217(03)00069-9</a>.
+</div>
+<div id="ref-wickham2014tidy" class="csl-entry" role="listitem">
+Wickham, Hadley. 2014. <span>“Tidy Data.”</span> <em>Journal of Statistical Software</em> 59 (10): 1–23.
+</div>
+</div>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p><a href="https://intuitionlabs.ai/articles/ai-reasoning-math-olympiad-imo">“AI Reasoning Models Achieve Gold-Medal Performance at the International Mathematical Olympiad”</a>, IntuitionLabs, accessed 2026.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Dastin, J. (2018). <a href="https://www.reuters.com/article/world/insight-amazon-scraps-secret-ai-recruiting-tool-that-showed-bias-against-women-idUSKCN1MK08G/">“Amazon scraps secret AI recruiting tool that showed bias against women.”</a> Reuters, October 10, 2018.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../index.html" class="pagination-link" aria-label="Preface">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Preface</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/02-python-basics.html" class="pagination-link" aria-label="Python Basics">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Python Basics</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,1981 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>6&nbsp; Model Evaluation – Introduction to Data Analytics for Business and Economics</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/appendix-installation.html" rel="next">
+<link href="../chapters/05-data-preparation.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-5ccb035bea26c1e21f80f44cf7c27909.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/06-model-evaluation.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Model Evaluation</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Introduction to Data Analytics for Business and Economics</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-python-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Python Basics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-data-understanding.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Understanding</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-data-exploration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Exploration</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-data-preparation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Preparation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/06-model-evaluation.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Model Evaluation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-installation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Installation Guide</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#the-experimental-setup" id="toc-the-experimental-setup" class="nav-link active" data-scroll-target="#the-experimental-setup"><span class="header-section-number">6.1</span> The experimental setup</a>
+  <ul class="collapse">
+  <li><a href="#the-holdout-set-train-and-test" id="toc-the-holdout-set-train-and-test" class="nav-link" data-scroll-target="#the-holdout-set-train-and-test"><span class="header-section-number">6.1.1</span> The holdout set: train and test</a></li>
+  <li><a href="#the-holdout-set-train-validation-and-test" id="toc-the-holdout-set-train-validation-and-test" class="nav-link" data-scroll-target="#the-holdout-set-train-validation-and-test"><span class="header-section-number">6.1.2</span> The holdout set: train, validation, and test</a></li>
+  <li><a href="#cross-validation" id="toc-cross-validation" class="nav-link" data-scroll-target="#cross-validation"><span class="header-section-number">6.1.3</span> Cross-validation</a></li>
+  <li><a href="#hyperparameter-tuning-with-k-fold-cv" id="toc-hyperparameter-tuning-with-k-fold-cv" class="nav-link" data-scroll-target="#hyperparameter-tuning-with-k-fold-cv"><span class="header-section-number">6.1.4</span> Hyperparameter tuning with K-fold CV</a></li>
+  <li><a href="#nested-cross-validation" id="toc-nested-cross-validation" class="nav-link" data-scroll-target="#nested-cross-validation"><span class="header-section-number">6.1.5</span> Nested cross-validation</a></li>
+  <li><a href="#leave-one-out-cross-validation" id="toc-leave-one-out-cross-validation" class="nav-link" data-scroll-target="#leave-one-out-cross-validation"><span class="header-section-number">6.1.6</span> Leave-one-out cross-validation</a></li>
+  <li><a href="#the-bootstrap" id="toc-the-bootstrap" class="nav-link" data-scroll-target="#the-bootstrap"><span class="header-section-number">6.1.7</span> The bootstrap</a></li>
+  <li><a href="#comparing-the-resampling-strategies" id="toc-comparing-the-resampling-strategies" class="nav-link" data-scroll-target="#comparing-the-resampling-strategies"><span class="header-section-number">6.1.8</span> Comparing the resampling strategies</a></li>
+  </ul></li>
+  <li><a href="#data-leakage" id="toc-data-leakage" class="nav-link" data-scroll-target="#data-leakage"><span class="header-section-number">6.2</span> Data leakage</a></li>
+  <li><a href="#the-biasvariance-trade-off" id="toc-the-biasvariance-trade-off" class="nav-link" data-scroll-target="#the-biasvariance-trade-off"><span class="header-section-number">6.3</span> The bias–variance trade-off</a></li>
+  <li><a href="#performance-metrics" id="toc-performance-metrics" class="nav-link" data-scroll-target="#performance-metrics"><span class="header-section-number">6.4</span> Performance metrics</a>
+  <ul class="collapse">
+  <li><a href="#regression-metrics" id="toc-regression-metrics" class="nav-link" data-scroll-target="#regression-metrics"><span class="header-section-number">6.4.1</span> Regression metrics</a></li>
+  <li><a href="#classification-metrics" id="toc-classification-metrics" class="nav-link" data-scroll-target="#classification-metrics"><span class="header-section-number">6.4.2</span> Classification metrics</a></li>
+  </ul></li>
+  <li><a href="#where-we-go-from-here" id="toc-where-we-go-from-here" class="nav-link" data-scroll-target="#where-we-go-from-here"><span class="header-section-number">6.5</span> Where we go from here</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Model Evaluation</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>The previous two chapters turned a raw tables into a clean, model-ready basetable. The obvious next step is to fit a model to it. Before that’s worth doing, though, we need to answer a more basic question: <em>how would we even properly set up an experiment and how would we know if the model is any good?</em></p>
+<p>In CRISP-DM terms this is the <strong>evaluation</strong> phase, and it’s where most predictive modelling projects actually go wrong. The mistakes rarely happen in the modelling itself; they happen in the <strong>experimental setup</strong>, the way the data is split into parts for learning and for testing. Get that wrong and every performance number you report afterwards is fiction and unreliable.</p>
+<p>This chapter covers the two things you need before you can trust a model:</p>
+<ul>
+<li><strong>An experimental setup</strong>: a sampling strategy that produces a fair, unseen sample to measure performance on (holdout, cross-validation, nested cross-validation, the bootstrap), plus the data-leakage traps that quietly break all of them.</li>
+<li><strong>Performance metrics</strong>: how to actually score a model once you have an honest test set, for both regression and classification targets.</li>
+</ul>
+<div id="88d9dc1d" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>RANDOM_STATE <span class="op">=</span> <span class="dv">123</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<section id="the-experimental-setup" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="the-experimental-setup"><span class="header-section-number">6.1</span> The experimental setup</h2>
+<p>The single most important principle in predictive modelling is that a model must be evaluated on <strong>unseen</strong> data. Scoring a model on the same rows it was trained on is a self-fulfilling prophecy: it will look accurate because you’re checking patterns against the exact data those patterns were extracted from. If every elderly customer in the training data happened to churn, the model will “learn” that elderly customers churn, and score perfectly on that training data, whether or not the relationship is real. Only data the model has never touched can tell you whether a learned pattern generalizes well or not.</p>
+<p>The fix is to split the available data into separate parts: one for <em>learning</em> the patterns, another for <em>evaluating</em> them. Several strategies exist for doing that, and the rest of this section works through them.</p>
+<p>We’ll use a compact <strong>churn</strong> basetable with just four predictors: a monetary score, a transaction count, a recency score, and the number of days the customer has been active. This is an RFM plus length-of-relationship feature set, exactly the kind discussed in the previous chapter.</p>
+<div id="013fd3d8" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>basetable <span class="op">=</span> pd.read_csv(<span class="st">"../data/processed/basetable.csv"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Dataset shape: </span><span class="sc">{</span>basetable<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Churn rate: </span><span class="sc">{</span>basetable[<span class="st">'churn'</span>]<span class="sc">.</span>mean()<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>basetable.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Dataset shape: (41739, 5)
+Churn rate: 0.038</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Monetary_score</th>
+<th data-quarto-table-cell-role="th">Total_quantity</th>
+<th data-quarto-table-cell-role="th">recency_score</th>
+<th data-quarto-table-cell-role="th">days_customer</th>
+<th data-quarto-table-cell-role="th">churn</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>12519.0</td>
+<td>715</td>
+<td>16</td>
+<td>15503</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>7315.2</td>
+<td>309</td>
+<td>36</td>
+<td>16964</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>3267.8</td>
+<td>176</td>
+<td>15</td>
+<td>22442</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>1289.0</td>
+<td>74</td>
+<td>21</td>
+<td>16598</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>6789.0</td>
+<td>390</td>
+<td>1</td>
+<td>15137</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="4991fa51" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> basetable.drop(<span class="st">"churn"</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> basetable[<span class="st">"churn"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<section id="the-holdout-set-train-and-test" class="level3" data-number="6.1.1">
+<h3 data-number="6.1.1" class="anchored" data-anchor-id="the-holdout-set-train-and-test"><span class="header-section-number">6.1.1</span> The holdout set: train and test</h3>
+<p>The simplest strategy is the <strong>holdout set</strong>: shuffle the data and split it once into a <strong>training set</strong> to learn from and a <strong>test set</strong> to evaluate on (<a href="#fig-holdout-tt" class="quarto-xref">Figure&nbsp;<span>6.1</span></a>).</p>
+<div id="fig-holdout-tt" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A row of ten blocks, the first six blue and labelled train (60%), the last four orange and labelled test (40%).">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-holdout-tt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../images/ch06-fig-holdout-tt.png" class="img-fluid figure-img" alt="A row of ten blocks, the first six blue and labelled train (60%), the last four orange and labelled test (40%).">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-holdout-tt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.1: A single holdout split: most of the data trains the model, the rest is held back to test it.
+</figcaption>
+</figure>
+</div>
+<p>Two practical points. We use a <strong>60/40 split</strong>: slightly more data in training (more training data generally means a better model) while still leaving a substantial test set. And we set a <strong>random state</strong> (seed) so the “random” sample is reproducible. That is essential while learning and debugging, so everyone gets the same split. <code>stratify=y</code> keeps the churn rate the same in both sets, which matters when the positive class is rare.</p>
+<div id="c0645d75" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    X, y, test_size<span class="op">=</span><span class="fl">0.4</span>, random_state<span class="op">=</span>RANDOM_STATE, stratify<span class="op">=</span>y</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Training set: </span><span class="sc">{</span>X_train<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> rows (</span><span class="sc">{</span>X_train<span class="sc">.</span>shape[<span class="dv">0</span>] <span class="op">/</span> <span class="bu">len</span>(X)<span class="sc">:.0%}</span><span class="ss">)"</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Test set:     </span><span class="sc">{</span>X_test<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> rows (</span><span class="sc">{</span>X_test<span class="sc">.</span>shape[<span class="dv">0</span>] <span class="op">/</span> <span class="bu">len</span>(X)<span class="sc">:.0%}</span><span class="ss">)"</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Churn rate, train: </span><span class="sc">{</span>y_train<span class="sc">.</span>mean()<span class="sc">:.3f}</span><span class="ss">, test: </span><span class="sc">{</span>y_test<span class="sc">.</span>mean()<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Training set: 25043 rows (60%)
+Test set:     16696 rows (40%)
+Churn rate, train: 0.038, test: 0.038</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>A note on the split ratio
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>There is no universal rule for how much data to hold out. This book uses a 60/40 split, but 70/30 and 80/20 are also common, and scikit-learn’s own <code>train_test_split</code> defaults to a 75/25 split when <code>test_size</code> and <code>train_size</code> are both left unspecified. The choice is a direct trade-off, not a fixed convention: a bigger training set gives the model more to learn from and lowers its bias, while a bigger test set gives a less variable, more trustworthy estimate of how well it actually performs <span class="citation" data-cites="james2013introduction">(<a href="#ref-james2013introduction" role="doc-biblioref">James et al. 2013</a>)</span>. With a small or moderately sized dataset, protecting the test-set estimate a bit more, as with a 60/40 split, is a reasonable choice.</p>
+</div>
+</div>
+<p>The holdout set is simple and works well on large samples (roughly 10,000+ rows). Its weakness is that the test-set score depends on <em>which</em> rows happened to land in the test set: a different random split can give a meaningfully different number.</p>
+</section>
+<section id="the-holdout-set-train-validation-and-test" class="level3" data-number="6.1.2">
+<h3 data-number="6.1.2" class="anchored" data-anchor-id="the-holdout-set-train-validation-and-test"><span class="header-section-number">6.1.2</span> The holdout set: train, validation, and test</h3>
+<p>As soon as you compare several models or fine-tune hyperparameter set tings, a plain train/test split isn’t enough. If you evaluate many candidate models on the test set and keep the best, you’ve effectively tuned to that specific test set (also called <em>test-set torturing</em>) and its score is no longer an honest estimate of future performance.</p>
+<p>The fix is a <strong>three-way split</strong> (<a href="#fig-holdout-tvt" class="quarto-xref">Figure&nbsp;<span>6.2</span></a>): a <strong>training set</strong> to fit models, a <strong>validation set</strong> to compare them and pick the winner, and a <strong>test set</strong> that stays untouched until the very end for the best, final, unbiased measurement. We’ll use <strong>60/20/20</strong>. In <code>sklearn</code> this takes two calls to <code>train_test_split</code>: first create the 20% test set, then split the remaining 80% into train (75% of 80% = 60%) and validation (25% of 80% = 20%).</p>
+<div id="fig-holdout-tvt" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A row of ten blocks: the first six blue and labelled train (60%), the next two dark navy and labelled validation (20%), the last two orange and labelled test (20%).">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-holdout-tvt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../images/ch06-fig-holdout-tvt.png" class="img-fluid figure-img" alt="A row of ten blocks: the first six blue and labelled train (60%), the next two dark navy and labelled validation (20%), the last two orange and labelled test (20%).">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-holdout-tvt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.2: A three-way split: the validation set is used to compare models and pick hyperparameters, and only the test set is kept for the final measurement.
+</figcaption>
+</figure>
+</div>
+<div id="303a1e79" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>X_temp, X_test, y_temp, y_test <span class="op">=</span> train_test_split(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    X, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span>RANDOM_STATE, stratify<span class="op">=</span>y</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>X_train, X_val, y_train, y_val <span class="op">=</span> train_test_split(</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    X_temp, y_temp, test_size<span class="op">=</span><span class="fl">0.25</span>, random_state<span class="op">=</span>RANDOM_STATE, stratify<span class="op">=</span>y_temp</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Train: </span><span class="sc">{</span><span class="bu">len</span>(X_train)<span class="sc">}</span><span class="ss">  |  Validation: </span><span class="sc">{</span><span class="bu">len</span>(X_val)<span class="sc">}</span><span class="ss">  |  Test: </span><span class="sc">{</span><span class="bu">len</span>(X_test)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Train: 25043  |  Validation: 8348  |  Test: 8348</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Two things people get wrong with the three-way split
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>All data preparation belongs on the training set.</strong> Bin width, imputation values, scaling statistics, encodings: everything gets <em>fitted</em> from training data only, then applied or <em>transformed</em> unchanged to validation and test. Fitting a scaler or an imputer on the full dataset leaks information about the test rows into the model and makes the model overly optimistic.</p>
+<p><strong>Never merge the validation and test sets.</strong> It’s fine (and recommended) to combine <em>train + validation</em> to refit the final model once the hyperparameter is chosen (albeit not needed if the training set is sufficiently big). The test set stays separate.</p>
+</div>
+</div>
+<p>To make this concrete, let’s tune one hyperparameter of a <strong>K-nearest-neighbours (KNN)</strong> classifier. KNN classifies an observation by finding the <em>K</em> most similar observations in the training data (by Euclidean distance) and taking a majority vote. <em>K</em> is a <strong>hyperparameter</strong>: it controls the model’s behaviour but isn’t estimated from the data the way a regression coefficient is, so we have to choose it ourselves by trying several values.</p>
+<p>Because KNN uses distances, all features must be on the same scale, so we wrap a <code>StandardScaler</code> and the classifier in a <strong>pipeline</strong>, which guarantees the scaler is fit on training data only and the same transformation is reapplied to every other set. We score each <em>K</em> by AUC on the validation set (AUC is covered later in this chapter; for now, read it as “higher is better, 0.5 is random”).</p>
+<div id="3199370a" class="cell" data-execution_count="6">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> KNeighborsClassifier</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> roc_auc_score</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>k_values <span class="op">=</span> [<span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">50</span>]</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>validation_scores <span class="op">=</span> []</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> k <span class="kw">in</span> k_values:</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    pipeline <span class="op">=</span> Pipeline([</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"scaler"</span>, StandardScaler()),</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"classifier"</span>, KNeighborsClassifier(n_neighbors<span class="op">=</span>k)),</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    ])</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    pipeline.fit(X_train, y_train)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    val_probs <span class="op">=</span> pipeline.predict_proba(X_val)[:, <span class="dv">1</span>]</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    validation_scores.append(roc_auc_score(y_val, val_probs))</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"K=</span><span class="sc">{</span>k<span class="sc">:2d}</span><span class="ss">: validation AUC = </span><span class="sc">{</span>validation_scores[<span class="op">-</span><span class="dv">1</span>]<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>plt.plot(k_values, validation_scores, <span class="st">"o-"</span>, color<span class="op">=</span><span class="st">"#2f6faa"</span>)</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Number of neighbours (K)"</span>)</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Validation AUC"</span>)</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"KNN performance vs. K"</span>)</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>plt.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>K= 3: validation AUC = 0.6056
+K= 5: validation AUC = 0.6307
+K=10: validation AUC = 0.6579
+K=15: validation AUC = 0.6783
+K=20: validation AUC = 0.6912
+K=30: validation AUC = 0.7222
+K=50: validation AUC = 0.7377</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06-model-evaluation_files/figure-html/cell-7-output-2.png" width="673" height="377" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Once the best <em>K</em> is identified on the validation set, we combine train + validation, refit the final model on all of it, and touch the test set exactly once:</p>
+<div id="84ca030e" class="cell" data-execution_count="7">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>best_k <span class="op">=</span> k_values[<span class="bu">int</span>(np.argmax(validation_scores))]</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>best_val_score <span class="op">=</span> <span class="bu">max</span>(validation_scores)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>X_train_full <span class="op">=</span> pd.concat([X_train, X_val])</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>y_train_full <span class="op">=</span> pd.concat([y_train, y_val])</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>final_pipeline <span class="op">=</span> Pipeline([</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"scaler"</span>, StandardScaler()),</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"classifier"</span>, KNeighborsClassifier(n_neighbors<span class="op">=</span>best_k)),</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>final_pipeline.fit(X_train_full, y_train_full)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>test_probs <span class="op">=</span> final_pipeline.predict_proba(X_test)[:, <span class="dv">1</span>]</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>test_auc <span class="op">=</span> roc_auc_score(y_test, test_probs)</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Best K = </span><span class="sc">{</span>best_k<span class="sc">}</span><span class="ss">  (validation AUC </span><span class="sc">{</span>best_val_score<span class="sc">:.4f}</span><span class="ss">)"</span>)</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Final test AUC: </span><span class="sc">{</span>test_auc<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Best K = 50  (validation AUC 0.7377)
+Final test AUC: 0.7439</code></pre>
+</div>
+</div>
+<p>The small gap between validation and test AUC is normal. It’s the natural variation between two different random samples of the same data.</p>
+</section>
+<section id="cross-validation" class="level3" data-number="6.1.3">
+<h3 data-number="6.1.3" class="anchored" data-anchor-id="cross-validation"><span class="header-section-number">6.1.3</span> Cross-validation</h3>
+<p>A single train/validation split has the same weakness as a single holdout: the score depends on which rows landed where. <strong>Cross-validation (CV)</strong> averages that variation away. The data is cut into <em>K</em> equally sized <strong>folds</strong>; each fold serves as the test set exactly once while the other <em>K−1</em> folds train the model, giving <em>K</em> scores that get averaged (<a href="#fig-kfold" class="quarto-xref">Figure&nbsp;<span>6.3</span></a>). <strong>10-fold CV</strong> is the most common choice in practice; but <em>K</em> = 5 is also a good compromise between reliable estimates and computation time.</p>
+<div id="fig-kfold" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Five rows of five blocks. In each row a different block is orange (the test fold) and the other four are blue (training data); the orange block steps one position along the diagonal from row to row. A note reads: average the 5 fold scores.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-kfold-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../images/ch06-fig-kfold.png" class="img-fluid figure-img" alt="Five rows of five blocks. In each row a different block is orange (the test fold) and the other four are blue (training data); the orange block steps one position along the diagonal from row to row. A note reads: average the 5 fold scores.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kfold-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.3: K-fold cross-validation: the data is cut into K folds, and each one takes a turn as the test set while the rest train the model.
+</figcaption>
+</figure>
+</div>
+<p><code>sklearn</code>’s <code>cross_validate</code> handles all the splitting, fitting, and scoring internally. Here we run it with a fixed KNN (<em>K</em> = 50) just to see how much a single split can vary. This is sometimes called the <strong>big outer loop</strong>: cross-validation used only to estimate final performance, with no hyperparameter tuning. We’ll reuse this exact <em>K</em>-fold strategy twice more below: first as the tuning mechanism <em>inside</em> a search, then wrapped <em>around</em> that search. The “Nested cross-validation” section further down names these three roles precisely.</p>
+<div id="9507072c" class="cell" data-execution_count="8">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> cross_validate, KFold</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>pipeline_cv <span class="op">=</span> Pipeline([</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"scaler"</span>, StandardScaler()),</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"classifier"</span>, KNeighborsClassifier(n_neighbors<span class="op">=</span><span class="dv">50</span>)),</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>kfold <span class="op">=</span> KFold(n_splits<span class="op">=</span><span class="dv">10</span>, shuffle<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span>RANDOM_STATE)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>cv_results <span class="op">=</span> cross_validate(pipeline_cv, X, y, cv<span class="op">=</span>kfold, scoring<span class="op">=</span><span class="st">"roc_auc"</span>)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>cv_scores <span class="op">=</span> cv_results[<span class="st">"test_score"</span>]</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>test_auc_cv <span class="op">=</span> cv_scores.mean()</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="dv">4</span>))</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">11</span>), cv_scores, <span class="st">"o-"</span>, color<span class="op">=</span><span class="st">"#2f6faa"</span>)</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>plt.axhline(test_auc_cv, color<span class="op">=</span><span class="st">"#c9772e"</span>, ls<span class="op">=</span><span class="st">"--"</span>, label<span class="op">=</span><span class="ss">f"Mean: </span><span class="sc">{</span>test_auc_cv<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Fold"</span>)</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"AUC"</span>)</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"10-fold cross-validation: AUC varies fold to fold (K=50)"</span>)</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>plt.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"AUC ranges from </span><span class="sc">{</span>cv_scores<span class="sc">.</span><span class="bu">min</span>()<span class="sc">:.4f}</span><span class="ss"> to </span><span class="sc">{</span>cv_scores<span class="sc">.</span><span class="bu">max</span>()<span class="sc">:.4f}</span><span class="ss">; mean </span><span class="sc">{</span>test_auc_cv<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06-model-evaluation_files/figure-html/cell-9-output-1.png" width="747" height="377" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>AUC ranges from 0.7223 to 0.7850; mean 0.7511</code></pre>
+</div>
+</div>
+</section>
+<section id="hyperparameter-tuning-with-k-fold-cv" class="level3" data-number="6.1.4">
+<h3 data-number="6.1.4" class="anchored" data-anchor-id="hyperparameter-tuning-with-k-fold-cv"><span class="header-section-number">6.1.4</span> Hyperparameter tuning with K-fold CV</h3>
+<p>In <code>sklearn</code>, <code>GridSearchCV</code> automates the inner train/validation loop: you give it a <strong>pipeline</strong>, a grid of hyperparameter values, and a CV strategy, and it fits every combination, scores it by cross-validation <em>within the training set</em>, keeps the best, and refits on the full training set, all without ever touching the test set.</p>
+<p>The workflow becomes: split off a test set manually (the <strong>outer loop</strong>), let <code>GridSearchCV</code> do the validation splitting (the <strong>inner loop</strong>), and evaluate once on the test set at the end. This is less code, harder to get wrong, and needs no manual refitting.</p>
+<p>A single holdout split for the outer loop, combined with full <em>K</em>-fold CV for the inner loop, is what’s called the <strong>big inner loop</strong>: cheaper than also repeating the outer split, and the usual choice in engineering and research settings, where getting the hyperparameter right matters more than polishing the final performance number and the test set is already large enough to be reliable.</p>
+<p>Below we tune <em>K</em> for KNN, but this time with <code>GridSearchCV</code>. The scoring metric is AUC, and the inner CV loop is 10-fold. The final test set in the outer loop is already present with the existing 20% holdout, and only touched once at the very end.</p>
+<div id="91560325" class="cell" data-execution_count="9">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> GridSearchCV</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    X, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span>RANDOM_STATE, stratify<span class="op">=</span>y</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>pipeline <span class="op">=</span> Pipeline([</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"scaler"</span>, StandardScaler()),</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"classifier"</span>, KNeighborsClassifier()),</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>param_grid <span class="op">=</span> {<span class="st">"classifier__n_neighbors"</span>: [<span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">50</span>]}</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>grid_search <span class="op">=</span> GridSearchCV(</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    pipeline, param_grid, cv<span class="op">=</span>kfold, scoring<span class="op">=</span><span class="st">"roc_auc"</span>, n_jobs<span class="op">=-</span><span class="dv">1</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>grid_search.fit(X_train, y_train)</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>test_probs_grid <span class="op">=</span> grid_search.predict_proba(X_test)[:, <span class="dv">1</span>]</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>test_auc_grid <span class="op">=</span> roc_auc_score(y_test, test_probs_grid)</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Best K = </span><span class="sc">{</span>grid_search<span class="sc">.</span>best_params_[<span class="st">'classifier__n_neighbors'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Best CV AUC (mean of 10 folds): </span><span class="sc">{</span>grid_search<span class="sc">.</span>best_score_<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Final test AUC: </span><span class="sc">{</span>test_auc_grid<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Best K = 50
+Best CV AUC (mean of 10 folds): 0.7471
+Final test AUC: 0.7439</code></pre>
+</div>
+</div>
+<p><code>n_jobs=-1</code> tells <code>GridSearchCV</code> to use all CPU cores. The folds and hyperparameter settings are independent, so they run in parallel and the search finishes much faster on larger grids.</p>
+</section>
+<section id="nested-cross-validation" class="level3" data-number="6.1.5">
+<h3 data-number="6.1.5" class="anchored" data-anchor-id="nested-cross-validation"><span class="header-section-number">6.1.5</span> Nested cross-validation</h3>
+<p>Above, <code>GridSearchCV</code> gives a robust <em>hyperparameter</em> estimate, but the <em>final performance</em> number still relies on one random train/test split. If that split happened to be favourable, the reported AUC is not representative of the model’s true performance.</p>
+<p>Every example above is built from the same two roles, combined differently:</p>
+<ul>
+<li>The <strong>outer loop</strong> splits the data into training and test folds. It is used to estimate generalization performance: each outer test fold acts as a final, untouched holdout for scoring.</li>
+<li>The <strong>inner loop</strong> runs <em>inside</em> each outer training fold. It is used for hyperparameter tuning and model selection, choosing the best configuration before that configuration is ever scored on the outer test fold.</li>
+</ul>
+<p>Cross-validation can play either role, or both at once, which gives potential setups:</p>
+<ul>
+<li><strong>Big outer loop</strong>: <em>K</em>-fold CV in the outer loop, a simple holdout split for tuning in the inner loop. The plain 10-fold example above is the most simple case of this, where there’s no hyperparameter to tune at all, so only the outer loop is left. Common in business and applied settings, where compute is limited and the model is often already fixed.</li>
+<li><strong>Big inner loop</strong>: a single holdout split in the outer loop, full <em>K</em>-fold CV in the inner loop. This is exactly the <code>GridSearchCV</code> example above. Common in engineering and research settings, where the hyperparameter search matters more than a polished final estimate.</li>
+<li><strong>Fully nested CV</strong>: <em>K</em>-fold CV in <em>both</em> loops. The most rigorous of the three, and the most expensive.</li>
+</ul>
+<p>Hence, <strong>fully nested cross-validation</strong> is the fully nested setup and it removes the last dependence on a single lucky split by running CV at two levels:</p>
+<ul>
+<li>an <strong>outer loop</strong> (e.g., 10-fold CV) that produces 10 independent train/test splits for performance estimation, and</li>
+<li>an <strong>inner loop</strong> (e.g., <code>GridSearchCV</code> with 10-fold CV) that tunes the hyperparameter separately <em>inside each outer training fold</em>.</li>
+</ul>
+<p><a href="#fig-nested" class="quarto-xref">Figure&nbsp;<span>6.4</span></a> draws this fully nested setup with 5-fold CV at both levels instead of 10. This makes it easier to visualize since each fold is larger. However, the logic remains identical for any <em>K</em>.</p>
+<div id="fig-nested" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Top: a row of five blocks, four blue (outer training data) and one orange (outer test fold), with a bracket and arrow pointing down from the training blocks, labelled one of 5 outer folds. Bottom: three of five rows of five blocks showing the inner 5-fold CV run only on that training data, one block per row in dark navy (the inner validation fold) and the rest blue (inner training data), with a note that inner scores are averaged to pick the hyperparameter before a final score on the outer test fold. A subtitle notes the same idea works for any K, e.g. 10-fold.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-nested-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../images/ch06-fig-nested.png" class="img-fluid figure-img" alt="Top: a row of five blocks, four blue (outer training data) and one orange (outer test fold), with a bracket and arrow pointing down from the training blocks, labelled one of 5 outer folds. Bottom: three of five rows of five blocks showing the inner 5-fold CV run only on that training data, one block per row in dark navy (the inner validation fold) and the rest blue (inner training data), with a note that inner scores are averaged to pick the hyperparameter before a final score on the outer test fold. A subtitle notes the same idea works for any K, e.g. 10-fold.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-nested-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.4: Nested cross-validation with 5-fold CV at both levels: one outer fold is shown on top, blue training data and an orange test fold; the arrow zooms into that training data below, where a second, inner 5-fold CV tunes the hyperparameter before the model is scored once on the outer test fold. The same logic applies for any choice of K.
+</figcaption>
+</figure>
+</div>
+<p>The code below uses 10-fold at both levels, matching the rest of the chapter. The result is 10 performance estimates instead of one, which gives a mean, a standard deviation, and a confidence interval, and no single lucky split can distort it. The cost is computation: 10 × 10 × 7 = 700 model fits instead of 70. As a rule of thumb, academic work favours fully nested CV for maximum rigour; industry usually settles for the big inner loop (<code>GridSearchCV</code>, inner CV only) for speed.</p>
+<div id="d39cd90d" class="cell" data-execution_count="10">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>nested_results <span class="op">=</span> cross_validate(grid_search, X, y, cv<span class="op">=</span>kfold, scoring<span class="op">=</span><span class="st">"roc_auc"</span>, n_jobs<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>nested_scores <span class="op">=</span> nested_results[<span class="st">"test_score"</span>]</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>test_auc_nested <span class="op">=</span> nested_scores.mean()</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Mean AUC across 10 outer folds: </span><span class="sc">{</span>test_auc_nested<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Standard deviation: </span><span class="sc">{</span>nested_scores<span class="sc">.</span>std()<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>lo, hi <span class="op">=</span> test_auc_nested <span class="op">-</span> <span class="fl">1.96</span> <span class="op">*</span> nested_scores.std(), test_auc_nested <span class="op">+</span> <span class="fl">1.96</span> <span class="op">*</span> nested_scores.std()</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"95% confidence interval: [</span><span class="sc">{</span>lo<span class="sc">:.4f}</span><span class="ss">, </span><span class="sc">{</span>hi<span class="sc">:.4f}</span><span class="ss">]"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Mean AUC across 10 outer folds: 0.7511
+Standard deviation: 0.0178
+95% confidence interval: [0.7163, 0.7860]</code></pre>
+</div>
+</div>
+<p>Here the nested-CV mean lands almost exactly on the plain outer-loop mean from before, because <em>K</em> = 50 really is the best setting for this data, so tuning inside each fold keeps picking it. On a problem where the best hyperparameter is genuinely unknown (which is often the case with more complex models), the two would diverge, and the nested estimate would be the trustworthy one.</p>
+</section>
+<section id="leave-one-out-cross-validation" class="level3" data-number="6.1.6">
+<h3 data-number="6.1.6" class="anchored" data-anchor-id="leave-one-out-cross-validation"><span class="header-section-number">6.1.6</span> Leave-one-out cross-validation</h3>
+<p><strong>Leave-one-out cross-validation (LOOCV)</strong> is <em>K</em>-fold CV taken to its extreme: <em>K</em> equals the number of rows, so each model trains on all data but one row and is tested on that single left-out row (<a href="#fig-loocv" class="quarto-xref">Figure&nbsp;<span>6.5</span></a>). It uses almost all the data for training every time, but it needs <em>n</em> model fits, which is impractical for anything but tiny datasets, and the per-fold test score (right or wrong on one row) is extremely noisy.</p>
+<div id="fig-loocv" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Five rows of fourteen thin blocks. In each row a single block is orange (the held-out observation) and the rest are blue (training data); the orange block steps along one position per row. A note reads: one model per held-out observation, n models in total.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-loocv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../images/ch06-fig-loocv.png" class="img-fluid figure-img" alt="Five rows of fourteen thin blocks. In each row a single block is orange (the held-out observation) and the rest are blue (training data); the orange block steps along one position per row. A note reads: one model per held-out observation, n models in total.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-loocv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.5: Leave-one-out cross-validation: each model trains on every row but one and is tested on that single held-out observation, for n models in total.
+</figcaption>
+</figure>
+</div>
+<p>We demonstrate it on a 500-row stratified subsample to keep the runtime reasonable:</p>
+<div id="ff74d968" class="cell" data-execution_count="11">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> LeaveOneOut</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>X_small, _, y_small, _ <span class="op">=</span> train_test_split(</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    X, y, train_size<span class="op">=</span><span class="dv">500</span>, random_state<span class="op">=</span>RANDOM_STATE, stratify<span class="op">=</span>y</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>loo <span class="op">=</span> LeaveOneOut()</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>loo_preds, loo_true <span class="op">=</span> [], []</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> train_idx, test_idx <span class="kw">in</span> loo.split(X_small):</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    pipeline_cv.fit(X_small.iloc[train_idx], y_small.iloc[train_idx])</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>    loo_preds.append(pipeline_cv.predict_proba(X_small.iloc[test_idx])[<span class="dv">0</span>, <span class="dv">1</span>])</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>    loo_true.append(y_small.iloc[test_idx].iloc[<span class="dv">0</span>])</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>loocv_auc <span class="op">=</span> roc_auc_score(loo_true, loo_preds)</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"LOOCV AUC (</span><span class="sc">{</span><span class="bu">len</span>(y_small)<span class="sc">}</span><span class="ss"> fits): </span><span class="sc">{</span>loocv_auc<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>LOOCV AUC (500 fits): 0.6287</code></pre>
+</div>
+</div>
+<p>The lower AUC here isn’t LOOCV being “wrong”: it’s the much smaller training set (499 rows, only a handful of churners per fit) doing worse than the models trained on tens of thousands of rows. LOOCV is really only worth it for final evaluation on very small datasets.</p>
+</section>
+<section id="the-bootstrap" class="level3" data-number="6.1.7">
+<h3 data-number="6.1.7" class="anchored" data-anchor-id="the-bootstrap"><span class="header-section-number">6.1.7</span> The bootstrap</h3>
+<p>The <strong>bootstrap</strong> builds a training set by sampling <em>n</em> rows <strong>with replacement</strong> from the data, so some rows appear multiple times and, on average, about 36.8% never get drawn at all. Those unused rows form the <strong>out-of-bag (OOB)</strong> test set. Repeating this many times gives a distribution of scores, much like CV, but with training sets that stay the original size. Note that the bootstrap was mainly designed as a statistical resampling technique, not a true model evaluation method, so it is less common in practice than CV. <code>sklearn</code> has no built-in bootstrap splitter, so we use <code>resample</code>:</p>
+<div id="1db13d50" class="cell" data-execution_count="12">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.utils <span class="im">import</span> resample</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>boot_scores <span class="op">=</span> []</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">50</span>):</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    X_boot, y_boot <span class="op">=</span> resample(X, y, n_samples<span class="op">=</span><span class="bu">len</span>(X), random_state<span class="op">=</span>RANDOM_STATE <span class="op">+</span> i, stratify<span class="op">=</span>y)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    oob_idx <span class="op">=</span> X.index.difference(X_boot.index)</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    pipeline_cv.fit(X_boot, y_boot)</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    oob_probs <span class="op">=</span> pipeline_cv.predict_proba(X.loc[oob_idx])[:, <span class="dv">1</span>]</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    boot_scores.append(roc_auc_score(y.loc[oob_idx], oob_probs))</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>boot_scores <span class="op">=</span> np.array(boot_scores)</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Bootstrap AUC: </span><span class="sc">{</span>boot_scores<span class="sc">.</span>mean()<span class="sc">:.4f}</span><span class="ss"> ± </span><span class="sc">{</span>boot_scores<span class="sc">.</span>std()<span class="sc">:.4f}</span><span class="ss">  (50 iterations)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Bootstrap AUC: 0.7254 ± 0.0114  (50 iterations)</code></pre>
+</div>
+</div>
+</section>
+<section id="comparing-the-resampling-strategies" class="level3" data-number="6.1.8">
+<h3 data-number="6.1.8" class="anchored" data-anchor-id="comparing-the-resampling-strategies"><span class="header-section-number">6.1.8</span> Comparing the resampling strategies</h3>
+<div id="af8fc80e" class="cell" data-execution_count="13">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>methods <span class="op">=</span> [<span class="st">"Holdout</span><span class="ch">\n</span><span class="st">(3-way)"</span>, <span class="st">"Big outer loop</span><span class="ch">\n</span><span class="st">(10-fold)"</span>, <span class="st">"Big inner loop</span><span class="ch">\n</span><span class="st">(GridSearchCV)"</span>, <span class="st">"Fully nested</span><span class="ch">\n</span><span class="st">CV"</span>, <span class="st">"LOOCV</span><span class="ch">\n</span><span class="st">(500)"</span>, <span class="st">"Bootstrap</span><span class="ch">\n</span><span class="st">(50)"</span>]</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>scores <span class="op">=</span> [test_auc, test_auc_cv, test_auc_grid, test_auc_nested, loocv_auc, boot_scores.mean()]</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="dv">4</span>))</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>bars <span class="op">=</span> plt.bar(methods, scores, color<span class="op">=</span><span class="st">"#2f6faa"</span>, alpha<span class="op">=</span><span class="fl">0.85</span>)</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> bar, s <span class="kw">in</span> <span class="bu">zip</span>(bars, scores):</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    plt.text(bar.get_x() <span class="op">+</span> bar.get_width() <span class="op">/</span> <span class="dv">2</span>, bar.get_height() <span class="op">+</span> <span class="fl">0.004</span>, <span class="ss">f"</span><span class="sc">{</span>s<span class="sc">:.3f}</span><span class="ss">"</span>,</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>             ha<span class="op">=</span><span class="st">"center"</span>, fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"AUC"</span>)</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"The resampling strategies give similar answers here"</span>)</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="bu">min</span>(scores) <span class="op">-</span> <span class="fl">0.03</span>, <span class="bu">max</span>(scores) <span class="op">+</span> <span class="fl">0.03</span>)</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>plt.xticks(fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06-model-evaluation_files/figure-html/cell-14-output-1.png" width="857" height="373" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>For this dataset every strategy lands around AUC 0.74 to 0.75, which is itself reassuring: it means the model is stable and not sensitive to how the data is split. In general:</p>
+<ul>
+<li><strong>Fully nested CV</strong> is the most robust approach: an unbiased estimate with a confidence interval.</li>
+<li><strong>The big outer loop</strong> (outer CV only) is a good compromise between speed and reliability, and is the usual choice in business research and applied settings.</li>
+<li><strong>The big inner loop</strong> (<code>GridSearchCV</code>, inner CV only) gives reliable <em>hyperparameter</em> choices at a fraction of the cost, and is the usual industry choice. Works well when the test set is large enough to be trustworthy.</li>
+<li><strong>Single holdout splits</strong> are fastest but least reliable: fine for quick exploration, risky for a final number.</li>
+<li><strong>LOOCV</strong> is computationally impractical except on very small data.</li>
+<li><strong>The bootstrap</strong> is an alternative to CV that keeps training sets at full size. However, it is less common in practice and has no built-in support in <code>sklearn</code>.</li>
+</ul>
+</section>
+</section>
+<section id="data-leakage" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="data-leakage"><span class="header-section-number">6.2</span> Data leakage</h2>
+<p>Almost every broken experimental setup comes down to the same root cause: <strong>data leakage</strong>. This is information from outside the training set (especially information about the target, about the future or the test data) sneaking into the model. The model then “learns” things it could not possibly know at prediction time, its measured performance is inflated, and its performances collapses on genuinely new data <span class="citation" data-cites="kaufman2012leakage">(<a href="#ref-kaufman2012leakage" role="doc-biblioref">Kaufman et al. 2012</a>)</span>.</p>
+<p>Leakage is fundamentally about <strong>legitimacy</strong>: which inputs would actually be available, and accurate, at the moment you’d want a prediction. Three rules capture most of it:</p>
+<ul>
+<li><strong>The target is never an input.</strong> Neither the target itself nor a proxy that’s really a restatement of it.</li>
+<li><strong>No time machine.</strong> Every feature must come from a time period strictly <em>before</em> the target is determined. A feature that’s only recorded <em>after</em> the outcome is leakage even if it looks innocuous.</li>
+<li><strong>No peeking at the test set.</strong> Every preprocessing step (scaling, imputation, encoding, feature selection) must be fit on training data only and applied unchanged to validation and test.</li>
+</ul>
+<p>Some classic examples:</p>
+<ul>
+<li>Predicting whether a prospect will <em>open a bank account</em>, with <strong>account number</strong> as a feature. You only get an account number once the account exists.</li>
+<li>Predicting <em>churn</em>, with an <strong>interviewer ID</strong> as a feature. Interviewers are assigned only <em>after</em> a customer has already been flagged as a likely leaver.</li>
+<li>Identifying prospects from <strong>website keywords</strong> that were actually scraped after those people became customers, so the keywords describe products they’ve already bought.</li>
+<li>Building a <strong>WoE encoding</strong> for payment type in a <em>churn</em> model (Chapter 5) using each payment type’s churn proportion computed across the entire dataset, then splitting into train and test. Every test row’s encoded value already reflects its own category’s churn outcome, information the model isn’t supposed to have before it makes a prediction.</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>A famous mistake: feature selection outside the CV loop
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You have 5,000 rows and 500 variables. To fight the curse of dimensionality, you run variable selection <strong>on the full dataset</strong> to get down to 100 variables, then cross-validate a classifier on those 100.</p>
+<p>This is a classical example of data leakage. The variable selection step already looked or peeked at every row’s label, including the rows that later act as CV test folds, and chose features <em>because</em> they correlated with those labels. Cross-validating afterwards can’t undo that; on the contrary, each fold is now contaminated with information from the test set and the folds were never truly unseen. The key lesson here is that feature selection is part of <em>training</em> and must happen <strong>inside</strong> each CV fold, on the training portion only.</p>
+</div>
+</div>
+<p><strong>How do you detect it?</strong> Performance that looks too good-to-be-true, is also often not true. For example, a churn model with AUC 0.99 should raise suspicion before celebration. A large drop in performance once the model meets a genuinely new batch of data, for example next month’s customers, should also raise suspicion. That drop is leakage showing itself: the model looked great on data it had secretly already seen, and it collapses once it can no longer cheat.</p>
+<p><strong>How do you prevent it?</strong></p>
+<ul>
+<li>Decide on the time separation up front: know exactly which point in time separates “known” from “future” before touching the data and stick to this is in your preprocessing and splitting.</li>
+<li>Run <em>every</em> preprocessing step (scaling, imputation, encoding, feature selection) <em>inside</em> the cross-validation loop, never on the full dataset beforehand. In <code>sklearn</code>, a <code>Pipeline</code> passed to <code>cross_validate</code> or <code>GridSearchCV</code> does exactly this automatically.</li>
+<li>Keep a final holdout test set that is touched exactly once, at the very end, and never used for any other decisions along the way.</li>
+</ul>
+</section>
+<section id="the-biasvariance-trade-off" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="the-biasvariance-trade-off"><span class="header-section-number">6.3</span> The bias–variance trade-off</h2>
+<p>Choosing a model’s <strong>complexity</strong> (e.g., how many features, what polynomial degree, how many parameters) is a balancing act between two kinds of error (<a href="#fig-bias-variance" class="quarto-xref">Figure&nbsp;<span>6.6</span></a>):</p>
+<ul>
+<li><strong>Bias</strong> is error from a model too simple to capture the real relationship. High bias means <strong>underfitting</strong>: consistently wrong, in the same way, on training <em>and</em> test data. Your model is too simple.</li>
+<li><strong>Variance</strong> is how much the fitted model would change if you retrained it on a different sample. High variance means <strong>overfitting</strong>: the model has learned the training data’s noise, so it does great on that data and poorly on anything new. This leads to stellar training performance but disappointing test performance. Your model is overly complex.</li>
+</ul>
+<div id="fig-bias-variance" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Line chart with model complexity on the x-axis and error on the y-axis. A decreasing curve labelled bias squared, an increasing curve labelled variance, a flat dashed line labelled irreducible error, and a U-shaped curve labelled total expected test error that reaches its minimum exactly where the bias squared and variance curves cross, marked as the sweet spot between an underfitting region on the left and an overfitting region on the right.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-bias-variance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../images/ch06-fig-bias-variance.png" class="img-fluid figure-img" alt="Line chart with model complexity on the x-axis and error on the y-axis. A decreasing curve labelled bias squared, an increasing curve labelled variance, a flat dashed line labelled irreducible error, and a U-shaped curve labelled total expected test error that reaches its minimum exactly where the bias squared and variance curves cross, marked as the sweet spot between an underfitting region on the left and an overfitting region on the right.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bias-variance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.6: The bias–variance trade-off: as model complexity increases, bias² falls and variance rises. Total expected test error is their sum plus an irreducible noise floor, and its minimum falls exactly where the bias² and variance curves cross.
+</figcaption>
+</figure>
+</div>
+<p>Expected test error is roughly bias² + variance + an <strong>irreducible</strong> noise floor you can never beat. Lowering one of the first two tends to raise the other, so there’s an optimal complexity where the total error is smallest. Increasing complexity beyond this (more variables, comples transformations trees) makes things <em>worse</em>, not better <span class="citation" data-cites="james2013introduction">(<a href="#ref-james2013introduction" role="doc-biblioref">James et al. 2013</a>)</span>.</p>
+<p>The synthetic example below shows things clearer. We generate data from a known quadratic relationship plus noise, then fit three models of increasing complexity:</p>
+<div id="d5165d84" class="cell" data-execution_count="14">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> PolynomialFeatures</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> r2_score</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>np.random.seed(RANDOM_STATE)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.arange(<span class="op">-</span><span class="dv">50</span>, <span class="dv">151</span>)</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>y_true <span class="op">=</span> <span class="dv">3</span> <span class="op">+</span> <span class="dv">2</span> <span class="op">*</span> x<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>y_noisy <span class="op">=</span> y_true <span class="op">+</span> np.random.normal(<span class="dv">0</span>, <span class="dv">4000</span>, <span class="bu">len</span>(x))</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fit_poly(degree):</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>    Xp <span class="op">=</span> PolynomialFeatures(degree<span class="op">=</span>degree, include_bias<span class="op">=</span><span class="va">False</span>).fit_transform(x.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> LinearRegression().fit(Xp, y_noisy)</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> model.predict(Xp)</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>pred_linear <span class="op">=</span> fit_poly(<span class="dv">1</span>)</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>pred_quad <span class="op">=</span> fit_poly(<span class="dv">2</span>)</span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>pred_poly20 <span class="op">=</span> fit_poly(<span class="dv">20</span>)</span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="dv">5</span>))</span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>ax.scatter(x, y_noisy, s<span class="op">=</span><span class="dv">15</span>, color<span class="op">=</span><span class="st">"#999999"</span>, alpha<span class="op">=</span><span class="fl">0.6</span>, label<span class="op">=</span><span class="st">"Data"</span>)</span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>ax.plot(x, pred_linear, color<span class="op">=</span><span class="st">"#c9772e"</span>, lw<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="ss">f"Linear: underfit (R²=</span><span class="sc">{</span>r2_score(y_noisy, pred_linear)<span class="sc">:.3f}</span><span class="ss">)"</span>)</span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>ax.plot(x, pred_poly20, color<span class="op">=</span><span class="st">"#2f6faa"</span>, lw<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="ss">f"Degree 20: overfit (R²=</span><span class="sc">{</span>r2_score(y_noisy, pred_poly20)<span class="sc">:.3f}</span><span class="ss">)"</span>)</span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>ax.plot(x, pred_quad, color<span class="op">=</span><span class="st">"#1a3f66"</span>, lw<span class="op">=</span><span class="dv">3</span>, label<span class="op">=</span><span class="ss">f"Quadratic: just right (R²=</span><span class="sc">{</span>r2_score(y_noisy, pred_quad)<span class="sc">:.3f}</span><span class="ss">)"</span>)</span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"x"</span>)</span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"y"</span>)</span>
+<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Same data, three complexities"</span>)</span>
+<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
+<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a>ax.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06-model-evaluation_files/figure-html/cell-15-output-1.png" width="771" height="450" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The linear model can’t bend to the curve at all (underfitting, high bias). The degree-20 polynomial wiggles to chase individual noisy points (overfitting, high variance). Note that its R² is <em>higher</em> than the quadratic’s on this data, which is exactly why R² on the training data you fit is a poor guide to a model’s real quality. The quadratic matches the true relationship and will generalise best to new data, even if its R² is lower on this particular training sample.</p>
+</section>
+<section id="performance-metrics" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="performance-metrics"><span class="header-section-number">6.4</span> Performance metrics</h2>
+<p>The demonstration above was easy because we <em>knew</em> the true relationship. In practice you don’t, which is why you need evaluation metrics, computed on a proper held-out set, to compare models and pick one.</p>
+<section id="regression-metrics" class="level3" data-number="6.4.1">
+<h3 data-number="6.4.1" class="anchored" data-anchor-id="regression-metrics"><span class="header-section-number">6.4.1</span> Regression metrics</h3>
+<p>Remember that a regression model doesn’t output a class label, it outputs a <strong>point estimate</strong>: a single predicted number <span class="math inline">\(\hat{y}\)</span> for each unknown value <span class="math inline">\(y\)</span>. Evaluating the model means comparing these predictions to the actual values on a held-out set: the closer <span class="math inline">\(\hat{y}\)</span> sits to <span class="math inline">\(y\)</span> across all test rows, the better the model. There is no single “right” way to summarise that closeness, different metrics have their own strengths and weaknesses (e.g., how to weigh large errors, outliers, and scale differently) so it’s common to look at several at once.</p>
+<p>Four metrics cover most needs:</p>
+<ul>
+<li><strong>R²</strong>: the proportion of variance in <span class="math inline">\(y\)</span> explained by <span class="math inline">\(\hat{y}\)</span> (higher is better, max 1). It is primarily a goodness-of-fit measure. On a test set it can even go <strong>negative</strong> if the model does worse than just predicting the mean. Note that when using a train and test split, the R² actually boils down to the squared correlation between <span class="math inline">\(\hat{y}\)</span> and <span class="math inline">\(y\)</span>.</li>
+<li><strong>RMSE</strong>: the root mean squared difference between <span class="math inline">\(\hat{y}\)</span> and <span class="math inline">\(y\)</span>, in the same units as the target. It squares the errors, so large errors are penalised heavily (sensitive to outliers).</li>
+<li><strong>MAE</strong>: the mean absolute difference between <span class="math inline">\(\hat{y}\)</span> and <span class="math inline">\(y\)</span>, also in target units, but penalising all errors proportionally.</li>
+<li><strong>MAPE</strong>: mean absolute <em>percentage</em> error. Scale-free and easy to communicate, but undefined when actual values are near zero. So be careful with this metric if you have small or zero values in your dependent variable.</li>
+</ul>
+<p>Only R² is maximised; the rest are minimised.</p>
+<p>To make this concrete, let’s consdider a synthetic time series example: <code>x</code> is a time index, <code>y</code> is profit in that period, and we want to predict future profit. We split it <strong>chronologically</strong> rather than randomly (for a time series, the validation and test set must be the <em>later</em> periods): 60% train, 20% validation, 20% test. Then we compare a linear, a quadratic, and a high-order polynomial fit.</p>
+<div id="7eeb3dc0" class="cell" data-execution_count="15">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>reg <span class="op">=</span> pd.DataFrame({<span class="st">"x"</span>: x, <span class="st">"x2"</span>: x<span class="op">**</span><span class="dv">2</span>, <span class="st">"x4"</span>: x<span class="op">**</span><span class="dv">4</span>, <span class="st">"x5"</span>: x<span class="op">**</span><span class="dv">5</span>, <span class="st">"y"</span>: y_noisy})</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>train, val, test <span class="op">=</span> reg.iloc[:<span class="dv">121</span>], reg.iloc[<span class="dv">121</span>:<span class="dv">161</span>], reg.iloc[<span class="dv">161</span>:]</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>linear_reg <span class="op">=</span> LinearRegression().fit(train[[<span class="st">"x"</span>]], train[<span class="st">"y"</span>])</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>quad_reg <span class="op">=</span> LinearRegression().fit(train[[<span class="st">"x"</span>, <span class="st">"x2"</span>]], train[<span class="st">"y"</span>])</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>poly_reg <span class="op">=</span> LinearRegression().fit(train[[<span class="st">"x4"</span>, <span class="st">"x5"</span>]], train[<span class="st">"y"</span>])</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>val_pred <span class="op">=</span> {</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Linear"</span>: linear_reg.predict(val[[<span class="st">"x"</span>]]),</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Quadratic"</span>: quad_reg.predict(val[[<span class="st">"x"</span>, <span class="st">"x2"</span>]]),</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"High-order poly"</span>: poly_reg.predict(val[[<span class="st">"x4"</span>, <span class="st">"x5"</span>]]),</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>Scoring the three candidate models on the validation set:</p>
+<div id="576e3278" class="cell" data-execution_count="16">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error, mean_absolute_error</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mape(y_true, y_pred):</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.mean(np.<span class="bu">abs</span>((y_true <span class="op">-</span> y_pred) <span class="op">/</span> y_true))</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> []</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> name, pred <span class="kw">in</span> val_pred.items():</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>    rows.append({</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Model"</span>: name,</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"R²"</span>: r2_score(val[<span class="st">"y"</span>], pred),</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"RMSE"</span>: np.sqrt(mean_squared_error(val[<span class="st">"y"</span>], pred)),</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">"MAE"</span>: mean_absolute_error(val[<span class="st">"y"</span>], pred),</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">"MAPE"</span>: mape(val[<span class="st">"y"</span>], pred),</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(rows).<span class="bu">round</span>(<span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="16">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Model</th>
+<th data-quarto-table-cell-role="th">R²</th>
+<th data-quarto-table-cell-role="th">RMSE</th>
+<th data-quarto-table-cell-role="th">MAE</th>
+<th data-quarto-table-cell-role="th">MAPE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>Linear</td>
+<td>-4.864</td>
+<td>12320.046</td>
+<td>11360.358</td>
+<td>0.635</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>Quadratic</td>
+<td>0.368</td>
+<td>4045.516</td>
+<td>3354.931</td>
+<td>0.193</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>High-order poly</td>
+<td>-3.158</td>
+<td>10374.303</td>
+<td>8295.971</td>
+<td>0.492</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>The quadratic model wins on every metric. The linear model underfits: it systematically underestimates the high values. The high-order polynomial overfits, producing poor predictions off the training range. Refitting the quadratic on train + validation and scoring once on the test set gives the final number:</p>
+<div id="1bd276a1" class="cell" data-execution_count="17">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>final_model <span class="op">=</span> LinearRegression().fit(</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    pd.concat([train, val])[[<span class="st">"x"</span>, <span class="st">"x2"</span>]], pd.concat([train, val])[<span class="st">"y"</span>]</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>test_pred <span class="op">=</span> final_model.predict(test[[<span class="st">"x"</span>, <span class="st">"x2"</span>]])</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Final quadratic model, test set:"</span>)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  R²   = </span><span class="sc">{</span>r2_score(test[<span class="st">'y'</span>], test_pred)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  RMSE = </span><span class="sc">{</span>np<span class="sc">.</span>sqrt(mean_squared_error(test[<span class="st">'y'</span>], test_pred))<span class="sc">:,.0f}</span><span class="ss">"</span>)</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  MAE  = </span><span class="sc">{</span>mean_absolute_error(test[<span class="st">'y'</span>], test_pred)<span class="sc">:,.0f}</span><span class="ss">"</span>)</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  MAPE = </span><span class="sc">{</span>mape(test[<span class="st">'y'</span>], test_pred)<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Final quadratic model, test set:
+  R²   = 0.683
+  RMSE = 3,666
+  MAE  = 2,493
+  MAPE = 0.080</code></pre>
+</div>
+</div>
+</section>
+<section id="classification-metrics" class="level3" data-number="6.4.2">
+<h3 data-number="6.4.2" class="anchored" data-anchor-id="classification-metrics"><span class="header-section-number">6.4.2</span> Classification metrics</h3>
+<p>Classification needs different evaluation metrics: you can’t average an “error” when every prediction is either exactly right (1–1 or 0–0) or exactly wrong.</p>
+<p>We switch back to the churn basetable, take a fresh <strong>50/50 split</strong> (so the test set is large enough for stable metrics), and fit a <strong>random forest</strong> model. Random forests build hundreds of decision trees and average them; they’re one of the best off-the-shelf classifiers even without tuning. You don’t have to know the details of this model, but just see it as a good performing default model. Here the random forest is just a means to generate predictions to evaluate.</p>
+<div id="e0b2eb8f" class="cell" data-execution_count="18">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>X_clf <span class="op">=</span> basetable.drop(<span class="st">"churn"</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>y_clf <span class="op">=</span> basetable[<span class="st">"churn"</span>]</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>X_tr, X_te, y_tr, y_te <span class="op">=</span> train_test_split(</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    X_clf, y_clf, test_size<span class="op">=</span><span class="fl">0.5</span>, random_state<span class="op">=</span>RANDOM_STATE, stratify<span class="op">=</span>y_clf</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>rf <span class="op">=</span> RandomForestClassifier(n_estimators<span class="op">=</span><span class="dv">100</span>, random_state<span class="op">=</span>RANDOM_STATE)</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>rf.fit(X_tr, y_tr)</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>y_proba <span class="op">=</span> rf.predict_proba(X_te)[:, <span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<section id="scoring-vs.-deterministic-classifiers" class="level4" data-number="6.4.2.1">
+<h4 data-number="6.4.2.1" class="anchored" data-anchor-id="scoring-vs.-deterministic-classifiers"><span class="header-section-number">6.4.2.1</span> Scoring vs.&nbsp;deterministic classifiers</h4>
+<p>Before looking at any metric, it helps to be clear about what a classifier actually returns, because that’s what the rest of this section relies on <span class="citation" data-cites="hernandezorallo2012unified">(<a href="#ref-hernandezorallo2012unified" role="doc-biblioref">Hernández-Orallo et al. 2012</a>)</span>. There are two kinds:</p>
+<ul>
+<li>A <strong>deterministic classifier</strong> returns a class label directly, 0 or 1. There’s nothing else to decide.</li>
+<li>A <strong>scoring classifier</strong> returns a continuous score in [0, 1] instead, or a score that shows confidence that the event (e.g., churn) will happen. That score only becomes a label once you pick a <strong>cut-off</strong> (or threshold): above it, predict 1; below it, predict 0.</li>
+</ul>
+<p>Most models used in practice, including random forests, logistic regression, and gradient boosting, are scoring classifiers. Random forest above is no exception: <code>rf.predict_proba</code> gives its raw scores, <code>y_proba</code>, and <code>rf.predict</code> is simply what you get after applying <code>sklearn</code>’s default cut-off of 0.5 to those same scores (a probability of exactly 0.5 is the one edge case that rounds down to 0).</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>A note on the word “probability”
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This book, like most of <code>sklearn</code>’s documentation, calls a scoring classifier’s output a “probability.” In practice, the raw score a model outputs is often not a genuine probability: many popular classifiers are known to be poorly calibrated out of the box <span class="citation" data-cites="niculescumizil2005predicting">(<a href="#ref-niculescumizil2005predicting" role="doc-biblioref">Niculescu-Mizil and Caruana 2005</a>)</span>. A classifier is <strong>well-calibrated</strong> if, for example, 80% of the instances to which it assigns a 80% probability are actually members of that class. So a score of 0.8 across a group of customers should mean that roughly 80% of them actually churn, which for most raw model outputs isn’t true. Turning a raw score into something that behaves like a real probability takes an extra step, <strong>calibration</strong>, or more rigorously, <strong>conformal prediction</strong> <span class="citation" data-cites="manokhin2023conformal">(<a href="#ref-manokhin2023conformal" role="doc-biblioref">Manokhin 2023</a>)</span>, which is a topic on its own and beyond the scope of this book. But it is worth keeping in mind that the “probabilities” you see here are not guaranteed to be probabilities in the strict sense and a purist would call them “scores” instead.</p>
+</div>
+</div>
+<p>Both kinds of classifier can be evaluated with the same starting point: the <strong>confusion matrix</strong>, a cross-tabulation of actual versus predicted labels. For a deterministic classifier that’s the whole story; for a scoring classifier, the matrix (and therefore everything built on it) still depends on which cut-off you chose.</p>
+<p>That split runs through everything that follows. <strong>Threshold-dependent metrics</strong>, like accuracy, precision, recall, and the rest, are computed from the confusion matrix at one specific cut-off. <strong>Threshold-independent metrics</strong>, ROC and AUC, precision-recall curves, lift, look instead at how a scoring classifier performs across <em>every possible</em> cut-off at once. We cover the threshold-dependent metrics first, then move on to the threshold-independent ones.</p>
+</section>
+<section id="the-confusion-matrix-and-threshold-dependent-metrics" class="level4" data-number="6.4.2.2">
+<h4 data-number="6.4.2.2" class="anchored" data-anchor-id="the-confusion-matrix-and-threshold-dependent-metrics"><span class="header-section-number">6.4.2.2</span> The confusion matrix and threshold-dependent metrics</h4>
+<p>The confusion matrix at a chosen threshold has four cells: true positives (tp) and true negatives (tn), <strong>false positives</strong> (fp, predicted churn, when the customer did not: a type I error) and <strong>false negatives</strong> (fn, missed a churner: a type II error).</p>
+<p>Almost every threshold-dependent metric is just a different ratio of these four counts:</p>
+<p><span class="math display">\[
+\text{Accuracy} = \frac{TP + TN}{TP + TN + FP + FN}
+\qquad\qquad
+\text{Precision} = \frac{TP}{TP + FP}
+\]</span></p>
+<p><span class="math display">\[
+\text{Recall (Sensitivity, TPR)} = \frac{TP}{TP + FN}
+\qquad\qquad
+\text{Specificity (TNR)} = \frac{TN}{TN + FP}
+\]</span></p>
+<p><span class="math display">\[
+\text{FNR (miss rate)} = \frac{FN}{TP + FN} = 1 - \text{Recall}
+\qquad\qquad
+F_1 = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}}
+\]</span></p>
+<p>Recall and specificity each look at one actual class: of actual churners, how many did we catch (recall), and of actual non-churners, how many did we correctly clear (specificity, also called the <strong>true negative rate</strong>, TNR). Their complements are exactly the two error rates marked on the confusion matrix above: 1 minus recall is the <strong>FNR</strong>, the type II error rate, and 1 minus specificity is the <strong>false positive rate (FPR)</strong>, the type I error rate. Precision instead looks at the predictions themselves: of everyone flagged as a churner, how many actually were one.</p>
+<p>Two more metrics are built specifically for imbalanced data, where the positive class is rare:</p>
+<p><span class="math display">\[
+\text{Balanced accuracy} = \frac{\text{Recall} + \text{Specificity}}{2}
+\qquad\qquad
+F_\beta = (1 + \beta^2) \cdot \frac{\text{Precision} \cdot \text{Recall}}{(\beta^2 \cdot \text{Precision}) + \text{Recall}}
+\]</span></p>
+<p><strong>Balanced accuracy</strong> averages the per-class accuracies instead of counting rows: a model that just predicts the majority class gets 50% here, not the inflated number plain accuracy would give it, because a large majority class can no longer hide a near-zero recall on the minority class. <strong><span class="math inline">\(F_\beta\)</span></strong> generalises <span class="math inline">\(F_1\)</span> (the special case <span class="math inline">\(\beta = 1\)</span>) to let you weight the two error types by how much they actually cost: <span class="math inline">\(\beta &gt; 1\)</span> weights recall more heavily, appropriate when missing a churner is worse than a false alarm; <span class="math inline">\(\beta &lt; 1\)</span> weights precision more, when a false alarm is the more expensive mistake.</p>
+<p>Let’s see these metrics in action on the random forest model above, at the default 0.5 threshold:</p>
+<div id="69e01fb4" class="cell" data-execution_count="19">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> (confusion_matrix, accuracy_score, precision_score,</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>                             recall_score, f1_score, balanced_accuracy_score, fbeta_score)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> rf.predict(X_te)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>cm <span class="op">=</span> confusion_matrix(y_te, y_pred)</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">4</span>))</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>sns.heatmap(cm, annot<span class="op">=</span><span class="va">True</span>, fmt<span class="op">=</span><span class="st">"d"</span>, cmap<span class="op">=</span><span class="st">"Blues"</span>, cbar<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>            xticklabels<span class="op">=</span>[<span class="st">"No churn"</span>, <span class="st">"Churn"</span>], yticklabels<span class="op">=</span>[<span class="st">"No churn"</span>, <span class="st">"Churn"</span>], ax<span class="op">=</span>ax)</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Predicted"</span>)</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Actual"</span>)</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Confusion matrix (threshold = 0.5)"</span>)</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>tn, fp, fn, tp <span class="op">=</span> cm.ravel()</span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Accuracy:          </span><span class="sc">{</span>accuracy_score(y_te, y_pred)<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Balanced accuracy: </span><span class="sc">{</span>balanced_accuracy_score(y_te, y_pred)<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Precision:         </span><span class="sc">{</span>precision_score(y_te, y_pred)<span class="sc">:.4f}</span><span class="ss">   (of predicted churners, how many churned)"</span>)</span>
+<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Recall:            </span><span class="sc">{</span>recall_score(y_te, y_pred)<span class="sc">:.4f}</span><span class="ss">   (of actual churners, how many we caught)"</span>)</span>
+<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Specificity:       </span><span class="sc">{</span>tn <span class="op">/</span> (tn <span class="op">+</span> fp)<span class="sc">:.4f}</span><span class="ss">   (of actual non-churners, how many we cleared)"</span>)</span>
+<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"FNR:               </span><span class="sc">{</span>fn <span class="op">/</span> (fn <span class="op">+</span> tp)<span class="sc">:.4f}</span><span class="ss">   (of actual churners, how many we missed)"</span>)</span>
+<span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"F1-score:          </span><span class="sc">{</span>f1_score(y_te, y_pred)<span class="sc">:.4f}</span><span class="ss">   (harmonic mean of precision and recall)"</span>)</span>
+<span id="cb30-23"><a href="#cb30-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"F2-score:          </span><span class="sc">{</span>fbeta_score(y_te, y_pred, beta<span class="op">=</span><span class="dv">2</span>)<span class="sc">:.4f}</span><span class="ss">   (weights recall twice as much as precision)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06-model-evaluation_files/figure-html/cell-20-output-1.png" width="433" height="377" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Accuracy:          0.9610
+Balanced accuracy: 0.5225
+Precision:         0.3725   (of predicted churners, how many churned)
+Recall:            0.0483   (of actual churners, how many we caught)
+Specificity:       0.9968   (of actual non-churners, how many we cleared)
+FNR:               0.9517   (of actual churners, how many we missed)
+F1-score:          0.0855   (harmonic mean of precision and recall)
+F2-score:          0.0585   (weights recall twice as much as precision)</code></pre>
+</div>
+</div>
+<p>The numbers show the classic failure mode on imbalanced data. Accuracy looks great at 96%, but that is almost entirely the 96% of customers who don’t churn: specificity is 99.7%, the model clears almost every non-churner. Balanced accuracy tells the true story: 52.3%, barely above the 50% coin flip, because it no longer lets the huge non-churn class hide the model’s near-zero recall. Recall itself confirms it: only 4.8% of actual churners are caught, an FNR above 95%. At a 0.5 threshold the model almost never predicts churn, because churn probabilities rarely climb above 0.5 when only ~4% of customers churn in the first place. Weighting recall more heavily makes this even more visible: F2 drops to 0.058, below F1’s already weak 0.086, because F2 punishes the missed churners harder than F1 does. Every one of these numbers depends on the threshold, which is exactly the weakness the next section addresses.</p>
+<p>Let’s drop the threshold to 0.05 and the picture changes completely:</p>
+<div id="afa86a7a" class="cell" data-execution_count="20">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> t <span class="kw">in</span> [<span class="fl">0.5</span>, <span class="fl">0.05</span>]:</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    yp <span class="op">=</span> (y_proba <span class="op">&gt;=</span> t).astype(<span class="bu">int</span>)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    tn, fp, fn, tp <span class="op">=</span> confusion_matrix(y_te, yp).ravel()</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"threshold </span><span class="sc">{</span>t<span class="sc">:&gt;4}</span><span class="ss">:  recall </span><span class="sc">{</span>recall_score(y_te, yp)<span class="sc">:.3f}</span><span class="ss">   "</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>          <span class="ss">f"precision </span><span class="sc">{</span>precision_score(y_te, yp)<span class="sc">:.3f}</span><span class="ss">   "</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>          <span class="ss">f"specificity </span><span class="sc">{</span>tn <span class="op">/</span> (tn <span class="op">+</span> fp)<span class="sc">:.3f}</span><span class="ss">   FPR </span><span class="sc">{</span>fp <span class="op">/</span> (fp <span class="op">+</span> tn)<span class="sc">:.3f}</span><span class="ss">   "</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>          <span class="ss">f"FNR </span><span class="sc">{</span>fn <span class="op">/</span> (fn <span class="op">+</span> tp)<span class="sc">:.3f}</span><span class="ss">   accuracy </span><span class="sc">{</span>accuracy_score(y_te, yp)<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>threshold  0.5:  recall 0.053   precision 0.382   specificity 0.997   FPR 0.003   FNR 0.947   accuracy 0.961
+threshold 0.05:  recall 0.615   precision 0.099   specificity 0.781   FPR 0.219   FNR 0.385   accuracy 0.775</code></pre>
+</div>
+</div>
+<p>Recall jumps from 5% to 61%, and the FNR falls from 95% to 38%: three times as many churners caught. That comes at a real cost. The false-alarm rate is read directly off specificity: it drops from 99.7% to 78%, which is the same as saying the <strong>false positive rate</strong> (1 minus specificity) rises from 0.3% to 22%, so far more non-churners now get incorrectly flagged. Precision falls too, from 38% to 10%, but for a related, distinct reason: it’s not a rate over non-churners, it’s the fraction of <em>flagged</em> customers who actually churn, and that fraction drops because the flagged group now contains many more of those false alarms relative to the true churners it also catches. Which trade-off is right depends entirely on the business context: a retention campaign that’s cheap per contact can afford more false positives to catch more real churners; an expensive one-on-one intervention cannot.</p>
+</section>
+<section id="choosing-a-threshold-deliberately" class="level4" data-number="6.4.2.3">
+<h4 data-number="6.4.2.3" class="anchored" data-anchor-id="choosing-a-threshold-deliberately"><span class="header-section-number">6.4.2.3</span> Choosing a threshold deliberately</h4>
+<p>A fixed cut-off like <code>sklearn</code>’s default of 0.5 quietly assumes two things that often aren’t true: that the classifier’s scores behave like well-calibrated probabilities (see the callout above), and that 0.5 happens to match what the business actually needs. Neither assumption is often the case. Comparing two classifiers at the same fixed cut-off can be misleading if their score distributions differ: one model’s recall can look like 0 and another’s clearly positive purely because their scores are scaled differently, not because one is genuinely worse. And even for a single well-behaved classifier, there is no reason 0.5 should be the cut-off a business actually wants to act on.</p>
+<p>Three ways to pick a better one:</p>
+<ol type="1">
+<li><strong>Calibrate the scores first</strong>, so a fixed cut-off means the same thing for every classifier. Out of scope for this book (see the callout above).</li>
+<li><strong>Work with percentile ranks instead of raw scores.</strong> Pick a cut-off so that a <em>fixed proportion</em> of the data is flagged, for example the top 10%, rather than trusting the raw score scale. A common heuristic is to set that proportion equal to the positive rate seen in training or validation.</li>
+<li><strong>Post-tune the threshold after training</strong>, searching for the threshold that maximises a chosen performance metric via cross-validation, so the choice isn’t overfit to the training data.</li>
+</ol>
+<p>Solution 2 is simple enough to do by hand:</p>
+<div id="f524aee1" class="cell" data-execution_count="21">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>pos_rate <span class="op">=</span> y_tr.mean()</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>cutoff_score <span class="op">=</span> np.quantile(y_proba, <span class="dv">1</span> <span class="op">-</span> pos_rate)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>y_pred_pct <span class="op">=</span> (y_proba <span class="op">&gt;=</span> cutoff_score).astype(<span class="bu">int</span>)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Training positive rate: </span><span class="sc">{</span>pos_rate<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Score cut-off at that percentile: </span><span class="sc">{</span>cutoff_score<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  recall    </span><span class="sc">{</span>recall_score(y_te, y_pred_pct)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  precision </span><span class="sc">{</span>precision_score(y_te, y_pred_pct)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  F1        </span><span class="sc">{</span>f1_score(y_te, y_pred_pct)<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Training positive rate: 0.038
+Score cut-off at that percentile: 0.230
+  recall    0.241
+  precision 0.233
+  F1        0.237</code></pre>
+</div>
+</div>
+<p>Solution 3 does the same job more rigorously. <code>TunedThresholdClassifierCV</code> searches for the threshold that maximises a chosen metric, using internal cross-validation . For churn, F1 (balancing precision and recall) is a reasonable target. Note the use of <code>StratifiedKFold</code>: with imbalanced data you always want folds that preserve the class ratio.</p>
+<div id="5194785d" class="cell" data-execution_count="22">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> TunedThresholdClassifierCV, StratifiedKFold</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>tuned <span class="op">=</span> TunedThresholdClassifierCV(</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    estimator<span class="op">=</span>RandomForestClassifier(n_estimators<span class="op">=</span><span class="dv">100</span>, random_state<span class="op">=</span>RANDOM_STATE),</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>    scoring<span class="op">=</span><span class="st">"f1"</span>,</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>    cv<span class="op">=</span>StratifiedKFold(n_splits<span class="op">=</span><span class="dv">5</span>, shuffle<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span>RANDOM_STATE),</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>    n_jobs<span class="op">=-</span><span class="dv">1</span>,</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>tuned.fit(X_tr, y_tr)</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>y_pred_tuned <span class="op">=</span> tuned.predict(X_te)</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"F1-optimal threshold: </span><span class="sc">{</span>tuned<span class="sc">.</span>best_threshold_<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  recall    </span><span class="sc">{</span>recall_score(y_te, y_pred_tuned)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  precision </span><span class="sc">{</span>precision_score(y_te, y_pred_tuned)<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"  F1        </span><span class="sc">{</span>f1_score(y_te, y_pred_tuned)<span class="sc">:.3f}</span><span class="ss">  (was </span><span class="sc">{</span>f1_score(y_te, y_pred)<span class="sc">:.3f}</span><span class="ss"> at 0.5)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>F1-optimal threshold: 0.207
+  recall    0.267
+  precision 0.221
+  F1        0.242  (was 0.085 at 0.5)</code></pre>
+</div>
+</div>
+<p>The two solutions land in a similar place here: F1 around 0.24 either way, a real improvement over the 0.085 the default 0.5 cut-off gave, but still modest in absolute terms. Threshold tuning merely repositions the operating point; it doesn’t make a weak classifier strong. Genuinely fixing imbalanced-class performance needs resampling, cost-sensitive learning, a stronger model or a combination of these, which are all beyond the scope of this book.</p>
+</section>
+<section id="threshold-independent-metrics-roc-and-auc" class="level4" data-number="6.4.2.4">
+<h4 data-number="6.4.2.4" class="anchored" data-anchor-id="threshold-independent-metrics-roc-and-auc"><span class="header-section-number">6.4.2.4</span> Threshold-independent metrics: ROC and AUC</h4>
+<p>Often you don’t know the operating conditions at evaluation time. For a retention campaign, the marketing budget, and so the fraction of customers you can target, may not be decided yet. <strong>Threshold-independent</strong> metrics sidestep this by aggregating over <em>all</em> thresholds at once.</p>
+<p>The <strong>ROC curve</strong> plots the true positive rate (recall) against the false positive rate (1 − specificity) as the threshold sweeps from 1 down to 0 <span class="citation" data-cites="fawcett2006introduction">(<a href="#ref-fawcett2006introduction" role="doc-biblioref">Fawcett 2006</a>)</span>. Two corners anchor it: a perfect model reaches the top-left corner (100% TPR, 0% FPR), a model that gets everything backwards sits in the bottom-right (0% TPR, 100% FPR), and the diagonal between them is what pure random guessing looks like. The closer a curve hugs the top-left corner, the better the trade-off it offers across every threshold at once, which also makes ROC curves useful for comparing two classifiers directly: whichever curve dominates (sits above the other almost everywhere) is the better model, threshold for threshold.</p>
+<p>The <strong>area under the curve (AUC)</strong> collapses that whole curve into one number:</p>
+<p><span class="math display">\[
+\text{AUC} = \int_0^1 TPR(FPR) \; d(FPR)
+\]</span></p>
+<p>The integral has a cleaner, ranking-based interpretation in practice: the probability that a randomly chosen positive instance (e.g., churn) is scored higher than a randomly chosen negative instance (e.g., non-churn). A random classifier scores 0.5; a perfect one scores 1.</p>
+<div id="1e72bf52" class="cell" data-execution_count="23">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> roc_curve, roc_auc_score</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>fpr, tpr, _ <span class="op">=</span> roc_curve(y_te, y_proba)</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>auc <span class="op">=</span> roc_auc_score(y_te, y_proba)</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">5</span>))</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>plt.plot(fpr, tpr, color<span class="op">=</span><span class="st">"#c9772e"</span>, lw<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="ss">f"Random forest (AUC = </span><span class="sc">{</span>auc<span class="sc">:.3f}</span><span class="ss">)"</span>)</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>plt.plot([<span class="dv">0</span>, <span class="dv">1</span>], [<span class="dv">0</span>, <span class="dv">1</span>], color<span class="op">=</span><span class="st">"#1a3f66"</span>, lw<span class="op">=</span><span class="fl">1.5</span>, ls<span class="op">=</span><span class="st">"--"</span>, label<span class="op">=</span><span class="st">"Random"</span>)</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"False positive rate (1 - specificity)"</span>)</span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"True positive rate (sensitivity)"</span>)</span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"ROC curve"</span>)</span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>plt.legend(loc<span class="op">=</span><span class="st">"lower right"</span>)</span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>plt.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06-model-evaluation_files/figure-html/cell-24-output-1.png" width="515" height="451" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The random forest model reaches an AUC of 0.764: pick a random churner and a random non-churner from the test set, and about 76% of the time the churner gets the higher score, comfortably better than the 0.5 a random classifier would get, but far from the 1.0 of a perfect one. Reading a single point off the curve makes the trade-off concrete: to catch 80% of churners (TPR = 0.8) this model needs a false positive rate of roughly 53%, more than half of all non-churners flagged along the way. That is exactly what AUC hides by summarising the whole curve: it judges the overall ranking ability, but any one operating point on that curve can still be a poor deal in business terms. AUC’s single-number convenience has a deeper, well-documented catch too: it implicitly weighs misclassification costs differently for different classifiers, which can make it favour the wrong model when two classifiers are compared, and can lead to suboptimal model selection in terms of actual profit <span class="citation" data-cites="verbraken2013novel">(<a href="#ref-verbraken2013novel" role="doc-biblioref">Verbraken et al. 2013</a>)</span>. That critique is beyond the scope of this book, but worth knowing the number isn’t as theoretically clean as it looks.</p>
+</section>
+<section id="precisionrecall-curves-and-average-precision" class="level4" data-number="6.4.2.5">
+<h4 data-number="6.4.2.5" class="anchored" data-anchor-id="precisionrecall-curves-and-average-precision"><span class="header-section-number">6.4.2.5</span> Precision–recall curves and average precision</h4>
+<p>On strongly imbalanced data, ROC/AUC can be misleading too, even producing overly optimistic results. Since the false positive rate has a huge true-negative denominator, so it stays low even when the model is producing many false alarms in absolute terms <span class="citation" data-cites="vanbelle2022inductive">(<a href="#ref-vanbelle2022inductive" role="doc-biblioref">Van Belle et al. 2022</a>)</span>. The <strong>precision–recall (PR) curve</strong> ignores true negatives entirely and focuses on the minority class. Its summary number, <strong>average precision (AP)</strong> or <strong>area under the PR curve (AUC-PR)</strong>, is the PR curve’s alternative to AUC. Note that a random classifier’s AP equals the positive rate in the test set (its “no-skill” baseline).</p>
+<div id="b60d511d" class="cell" data-execution_count="24">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> precision_recall_curve, average_precision_score</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>precision, recall, _ <span class="op">=</span> precision_recall_curve(y_te, y_proba)</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>ap <span class="op">=</span> average_precision_score(y_te, y_proba)</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>no_skill <span class="op">=</span> y_te.mean()</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">5</span>))</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>plt.plot(recall, precision, color<span class="op">=</span><span class="st">"#c9772e"</span>, lw<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="ss">f"Random forest (AP = </span><span class="sc">{</span>ap<span class="sc">:.3f}</span><span class="ss">)"</span>)</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>plt.axhline(no_skill, color<span class="op">=</span><span class="st">"#1a3f66"</span>, lw<span class="op">=</span><span class="fl">1.5</span>, ls<span class="op">=</span><span class="st">"--"</span>, label<span class="op">=</span><span class="ss">f"No-skill baseline (</span><span class="sc">{</span>no_skill<span class="sc">:.3f}</span><span class="ss">)"</span>)</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Recall"</span>)</span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Precision"</span>)</span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Precision-recall curve"</span>)</span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>plt.legend(loc<span class="op">=</span><span class="st">"upper right"</span>)</span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>plt.grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"AUC = </span><span class="sc">{</span>auc<span class="sc">:.3f}</span><span class="ss">  vs  AP = </span><span class="sc">{</span>ap<span class="sc">:.3f}</span><span class="ss">  (no-skill AP = </span><span class="sc">{</span>no_skill<span class="sc">:.3f}</span><span class="ss">)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06-model-evaluation_files/figure-html/cell-25-output-1.png" width="515" height="451" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>AUC = 0.764  vs  AP = 0.164  (no-skill AP = 0.038)</code></pre>
+</div>
+</div>
+<p>The gap tells the story: an AUC of ~0.76 sounds healthy, but the AP of ~0.16, against a no-skill baseline of ~0.04, is a more realistic read of how the model does at actually pinpointing churners.</p>
+</section>
+<section id="roc-vs.-pr-a-worked-comparison" class="level4" data-number="6.4.2.6">
+<h4 data-number="6.4.2.6" class="anchored" data-anchor-id="roc-vs.-pr-a-worked-comparison"><span class="header-section-number">6.4.2.6</span> ROC vs.&nbsp;PR: a worked comparison</h4>
+<p>A workable decision rule for imbalanced problems is to look at <strong>both</strong> curves. If the ROC curves don’t cross, pick the dominant one on AUC. If they cross, or the AUC gap is small (under ~0.02), fall back to <strong>AP</strong> and the <strong>PR curves</strong> instead, since that ambiguous case is exactly where ROC/AUC’s optimism on imbalanced data can hide a real difference between models.</p>
+<p>Here it is in practice, comparing random forest against logistic regression:</p>
+<div id="9a2f87df" class="cell" data-execution_count="25">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>lr <span class="op">=</span> Pipeline([</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"scaler"</span>, StandardScaler()),</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"classifier"</span>, LogisticRegression(random_state<span class="op">=</span>RANDOM_STATE, max_iter<span class="op">=</span><span class="dv">1000</span>)),</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>]).fit(X_tr, y_tr)</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>rf_proba <span class="op">=</span> y_proba</span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>lr_proba <span class="op">=</span> lr.predict_proba(X_te)[:, <span class="dv">1</span>]</span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">13</span>, <span class="dv">5</span>))</span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> name, p, color <span class="kw">in</span> [(<span class="st">"Random forest"</span>, rf_proba, <span class="st">"#2f6faa"</span>), (<span class="st">"Logistic regression"</span>, lr_proba, <span class="st">"#c9772e"</span>)]:</span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>    f, t, _ <span class="op">=</span> roc_curve(y_te, p)</span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">0</span>].plot(f, t, color<span class="op">=</span>color, lw<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="ss">f"</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss"> (AUC = </span><span class="sc">{</span>roc_auc_score(y_te, p)<span class="sc">:.3f}</span><span class="ss">)"</span>)</span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a>    pr_p, pr_r, _ <span class="op">=</span> precision_recall_curve(y_te, p)</span>
+<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">1</span>].plot(pr_r, pr_p, color<span class="op">=</span>color, lw<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="ss">f"</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss"> (AP = </span><span class="sc">{</span>average_precision_score(y_te, p)<span class="sc">:.3f}</span><span class="ss">)"</span>)</span>
+<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot([<span class="dv">0</span>, <span class="dv">1</span>], [<span class="dv">0</span>, <span class="dv">1</span>], <span class="st">"k--"</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"False positive rate"</span>, ylabel<span class="op">=</span><span class="st">"True positive rate"</span>, title<span class="op">=</span><span class="st">"ROC"</span>)</span>
+<span id="cb41-20"><a href="#cb41-20" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].legend(loc<span class="op">=</span><span class="st">"lower right"</span>)<span class="op">;</span> axes[<span class="dv">0</span>].grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb41-21"><a href="#cb41-21" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].axhline(no_skill, color<span class="op">=</span><span class="st">"gray"</span>, ls<span class="op">=</span><span class="st">"--"</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb41-22"><a href="#cb41-22" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"Recall"</span>, ylabel<span class="op">=</span><span class="st">"Precision"</span>, title<span class="op">=</span><span class="st">"Precision-recall"</span>)</span>
+<span id="cb41-23"><a href="#cb41-23" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].legend(loc<span class="op">=</span><span class="st">"upper right"</span>)<span class="op">;</span> axes[<span class="dv">1</span>].grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb41-24"><a href="#cb41-24" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb41-25"><a href="#cb41-25" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06-model-evaluation_files/figure-html/cell-26-output-1.png" width="1240" height="470" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The AUCs are clsoe to each other and the ROC curves cross, exactly the ambiguous case the rule above is for. Falling back to AP settles the discussion: random forest’s AP is clearly higher, so it’s the pick.</p>
+<p>The final call is still a business decision. A <strong>high-precision</strong> strategy (few, high-confidence targets) suits a small retention budget; a <strong>high-recall</strong> strategy (catch as many churners as possible, tolerate false alarms) suits a case where losing a customer is very costly; a <strong>balanced</strong> strategy optimises F1 or ideally creates an explicit cost matrix tailored to the specific business context <span class="citation" data-cites="verbeke2012newinsights verbraken2013novel">(<a href="#ref-verbeke2012newinsights" role="doc-biblioref">Verbeke et al. 2012</a>; <a href="#ref-verbraken2013novel" role="doc-biblioref">Verbraken et al. 2013</a>)</span>.</p>
+</section>
+<section id="lift-and-top-decile-lift" class="level4" data-number="6.4.2.7">
+<h4 data-number="6.4.2.7" class="anchored" data-anchor-id="lift-and-top-decile-lift"><span class="header-section-number">6.4.2.7</span> Lift and top-decile lift</h4>
+<p>Retention campaigns rarely contact everyone: budgets are limited, so in practice a campaign targets a fixed slice of the customer base, sorted by score, from the most likely churners down. <strong>Lift</strong> measures how much better than random that targeting is and is especially useful for evaluating the effectiveness of a model in identifying high-risk customers or for guiding retention campaigns. Linking back to the confusion matrix, it is precision divided by the overall churn rate <span class="citation" data-cites="decaigny2018hybrid">(<a href="#ref-decaigny2018hybrid" role="doc-biblioref">De Caigny et al. 2018</a>)</span>:</p>
+<p><span class="math display">\[
+\text{Lift} = \frac{TP / (TP + FP)}{(TP + FN) / (TP + TN + FP + FN)}
+\]</span></p>
+<p>The numerator is precision at that cut-off: of the customers targeted, how many actually churn. The denominator is the base rate: how many would churn if targeted at random. A lift of 1 means the targeted slice is no more concentrated in churners than the population as a whole, the model adds nothing; a lift of 3 means it is three times as concentrated.</p>
+<p>The <strong>top-decile lift (TDL)</strong>, the lift at the cut-off that flags exactly the top 10% of customers by score, is the most common single-number version in practice. Ten percent isn’t mathematically special: Neslin et al.&nbsp;(2006) showed that a retention campaign’s expected profit is a direct, increasing function of lift, which is why (top-decile) lift became one of the most widely used performance criteria in churn prediction in the first place <span class="citation" data-cites="verbeke2012newinsights decaigny2018hybrid">(<a href="#ref-verbeke2012newinsights" role="doc-biblioref">Verbeke et al. 2012</a>; <a href="#ref-decaigny2018hybrid" role="doc-biblioref">De Caigny et al. 2018</a>)</span>.</p>
+<div id="9edac04f" class="cell" data-execution_count="26">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>order <span class="op">=</span> np.argsort(y_proba)[::<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>top10 <span class="op">=</span> order[: <span class="bu">int</span>(<span class="fl">0.10</span> <span class="op">*</span> <span class="bu">len</span>(y_te))]</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>top_decile_lift <span class="op">=</span> y_te.iloc[top10].mean() <span class="op">/</span> y_te.mean()</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Top-decile lift: </span><span class="sc">{</span>top_decile_lift<span class="sc">:.2f}</span><span class="ss">x  (baseline churn rate </span><span class="sc">{</span>y_te<span class="sc">.</span>mean()<span class="sc">:.1%}</span><span class="ss">)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Top-decile lift: 4.17x  (baseline churn rate 3.8%)</code></pre>
+</div>
+</div>
+<p>The interpretation is direct: at the top 10%, the model detects 4.17 times more churners than a random 10% of customers would, exactly the efficiency gain a limited retention budget is trying to get.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Why a fixed 10% cut-off can pick the wrong model
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Fixing the cut-off at 10% by convention is still only a stand-in for whatever the real campaign size will be, and that choice matters more than it looks. In practice, lift curves should be compared directly: Verbeke et al.&nbsp;show two churn models whose lift curves <em>cross</em>, one has the better lift at the top 5%, the other at the top 10% <span class="citation" data-cites="verbeke2012newinsights">(<a href="#ref-verbeke2012newinsights" role="doc-biblioref">Verbeke et al. 2012</a>)</span>. Picking a model on top-decile lift can therefore mean walking away with the wrong one if the real campaign only reaches the top 5%, or vice versa. Since expected profit is a direct function of lift at whatever fraction is actually used, the safe rule is to read lift at the fraction you genuinely intend to target, not at a fixed 10% by habit. Fully profit-driven metrics remove that guesswork by searching over every fraction directly <span class="citation" data-cites="verbraken2013novel">(<a href="#ref-verbraken2013novel" role="doc-biblioref">Verbraken et al. 2013</a>)</span>, but that is beyond the scope of this book.</p>
+</div>
+</div>
+<p>The <strong>cumulative lift curve</strong> extends the top decile lift to every possible campaign size, from the top 1% to the whole population: at each point it’s the cumulative churn rate among the highest-scored customers divided by the overall rate. It starts highest at the very smallest, most concentrated slice (lift of about 9 at the top 1% here), decays as more, less certain customers are added, and settles at 1 once the whole population is targeted, since targeting everyone is the same as targeting at random.</p>
+<div id="bfd9f03d" class="cell" data-execution_count="27">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn_evaluation.plot <span class="im">import</span> lift_curve</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>y_proba_2d <span class="op">=</span> np.column_stack([<span class="dv">1</span> <span class="op">-</span> y_proba, y_proba])</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">4</span>))</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>lift_curve(y_te, y_proba_2d)</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<pre><code>&lt;Figure size 672x384 with 0 Axes&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06-model-evaluation_files/figure-html/cell-28-output-2.png" width="664" height="470" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="cumulative-gains-and-the-ks-statistic" class="level4" data-number="6.4.2.8">
+<h4 data-number="6.4.2.8" class="anchored" data-anchor-id="cumulative-gains-and-the-ks-statistic"><span class="header-section-number">6.4.2.8</span> Cumulative gains and the KS statistic</h4>
+<p>The <strong>cumulative gains chart</strong> is the lift curve’s close cousin, and the two are related by a simple identity. Both share the same x-axis: the fraction of customers targeted, sorted from the highest score down to the lowest, growing from the smallest slice to the whole population. Where they differ is what the y-axis counts. Lift is a <em>ratio</em>, how concentrated is this slice compared to random, so it starts high and decays toward 1 as more, less certain customers are added. Gains is a <em>running total</em>, how many churners have been captured so far, so it starts at 0% and climbs to 100% once everyone is included. The two are tied together exactly:</p>
+<p><span class="math display">\[
+\text{Gains}(x) = x \cdot \text{Lift}(x)
+\]</span></p>
+<p>Working that out in terms of the confusion matrix at the cut-off that targets fraction <span class="math inline">\(x\)</span> gives an even cleaner formula:</p>
+<p><span class="math display">\[
+\text{Gains}(x) = \frac{TP}{TP + FN}
+\]</span></p>
+<p>That’s exactly <strong>recall</strong>. The cumulative gains chart is nothing more than recall traced across every possible cut-off instead of read at one fixed threshold: of all actual churners, what share are in the group targeted so far. Targeting a larger fraction <span class="math inline">\(x\)</span> always trades a lower lift for a larger absolute share of churners caught. Targeting the top 10% here captures roughly 40% of all churners (<span class="math inline">\(0.10 \times 4.17 \approx 0.42\)</span>, the same top-decile lift computed above, just read as a running total instead of a ratio).</p>
+<p>Let’s see that in action, and read the cumulative gains at 10% directly off the chart:</p>
+<div id="2fd82516" class="cell" data-execution_count="28">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn_evaluation.plot <span class="im">import</span> cumulative_gain</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>gains_at_10 <span class="op">=</span> y_te.iloc[top10].<span class="bu">sum</span>() <span class="op">/</span> y_te.<span class="bu">sum</span>()</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Cumulative gains at 10%: </span><span class="sc">{</span>gains_at_10<span class="sc">:.1%}</span><span class="ss"> of all churners captured"</span>)</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">4</span>))</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>cumulative_gain(y_te, y_proba_2d)</span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Cumulative gains at 10%: 41.7% of all churners captured</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre><code>&lt;Figure size 672x384 with 0 Axes&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06-model-evaluation_files/figure-html/cell-29-output-3.png" width="664" height="470" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The <strong>Kolmogorov–Smirnov (KS) statistic</strong> measures how well the scores <em>separate</em> the two classes. It comes from a classic two-sample test: plot the cumulative distribution of scores separately for churners and for non-churners, and KS is the largest vertical gap between those two curves. Since TPR and FPR are themselves just those two cumulative distributions read from the top down, that same gap shows up on the ROC curve as <code>max(TPR - FPR)</code>. Hence, it is the widest vertical distance between the ROC curve and the diagonal.</p>
+<p>Let’s compute KS both ways and see that they agree:</p>
+<div id="e6b53fa5" class="cell" data-execution_count="29">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> ks_2samp</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>ks_scipy <span class="op">=</span> ks_2samp(y_proba[y_te <span class="op">==</span> <span class="dv">1</span>], y_proba[y_te <span class="op">==</span> <span class="dv">0</span>]).statistic</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>fpr, tpr, thresholds <span class="op">=</span> roc_curve(y_te, y_proba)</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>ks_idx <span class="op">=</span> np.argmax(tpr <span class="op">-</span> fpr)</span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>ks_roc <span class="op">=</span> (tpr <span class="op">-</span> fpr)[ks_idx]</span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"KS statistic (two score distributions): </span><span class="sc">{</span>ks_scipy<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"KS statistic (max TPR - FPR on the ROC curve): </span><span class="sc">{</span>ks_roc<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Reached at threshold </span><span class="sc">{</span>thresholds[ks_idx]<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">5</span>))</span>
+<span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-15"><a href="#cb49-15" aria-hidden="true" tabindex="-1"></a>sns.ecdfplot(y_proba[y_te <span class="op">==</span> <span class="dv">0</span>], ax<span class="op">=</span>axes[<span class="dv">0</span>], color<span class="op">=</span><span class="st">"#2f6faa"</span>, label<span class="op">=</span><span class="st">"No churn"</span>)</span>
+<span id="cb49-16"><a href="#cb49-16" aria-hidden="true" tabindex="-1"></a>sns.ecdfplot(y_proba[y_te <span class="op">==</span> <span class="dv">1</span>], ax<span class="op">=</span>axes[<span class="dv">0</span>], color<span class="op">=</span><span class="st">"#c9772e"</span>, label<span class="op">=</span><span class="st">"Churn"</span>)</span>
+<span id="cb49-17"><a href="#cb49-17" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].axvline(thresholds[ks_idx], color<span class="op">=</span><span class="st">"gray"</span>, ls<span class="op">=</span><span class="st">"--"</span>, lw<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb49-18"><a href="#cb49-18" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"Predicted score"</span>, ylabel<span class="op">=</span><span class="st">"Cumulative proportion"</span>,</span>
+<span id="cb49-19"><a href="#cb49-19" aria-hidden="true" tabindex="-1"></a>            title<span class="op">=</span><span class="st">"The two score distributions, and their widest gap"</span>)</span>
+<span id="cb49-20"><a href="#cb49-20" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].legend(loc<span class="op">=</span><span class="st">"lower right"</span>)</span>
+<span id="cb49-21"><a href="#cb49-21" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb49-22"><a href="#cb49-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-23"><a href="#cb49-23" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].plot(fpr, tpr, color<span class="op">=</span><span class="st">"#2f6faa"</span>, lw<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="ss">f"ROC (AUC = </span><span class="sc">{</span>auc<span class="sc">:.3f}</span><span class="ss">)"</span>)</span>
+<span id="cb49-24"><a href="#cb49-24" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].plot([<span class="dv">0</span>, <span class="dv">1</span>], [<span class="dv">0</span>, <span class="dv">1</span>], <span class="st">"k--"</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb49-25"><a href="#cb49-25" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].vlines(fpr[ks_idx], fpr[ks_idx], tpr[ks_idx], color<span class="op">=</span><span class="st">"#c9772e"</span>, lw<span class="op">=</span><span class="dv">3</span>,</span>
+<span id="cb49-26"><a href="#cb49-26" aria-hidden="true" tabindex="-1"></a>               label<span class="op">=</span><span class="ss">f"KS = </span><span class="sc">{</span>ks_roc<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb49-27"><a href="#cb49-27" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"False positive rate"</span>, ylabel<span class="op">=</span><span class="st">"True positive rate"</span>,</span>
+<span id="cb49-28"><a href="#cb49-28" aria-hidden="true" tabindex="-1"></a>            title<span class="op">=</span><span class="st">"The same gap, seen on the ROC curve"</span>)</span>
+<span id="cb49-29"><a href="#cb49-29" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].legend(loc<span class="op">=</span><span class="st">"lower right"</span>)</span>
+<span id="cb49-30"><a href="#cb49-30" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].grid(alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb49-31"><a href="#cb49-31" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb49-32"><a href="#cb49-32" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>KS statistic (two score distributions): 0.3963
+KS statistic (max TPR - FPR on the ROC curve): 0.3963
+Reached at threshold 0.050</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06-model-evaluation_files/figure-html/cell-30-output-2.png" width="1143" height="470" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Both routes agree: KS = 0.396, reached at a score threshold of 0.05, the cut-off where the two classes are most cleanly separated. That’s a different threshold from the F1-optimal one found earlier (0.207): maximising separation and maximising F1 don’t have to agree. At this KS-optimal threshold the model would flag about 23% of customers as likely churners, noticeably more than the 10% a typical campaign budget allows, a reminder that “the threshold with the best statistical property” and “the threshold the business can actually act on” are two different questions.</p>
+<p>As a rule of thumb: KS below 0.2 is poor separation, 0.2 to 0.4 acceptable, 0.4 to 0.75 good, and above 0.75 is either excellent or a sign of leakage worth investigating. At 0.396, this model sits right at the top of the acceptable band, just short of good.</p>
+</section>
+</section>
+</section>
+<section id="where-we-go-from-here" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="where-we-go-from-here"><span class="header-section-number">6.5</span> Where we go from here</h2>
+<p>We now have both sides of a trustworthy evaluation: an experimental setup that produces an honest test set, and metrics to score against it for regression and classification targets. The models used throughout this chapter, KNN and random forests, were deliberately treated as black boxes: useful for producing predictions to evaluate, not yet explained. The next chapter, <strong>Modeling</strong>, opens up the two workhorses instead, <strong>linear regression</strong> and <strong>logistic regression</strong>, including how regularization keeps them from overfitting, so you understand not just how to score a model but how the most widely used one actually works.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-decaigny2018hybrid" class="csl-entry" role="listitem">
+De Caigny, Arno, Kristof Coussement, and Koen W. De Bock. 2018. <span>“A New Hybrid Classification Algorithm for Customer Churn Prediction Based on Logistic Regression and Decision Trees.”</span> <em>European Journal of Operational Research</em> 269 (2): 760–72. <a href="https://doi.org/10.1016/j.ejor.2018.02.009">https://doi.org/10.1016/j.ejor.2018.02.009</a>.
+</div>
+<div id="ref-fawcett2006introduction" class="csl-entry" role="listitem">
+Fawcett, Tom. 2006. <span>“An Introduction to <span>ROC</span> Analysis.”</span> <em>Pattern Recognition Letters</em> 27 (8): 861–74. <a href="https://doi.org/10.1016/j.patrec.2005.10.010">https://doi.org/10.1016/j.patrec.2005.10.010</a>.
+</div>
+<div id="ref-hernandezorallo2012unified" class="csl-entry" role="listitem">
+Hernández-Orallo, José, Peter Flach, and Cèsar Ferri. 2012. <span>“A Unified View of Performance Metrics: Translating Threshold Choice into Expected Classification Loss.”</span> <em>Journal of Machine Learning Research</em> 13 (91): 2813–69.
+</div>
+<div id="ref-james2013introduction" class="csl-entry" role="listitem">
+James, Gareth, Daniela Witten, Trevor Hastie, and Robert Tibshirani. 2013. <em>An Introduction to Statistical Learning: With Applications in r</em>. Springer.
+</div>
+<div id="ref-kaufman2012leakage" class="csl-entry" role="listitem">
+Kaufman, Shachar, Saharon Rosset, Claudia Perlich, and Ori Stitelman. 2012. <span>“Leakage in Data Mining: Formulation, Detection, and Avoidance.”</span> <em>ACM Transactions on Knowledge Discovery from Data</em> 6 (4): 1–21. <a href="https://doi.org/10.1145/2382577.2382579">https://doi.org/10.1145/2382577.2382579</a>.
+</div>
+<div id="ref-manokhin2023conformal" class="csl-entry" role="listitem">
+Manokhin, Valeriy. 2023. <em>Practical Guide to Applied Conformal Prediction in Python: Learn and Apply the Best Uncertainty Frameworks to Your Industry Applications</em>. Packt Publishing.
+</div>
+<div id="ref-niculescumizil2005predicting" class="csl-entry" role="listitem">
+Niculescu-Mizil, Alexandru, and Rich Caruana. 2005. <span>“Predicting Good Probabilities with Supervised Learning.”</span> <em>Proceedings of the 22nd International Conference on Machine Learning</em>, 625–32. <a href="https://doi.org/10.1145/1102351.1102430">https://doi.org/10.1145/1102351.1102430</a>.
+</div>
+<div id="ref-vanbelle2022inductive" class="csl-entry" role="listitem">
+Van Belle, Rafaël, Charles Van Damme, Hendrik Tytgat, and Jochen De Weerdt. 2022. <span>“Inductive Graph Representation Learning for Fraud Detection.”</span> <em>Expert Systems with Applications</em> 193: 116463. <a href="https://doi.org/10.1016/j.eswa.2021.116463">https://doi.org/10.1016/j.eswa.2021.116463</a>.
+</div>
+<div id="ref-verbeke2012newinsights" class="csl-entry" role="listitem">
+Verbeke, Wouter, Karel Dejaeger, David Martens, Joon Hur, and Bart Baesens. 2012. <span>“New Insights into Churn Prediction in the Telecommunication Sector: A Profit Driven Data Mining Approach.”</span> <em>European Journal of Operational Research</em> 218 (1): 211–29. <a href="https://doi.org/10.1016/j.ejor.2011.09.031">https://doi.org/10.1016/j.ejor.2011.09.031</a>.
+</div>
+<div id="ref-verbraken2013novel" class="csl-entry" role="listitem">
+Verbraken, Thomas, Wouter Verbeke, and Bart Baesens. 2013. <span>“A Novel Profit Maximizing Metric for Measuring Classification Performance of Customer Churn Prediction Models.”</span> <em>IEEE Transactions on Knowledge and Data Engineering</em> 25 (5): 961–73. <a href="https://doi.org/10.1109/TKDE.2012.50">https://doi.org/10.1109/TKDE.2012.50</a>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/05-data-preparation.html" class="pagination-link" aria-label="Data Preparation">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Preparation</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/appendix-installation.html" class="pagination-link" aria-label="Installation Guide">
+        <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Installation Guide</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

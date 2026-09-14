@@ -1,0 +1,2317 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>5&nbsp; Data Preparation – Introduction to Data Analytics for Business and Economics</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/06-model-evaluation.html" rel="next">
+<link href="../chapters/04-data-exploration.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-5ccb035bea26c1e21f80f44cf7c27909.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/05-data-preparation.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Preparation</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Introduction to Data Analytics for Business and Economics</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-python-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Python Basics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-data-understanding.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Understanding</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-data-exploration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Exploration</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-data-preparation.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Preparation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/06-model-evaluation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Model Evaluation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-installation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Installation Guide</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#value-transformations" id="toc-value-transformations" class="nav-link active" data-scroll-target="#value-transformations"><span class="header-section-number">5.1</span> Value transformations</a>
+  <ul class="collapse">
+  <li><a href="#continuous-categorization-binning" id="toc-continuous-categorization-binning" class="nav-link" data-scroll-target="#continuous-categorization-binning"><span class="header-section-number">5.1.1</span> Continuous categorization (binning)</a></li>
+  </ul></li>
+  <li><a href="#value-representations" id="toc-value-representations" class="nav-link" data-scroll-target="#value-representations"><span class="header-section-number">5.2</span> Value representations</a>
+  <ul class="collapse">
+  <li><a href="#one-hot-encoding" id="toc-one-hot-encoding" class="nav-link" data-scroll-target="#one-hot-encoding"><span class="header-section-number">5.2.1</span> One-hot encoding</a></li>
+  <li><a href="#weight-of-evidence" id="toc-weight-of-evidence" class="nav-link" data-scroll-target="#weight-of-evidence"><span class="header-section-number">5.2.2</span> Weight of Evidence</a></li>
+  </ul></li>
+  <li><a href="#feature-engineering" id="toc-feature-engineering" class="nav-link" data-scroll-target="#feature-engineering"><span class="header-section-number">5.3</span> Feature engineering</a>
+  <ul class="collapse">
+  <li><a href="#non-linear-relationships" id="toc-non-linear-relationships" class="nav-link" data-scroll-target="#non-linear-relationships"><span class="header-section-number">5.3.1</span> Non-linear relationships</a></li>
+  </ul></li>
+  <li><a href="#standardization-and-normalization" id="toc-standardization-and-normalization" class="nav-link" data-scroll-target="#standardization-and-normalization"><span class="header-section-number">5.4</span> Standardization and normalization</a></li>
+  <li><a href="#variable-selection" id="toc-variable-selection" class="nav-link" data-scroll-target="#variable-selection"><span class="header-section-number">5.5</span> Variable selection</a>
+  <ul class="collapse">
+  <li><a href="#filter-methods" id="toc-filter-methods" class="nav-link" data-scroll-target="#filter-methods"><span class="header-section-number">5.5.1</span> Filter methods</a></li>
+  </ul></li>
+  <li><a href="#ordinal-encoding" id="toc-ordinal-encoding" class="nav-link" data-scroll-target="#ordinal-encoding"><span class="header-section-number">5.6</span> Ordinal encoding</a></li>
+  <li><a href="#putting-it-all-together" id="toc-putting-it-all-together" class="nav-link" data-scroll-target="#putting-it-all-together"><span class="header-section-number">5.7</span> Putting it all together</a></li>
+  <li><a href="#where-we-go-from-here" id="toc-where-we-go-from-here" class="nav-link" data-scroll-target="#where-we-go-from-here"><span class="header-section-number">5.8</span> Where we go from here</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Preparation</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>The previous chapter cleaned up <code>train_data</code> and <code>test_data</code>: missing values imputed, negative ages fixed, multicollinearity flagged. That’s a proper dataset to explore, but most of it still can’t go into a predictive model as-is: categorical columns need to become numbers, some continuous variables would benefit from being simplified, and every feature needs to be on a scale a model can work with. That’s what <strong>data preparation</strong> covers.</p>
+<p>It’s easy to underestimate how much this step matters. Some authors argue that it’s the data preparation, not the algorithm, that mainly drives predictive performance <span class="citation" data-cites="coussement2017comparative">(<a href="#ref-coussement2017comparative" role="doc-biblioref">Coussement et al. 2017</a>)</span>. Variables get transformed or reduced for a few reasons: to be interpretable, to overcome bias, to actually be usable by a given model, and simply to carry more predictive value than the raw column did. It’s also the most time-consuming step of the whole process, which is exactly why it’s worth doing carefully.</p>
+<p>Broadly, this chapter covers four things:</p>
+<ul>
+<li><strong>Value transformation</strong>: turning continuous variables into simpler categorical ones.</li>
+<li><strong>Value representation</strong>: turning categorical variables into a numeric form a model can use.</li>
+<li><strong>Feature engineering</strong>: creating new features and transforming existing ones to help a model fit better.</li>
+<li><strong>Variable selection</strong>: reducing the number of features to only those that actually carry predictive value.</li>
+</ul>
+<p>Let’s pick up where the previous chapter left off, and load the cleaned training and test sets:</p>
+<div id="58f70af4" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>train_complete <span class="op">=</span> pd.read_parquet(<span class="st">"../data/raw/train_complete.parquet"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>train_data <span class="op">=</span> train_complete.drop(columns<span class="op">=</span>[<span class="st">"target"</span>])</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>train_target <span class="op">=</span> train_complete[<span class="st">"target"</span>]</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>test_complete <span class="op">=</span> pd.read_parquet(<span class="st">"../data/raw/test_complete.parquet"</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>test_data <span class="op">=</span> test_complete.drop(columns<span class="op">=</span>[<span class="st">"target"</span>])</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>test_target <span class="op">=</span> test_complete[<span class="st">"target"</span>]</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Training data shape: </span><span class="sc">{</span>train_data<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>train_data[<span class="st">"Age"</span>].describe()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Training data shape: (589, 41)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>count    589.000000
+mean      60.779287
+std       10.723909
+min        1.000000
+25%       61.000000
+50%       61.000000
+75%       61.000000
+max       96.000000
+Name: Age, dtype: float64</code></pre>
+</div>
+</div>
+<section id="value-transformations" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="value-transformations"><span class="header-section-number">5.1</span> Value transformations</h2>
+<section id="continuous-categorization-binning" class="level3" data-number="5.1.1">
+<h3 data-number="5.1.1" class="anchored" data-anchor-id="continuous-categorization-binning"><span class="header-section-number">5.1.1</span> Continuous categorization (binning)</h3>
+<p><strong>Binning</strong> (also called discretization, coarse-classification, or classing) transforms a continuous variable into a categorical one with a handful of ranges instead of many individual values. There are two main reasons to do this:</p>
+<ul>
+<li><strong>Fewer parameters to estimate:</strong> A categorical variable with a lot of levels (e.g., in our case the <code>ZIP</code> variable has well over a hundred) needs one dummy variable per level (minus one) in an analytical model. Grouping those levels into a handful of bins keeps the model far more compact and robust.</li>
+<li><strong>Capturing non-monotonic relationships in linear models:</strong> A linear model can only fit a straight line. If the true relationship between a variable and the outcome isn’t monotonic, binning lets a linear model approximate it anyway, since each bin gets its own coefficient. For example, in a real credit-scoring model <span class="citation" data-cites="vangool2012credit">Van Gool et al. (<a href="#ref-vangool2012credit" role="doc-biblioref">2012</a>)</span> find exactly this for requested loan duration: the riskiest loans turn out to be the medium-term ones, not the longest ones. This is a pattern a single linear term would have missed entirely, and one their binned model picks up directly.</li>
+</ul>
+<p><a href="#fig-binning-recency" class="quarto-xref">Figure&nbsp;<span>5.1</span></a> illustrates the second point with a hypothetical marketing example: a campaign’s response rate against how many days it’s been since the customer was last contacted. Response is low right after contact (fatigue since nobody likes being messaged twice in a row), climbs to a “sweet spot” a few weeks out, then drops again as the customer disengages. A straight line can’t capture this rise-then-plateau-then-fall pattern. What it actually does is creating a misleading representation of the true relationship. Binning recency into a handful of ranges lets even a plain linear model pick up the sweet spot, since each range gets its own estimated response level.</p>
+<div id="fig-binning-recency" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Scatter plot of an inverted-U relationship between days since last contact and campaign response rate, with a shallow, misleading linear fit and a five-step binned function closely tracking the true rise-then-fall pattern.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-binning-recency-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../images/ch05-fig-binning-recency.png" class="img-fluid figure-img" alt="Scatter plot of an inverted-U relationship between days since last contact and campaign response rate, with a shallow, misleading linear fit and a five-step binned function closely tracking the true rise-then-fall pattern.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-binning-recency-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.1: Why binning helps a linear model fit a non-monotonic relationship: a straight line (orange) averages away the rise-and-fall pattern, while a binned step function (navy) tracks it closely.
+</figcaption>
+</figure>
+</div>
+<p>Two very basic binning strategies are <strong>equal-width binning</strong> (bins created with the same range of values) and <strong>equal-frequency binning</strong> (bins containing the same number of observations). Both are simple but don’t take the target variable into account at all. For categorical variables, the equivalent ideas are <strong>grouping</strong> (combining several levels into one) and <strong>remapping</strong> (rebuilding categories around their relationship with the target, e.g.&nbsp;via a chi-square analysis).</p>
+<p><code>sklearn</code> has <code>KBinsDiscretizer</code>, but <code>feature-engine</code> offers more convenient binning transformers:</p>
+<ul>
+<li><strong><code>EqualFrequencyDiscretiser</code></strong>: equal-frequency bins.</li>
+<li><strong><code>EqualWidthDiscretiser</code></strong>: equal-width bins.</li>
+<li><strong><code>DecisionTreeDiscretiser</code></strong>: uses a decision tree to find the optimal split points taking into account the target variable (out of scope here).</li>
+</ul>
+<p>As with everything so far, binning is <em>fit</em> on the training data only, then <em>applied</em> or <em>transformed</em> to the test set:</p>
+<div id="d18ac275" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> feature_engine.discretisation <span class="im">import</span> EqualFrequencyDiscretiser, EqualWidthDiscretiser</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>freq_binner <span class="op">=</span> EqualFrequencyDiscretiser(variables<span class="op">=</span>[<span class="st">"Age"</span>], q<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>train_freq_binned <span class="op">=</span> freq_binner.fit_transform(train_data)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>width_binner <span class="op">=</span> EqualWidthDiscretiser(variables<span class="op">=</span>[<span class="st">"Age"</span>], bins<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>train_width_binned <span class="op">=</span> width_binner.fit_transform(train_data)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Equal-frequency bin edges (10 bins):"</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(freq_binner.binner_dict_[<span class="st">"Age"</span>])</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Equal-width bin edges (3 bins):"</span>)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(width_binner.binner_dict_[<span class="st">"Age"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Equal-frequency bin edges (10 bins):
+[-inf, np.float64(47.0), np.float64(59.0), np.float64(61.0), np.float64(64.0), np.float64(74.0), inf]
+
+Equal-width bin edges (3 bins):
+[-inf, np.float64(32.66666666666667), np.float64(64.33333333333334), inf]</code></pre>
+</div>
+</div>
+<p>Whether a binning is actually <em>useful</em> is a separate question from whether it’s <em>possible</em>. The way to check is to look at how well it separates the outcome you care about. If churn rate differs clearly and fairly monotonically across bins, and each bin still has enough observations to be reliable, the binning is doing real work:</p>
+<div id="86619d40" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>train_freq_binned[<span class="st">"churn"</span>] <span class="op">=</span> train_target</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>train_width_binned[<span class="st">"churn"</span>] <span class="op">=</span> train_target</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>freq_churn <span class="op">=</span> train_freq_binned.groupby(<span class="st">"Age"</span>)[<span class="st">"churn"</span>].agg([<span class="st">"mean"</span>, <span class="st">"count"</span>])</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>width_churn <span class="op">=</span> train_width_binned.groupby(<span class="st">"Age"</span>)[<span class="st">"churn"</span>].agg([<span class="st">"mean"</span>, <span class="st">"count"</span>])</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>))</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>freq_churn[<span class="st">"mean"</span>].plot(kind<span class="op">=</span><span class="st">"bar"</span>, ax<span class="op">=</span>ax1, title<span class="op">=</span><span class="st">"Churn Rate: Equal-Frequency Bins"</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>width_churn[<span class="st">"mean"</span>].plot(kind<span class="op">=</span><span class="st">"bar"</span>, ax<span class="op">=</span>ax2, title<span class="op">=</span><span class="st">"Churn Rate: Equal-Width Bins"</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax <span class="kw">in</span> [ax1, ax2]:</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">"Churn Rate"</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="05-data-preparation_files/figure-html/cell-4-output-1.png" width="1144" height="375" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The bars are worth reading with actual numbers next to them:</p>
+<div id="4c0abbf1" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Equal-frequency bins (target: 10):"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(freq_churn)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Equal-width bins (target: 3):"</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(width_churn)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Equal-frequency bins (target: 10):
+         mean  count
+Age                 
+0    0.349206     63
+1    0.315789     57
+2    0.273556    329
+3    0.125000     24
+4    0.183333     60
+5    0.250000     56
+
+Equal-width bins (target: 3):
+         mean  count
+Age                 
+0    0.533333     15
+1    0.272926    458
+2    0.215517    116</code></pre>
+</div>
+</div>
+<p>Two things stand out:</p>
+<ul>
+<li><strong>Equal-frequency only produced 6 bins, not the requested 10.</strong> <code>Age</code> has a lot of repeated values, so several of the 10 requested quantile edges collapsed onto the same value. This is very common in quantile-based binning whenever a variable has many ties.</li>
+<li><strong>Neither binning is straightforwardly reliable.</strong> Equal-width binning <em>looks</em> like the cleaner story (e.g., churn drops monotonically from bin to bin) but its first bin holds only 15 observations, far too few to trust a 53% churn rate from. Equal-frequency binning has properly sized bins throughout, but the churn rate across them doesn’t move monotonically at all (35% → 32% → 27% → 13% → 18% → 25%): it dips, then partly recovers.</li>
+</ul>
+<p>The take-away: binning <code>Age</code> this way doesn’t reveal a strong, trustworthy relationship with churn here. It means <code>Age</code> on its own is a weaker predictor of churn than the binning exercise might have hoped to show, and any apparent pattern (like the width-binned one) needs its bin sizes checked before it’s believed. Therefore, we’ll leave <code>Age</code> as a continuous variable for now, and move on to the next step: representing categorical variables numerically.</p>
+</section>
+</section>
+<section id="value-representations" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="value-representations"><span class="header-section-number">5.2</span> Value representations</h2>
+<p>The most common way to represent a discrete variable numerically is <strong>one-hot (dummy) encoding</strong>. In short, each category of a variable becomes its own 0/1 column or <em>dummy variable</em>. For example, an <code>Income category</code> variable with levels <em>High</em>, <em>Medium</em>, and <em>Low</em> becomes three 0/1 columns, one of which is typically dropped as the <strong>reference category</strong> to avoid multicollinearity between the dummies:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Income category</th>
+<th>Income_high</th>
+<th>Income_medium</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>High</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>Medium</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>Low</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>One-hot encoding works well as long as the number of categories stays manageable. When a variable has many categories, it needs a different treatment, covered in its own section below (<strong>Weight of Evidence</strong>), since it’s important enough to deserve one.</p>
+<section id="one-hot-encoding" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="one-hot-encoding"><span class="header-section-number">5.2.1</span> One-hot encoding</h3>
+<p>For a categorical variable with a limited number of categories (say, fewer than 10), one-hot encoding is usually the right default since it is:</p>
+<ul>
+<li><strong>Simple to interpret</strong>: each dummy is just presence/absence of one category.</li>
+<li><strong>No information loss</strong>: every original category is preserved (unlike binning).</li>
+<li><strong>Broadly compatible</strong>: works with linear models and tree-based models alike.</li>
+</ul>
+<p>One thing to watch for in a predictive setting: training and test data need to end up with the <em>same</em> dummy columns. If a category shows up only in the test set, a model trained without it simply can’t make use of it. <code>sklearn</code>’s <code>OneHotEncoder</code>, fit on the training set with <code>handle_unknown="ignore"</code>, handles this cleanly. Any category the test set has that training didn’t will just come out as all zeros, rather than raising an error.</p>
+<p>Let’s apply it to <code>Gender</code> and <code>District</code>:</p>
+<div id="7b44668a" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> OneHotEncoder</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>categorical_vars <span class="op">=</span> [<span class="st">"Gender"</span>, <span class="st">"District"</span>]</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>train_cats <span class="op">=</span> {var: <span class="bu">set</span>(train_data[var].unique()) <span class="cf">for</span> var <span class="kw">in</span> categorical_vars}</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>test_cats <span class="op">=</span> {var: <span class="bu">set</span>(test_data[var].unique()) <span class="cf">for</span> var <span class="kw">in</span> categorical_vars}</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>inconsistencies <span class="op">=</span> {var: test_cats[var] <span class="op">-</span> train_cats[var] <span class="cf">for</span> var <span class="kw">in</span> categorical_vars <span class="cf">if</span> test_cats[var] <span class="op">!=</span> train_cats[var]}</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> inconsistencies:</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Categories in test but not train: </span><span class="sc">{</span>inconsistencies<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Train and test sets have consistent categories"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Categories in test but not train: {'District': {np.float64(4.0)}}</code></pre>
+</div>
+</div>
+<div id="73c4ce6c" class="cell" data-execution_count="6">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># drop="first" avoids the dummy-variable multicollinearity from the reference category above</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># handle_unknown="ignore" sets any unseen test-time category to all zeros</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>dummy_encoder <span class="op">=</span> OneHotEncoder(drop<span class="op">=</span><span class="st">"first"</span>, sparse_output<span class="op">=</span><span class="va">False</span>, handle_unknown<span class="op">=</span><span class="st">"ignore"</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>dummy_encoder.fit(train_data[categorical_vars])</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>feature_names <span class="op">=</span> dummy_encoder.get_feature_names_out(categorical_vars)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Feature names after dummy encoding: </span><span class="sc">{</span>feature_names<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>train_dummies <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    dummy_encoder.transform(train_data[categorical_vars]),</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>feature_names, index<span class="op">=</span>train_data.index,</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>test_dummies <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    dummy_encoder.transform(test_data[categorical_vars]),</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>feature_names, index<span class="op">=</span>test_data.index,</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Training dummies shape: </span><span class="sc">{</span>train_dummies<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Test dummies shape: </span><span class="sc">{</span>test_dummies<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>train_dummies.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Feature names after dummy encoding: ['Gender_M' 'District_2.0' 'District_5.0' 'District_6.0' 'District_7.0'
+ 'District_8.0' 'District_9.0']
+Training dummies shape: (589, 7)
+Test dummies shape: (589, 7)</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/Users/matthiasbogaert/anaconda3/envs/DA2026/lib/python3.11/site-packages/sklearn/preprocessing/_encoders.py:262: UserWarning: Found unknown categories in columns [1] during transform. These unknown categories will be encoded as all zeros
+  warnings.warn(msg, UserWarning)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Gender_M</th>
+<th data-quarto-table-cell-role="th">District_2.0</th>
+<th data-quarto-table-cell-role="th">District_5.0</th>
+<th data-quarto-table-cell-role="th">District_6.0</th>
+<th data-quarto-table-cell-role="th">District_7.0</th>
+<th data-quarto-table-cell-role="th">District_8.0</th>
+<th data-quarto-table-cell-role="th">District_9.0</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>1.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>1.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Finally, swap the original categorical columns for their dummy versions:</p>
+<div id="9e6ef3a8" class="cell" data-execution_count="7">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>train_with_dummies <span class="op">=</span> pd.concat([train_data.drop(columns<span class="op">=</span>categorical_vars), train_dummies], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>test_with_dummies <span class="op">=</span> pd.concat([test_data.drop(columns<span class="op">=</span>categorical_vars), test_dummies], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Training data with dummies shape: </span><span class="sc">{</span>train_with_dummies<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Test data with dummies shape: </span><span class="sc">{</span>test_with_dummies<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Training data with dummies shape: (589, 46)
+Test data with dummies shape: (589, 46)</code></pre>
+</div>
+</div>
+</section>
+<section id="weight-of-evidence" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="weight-of-evidence"><span class="header-section-number">5.2.2</span> Weight of Evidence</h3>
+<p>Two variables in our data, <code>ZIP</code> and <code>StreeID</code>, are still not usable: they have far too many categories for one-hot encoding to be practical. Turning either one into dummies would blow up the number of predictors and increase computation time enormously. There are two common ways to handle this:</p>
+<ol type="1">
+<li><strong>Keep only the top categories</strong> by frequency, grouping everything else into “other”. Simple, but throws away information.</li>
+<li><strong>Weight of Evidence (WoE)</strong>, which is much better suited to high-cardinality variables.</li>
+</ol>
+<p>Let’s first check just how high the cardinality actually is:</p>
+<div id="967d6878" class="cell" data-execution_count="8">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>high_cardinality_vars <span class="op">=</span> [<span class="st">"ZIP"</span>, <span class="st">"StreeID"</span>]</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> var <span class="kw">in</span> high_cardinality_vars:</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    unique_count <span class="op">=</span> train_with_dummies[var].nunique()</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>var<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>unique_count<span class="sc">}</span><span class="ss"> unique categories"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>ZIP: 164 unique categories
+StreeID: 562 unique categories</code></pre>
+</div>
+</div>
+<p><strong>Weight of Evidence</strong> summarizes a categorical variable into a single numeric column, computed per category as:</p>
+<p><span class="math display">\[\text{WOE} = \ln\left(\frac{\text{\% of positives}}{\text{\% of negatives}}\right)\]</span></p>
+<p>where “positive” and “negative” refer to the two classes of a binary target (here, churners and non-churners respectively) matching how <code>churn</code> is coded (1/0) throughout this book. A positive WoE means a category has relatively more positives (churners) than negatives; a negative WoE means the opposite. It’s widely used in practice, particularly in credit scoring <span class="citation" data-cites="vangool2012credit">(<a href="#ref-vangool2012credit" role="doc-biblioref">Van Gool et al. 2012</a>)</span>.</p>
+<p>WoE belongs to a broader family of techniques called <strong>target statistics</strong> (also called target encoding): replace each category with some summary of the target computed within that category. The simplest version computes each category’s raw target mean, which we’ll use directly later in this chapter for ordinal variables. That simplest version has a real weakness on a variable like <code>ZIP</code>, though: many categories have only a handful of observations, and a mean computed from three or four rows is noise dressed up as a number, not a genuine signal. <span class="citation" data-cites="micci-barreca2001preprocessing">Micci-Barreca (<a href="#ref-micci-barreca2001preprocessing" role="doc-biblioref">2001</a>)</span> shows this is exactly why a per-category target mean is normally blended with the overall mean (shrinkage) rather than used raw, and <span class="citation" data-cites="prokhorenkova2018catboost">Prokhorenkova et al. (<a href="#ref-prokhorenkova2018catboost" role="doc-biblioref">2018</a>)</span> describes the same failure mode, there called <em>target leakage</em>, as the reason more recent methods such as CatBoost’s ordered target statistics exist at all. That’s a reliability problem shared by <em>any</em> target statistic, WoE included, which is exactly why grouping rare categories comes first (Step 2 below), before computing anything: it protects whichever statistic you use from being estimated on an unreliably small group.</p>
+<p>So why WoE specifically instead of the raw target mean, even after that protection is in place? Two reasons. First, <span class="citation" data-cites="moeyersoms2015highcardinality">Moeyersoms and Martens (<a href="#ref-moeyersoms2015highcardinality" role="doc-biblioref">2015</a>)</span> directly compared a raw target-ratio encoding against WoE on a real churn-prediction dataset and found WoE gave the best results across several classifiers, including logistic regression. Second, its scale fits a model like logistic regression more naturally: WoE is a log-odds transform, and logistic regression predicts log-odds, not probability, so a WoE-encoded category sits on the same scale the model is actually estimating, whereas a raw target mean (a bounded probability) doesn’t, and tends to behave less smoothly as a category’s rate approaches 0% or 100%.</p>
+<p>A closely related metric is the <strong>Information Value (IV)</strong>, which sums a weighted version of the WoE across all categories of a variable into a single number summarizing how predictive that whole variable is: <span class="math inline">\(\text{IV} = \sum_i (\%\text{positive}_i - \%\text{negative}_i) \times \text{WOE}_i\)</span>.</p>
+<p>An illustrative example below shows how to compute WoE and IV for a hypothetical <code>PaymentType</code> variable against churn (positive = churner, negative = non-churner):</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>PaymentType</th>
+<th>Count</th>
+<th>Distr. Count</th>
+<th>Positive</th>
+<th>Distr. Positive</th>
+<th>Negative</th>
+<th>Distr. Negative</th>
+<th>WOE</th>
+<th>IV</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Direct debit</td>
+<td>800</td>
+<td>40.00%</td>
+<td>50</td>
+<td>13.51%</td>
+<td>750</td>
+<td>46.01%</td>
+<td>−1.2252</td>
+<td>0.3982</td>
+</tr>
+<tr class="even">
+<td>Bank transfer</td>
+<td>500</td>
+<td>25.00%</td>
+<td>80</td>
+<td>21.62%</td>
+<td>420</td>
+<td>25.77%</td>
+<td>−0.1754</td>
+<td>0.0073</td>
+</tr>
+<tr class="odd">
+<td>Credit card</td>
+<td>450</td>
+<td>22.50%</td>
+<td>120</td>
+<td>32.43%</td>
+<td>330</td>
+<td>20.25%</td>
+<td>+0.4712</td>
+<td>0.0574</td>
+</tr>
+<tr class="even">
+<td>Cash</td>
+<td>250</td>
+<td>12.50%</td>
+<td>120</td>
+<td>32.43%</td>
+<td>130</td>
+<td>7.98%</td>
+<td>+1.4028</td>
+<td>0.3431</td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td><strong>2000</strong></td>
+<td></td>
+<td><strong>370</strong></td>
+<td></td>
+<td><strong>1630</strong></td>
+<td></td>
+<td></td>
+<td><strong>0.8060</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Cash customers churn far more than the base rate (a strongly positive WoE), direct debit customers churn far less (a strongly negative WoE), and the variable’s total IV of 0.81 would count as a <strong>strong</strong> predictor by the usual rule of thumb:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>IV</th>
+<th>Predictive power</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>&lt; 0.02</td>
+<td>Unpredictive</td>
+</tr>
+<tr class="even">
+<td>0.02 to 0.1</td>
+<td>Weak</td>
+</tr>
+<tr class="odd">
+<td>0.1 to 0.3</td>
+<td>Medium</td>
+</tr>
+<tr class="even">
+<td>&gt; 0.3</td>
+<td>Strong</td>
+</tr>
+</tbody>
+</table>
+<p>Two things make WoE attractive for high-cardinality variables: it <strong>reduces dimensionality</strong> (many categories become one numeric column), and it creates a <strong>monotonic relationship</strong> with the target, which linear models can exploit directly.</p>
+<p>Implementing WoE takes a few steps: check data quality, group rare categories, fit WoE, then apply it to build the final dataset.</p>
+<p><strong>Step 1: check data quality.</strong> WoE breaks down for a category that’s 100% or 0% one class (the log ratio is undefined), so it’s worth checking how common that is per variable first. A rough heuristic: if more than about 80% of a variable’s categories are problematic like this, it’s probably not a good candidate for WoE at all.</p>
+<div id="8d7b4473" class="cell" data-execution_count="9">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>train_demo <span class="op">=</span> train_with_dummies.copy()</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>train_demo[<span class="st">"churn"</span>] <span class="op">=</span> train_target</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> var <span class="kw">in</span> high_cardinality_vars:</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    churn_analysis <span class="op">=</span> train_demo.groupby(var).agg(</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>        Total_Count<span class="op">=</span>(<span class="st">"churn"</span>, <span class="st">"count"</span>), Churn_Count<span class="op">=</span>(<span class="st">"churn"</span>, <span class="st">"sum"</span>), Churn_Rate<span class="op">=</span>(<span class="st">"churn"</span>, <span class="st">"mean"</span>),</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    ).<span class="bu">round</span>(<span class="dv">3</span>)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    problematic <span class="op">=</span> churn_analysis[(churn_analysis[<span class="st">"Churn_Rate"</span>] <span class="op">==</span> <span class="dv">0</span>) <span class="op">|</span> (churn_analysis[<span class="st">"Churn_Rate"</span>] <span class="op">==</span> <span class="dv">1</span>)]</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>var<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span><span class="bu">len</span>(churn_analysis)<span class="sc">}</span><span class="ss"> categories, </span><span class="sc">{</span><span class="bu">len</span>(problematic)<span class="sc">}</span><span class="ss"> problematic "</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>          <span class="ss">f"(</span><span class="sc">{</span><span class="bu">len</span>(problematic) <span class="op">/</span> <span class="bu">len</span>(churn_analysis)<span class="sc">:.0%}</span><span class="ss">)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>ZIP: 164 categories, 93 problematic (57%)
+StreeID: 562 categories, 555 problematic (99%)</code></pre>
+</div>
+</div>
+<p><code>StreeID</code> turns out to be almost entirely problematic categories, so we’ll exclude it from WoE and just drop it later. <code>ZIP</code> looks usable.</p>
+<p><strong>Step 2: group rare categories.</strong> Before fitting WoE, grouping infrequent categories into a single “Rare” bucket with <code>RareLabelEncoder</code> makes the resulting WoE values more stable:</p>
+<div id="ba8aa925" class="cell" data-execution_count="10">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> feature_engine.encoding <span class="im">import</span> RareLabelEncoder</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>suitable_vars <span class="op">=</span> [<span class="st">"ZIP"</span>]</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>rare_encoder <span class="op">=</span> RareLabelEncoder(tol<span class="op">=</span><span class="fl">0.02</span>, n_categories<span class="op">=</span><span class="dv">5</span>, variables<span class="op">=</span>suitable_vars, ignore_format<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>train_rare <span class="op">=</span> rare_encoder.fit_transform(train_demo[suitable_vars])</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>train_rare[<span class="st">"churn"</span>] <span class="op">=</span> train_demo[<span class="st">"churn"</span>].values</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>test_demo <span class="op">=</span> test_with_dummies.copy()</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>test_rare <span class="op">=</span> rare_encoder.transform(test_demo[suitable_vars])</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"ZIP: </span><span class="sc">{</span>train_rare[<span class="st">'ZIP'</span>]<span class="sc">.</span>nunique()<span class="sc">}</span><span class="ss"> categories after grouping (was </span><span class="sc">{</span>train_demo[<span class="st">'ZIP'</span>]<span class="sc">.</span>nunique()<span class="sc">}</span><span class="ss">)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>ZIP: 7 categories after grouping (was 164)</code></pre>
+</div>
+</div>
+<p><strong>Step 3: fit WoE on the training set, apply to both:</strong></p>
+<div id="0f1bd750" class="cell" data-execution_count="11">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> feature_engine.encoding <span class="im">import</span> WoEEncoder</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>woe_encoder <span class="op">=</span> WoEEncoder(variables<span class="op">=</span>suitable_vars, ignore_format<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>woe_encoder.fit(train_rare[suitable_vars], train_rare[<span class="st">"churn"</span>])</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>train_woe <span class="op">=</span> woe_encoder.transform(train_rare[suitable_vars])</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>test_woe <span class="op">=</span> woe_encoder.transform(test_rare[suitable_vars])</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>woe_summary <span class="op">=</span> pd.DataFrame({<span class="st">"Category"</span>: train_rare[<span class="st">"ZIP"</span>], <span class="st">"WoE"</span>: train_woe[<span class="st">"ZIP"</span>]}).drop_duplicates()</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>woe_summary <span class="op">=</span> woe_summary.merge(train_rare.groupby(<span class="st">"ZIP"</span>)[<span class="st">"churn"</span>].agg([<span class="st">"count"</span>, <span class="st">"mean"</span>]), left_on<span class="op">=</span><span class="st">"Category"</span>, right_index<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>woe_summary.columns <span class="op">=</span> [<span class="st">"Category"</span>, <span class="st">"WoE"</span>, <span class="st">"Count"</span>, <span class="st">"Churn_Rate"</span>]</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>woe_summary.sort_values(<span class="st">"WoE"</span>, ascending<span class="op">=</span><span class="va">False</span>).<span class="bu">round</span>(<span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Category</th>
+<th data-quarto-table-cell-role="th">WoE</th>
+<th data-quarto-table-cell-role="th">Count</th>
+<th data-quarto-table-cell-role="th">Churn_Rate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">9</th>
+<td>3740.0</td>
+<td>0.5335</td>
+<td>13</td>
+<td>0.3846</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">0</th>
+<td>3550.0</td>
+<td>0.4927</td>
+<td>16</td>
+<td>0.3750</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>3500.0</td>
+<td>0.1562</td>
+<td>20</td>
+<td>0.3000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">18</th>
+<td>3530.0</td>
+<td>0.0872</td>
+<td>14</td>
+<td>0.2857</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">1</th>
+<td>Rare</td>
+<td>-0.0261</td>
+<td>494</td>
+<td>0.2632</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">47</th>
+<td>3630.0</td>
+<td>-0.2005</td>
+<td>13</td>
+<td>0.2308</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">12</th>
+<td>3600.0</td>
+<td>-0.3182</td>
+<td>19</td>
+<td>0.2105</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p><strong>Step 4: assemble the final dataset</strong>, replacing <code>ZIP</code> with its WoE column and dropping <code>StreeID</code> entirely:</p>
+<div id="ac959a59" class="cell" data-execution_count="12">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>train_final <span class="op">=</span> train_with_dummies.copy()</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>test_final <span class="op">=</span> test_with_dummies.copy()</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>train_final[<span class="st">"ZIP_woe"</span>] <span class="op">=</span> train_woe[<span class="st">"ZIP"</span>].values</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>test_final[<span class="st">"ZIP_woe"</span>] <span class="op">=</span> test_woe[<span class="st">"ZIP"</span>].values</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>train_final <span class="op">=</span> train_final.drop(columns<span class="op">=</span>[<span class="st">"ZIP"</span>, <span class="st">"StreeID"</span>])</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>test_final <span class="op">=</span> test_final.drop(columns<span class="op">=</span>[<span class="st">"ZIP"</span>, <span class="st">"StreeID"</span>])</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Training set: </span><span class="sc">{</span>train_final<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Test set: </span><span class="sc">{</span>test_final<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Training set: (589, 45)
+Test set: (589, 45)</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Dummy encoding vs.&nbsp;WoE: use both, for different variables
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>They’re not competitors and they try to solve the same problem, namely turning a categorical variable into numbers, but they sit at opposite ends of the cardinality spectrum. Dummy encoding preserves the most detail per category but doesn’t scale well after 10 categories; WoE scales to hundreds of categories and guarantees a monotonic relationship with the target, at the cost of collapsing each category down to a single number. In practice, a single dataset often needs both at once, depending on the needs of different columnsn, which is exactly as we just did.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="feature-engineering" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="feature-engineering"><span class="header-section-number">5.3</span> Feature engineering</h2>
+<p><strong>Feature engineering</strong> is the process of creating new features, or transforming existing ones, to help a model perform better in terms of predictive performance, interpretability, or both. It pays to keep the target model’s biases in mind: a linear model needs features that separate the classes roughly linearly, so a raw date-of-birth column is far less useful to it than an age computed from it.</p>
+<p><strong>Recency, Frequency, and Monetary value (RFM)</strong> features are a classic example of this kind of engineering <span class="citation" data-cites="baesens2021dataengineering">(<a href="#ref-baesens2021dataengineering" role="doc-biblioref">Baesens et al. 2021</a>)</span>: instead of feeding a model per-transaction data, summarize each customer’s behavior along three simple dimensions:</p>
+<ul>
+<li><strong>Recency</strong>: how long since the customer’s last transaction, payment, or contact.</li>
+<li><strong>Frequency</strong>: how often the customer transacts, e.g.&nbsp;per month or per year.</li>
+<li><strong>Monetary</strong>: how much value those transactions carry, e.g.&nbsp;average, minimum, or maximum spend.</li>
+</ul>
+<p>A fourth dimension, <strong>length of relationship</strong> (time since the customer’s <em>first</em> transaction), is often added alongside the classic three. In fact, it’s closely related to the customer-tenure and duration modeling used in CRM attrition research <span class="citation" data-cites="VandenPoel2004">(<a href="#ref-VandenPoel2004" role="doc-biblioref">Poel and Larivière 2004</a>)</span>. Each dimension can also be operationalized in several ways: frequency over different windows (last month vs.&nbsp;last year), monetary value summarized differently (average vs.&nbsp;highest vs.&nbsp;lowest), or any of the above computed separately per product, time period, or channel. RFM-style features are heavily used in CRM <span class="citation" data-cites="buckinx2005customer">(<a href="#ref-buckinx2005customer" role="doc-biblioref">Buckinx and Van den Poel 2005</a>)</span>, fraud analytics <span class="citation" data-cites="baesens2021dataengineering">(<a href="#ref-baesens2021dataengineering" role="doc-biblioref">Baesens et al. 2021</a>)</span>, and credit scoring <span class="citation" data-cites="hsieh2004integrated">(<a href="#ref-hsieh2004integrated" role="doc-biblioref">Hsieh 2004</a>)</span>. Several of the aggregated columns already in our dataset (purchase counts, average discount, days since last payment) are exactly this kind of feature. We won’t build RFM features from scratch here since they’re already present, but it’s worth knowing the term and the reasoning behind it.</p>
+<p>Let’s take stock of where the dataset stands after value representation:</p>
+<div id="c18e3f50" class="cell" data-execution_count="13">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Shape: </span><span class="sc">{</span>train_final<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>train_final.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Shape: (589, 45)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ProductID_1_sum</th>
+<th data-quarto-table-cell-role="th">ProductID_2_sum</th>
+<th data-quarto-table-cell-role="th">ProductID_3_sum</th>
+<th data-quarto-table-cell-role="th">ProductID_4_sum</th>
+<th data-quarto-table-cell-role="th">ProductID_5_sum</th>
+<th data-quarto-table-cell-role="th">ProductID_6_sum</th>
+<th data-quarto-table-cell-role="th">ProductID_7_sum</th>
+<th data-quarto-table-cell-role="th">ProductID_8_sum</th>
+<th data-quarto-table-cell-role="th">Pattern_0000010_sum</th>
+<th data-quarto-table-cell-role="th">Pattern_0000100_sum</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">PaymentDate_rec_missing</th>
+<th data-quarto-table-cell-role="th">Gender_missing</th>
+<th data-quarto-table-cell-role="th">Gender_M</th>
+<th data-quarto-table-cell-role="th">District_2.0</th>
+<th data-quarto-table-cell-role="th">District_5.0</th>
+<th data-quarto-table-cell-role="th">District_6.0</th>
+<th data-quarto-table-cell-role="th">District_7.0</th>
+<th data-quarto-table-cell-role="th">District_8.0</th>
+<th data-quarto-table-cell-role="th">District_9.0</th>
+<th data-quarto-table-cell-role="th">ZIP_woe</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>3.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>...</td>
+<td>False</td>
+<td>False</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.492687</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>0.0</td>
+<td>2.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>...</td>
+<td>False</td>
+<td>False</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>-0.026106</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>3.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>...</td>
+<td>False</td>
+<td>False</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.156215</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>4.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>...</td>
+<td>False</td>
+<td>False</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>-0.026106</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>...</td>
+<td>False</td>
+<td>False</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>-0.026106</td>
+</tr>
+</tbody>
+</table>
+
+<p>5 rows × 45 columns</p>
+</div>
+</div>
+</div>
+<section id="non-linear-relationships" class="level3" data-number="5.3.1">
+<h3 data-number="5.3.1" class="anchored" data-anchor-id="non-linear-relationships"><span class="header-section-number">5.3.1</span> Non-linear relationships</h3>
+<section id="visual-inspection-for-non-linear-relationships" class="level4" data-number="5.3.1.1">
+<h4 data-number="5.3.1.1" class="anchored" data-anchor-id="visual-inspection-for-non-linear-relationships"><span class="header-section-number">5.3.1.1</span> Visual inspection for non-linear relationships</h4>
+<p>Before reaching for a transformation, it’s worth checking whether one is actually needed. A convenient way to do that for a binary target is to fit a logistic regression on everything, then plot each feature against the model’s <strong>logit</strong> (the log-odds it predicts). If a LOESS curve through that relationship tracks a straight line closely, the feature is already behaving roughly linearly with respect to the target; if it diverges, a transformation might help.</p>
+<div id="2d3c8a91" class="cell" data-execution_count="14">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>numerical_features <span class="op">=</span> [<span class="st">"TotalDiscount_mean"</span>, <span class="st">"PaymentDate_rec"</span>]</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>X_demo <span class="op">=</span> train_final[numerical_features].copy()</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>y_demo <span class="op">=</span> train_target.copy()</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> LogisticRegression(random_state<span class="op">=</span><span class="dv">42</span>, max_iter<span class="op">=</span><span class="dv">1000</span>)</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>model.fit(train_final, train_target)</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>probabilities <span class="op">=</span> np.clip(model.predict_proba(train_final)[:, <span class="dv">1</span>], <span class="fl">1e-10</span>, <span class="dv">1</span> <span class="op">-</span> <span class="fl">1e-10</span>)</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>logits <span class="op">=</span> np.log(probabilities <span class="op">/</span> (<span class="dv">1</span> <span class="op">-</span> probabilities))</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="bu">len</span>(numerical_features), figsize<span class="op">=</span>(<span class="dv">5</span> <span class="op">*</span> <span class="bu">len</span>(numerical_features), <span class="dv">4</span>))</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, feature <span class="kw">in</span> <span class="bu">enumerate</span>(numerical_features):</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>    sns.regplot(x<span class="op">=</span>X_demo[feature], y<span class="op">=</span>logits, ax<span class="op">=</span>axes[i], scatter_kws<span class="op">=</span>{<span class="st">"alpha"</span>: <span class="fl">0.5</span>, <span class="st">"s"</span>: <span class="dv">10</span>},</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>                lowess<span class="op">=</span><span class="va">True</span>, line_kws<span class="op">=</span>{<span class="st">"color"</span>: <span class="st">"red"</span>, <span class="st">"linewidth"</span>: <span class="dv">2</span>, <span class="st">"label"</span>: <span class="st">"Lowess smooth"</span>})</span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>    sns.regplot(x<span class="op">=</span>X_demo[feature], y<span class="op">=</span>logits, ax<span class="op">=</span>axes[i], scatter<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>                line_kws<span class="op">=</span>{<span class="st">"color"</span>: <span class="st">"blue"</span>, <span class="st">"linewidth"</span>: <span class="dv">2</span>, <span class="st">"linestyle"</span>: <span class="st">"--"</span>, <span class="st">"label"</span>: <span class="st">"Linear fit"</span>})</span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>    axes[i].set_xlabel(feature)</span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>    axes[i].set_ylabel(<span class="st">"Logit"</span>)</span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>    axes[i].set_title(<span class="ss">f"Logit vs </span><span class="sc">{</span>feature<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>    axes[i].legend()</span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>/Users/matthiasbogaert/anaconda3/envs/DA2026/lib/python3.11/site-packages/sklearn/linear_model/_logistic.py:599: ConvergenceWarning: lbfgs failed to converge after 1000 iteration(s) (status=1):
+STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT
+
+Increase the number of iterations to improve the convergence (max_iter=1000).
+You might also want to scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+Please also refer to the documentation for alternative solver options:
+    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+  n_iter_i = _check_optimize_result(
+/Users/matthiasbogaert/anaconda3/envs/DA2026/lib/python3.11/site-packages/statsmodels/nonparametric/smoothers_lowess.py:226: RuntimeWarning: invalid value encountered in divide
+  res, _ = _lowess(y, x, x, np.ones_like(x),</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="05-data-preparation_files/figure-html/cell-15-output-2.png" width="952" height="374" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The two lines are close for both features here, which suggests a fairly linear relationship already. <code>TotalDiscount_mean</code> diverges slightly more than <code>PaymentDate_rec</code>, so it’s the more plausible candidate for a transformation. Let’s try a couple anyway, to see what they’d actually buy us.</p>
+</section>
+<section id="polynomial-features" class="level4" data-number="5.3.1.2">
+<h4 data-number="5.3.1.2" class="anchored" data-anchor-id="polynomial-features"><span class="header-section-number">5.3.1.2</span> Polynomial features</h4>
+<p><strong>Polynomial features</strong> add higher-order and interaction terms, letting a linear model capture curvature it otherwise couldn’t. Let’s create a degree-2 polynomial expansion of <code>TotalDiscount_mean</code>:</p>
+<div id="01e059f1" class="cell" data-execution_count="15">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> PolynomialFeatures</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>target_feature <span class="op">=</span> numerical_features[<span class="dv">0</span>]</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>poly_transformer <span class="op">=</span> PolynomialFeatures(degree<span class="op">=</span><span class="dv">2</span>, include_bias<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>target_poly <span class="op">=</span> poly_transformer.fit_transform(train_final[[target_feature]])</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>poly_names <span class="op">=</span> poly_transformer.get_feature_names_out([target_feature])</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>target_poly_df <span class="op">=</span> pd.DataFrame(target_poly, columns<span class="op">=</span>poly_names, index<span class="op">=</span>train_final.index)</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"New polynomial features: </span><span class="sc">{</span><span class="bu">list</span>(poly_names)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>New polynomial features: ['TotalDiscount_mean', 'TotalDiscount_mean^2']</code></pre>
+</div>
+</div>
+<p>Adding it to the dataset and comparing training accuracy against the original model shows whether it actually helped:</p>
+<div id="03d8ff0e" class="cell" data-execution_count="16">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>train_final_with_poly <span class="op">=</span> pd.concat([train_final, target_poly_df.iloc[:, <span class="dv">1</span>:]], axis<span class="op">=</span><span class="dv">1</span>)  <span class="co"># skip the original feature</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>model_poly <span class="op">=</span> LogisticRegression(random_state<span class="op">=</span><span class="dv">42</span>, max_iter<span class="op">=</span><span class="dv">1000</span>)</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>model_poly.fit(train_final_with_poly, train_target)</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>original_score <span class="op">=</span> model.score(train_final, train_target)</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>poly_score <span class="op">=</span> model_poly.score(train_final_with_poly, train_target)</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Original accuracy: </span><span class="sc">{</span>original_score<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"With polynomial feature: </span><span class="sc">{</span>poly_score<span class="sc">:.4f}</span><span class="ss">  (Δ = </span><span class="sc">{</span>poly_score <span class="op">-</span> original_score<span class="sc">:+.4f}</span><span class="ss">)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Original accuracy: 0.8727
+With polynomial feature: 0.8778  (Δ = +0.0051)</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/Users/matthiasbogaert/anaconda3/envs/DA2026/lib/python3.11/site-packages/sklearn/linear_model/_logistic.py:599: ConvergenceWarning: lbfgs failed to converge after 1000 iteration(s) (status=1):
+STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT
+
+Increase the number of iterations to improve the convergence (max_iter=1000).
+You might also want to scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+Please also refer to the documentation for alternative solver options:
+    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+  n_iter_i = _check_optimize_result(</code></pre>
+</div>
+</div>
+</section>
+<section id="power-transformations" class="level4" data-number="5.3.1.3">
+<h4 data-number="5.3.1.3" class="anchored" data-anchor-id="power-transformations"><span class="header-section-number">5.3.1.3</span> Power transformations</h4>
+<p><strong>Power transformations</strong> reshape a variable’s distribution, often to make it more Gaussian-like and to stabilize its variance, which can help both linear models and any method that assumes a normal distribution of errors. A simple <strong>logarithmic transformation</strong> (<code>x -&gt; log(x)</code>, or <code>x -&gt; log(1 + x)</code> when zeros are present) is the most common case, typically applied to strictly-positive, right-skewed “size” variables like loan amounts or revenue. More general power transforms (<code>x -&gt; x^λ</code>) trade off skew in either direction depending on λ, at the cost of needing to fit that λ.</p>
+<p><strong>Box-Cox</strong> and <strong>Yeo-Johnson</strong> are the two standard ways to fit λ automatically rather than guessing it. Box-Cox only works for strictly positive values; Yeo-Johnson extends it to handle zero and negative values too (and reduces to Box-Cox exactly when all values are positive). In <code>sklearn</code>, this works the same way as everything else fit in this book: <code>PowerTransformer</code>’s <code>.fit()</code> estimates λ directly from the training data (i.e., the value that makes the transformed distribution closest to Gaussian) rather than you having to search for it by hand. Let’s try Yeo-Johnson on the same feature:</p>
+<div id="415df531" class="cell" data-execution_count="17">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> PowerTransformer</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>power_transformer <span class="op">=</span> PowerTransformer(method<span class="op">=</span><span class="st">"yeo-johnson"</span>, standardize<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>target_transformed <span class="op">=</span> power_transformer.fit_transform(train_final[[target_feature]])</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Optimal lambda: </span><span class="sc">{</span>power_transformer<span class="sc">.</span>lambdas_[<span class="dv">0</span>]<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>))</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].hist(train_final[target_feature], bins<span class="op">=</span><span class="dv">30</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, color<span class="op">=</span><span class="st">"#2f6faa"</span>)</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="ss">f"Original </span><span class="sc">{</span>target_feature<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].hist(target_transformed[:, <span class="dv">0</span>], bins<span class="op">=</span><span class="dv">30</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, color<span class="op">=</span><span class="st">"#c9772e"</span>)</span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="ss">f"Yeo-Johnson transformed </span><span class="sc">{</span>target_feature<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Optimal lambda: -0.8871</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="05-data-preparation_files/figure-html/cell-18-output-2.png" width="1144" height="374" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="04a89aca" class="cell" data-execution_count="18">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>train_final_with_yj <span class="op">=</span> train_final.copy()</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>train_final_with_yj[<span class="ss">f"</span><span class="sc">{</span>target_feature<span class="sc">}</span><span class="ss">_yj"</span>] <span class="op">=</span> target_transformed.flatten()</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>model_yj <span class="op">=</span> LogisticRegression(random_state<span class="op">=</span><span class="dv">42</span>, max_iter<span class="op">=</span><span class="dv">1000</span>)</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>model_yj.fit(train_final_with_yj, train_target)</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>yj_score <span class="op">=</span> model_yj.score(train_final_with_yj, train_target)</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Original accuracy: </span><span class="sc">{</span>original_score<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"With Yeo-Johnson feature: </span><span class="sc">{</span>yj_score<span class="sc">:.4f}</span><span class="ss">  (Δ = </span><span class="sc">{</span>yj_score <span class="op">-</span> original_score<span class="sc">:+.4f}</span><span class="ss">)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Original accuracy: 0.8727
+With Yeo-Johnson feature: 0.8795  (Δ = +0.0068)</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/Users/matthiasbogaert/anaconda3/envs/DA2026/lib/python3.11/site-packages/sklearn/linear_model/_logistic.py:599: ConvergenceWarning: lbfgs failed to converge after 1000 iteration(s) (status=1):
+STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT
+
+Increase the number of iterations to improve the convergence (max_iter=1000).
+You might also want to scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+Please also refer to the documentation for alternative solver options:
+    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+  n_iter_i = _check_optimize_result(</code></pre>
+</div>
+</div>
+<p>In this case, neither the polynomial term nor the Yeo-Johnson transform moved training accuracy much. This is consistent with the logit plots above, which already showed a fairly linear relationship. That’s a useful negative result: it means we can discard both here rather than carrying extra, unhelpful complexity forward.</p>
+<p>That’s not always the case, though. Sometimes a transformation like this is the difference between a model that’s good enough to detect a real, actionable relationship and one that isn’t. <span class="citation" data-cites="wang2019optimal">Wang et al. (<a href="#ref-wang2019optimal" role="doc-biblioref">2019</a>)</span> study how a seller’s mix of marketing versus non-marketing social media posts relates to how popular those posts become, and specifically whether there’s an <em>optimal</em> level of marketing aggressiveness. Their actual aggressiveness level is an inverted U-shape curve, quantified with a quadratic term in a plain linear regression too. But applying a Yeo-Johnson transform to one of their control variables (a seller’s number of followers) nearly triples the model’s R² compared to the untransformed version. The take-away: the transformation itself didn’t reveal the U-shape; it made the model reliable enough to trust the U-shape it found.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Interaction effects
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sometimes a variable has no linear effect on its own: <span class="math inline">\(y \not\leftarrow f(x_1)\)</span> and <span class="math inline">\(y \not\leftarrow f(x_2)\)</span> individually, but the <em>combination</em> <span class="math inline">\(y \leftarrow f(x_1, x_2)\)</span> does, often represented simply as the product <span class="math inline">\(x_1 \times x_2\)</span>. A classic example: <code>Gender</code> on its own might show no relationship with an outcome, but <code>Gender × Income</code> might, if the effect of income differs by gender. This is sometimes called moderation, with the interaction term acting as the moderator.</p>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="standardization-and-normalization" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="standardization-and-normalization"><span class="header-section-number">5.4</span> Standardization and normalization</h2>
+<p>Different algorithms need scaling for different reasons: distance-based methods like k-nearest neighbors and linear models with regularization need it directly, neural networks need it to avoid numerical overflow, and tree-based models don’t need it at all. The two most common approaches are:</p>
+<ul>
+<li><strong>Standardization</strong>: rescale to mean 0, standard deviation 1 (the z-score). Good for distance-based algorithms and for comparing coefficients across features.</li>
+<li><strong>Min-max normalization</strong>: rescale to a fixed range, typically [0, 1]. Common for neural networks and any method that expects bounded input.</li>
+</ul>
+<p>As with the transformations above, <code>sklearn</code> estimates the numbers each scaler needs directly from the data: <code>StandardScaler.fit()</code> computes each feature’s mean and standard deviation, <code>MinMaxScaler.fit()</code> computes its min and max, and <code>.transform()</code> applies them.</p>
+<div id="4efbdb2e" class="cell" data-execution_count="19">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler, MinMaxScaler</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>scaler_standard <span class="op">=</span> StandardScaler()</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>X_demo_standardized <span class="op">=</span> pd.DataFrame(scaler_standard.fit_transform(X_demo), columns<span class="op">=</span>X_demo.columns)</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>scaler_minmax <span class="op">=</span> MinMaxScaler()</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>X_demo_normalized <span class="op">=</span> pd.DataFrame(scaler_minmax.fit_transform(X_demo), columns<span class="op">=</span>X_demo.columns)</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">3</span>, <span class="bu">len</span>(X_demo.columns), figsize<span class="op">=</span>(<span class="dv">4</span> <span class="op">*</span> <span class="bu">len</span>(X_demo.columns), <span class="dv">8</span>))</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, feature <span class="kw">in</span> <span class="bu">enumerate</span>(X_demo.columns):</span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">0</span>, i].hist(X_demo[feature], bins<span class="op">=</span><span class="dv">30</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, color<span class="op">=</span><span class="st">"#2f6faa"</span>)</span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">0</span>, i].set_title(<span class="ss">f"Original </span><span class="sc">{</span>feature<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">1</span>, i].hist(X_demo_standardized[feature], bins<span class="op">=</span><span class="dv">30</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, color<span class="op">=</span><span class="st">"#1a3f66"</span>)</span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">1</span>, i].set_title(<span class="ss">f"Standardized </span><span class="sc">{</span>feature<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">2</span>, i].hist(X_demo_normalized[feature], bins<span class="op">=</span><span class="dv">30</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, color<span class="op">=</span><span class="st">"#c9772e"</span>)</span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">2</span>, i].set_title(<span class="ss">f"Normalized </span><span class="sc">{</span>feature<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="05-data-preparation_files/figure-html/cell-20-output-1.png" width="760" height="758" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Fit on training, transform on test and never scale dummy variables!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The fit-on-train, transform-on-both rule from the previous chapter applies here too: fit the scaler on training data only, then use it to transform both sets. There’s a second, easy-to-miss mistake specific to scaling: <strong>don’t scale dummy/binary columns</strong>. A one-hot column only ever takes the values 0 and 1 and standardizing it doesn’t make it more useful. More importantly, it destroys the direct 0/1 interpretation. Hence, only continuous features should go through the scaler.</p>
+</div>
+</div>
+<div id="0771b452" class="cell" data-execution_count="20">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>binary_features, continuous_features <span class="op">=</span> [], []</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> train_final.columns:</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>    unique_values <span class="op">=</span> <span class="bu">set</span>(train_final[col].unique())</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> unique_values <span class="op">==</span> {<span class="dv">0</span>, <span class="dv">1</span>}:</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>        binary_features.append(col)</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>        continuous_features.append(col)</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Binary features (not scaled): </span><span class="sc">{</span><span class="bu">len</span>(binary_features)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Continuous features (scaled): </span><span class="sc">{</span><span class="bu">len</span>(continuous_features)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>train_binary, train_continuous <span class="op">=</span> train_final[binary_features], train_final[continuous_features]</span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>test_binary, test_continuous <span class="op">=</span> test_final[binary_features], test_final[continuous_features]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Binary features (not scaled): 11
+Continuous features (scaled): 34</code></pre>
+</div>
+</div>
+<div id="dc0efe9f" class="cell" data-execution_count="21">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler()</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>scaler.fit(train_continuous)</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>train_continuous_scaled <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>    scaler.transform(train_continuous), columns<span class="op">=</span>continuous_features, index<span class="op">=</span>train_final.index,</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>test_continuous_scaled <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>    scaler.transform(test_continuous), columns<span class="op">=</span>continuous_features, index<span class="op">=</span>test_final.index,</span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a><span class="co"># recombine, keeping the original column order</span></span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>train_final_scaled_df <span class="op">=</span> pd.concat([train_continuous_scaled, train_binary], axis<span class="op">=</span><span class="dv">1</span>)[train_final.columns]</span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>test_final_scaled_df <span class="op">=</span> pd.concat([test_continuous_scaled, test_binary], axis<span class="op">=</span><span class="dv">1</span>)[test_final.columns]</span>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Final scaled training shape: </span><span class="sc">{</span>train_final_scaled_df<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Final scaled test shape: </span><span class="sc">{</span>test_final_scaled_df<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Final scaled training shape: (589, 45)
+Final scaled test shape: (589, 45)</code></pre>
+</div>
+</div>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Transformation</th>
+<th>When to use</th>
+<th>Example algorithms</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Standardization</td>
+<td>Distance-based methods, comparing coefficients</td>
+<td>SVM, KNN, linear/logistic regression</td>
+</tr>
+<tr class="even">
+<td>Min-max normalization</td>
+<td>Bounded features needed</td>
+<td>Neural networks, some clustering methods</td>
+</tr>
+<tr class="odd">
+<td>Polynomial features</td>
+<td>Non-linear relationships in a linear model</td>
+<td>Linear/logistic regression</td>
+</tr>
+<tr class="even">
+<td>Power transforms</td>
+<td>Skewed data, improving normality</td>
+<td>Linear models, parametric tests</td>
+</tr>
+<tr class="odd">
+<td>No scaling</td>
+<td>Split-based models</td>
+<td>Random forests, gradient boosting, decision trees</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="variable-selection" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="variable-selection"><span class="header-section-number">5.5</span> Variable selection</h2>
+<p>Real datasets usually come with far more variables than actually needed to achieve good predictive performance. Searching every possible subset is computationally infeasible (even in today’s world). So <strong>variable selection</strong> methods use a heuristic instead: keep predictors that are strongly related to the response and weakly related to each other, and drop the rest. In other words, delete both the ones that are <strong>irrelevant</strong> (unrelated to the target) and the ones that are <strong>redundant</strong> (correlated with another predictor that already carries the same information). This isn’t purely a matter of convenience: more compact models are also faster to estimate, and can genuinely perform <em>better</em> (thanks to the curse of dimensionality), since more variables for a fixed number of observations makes the prediction task harder, not easier <span class="citation" data-cites="verbeke2012newinsights">(<a href="#ref-verbeke2012newinsights" role="doc-biblioref">Verbeke et al. 2012</a>)</span>.</p>
+<p>Three broad families of methods exist: <strong>filter</strong> methods (fast, univariate, model-independent), <strong>wrapper</strong> methods (recursive feature elimination, and stepwise selection, considered more expensive since they retrain a model repeatedly), and <strong>embedded</strong> methods (regularization such as L1/L2/elastic net, built directly into the model-fitting process). Filter methods are covered here, and the other two families are introduced in the next chapters.</p>
+<section id="filter-methods" class="level3" data-number="5.5.1">
+<h3 data-number="5.5.1" class="anchored" data-anchor-id="filter-methods"><span class="header-section-number">5.5.1</span> Filter methods</h3>
+<p>Filter methods score each predictor’s univariate relationship with the target, independent of any model, which makes them a fast first screening pass. Which score to use depends on the variable type:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Continuous target</th>
+<th>Categorical target</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Continuous variable</td>
+<td>Pearson correlation</td>
+<td>Fisher score / ANOVA</td>
+</tr>
+<tr class="even">
+<td>Categorical variable</td>
+<td>Fisher score / ANOVA</td>
+<td>Information Value, Cramér’s V</td>
+</tr>
+</tbody>
+</table>
+<p>For our continuous features against the (categorical) churn target, <code>sklearn</code>’s <code>f_classif</code> plays the role of the Fisher score, paired with <code>SelectKBest</code> to keep only the top-scoring ones:</p>
+<div id="34f1b376" class="cell" data-execution_count="22">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> SelectKBest, f_classif</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>k_best_numerical <span class="op">=</span> <span class="bu">min</span>(<span class="dv">20</span>, <span class="bu">len</span>(continuous_features))</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>selector_numerical <span class="op">=</span> SelectKBest(score_func<span class="op">=</span>f_classif, k<span class="op">=</span>k_best_numerical)</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>selector_numerical.fit(train_continuous_scaled, train_target)</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>selected_numerical_features <span class="op">=</span> np.array(continuous_features)[selector_numerical.get_support()].tolist()</span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>numerical_results <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"feature"</span>: continuous_features, <span class="st">"f_score"</span>: selector_numerical.scores_,</span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>}).sort_values(<span class="st">"f_score"</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a>numerical_results.head(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>/Users/matthiasbogaert/anaconda3/envs/DA2026/lib/python3.11/site-packages/sklearn/feature_selection/_univariate_selection.py:110: UserWarning: Features [11 13] are constant.
+  warnings.warn("Features %s are constant." % constant_features_idx, UserWarning)
+/Users/matthiasbogaert/anaconda3/envs/DA2026/lib/python3.11/site-packages/sklearn/feature_selection/_univariate_selection.py:111: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="22">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">feature</th>
+<th data-quarto-table-cell-role="th">f_score</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">19</th>
+<td>StartDate_rec</td>
+<td>105.595305</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">21</th>
+<td>PaymentDate_rec</td>
+<td>93.995147</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">28</th>
+<td>FormulaDiscount_mean</td>
+<td>71.133723</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">26</th>
+<td>NetNewspaperPrice_mean</td>
+<td>52.653478</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">23</th>
+<td>NbrStart_mean</td>
+<td>34.391696</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">30</th>
+<td>TotalPrice_mean</td>
+<td>33.057998</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">17</th>
+<td>PaymentStatus_Paid_sum</td>
+<td>31.056359</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">14</th>
+<td>Pattern_1111110_sum</td>
+<td>28.830724</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">15</th>
+<td>PaymentType_BT_sum</td>
+<td>24.807797</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">25</th>
+<td>NetFormulaPrice_mean</td>
+<td>22.855152</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>For the binary (dummy) features, chi-squared and mutual information are the equivalent tools:</p>
+<div id="763a5b1b" class="cell" data-execution_count="23">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> mutual_info_classif, chi2</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>k_best_categorical <span class="op">=</span> <span class="bu">min</span>(<span class="dv">5</span>, <span class="bu">len</span>(binary_features))</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>selector_chi2 <span class="op">=</span> SelectKBest(score_func<span class="op">=</span>chi2, k<span class="op">=</span>k_best_categorical)</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>selector_chi2.fit(train_binary, train_target)</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>selected_chi2 <span class="op">=</span> [f <span class="cf">for</span> f, keep <span class="kw">in</span> <span class="bu">zip</span>(binary_features, selector_chi2.get_support()) <span class="cf">if</span> keep]</span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>selector_mi <span class="op">=</span> SelectKBest(score_func<span class="op">=</span>mutual_info_classif, k<span class="op">=</span>k_best_categorical)</span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>selector_mi.fit(train_binary, train_target)</span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>selected_mi <span class="op">=</span> [f <span class="cf">for</span> f, keep <span class="kw">in</span> <span class="bu">zip</span>(binary_features, selector_mi.get_support()) <span class="cf">if</span> keep]</span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Top by chi-squared: </span><span class="sc">{</span>selected_chi2<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb46-14"><a href="#cb46-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Top by mutual information: </span><span class="sc">{</span>selected_mi<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Top by chi-squared: ['RenewalDate_rec_missing', 'PaymentDate_rec_missing', 'Gender_missing', 'District_7.0', 'District_9.0']
+Top by mutual information: ['Pattern_0000100_sum', 'RenewalDate_rec_missing', 'Gender_missing', 'District_5.0', 'District_6.0']</code></pre>
+</div>
+</div>
+<p>Combining the two: take every continuous feature the numerical filter selected, plus only the binary features <em>both</em> categorical filters agreed on:</p>
+<div id="9b06f47c" class="cell" data-execution_count="24">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>selected_binary <span class="op">=</span> <span class="bu">list</span>(<span class="bu">set</span>(selected_chi2) <span class="op">&amp;</span> <span class="bu">set</span>(selected_mi))</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>all_selected_features <span class="op">=</span> selected_numerical_features <span class="op">+</span> selected_binary</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>train_final_selected <span class="op">=</span> train_final_scaled_df[all_selected_features]</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>test_final_selected <span class="op">=</span> test_final_scaled_df[all_selected_features]</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Selected </span><span class="sc">{</span><span class="bu">len</span>(all_selected_features)<span class="sc">}</span><span class="ss"> features "</span></span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>      <span class="ss">f"(</span><span class="sc">{</span><span class="bu">len</span>(selected_numerical_features)<span class="sc">}</span><span class="ss"> continuous, </span><span class="sc">{</span><span class="bu">len</span>(selected_binary)<span class="sc">}</span><span class="ss"> binary), "</span></span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>      <span class="ss">f"down from </span><span class="sc">{</span>train_final_scaled_df<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Selected 22 features (20 continuous, 2 binary), down from 45</code></pre>
+</div>
+</div>
+<p>Filter methods are fast and a good first pass, but they’re univariate. They don’t account for correlations <em>between</em> features, so a certain amount of redundancy can slip through. That’s exactly why they’re normally used as a quick first cut, often followed by a wrapper or embedded method for the final selection. Determining the actual optimal number of features is left for later, once cross-validation is introduced.</p>
+</section>
+</section>
+<section id="ordinal-encoding" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="ordinal-encoding"><span class="header-section-number">5.6</span> Ordinal encoding</h2>
+<p><strong>Ordinal variables</strong> have a natural ranking in their categories (e.g., credit rating, education level, or a customer loyalty tier) unlike a plain nominal categorical variable like <code>Gender</code> or <code>District</code>. Our dataset doesn’t happen to have one, so to demonstrate the encoding options, we’ll build a synthetic <strong>customer value tier</strong> from two existing features: total product purchases and payment recency.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>This section is a synthetic, self-contained demo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The customer tiers and the churn labels used below are artificially generated purely to illustrate the three encoding methods. They are <em>not</em> the real <code>churn</code> target from earlier in the chapter, even though the code reuses familiar variable names for convenience.</p>
+</div>
+</div>
+<div id="9fb54c4e" class="cell" data-execution_count="25">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>product_cols <span class="op">=</span> [col <span class="cf">for</span> col <span class="kw">in</span> train_final.columns <span class="cf">if</span> <span class="st">"ProductID"</span> <span class="kw">in</span> col <span class="kw">and</span> <span class="st">"_sum"</span> <span class="kw">in</span> col]</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>total_products <span class="op">=</span> train_final[product_cols].<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>recency_factor <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> train_final[<span class="st">"PaymentDate_rec"</span>])</span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>value_score <span class="op">=</span> total_products <span class="op">*</span> <span class="fl">0.7</span> <span class="op">+</span> recency_factor <span class="op">*</span> <span class="fl">0.3</span></span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>q1, q2, q3 <span class="op">=</span> np.percentile(value_score, [<span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">75</span>])</span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> assign_tier(score):</span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> score <span class="op">&lt;=</span> q1:</span>
+<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"Bronze"</span></span>
+<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> score <span class="op">&lt;=</span> q2:</span>
+<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"Silver"</span></span>
+<span id="cb50-15"><a href="#cb50-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> score <span class="op">&lt;=</span> q3:</span>
+<span id="cb50-16"><a href="#cb50-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"Gold"</span></span>
+<span id="cb50-17"><a href="#cb50-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">"Platinum"</span></span>
+<span id="cb50-18"><a href="#cb50-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-19"><a href="#cb50-19" aria-hidden="true" tabindex="-1"></a>customer_tiers <span class="op">=</span> [assign_tier(score) <span class="cf">for</span> score <span class="kw">in</span> value_score]</span>
+<span id="cb50-20"><a href="#cb50-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.Series(customer_tiers).value_counts())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Silver      153
+Bronze      148
+Platinum    147
+Gold        141
+Name: count, dtype: int64</code></pre>
+</div>
+</div>
+<div id="a3e92b99" class="cell" data-execution_count="26">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Synthetic churn, deliberately lower for higher tiers, so the encodings below have something to pick up on</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>tier_churn_probs <span class="op">=</span> {<span class="st">"Bronze"</span>: <span class="fl">0.6</span>, <span class="st">"Silver"</span>: <span class="fl">0.4</span>, <span class="st">"Gold"</span>: <span class="fl">0.25</span>, <span class="st">"Platinum"</span>: <span class="fl">0.15</span>}</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>synthetic_churn <span class="op">=</span> [np.random.binomial(<span class="dv">1</span>, tier_churn_probs[tier]) <span class="cf">for</span> tier <span class="kw">in</span> customer_tiers]</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>X_train_ordinal <span class="op">=</span> pd.DataFrame({<span class="st">"customer_tier"</span>: customer_tiers})</span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>y_train_ordinal <span class="op">=</span> pd.Series(synthetic_churn, name<span class="op">=</span><span class="st">"churn"</span>)</span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.DataFrame({<span class="st">"customer_tier"</span>: customer_tiers, <span class="st">"churn"</span>: synthetic_churn})</span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a>      .groupby(<span class="st">"customer_tier"</span>)[<span class="st">"churn"</span>].agg([<span class="st">"mean"</span>, <span class="st">"count"</span>]).<span class="bu">round</span>(<span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                mean  count
+customer_tier              
+Bronze         0.554    148
+Gold           0.291    141
+Platinum       0.129    147
+Silver         0.399    153</code></pre>
+</div>
+</div>
+<p><strong>Manual ordinal encoding</strong> uses domain knowledge to specify the order directly (Bronze &lt; Silver &lt; Gold &lt; Platinum):</p>
+<div id="dc9a1888" class="cell" data-execution_count="27">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> OrdinalEncoder</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>tier_order <span class="op">=</span> [[<span class="st">"Bronze"</span>, <span class="st">"Silver"</span>, <span class="st">"Gold"</span>, <span class="st">"Platinum"</span>]]</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>sklearn_encoder <span class="op">=</span> OrdinalEncoder(categories<span class="op">=</span>tier_order)</span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>sklearn_encoder.fit(X_train_ordinal)</span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Bronze → 0, Silver → 1, Gold → 2, Platinum → 3"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Bronze → 0, Silver → 1, Gold → 2, Platinum → 3</code></pre>
+</div>
+</div>
+<p><strong>Automated ordinal encoding</strong> orders categories by their relationship with the target instead of by domain knowledge. <code>feature-engine</code>’s version always orders ascending by target mean:</p>
+<div id="8674a0bf" class="cell" data-execution_count="28">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> feature_engine.encoding <span class="im">import</span> OrdinalEncoder <span class="im">as</span> FeatureEngineOrdinalEncoder</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>fe_encoder <span class="op">=</span> FeatureEngineOrdinalEncoder(variables<span class="op">=</span>[<span class="st">"customer_tier"</span>])</span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>fe_encoder.fit(X_train_ordinal, y_train_ordinal)</span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Categories ordered by churn rate (ascending): </span><span class="sc">{</span>fe_encoder<span class="sc">.</span>encoder_dict_[<span class="st">'customer_tier'</span>]<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Categories ordered by churn rate (ascending): {'Platinum': 0, 'Gold': 1, 'Silver': 2, 'Bronze': 3}</code></pre>
+</div>
+</div>
+<p><strong>Target (mean) encoding</strong>, which goes a step further and replaces each category with the actual mean of the target for that category, rather than just a rank. This is the plain target statistic flagged back in the Weight of Evidence section. Here, it’s reliable enough since our synthetic tiers are each backed by hundreds of observations. But remember, this is exactly the kind of raw, unshrunk per-category mean that gets noisy fast on a variable with many small categories:</p>
+<div id="70cd5dca" class="cell" data-execution_count="29">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> feature_engine.encoding <span class="im">import</span> MeanEncoder</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>target_encoder <span class="op">=</span> MeanEncoder(variables<span class="op">=</span>[<span class="st">"customer_tier"</span>])</span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>target_encoder.fit(X_train_ordinal, y_train_ordinal)</span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Encoding: </span><span class="sc">{</span>target_encoder<span class="sc">.</span>encoder_dict_[<span class="st">'customer_tier'</span>]<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Encoding: {'Bronze': 0.5540540540540541, 'Gold': 0.2907801418439716, 'Platinum': 0.1292517006802721, 'Silver': 0.39869281045751637}</code></pre>
+</div>
+</div>
+<div id="8c806624" class="cell" data-execution_count="30">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>comparison <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"customer_tier"</span>: X_train_ordinal[<span class="st">"customer_tier"</span>].unique(),</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>comparison[<span class="st">"sklearn_ordinal"</span>] <span class="op">=</span> [sklearn_encoder.categories_[<span class="dv">0</span>].tolist().index(t) <span class="cf">for</span> t <span class="kw">in</span> comparison[<span class="st">"customer_tier"</span>]]</span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>comparison[<span class="st">"feature_engine_ordinal"</span>] <span class="op">=</span> comparison[<span class="st">"customer_tier"</span>].<span class="bu">map</span>(fe_encoder.encoder_dict_[<span class="st">"customer_tier"</span>])</span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>comparison[<span class="st">"target_encoding"</span>] <span class="op">=</span> comparison[<span class="st">"customer_tier"</span>].<span class="bu">map</span>(target_encoder.encoder_dict_[<span class="st">"customer_tier"</span>])</span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>comparison.sort_values(<span class="st">"target_encoding"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="30">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">customer_tier</th>
+<th data-quarto-table-cell-role="th">sklearn_ordinal</th>
+<th data-quarto-table-cell-role="th">feature_engine_ordinal</th>
+<th data-quarto-table-cell-role="th">target_encoding</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">3</th>
+<td>Platinum</td>
+<td>3</td>
+<td>0</td>
+<td>0.129252</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>Gold</td>
+<td>2</td>
+<td>1</td>
+<td>0.290780</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>Silver</td>
+<td>1</td>
+<td>2</td>
+<td>0.398693</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">0</th>
+<td>Bronze</td>
+<td>0</td>
+<td>3</td>
+<td>0.554054</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Which to use depends on what you have and what you need:</p>
+<ul>
+<li><strong>Manual encoding</strong> when you have a clear, defensible business hierarchy, it stays interpretable, but isn’t necessarily optimal for prediction.</li>
+<li><strong>Automated (feature-engine) encoding</strong> when you’d rather let the data reveal the order, useful for finding surprising patterns, at some cost to interpretability (e.g., it might not be obvious <em>why</em> Platinum ends up coded as 0 in a given fit).</li>
+<li><strong>Target encoding</strong> when predictive power matters most it creates the strongest statistical relationship with the target, but is also the most prone to overfitting, especially with small categories, and needs careful cross-validation (or an approach like WoE) to use safely.</li>
+</ul>
+</section>
+<section id="putting-it-all-together" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="putting-it-all-together"><span class="header-section-number">5.7</span> Putting it all together</h2>
+<p>The exact order can vary by project, but a reasonable default sequence for everything covered in this chapter (and the previous one) is:</p>
+<ol type="1">
+<li>Impute missing values.</li>
+<li>Resolve outliers and other data quality issues.</li>
+<li>Engineer individual features (transformations, computed columns).</li>
+<li>Discretize, where useful.</li>
+<li>Encode categorical variables.</li>
+<li>Create interaction effects.</li>
+<li>Normalize or standardize.</li>
+<li>Apply variable selection or dimensionality reduction.</li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>The order isn’t arbitrary
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Each step assumes the previous ones are already done: a transformation expects a variable’s original distribution rather than a rescaled one, an interaction term expects numeric inputs rather than raw category labels, a scaler expects genuinely continuous features. Swapping steps around doesn’t just change the output: it can make a step mean something different from what it’s meant to.</p>
+</div>
+</div>
+</section>
+<section id="where-we-go-from-here" class="level2" data-number="5.8">
+<h2 data-number="5.8" class="anchored" data-anchor-id="where-we-go-from-here"><span class="header-section-number">5.8</span> Where we go from here</h2>
+<p>Between this chapter and the last one, <code>train_data</code> and <code>test_data</code> have gone from a raw, messy table to a fully numeric, model-ready basetable: imputed, encoded, transformed, scaled, and filtered down to a manageable set of predictors. The next chapter, <strong>Model Evaluation</strong>, is where that basetable finally meets a model and where the train/test split gets formalized properly, alongside the metrics needed to evaluate whether a model is actually any good.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-baesens2021dataengineering" class="csl-entry" role="listitem">
+Baesens, Bart, Sébastien Höppner, and Tim Verdonck. 2021. <span>“Data Engineering for Fraud Detection.”</span> <em>Decision Support Systems</em> 150: 113492. <a href="https://doi.org/10.1016/j.dss.2021.113492">https://doi.org/10.1016/j.dss.2021.113492</a>.
+</div>
+<div id="ref-buckinx2005customer" class="csl-entry" role="listitem">
+Buckinx, Wouter, and Dirk Van den Poel. 2005. <span>“Customer Base Analysis: Partial Defection of Behaviourally Loyal Clients in a Non-Contractual <span>FMCG</span> Retail Setting.”</span> <em>European Journal of Operational Research</em> 164 (1): 252–68.
+</div>
+<div id="ref-coussement2017comparative" class="csl-entry" role="listitem">
+Coussement, Kristof, Stefan Lessmann, and Geert Verstraeten. 2017. <span>“A Comparative Analysis of Data Preparation Algorithms for Customer Churn Prediction: A Case Study in the Telecommunication Industry.”</span> <em>Decision Support Systems</em> 95: 27–36. <a href="https://doi.org/10.1016/j.dss.2016.11.007">https://doi.org/10.1016/j.dss.2016.11.007</a>.
+</div>
+<div id="ref-hsieh2004integrated" class="csl-entry" role="listitem">
+Hsieh, Nan-Chen. 2004. <span>“An Integrated Data Mining and Behavioral Scoring Model for Analyzing Bank Customers.”</span> <em>Expert Systems with Applications</em> 27 (4): 623–33.
+</div>
+<div id="ref-micci-barreca2001preprocessing" class="csl-entry" role="listitem">
+Micci-Barreca, Daniele. 2001. <span>“A Preprocessing Scheme for High-Cardinality Categorical Attributes in Classification and Prediction Problems.”</span> <em>ACM SIGKDD Explorations Newsletter</em> 3 (1): 27–32. <a href="https://doi.org/10.1145/507533.507538">https://doi.org/10.1145/507533.507538</a>.
+</div>
+<div id="ref-moeyersoms2015highcardinality" class="csl-entry" role="listitem">
+Moeyersoms, Julie, and David Martens. 2015. <span>“Including High-Cardinality Attributes in Predictive Models: A Case Study in Churn Prediction in the Energy Sector.”</span> <em>Decision Support Systems</em> 72: 72–81. <a href="https://doi.org/10.1016/j.dss.2015.02.007">https://doi.org/10.1016/j.dss.2015.02.007</a>.
+</div>
+<div id="ref-VandenPoel2004" class="csl-entry" role="listitem">
+Poel, Dirk Van den, and Bart Larivière. 2004. <span>“Customer Attrition Analysis for Financial Services Using Proportional Hazard Models.”</span> <em>European Journal of Operational Research</em> 157 (August): 196–217. <a href="https://doi.org/10.1016/S0377-2217(03)00069-9">https://doi.org/10.1016/S0377-2217(03)00069-9</a>.
+</div>
+<div id="ref-prokhorenkova2018catboost" class="csl-entry" role="listitem">
+Prokhorenkova, Liudmila, Gleb Gusev, Aleksandr Vorobev, Anna Veronika Dorogush, and Andrey Gulin. 2018. <span>“<span>CatBoost</span>: Unbiased Boosting with Categorical Features.”</span> <em>Advances in Neural Information Processing Systems</em> 31.
+</div>
+<div id="ref-vangool2012credit" class="csl-entry" role="listitem">
+Van Gool, Joris, Wouter Verbeke, Piet Sercu, and Bart Baesens. 2012. <span>“Credit Scoring for Microfinance: Is It Worth It?”</span> <em>International Journal of Finance &amp; Economics</em> 17 (2): 103–23.
+</div>
+<div id="ref-verbeke2012newinsights" class="csl-entry" role="listitem">
+Verbeke, Wouter, Karel Dejaeger, David Martens, Joon Hur, and Bart Baesens. 2012. <span>“New Insights into Churn Prediction in the Telecommunication Sector: A Profit Driven Data Mining Approach.”</span> <em>European Journal of Operational Research</em> 218 (1): 211–29. <a href="https://doi.org/10.1016/j.ejor.2011.09.031">https://doi.org/10.1016/j.ejor.2011.09.031</a>.
+</div>
+<div id="ref-wang2019optimal" class="csl-entry" role="listitem">
+Wang, Xu, Bart Baesens, and Zhen Zhu. 2019. <span>“On the Optimal Marketing Aggressiveness Level of <span>C2C</span> Sellers in Social Media: Evidence from China.”</span> <em>Omega</em> 85: 83–93. <a href="https://doi.org/10.1016/j.omega.2018.05.014">https://doi.org/10.1016/j.omega.2018.05.014</a>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/04-data-exploration.html" class="pagination-link" aria-label="Data Exploration">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Exploration</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/06-model-evaluation.html" class="pagination-link" aria-label="Model Evaluation">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Model Evaluation</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
