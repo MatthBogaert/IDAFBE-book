@@ -1,0 +1,2085 @@
+# Python Basics
+
+This chapter reviews the fundamental building blocks of Python that the rest of the book relies on: variables, collections, control flow, reading and writing files, functions, modules, NumPy arrays, and finally `pandas`, the core data manipulation library within this book. If you already know Python well, treat this chapter as a quick reference; if you're new to the language, work through every code cell yourself before moving on to the running business case in the next chapter.
+
+::: callout-tip
+## Practice with generative AI
+
+If you want to exercise your Python skills even more, consider asking a Large Language Model (LLM) to create additional practice exercises tailored to the concepts in this chapter. For example, you could ask it to show you how to select specific rows from a pandas DataFrame or filter a NumPy array based on a condition, then implement and test them yourself. This is a useful way to learn a new programming language and a proper way of using generative AI in your learning experience.
+:::
+
+Throughout, we use small business-flavored examples (e.g., customers and newpapers subscriptions data) rather than simulated toy examples. In that way, the syntax remains close to the context you'll actually use it in.
+
+::: callout-note
+## Using Google Colab
+
+If you're running these examples in Google Colab rather than locally, you first need to mount your Google Drive and point Python at the folder containing your notebook, since Colab's default working directory isn't the same as where your notebook is saved.
+
+```{python}
+#| eval: false
+# Code to access drive
+from google.colab import drive
+drive.mount('/content/drive')
+```
+
+```{python}
+#| eval: false
+# Set working directory to proper location
+import os
+os.chdir("/content/drive/MyDrive/Colab Notebooks/Data Analytics/Session 2 & 3")
+```
+
+If you're working locally with VS Code (see the installation guide in the appendix), your working directory is already the folder containing your notebook, so you can skip both cells above.
+:::
+
+## Variables
+
+A variable is simply a name that points to a value in memory. Python figures out a variable's type automatically from the value you assign to it — you never have to declare it up front.
+
+### Numeric Variables
+
+Python has two built-in numeric types you'll use constantly: `int` for whole numbers and `float` for decimal numbers.
+
+#### Definition
+
+A numeric variable's type is inferred automatically from how you write the value: no decimal point makes it an `int`, while a decimal point makes it a `float`.
+
+```{python}
+# assign integer variable
+x = 3
+print(type(x))
+```
+
+```{python}
+# assign float variable
+x = 3.0
+print(type(x))
+```
+
+#### Arithmetic operators
+
+The standard arithmetic operators work as you'd expect, including `%` for the remainder (modulus), `//` for floor division, and `**` for exponentiation.
+
+```{python}
+# arithmetic operators
+x = 5.
+y = 3.
+print("addition: ", x + y)
+print("subtraction: ", x - y)
+print("multiplication: ", x * y)
+print("division: ", x / y)
+print("modulus: ", x % y)
+print("floor division: ", x // y)
+print("exponent: ", x ** y)
+```
+
+Division behaves the same whether the operands are `int` or `float` — since Python 3, `/` always returns a `float`, so you no longer need to manually cast one of the operands.
+
+```{python}
+# integer division (no issues from python 3.X onwards)
+x = 5
+y = 3
+print(x / y)
+```
+
+```{python}
+# float division (no need to type cast from python 3.X onwards)
+x = 5.
+y = 3.
+print(x / y)
+```
+
+#### Type conversion
+
+You can convert explicitly between numeric types using `float()` and `int()`.
+
+```{python}
+# convert integer to float
+x = 3
+y = float(x)
+print(y)
+print(type(y))
+```
+
+```{python}
+# convert float to integer
+x = 3.
+y = int(x)
+print(y)
+print(type(y))
+```
+
+#### Comparison operators
+
+Comparison operators return a `bool` (`True`/`False`), and Python compares across numeric types transparently — an `int` and a `float` with the same value are considered equal.
+
+```{python}
+# comparison operators
+x = 3
+y = 5
+print("greater than: ", x > y)
+print("greater than or equal to: ", x >= y)
+print("less than: ", x < y)
+print("less than or equal to: ", x <= y)
+print("equal to: ", x == y)
+print("not equal to: ", x != y)
+```
+
+```{python}
+x = 3
+y = 3.
+x == y
+```
+
+### Boolean Variables
+
+#### Definition
+
+A `bool` variable holds one of exactly two values: `True` or `False`. They're what conditionals and loops branch on.
+
+```{python}
+x = True
+y = False
+print(type(x))
+```
+
+#### Boolean operators
+
+Python's boolean operators — `and`, `or`, and `not` — combine or invert `True`/`False` values, exactly like in everyday logic.
+
+```{python}
+x = True
+y = False
+print("and: ", x and y)
+print("or: ", x or y)
+print("not: ", not x)
+```
+
+#### Conversion
+
+Booleans are really a special case of integers under the hood: `False` is `0` and `True` is `1`. Conversely, `0` converts to `False` and any other number converts to `True`.
+
+```{python}
+# convert bool to int
+print(int(False))
+print(int(True))
+```
+
+```{python}
+# convert int to bool
+print(bool(0))
+print(bool(1))
+```
+
+### String Variables
+
+#### Definition
+
+Strings hold text and are indexed like sequences — you can pull out individual characters by position.
+
+```{python}
+# define string variable
+x = "hello"
+print(type(x))
+```
+
+```{python}
+# get the third character of the string
+x = "hello"
+y = x[3]
+print(y)
+```
+
+#### String methods
+
+Strings come with a large set of built-in methods for cleaning and transforming text — useful for anything from normalizing customer names to parsing raw text files, which we'll do later in this chapter.
+
+```{python}
+# convert to upper case
+"hello".upper()
+```
+
+```{python}
+# convert to lower case
+"HELLO".lower()
+```
+
+```{python}
+# replace substring
+"hello".replace("llo", "ro")
+```
+
+```{python}
+# split string
+"hello-world".split("-")
+```
+
+```{python}
+# string concatenation
+"hello" + " " + "world"
+```
+
+```{python}
+# example string methods
+x = "hello world "
+print("capitalize: ", x.capitalize())
+print("index: ", x.index("world"))
+print("isalpha: ", x.isalpha())
+print("isdigit: ", x.isdigit())
+print("islower: ", x.islower())
+print("isupper: ", x.isupper())
+print("lower: ", x.lower())
+print("replace: ", x.replace("world", "students"))
+print("split: ", x.split(" "))
+print("strip: ", x.strip())
+print("upper: ", x.upper())
+```
+
+#### Conversion
+
+Just like numbers, strings can be converted to and from other types.
+
+```{python}
+# convert int to str
+print(str(3))
+# convert float to str
+print(str(54.3))
+# convert bool to str
+print(str(True))
+```
+
+```{python}
+# convert str to int
+print(int("75"))
+# convert str to float
+print(float("45.2"))
+# convert str to bool
+print(bool("True"))
+```
+
+Not every string converts cleanly, though. `int()` only accepts strings that look like whole numbers, so the following raises a `ValueError` — shown here deliberately, since you'll run into this exact error the first time you try to parse a decimal string as an integer.
+
+```{python}
+#| error: true
+# try to convert str to int
+int("4.5")
+```
+
+### None Variables
+
+#### Definition
+
+`None` is Python's way of representing "no value." You'll see it used as a placeholder for missing data or as the default return value of a function that doesn't explicitly return anything.
+
+```{python}
+x = None
+print(type(x))
+```
+
+## Collections
+
+Collections let you group multiple values into a single variable. Python has four built-in collection types, each with different trade-offs around ordering, mutability, and how you look values up.
+
+### Lists
+
+#### Definition
+
+A list is an ordered, mutable sequence of values — the values don't have to be the same type.
+
+```{python}
+# assign a list with string variables
+cities = ["Ghent", "Brussels", "Antwerp"]
+
+# assign a list with numeric variables
+scores = [13, 19, 18, 19, 11, 9]
+
+# assign a list with numeric and string variables
+names_and_wages = ["tim", 3003, "john", 1600, "sophie", 1900]
+
+print(type(cities))
+```
+
+#### Indexing
+
+Lists are indexed starting from `0`, and negative indices count backward from the end. A `start:stop` slice returns a sub-list.
+
+```{python}
+# get index of element
+cities = ["Ghent", "Brussels", "Antwerp"]
+print(cities[1])
+```
+
+```{python}
+# get index of first element
+cities = ["Ghent", "Brussels", "Antwerp"]
+print(cities[0])
+```
+
+```{python}
+# get index of last element
+cities = ["Ghent", "Brussels", "Antwerp"]
+print(cities[-1])
+```
+
+```{python}
+# get index of second last element
+cities = ["Ghent", "Brussels", "Antwerp"]
+print(cities[-2])
+```
+
+```{python}
+# get index of first two elements
+cities = ["Ghent", "Brussels", "Antwerp"]
+print(cities[0:2])
+```
+
+Strings support the same indexing and slicing syntax as lists, since a string is really just a sequence of characters.
+
+```{python}
+# define a string
+string = "hello world"
+
+# get the character at index 6
+print(string[6])
+```
+
+#### Operations
+
+Because lists are mutable, you can change, add, and remove elements in place rather than creating a new list each time.
+
+```{python}
+# change element
+cities = ["Ghent", "Brussels", "Antwerp"]
+cities[1] = "Louvain"
+print(cities)
+```
+
+```{python}
+# number of elements
+cities = ["Ghent", "Brussels", "Antwerp"]
+print(len(cities))
+```
+
+```{python}
+# append elements
+cities = ["Ghent", "Brussels", "Antwerp"]
+cities.append("Louvain")
+cities.append("Bruges")
+print(cities)
+```
+
+```{python}
+# insert elements
+cities = ["Ghent", "Brussels", "Antwerp"]
+cities.insert(0, "Louvain")
+cities.insert(2, "Bruges")
+print(cities)
+```
+
+```{python}
+# extend list
+cities_1 = ["Ghent", "Brussels", "Antwerp"]
+cities_2 = ["Leuven", "Bruges"]
+cities_1.extend(cities_2)
+print(cities_1)
+```
+
+```{python}
+# remove element from list
+cities = ["Ghent", "Brussels", "Antwerp"]
+cities.remove("Ghent")
+print(cities)
+```
+
+```{python}
+# remove element at index from list
+cities = ["Ghent", "Brussels", "Antwerp"]
+cities.pop(1)
+print(cities)
+```
+
+```{python}
+# get index of element
+cities = ["Ghent", "Brussels", "Antwerp"]
+idx = cities.index("Brussels")
+print(idx)
+```
+
+#### Nested lists
+
+Lists can contain other lists. You index into them one level at a time.
+
+```{python}
+# nested lists
+products = [["samsung", "apple", "nokia"],
+            ["bmw", "mercedes", "audi", "toyota", "renault"],
+            ["apple", "banana"]]
+
+print(products[1][2])
+```
+
+### Dictionaries
+
+#### Definition
+
+A dictionary stores `key: value` pairs, where each key maps directly to its value — no scanning through positions like with a list. This is the collection you'll reach for whenever you need to look things up by name or ID, such as a customer's score or a product's price.
+
+```{python}
+# assigning a dictionary
+students_and_scores = {"tom": 13, "sarah": 20, "john": 9}
+print(type(students_and_scores))
+```
+
+#### Indexing
+
+You look up a value by its key in square brackets — not by position, since dictionaries aren't ordered by index the way lists are.
+
+```{python}
+# get the score of specific student
+students_and_scores = {"tom": 13, "sarah": 20, "john": 9}
+print(students_and_scores["sarah"])
+```
+
+#### Operations
+
+Dictionaries are mutable: you can change a value, add or remove a key, and inspect all the keys or values at once.
+
+```{python}
+# change the value of specific item
+students_and_scores = {"tom": 13, "sarah": 20, "john": 9}
+students_and_scores["sarah"] = 4
+print(students_and_scores)
+```
+
+```{python}
+# get number of items in dictionary
+students_and_scores = {"tom": 13, "sarah": 20, "john": 9}
+print(len(students_and_scores))
+```
+
+```{python}
+# add new item to dictionary
+students_and_scores = {"tom": 13, "sarah": 20, "john": 9}
+students_and_scores["lisa"] = 15
+print(students_and_scores)
+```
+
+```{python}
+# remove item from dictionary
+students_and_scores = {"tom": 13, "sarah": 20, "john": 9}
+students_and_scores.pop("john")
+print(students_and_scores)
+```
+
+```{python}
+# get the keys of the dictionary
+students_and_scores = {"tom": 13, "sarah": 20, "john": 9}
+keys = students_and_scores.keys()
+print(keys)
+```
+
+```{python}
+# get the values of the dictionary
+students_and_scores = {"tom": 13, "sarah": 20, "john": 9}
+values = students_and_scores.values()
+print(values)
+```
+
+#### Nested dictionaries
+
+Dictionaries can hold other dictionaries as values, which is a natural way to represent structured records — think of each key as a customer ID and each value as that customer's full profile.
+
+```{python}
+# nested dictionary
+customer_info = {"tom": {"city": "brussels", "email": "tom@hotmail.com", "age": 24},
+                 "sarah": {"city": "Ghent", "email": "sarah@gmail.com", "age": 32},
+                 "jack": {"city": "Ghent", "email": "jackjack@gmail.com", "age": 12}}
+
+print(customer_info["tom"]["email"])
+```
+
+### Tuples
+
+#### Definition
+
+A tuple looks like a list but is immutable — once created, you cannot change, add, or remove elements. Tuples are commonly used for values that shouldn't change after creation, like a fixed record or a coordinate pair.
+
+```{python}
+# create a tuple with different data types
+my_tuple = ("Ghent", 13, 4.20, ["el1", "el2"], {"key_1": 1.0, "key_2": 2.0})
+
+print(type(my_tuple))
+```
+
+#### Indexing
+
+Indexing works the same as for lists.
+
+```{python}
+# retrieve the second element
+my_tuple = ("Ghent", 13, 4.20, ["el1", "el2"], {"key_1": 1.0, "key_2": 2.0})
+print(my_tuple[1])
+```
+
+```{python}
+# retrieve the last element
+my_tuple = ("Ghent", 13, 4.20, ["el1", "el2"], {"key_1": 1.0, "key_2": 2.0})
+print(my_tuple[-1])
+```
+
+#### Operations
+
+Because tuples are immutable, most of these operations only read from the tuple rather than changing it: counting elements, finding an index, joining two tuples together, or comparing them.
+
+```{python}
+# create a tuple (NOTE: once created, you cannot change any element)
+my_tuple = ("Ghent", 13, 13, 4.20, ["el1", "el2"], {"key_1": 1.0, "key_2": 2.0})
+```
+
+```{python}
+# retrieve number of elements
+print(len(my_tuple))
+```
+
+```{python}
+# retrieve the index of the list in our tuple
+print(my_tuple.index(["el1", "el2"]))
+```
+
+```{python}
+# retrieve the index of the list in our tuple
+print(my_tuple.count(13))
+```
+
+```{python}
+# join two tuples
+first_tuple = ("Ghent", "Brussels")
+second_tuple = ("Antwerp", "Leuven")
+new_tuple = first_tuple + second_tuple # alternative notation: my_tuple += my_tuple2
+print(new_tuple)
+```
+
+```{python}
+# compare two tuples
+first_tuple = ("Ghent", "Brussels")
+second_tuple = ("Antwerp", "Leuven")
+print(first_tuple == second_tuple)
+```
+
+```{python}
+# compare two tuples
+first_tuple = ("Ghent", "Antwerp")
+second_tuple = ("Antwerp", "Leuven")
+print(first_tuple < second_tuple)
+```
+
+```{python}
+# other comparisons (NOTE: the comparison is done element by element!)
+print((2, 3) == (2, 3))
+
+print((5, 6, 7) < (7, 5, 6))
+
+print((5, 6, 7) > (7, 5, 6))
+
+print((4, 3, 2) <= (4.0, 3.0, 2.0))
+```
+
+In the examples above, you compare tuples of numbers using the standard comparison operators. Python runs an **element-by-element comparison**. So, for example:
+
+- In the first expression above, Python compares the 2 in the left tuple and the 2 in the right one. They're equal, and Python continues by comparing 3 and 3 to conclude that both tuples are equal.
+- In the second expression, Python compares 5 and 7. They're different. Because 5 is less than 7, this *individual comparison* determines the result of the entire expression, and you get `True` as a result. If we perform the opposite action, using `>` instead of `<`, 5 is not greater than 7, so we get `False` as a result.
+- In the last expression, both tuples contain the same values. Because equality is included in the comparison, you get `True` as a result. **Note** that it handles the fact that one tuple uses `integer` and the other tuple uses `float` notation!
+
+#### Nested Tuples
+
+Just like nested lists, you index into a nested tuple one level at a time.
+
+```{python}
+# nested tuples
+nested_tuple = (("Ghent", 6), ("Brussels", 9))
+print(nested_tuple[0][1])
+```
+
+## Conditionals
+
+Conditionals let your code take different paths depending on the data it sees — for example, sending a different message to a customer depending on how they prefer to be contacted.
+
+### If-Else
+
+#### Definition
+
+An `if`/`elif`/`else` block runs exactly one of its branches — whichever one is reached first with a condition that evaluates to `True`.
+
+```{python}
+# if-elif-else example
+number = 3
+
+if number > 0:
+
+    print("this is a positive number")
+
+elif number == 0:
+
+    print("this number equals zero")
+
+else:
+    print("this is a negative number")
+```
+
+#### Nested if-else
+
+You can nest conditionals inside one another to check several conditions in sequence. Here, it first checks whether a customer exists at all, and only then checks their contact preferences.
+
+```{python}
+# nested if-else example
+customers = {"Tom": {"mail": True, "phone": False},
+             "Julie": {"mail": False, "phone": False},
+             "Jasper": {"mail": True, "phone": True}}
+
+contact_customer = "tom"
+
+# check if the customer we want to contact is in our customer list
+if contact_customer in customers.keys():
+
+    # check if customer wants to be contacted via mail
+    if customers[contact_customer]["mail"] == True:
+        print("customer wants to be contacted via mail")
+    else:
+        print("customer wants not to be contacted via mail")
+
+    # check if customer wants to be contacted via phone
+    if customers[contact_customer]["phone"] == True:
+        print("customer wants to be contacted via phone")
+    else:
+        print("customer wants not to be contacted via phone")
+
+else:
+
+    print("customer not in customer list!")
+```
+
+Notice the output here: `contact_customer` is `"tom"` (lowercase) but the dictionary key is `"Tom"` (capitalized), so the membership check fails and we fall into the `else` branch. The take-away is that key lookups in Python are case-sensitive, and mismatched casing is a common source of silent bugs (and frustrations) when matching records across datasets.
+
+### For
+
+#### Looping through a list
+
+A `for` loop repeats a block of code once per item in a sequence: a range of numbers, a list, or the keys of a dictionary.
+
+```{python}
+# looping through a range of numbers
+for i in range(0, 3):
+    print(i)
+```
+
+```{python}
+# looping through a list
+customers = ["tom", "sarah", "julie"]
+for cust in customers:
+    print(cust)
+```
+
+#### Looping through a dictionary
+
+Looping over a dictionary by default gives you its keys; `.items()` gives you both the key and its value in one go, which is usually what you want.
+
+```{python}
+# looping through keys of a dictionary
+product_prices = {"xs45321": 420, "xs5620": 690, "xs0909": 2503}
+
+for key in product_prices.keys():
+    print(key, ":", product_prices[key])
+```
+
+```{python}
+# looping through items of a dictionary
+product_prices = {"xs45321": 420, "xs5620": 690, "xs0909": 2503}
+
+for key, value in product_prices.items():
+    print(key, ":", value)
+```
+
+### While
+
+#### Definition
+
+Unlike a `for` loop, a `while` loop keeps running as long as a condition stays `True`. This is useful when you don't know in advance how many iterations you'll need.
+
+```{python}
+# example while loop
+counter = 0
+
+while counter < 4:
+
+    print("counter: ", counter)
+    counter = counter + 1
+```
+
+#### Infinite while loop
+
+If the condition never becomes `False`, a `while` loop runs forever. The cell below is commented out on purpose: don't uncomment and run it as-is, since it would never stop!
+
+```{python}
+# example infinite while loop: Do not run this!!!
+#counter = 0
+
+#while counter >= 0:
+
+    #counter = counter + 1
+```
+
+#### Break and continue
+
+`break` exits the loop immediately, while `continue` skips the rest of the current iteration and moves on to the next one.
+
+```{python}
+# break
+counter = 0
+
+while counter < 6:
+
+    print("counter: ", counter)
+    counter = counter + 1
+
+    if counter == 3:
+        break
+```
+
+```{python}
+# continue
+counter = 0
+
+while counter < 6:
+
+    counter = counter + 1
+
+    if counter == 3:
+        continue
+
+    print("counter: ", counter)
+```
+
+### Try-Except
+
+#### Definition
+
+A `try`/`except` block lets your code recover from an error instead of crashing outright. This is especially useful inside a loop over many records, where one bad record shouldn't stop processing of the rest. Below, a customer with zero years of tenure would otherwise cause a division-by-zero error.
+
+```{python}
+customer_spendings = {"Tom": {"years_customer": 5, "total_spendings": 304},
+                  "Julie": {"years_customer": 0, "total_spendings": 1402},
+                  "Jack": {"years_customer": 2, "total_spendings": 459}}
+
+for customer, value in customer_spendings.items():
+
+    try:
+        avg_spending_per_year = value["total_spendings"] / value["years_customer"]
+        print(customer, ":", avg_spending_per_year)
+    except:
+        avg_spending_per_year = value["total_spendings"]
+        print(customer, ":", avg_spending_per_year, "for less than 1 year a customer")
+```
+
+## Reading and Writing Files
+
+In every real-world data analytics project, you'll need to get data into and out of Python. Later in the book, you'll see how to read and write Excel and CSV files with `pandas`, but sometimes you need to work with plain-text files directly. Therefore, this section covers the basics of file handling using plain-text files. The examples below use files from this book's `data/raw/` folder.
+
+### Reading
+
+#### General procedure
+
+Opening a file gives you a file object; you read its contents, then close it when you're done to free up the underlying resource.
+
+```{python}
+# open the corpus.txt file into the file object f
+f = open("../data/raw/corpus.txt", "r")
+```
+
+```{python}
+# read the file
+text = f.read()
+print(text)
+```
+
+```{python}
+# close the file
+f.close()
+```
+
+```{python}
+# inspect object type of text variable
+type(text)
+```
+
+#### Read functions
+
+There are a few different ways to pull lines out of a file, depending on whether you want to process them one at a time or all at once.
+
+```{python}
+# open the corpus.txt file into the file object f
+f = open("../data/raw/corpus.txt", "r")
+
+# initialize empty list
+lines_container = []
+
+# loop through lines
+for line in f:
+    # add line to container
+    lines_container.append(line)
+
+# loop through container
+for line in lines_container:
+    print(line)
+```
+
+```{python}
+# open the corpus.txt file into the file object f
+f = open("../data/raw/corpus.txt", "r")
+
+# read lines into container
+container = f.readlines()
+
+print(type(container))
+print(len(container))
+print(container[0])
+```
+
+```{python}
+# close the file
+f.close()
+```
+
+```{python}
+# open the corpus.txt file into the file object f
+f = open("../data/raw/corpus.txt", "r")
+
+# loop through the lines
+for line in f:
+    print(line)
+```
+
+```{python}
+# close the file
+f.close()
+```
+
+A more realistic use case: parsing a semicolon-separated customer file, line by line, into a dictionary keyed by customer ID.
+
+```{python}
+# open the customers.csv file
+f = open("../data/raw/customers.csv", "r")
+
+# initialize dictionary
+customers_dict = dict()
+
+
+# loop through the lines
+for line in f:
+    # remove new line
+    line = line.replace("\n", "")
+    # split line by separator
+    data = line.split(";")
+    # create dictionary
+    cust_dict = {"name": data[1], "country": data[2], "phone": data[3]}
+    # store in customers dict with id as key
+    customers_dict[line[0]] = cust_dict
+
+# inspect dict
+customers_dict
+```
+
+```{python}
+# close the file
+f.close()
+```
+
+#### With
+
+Manually calling `.close()` every time is easy to forget. For example, if an error happens before you reach the statement, the file stays open. The `with` statement handles closing the file automatically, even if an error occurs inside the block, so it's the pattern you should reach for by default.
+
+```{python}
+# use the with statement
+with open("../data/raw/corpus.txt", "r") as f:
+    text = f.read()
+```
+
+### Writing Files
+
+#### General procedure
+
+Writing works the same way as reading, but with mode `"w"` instead of `"r"`. Run the cells below and you'll see the corresponding file appear in `data/raw/`.
+
+```{python}
+# initialize a string
+string = "this is some random string I want to store"
+```
+
+```{python}
+with open("../data/raw/my_random_string.txt", "w") as f:
+    f.write(string)
+```
+
+#### Write functions
+
+`.writelines()` writes a list of strings to a file, one after another, with no separator added automatically — if you want line breaks, you need to include `"\n"` yourself.
+
+```{python}
+# initialize a list you want to store
+customers  = ['Tom', 'Charlotte', 'Lyam', 'Patrick', 'Matts', 'Lesley']
+```
+
+```{python}
+with open("../data/raw/my_customers.txt", "w") as f:
+    f.writelines(customers)
+```
+
+```{python}
+# initialize a list you want to store
+customers  = ['Tom\n', 'Charlotte\n', 'Lyam\n', 'Patrick\n', 'Matts\n', 'Lesley\n']
+```
+
+```{python}
+with open("../data/raw/my_customers_2.txt", "w") as f:
+    f.writelines(customers)
+```
+
+You can also build up a file line by line inside a loop, which is handy when each line needs to be assembled from several pieces of data first. Here, the file is created from a list of customer dictionaries.
+
+```{python}
+# initialize a dictionary you want to store
+customer_info  = [{"name": "Tom", "country": "Belgium", "customer_since": "05/03/1997"},
+                  {"name": "Matts", "country": "United States", "customer_since": "14/09/2003"},
+                  {"name": "Lesley", "country": "France", "customer_since": "01/11/1993"},
+                  {"name": "Catherine", "country": "Belgium", "customer_since": "25/04/2005"}]
+```
+
+```{python}
+# open the file
+with open("../data/raw/my_customers_3.txt", "w") as f:
+
+    # loop through objects
+    for customer in customer_info:
+
+        # get the name
+        name = customer["name"]
+        # get the country
+        country = customer["country"]
+        # get the start date
+        start_date = customer["customer_since"]
+
+        # write data to file and seperate by ;
+        f.write(name)
+        f.write(";")
+        f.write(country)
+        f.write(";")
+        f.write(start_date)
+        f.write("\n")
+```
+
+In the end, you'll find the three newly created customer `.txt` files in `data/raw/`.
+
+## Functions
+
+### Definition
+
+A function wraps up a block of reusable code under a specific name. Python also ships with many built-in functions you've already been using without a formal introduction, such as `print()`, `type()`, `float()`, among others.
+
+```{python}
+# built in functions
+print("hallo")
+print(type(3.0))
+print(float(2))
+print(str(2))
+print(bool(0))
+print(list())
+print(dict())
+```
+
+### Parameters
+
+Parameters are the inputs a function accepts. You can pass them by referencing their position in the function call or by explicitly naming them. 
+
+```{python}
+# define a function which adds a constant to a number
+def add_constant_to_number(number, constant):
+
+    # calculate result
+    result = number + constant
+
+    # return result
+    return(result)
+```
+
+```{python}
+# call the function for a specific number and constant
+result = add_constant_to_number(number=15, constant=3)
+print(result)
+```
+
+```{python}
+# define a function that will print the elements of a list
+def print_elements_list(elements):
+    for el in elements:
+        print(el)
+```
+
+```{python}
+# define a list of elements
+e = ["belgium", "france", "germany"]
+# call function on this list
+print_elements_list(e)
+```
+
+```{python}
+# define a function that divides a numerator by denominator
+def division(numerator, denominator):
+
+    return(numerator / denominator)
+```
+
+When you call a function with positional arguments, order matters! Swapping the numerator and denominator gives you a different (and wrong) result if you're not careful.
+
+```{python}
+# call the function with parameter values at correct place
+div = division(4., 2.)
+print(div)
+```
+
+```{python}
+# call the function with parameter values not at correct place
+div = division(2., 4.)
+print(div)
+```
+
+Using keyword arguments removes any ambiguity, since each value is explicitly matched to its parameter name regardless of the order you write them in.
+
+```{python}
+# call the function with parameter names and values specified
+div = division(denominator=2., numerator=4.)
+print(div)
+```
+
+Parameters can also have default values, which make them optional at the call site.
+
+```{python}
+# define function which prints a customer's name
+def print_name(name="unknown"):
+
+    print("the customer's name is: " + name)
+```
+
+```{python}
+# call function with parameter specified
+print_name(name="jack")
+```
+
+```{python}
+# call function with no parameter specified
+print_name()
+```
+
+### Return
+
+A function stops executing as soon as it hits a `return` statement. Any code written after it inside the same branch never runs.
+
+```{python}
+# define function with multiple return statements
+def divide_and_sum(number, constant_1, constant_2):
+
+    # divide number by constant_1
+    result_1 = number / constant_1
+    return(result_1)
+
+    # add constant_2 to result_1
+    result_2 = result_1 + constant_2
+    return(result_2)
+```
+
+```{python}
+# call function
+result = divide_and_sum(number=10, constant_1=5, constant_2=2)
+print(result)
+```
+
+### Flexible Functions
+
+Sometimes you don't know in advance how many arguments a function needs to accept. `*args` collects any number of positional arguments into a tuple, and `**kwargs` collects any number of keyword arguments into a dictionary. You can use either, or both, in the same function.
+
+```{python}
+def print_args(*args):
+   # loop through non-keyword arguments (stored as a tuple)
+   for arg in args:
+      print(arg)
+
+print_args(1, 2, 3)
+```
+
+```{python}
+def print_kwargs(**kwargs):
+   # loop through keyword arguments (stored as a dictionary)
+   for key, value in kwargs.items():
+      print("{key}: {value}".format(key=key, value=value))
+
+print_kwargs(a=1, b=2, c=3)
+```
+
+```{python}
+def print_args_kwargs(*args, **kwargs):
+   # loop through non-keyword arguments (stored as a tuple)
+   for arg in args:
+      print("Non-keyword argument: {arg}".format(arg=arg))
+
+   # loop through keyword arguments (stored as a dictionary)
+   for key, value in kwargs.items():
+      print("Keyword argument: {key}={value}".format(key=key, value=value))
+
+print_args_kwargs(1, 2, 3, a=1, b=2, c=3)
+```
+
+## Packages
+
+### Usage
+
+Almost everything useful you'll do in Python relies on packages beyond the standard library. Install them from the command line or with `!pip install` inside a Jupyter notebook or `%pip install` inside VScode. 
+
+```{python}
+#| eval: false
+# install package from within Jupyter Notebook
+# NOTE: replace package_name by the name of the package you want to install!
+!pip install package_name
+#in VSCode it better to use: %pip install package_name
+```
+
+Once a package (or a built-in module) is installed, you bring it into your script with `import`. You can import an entire module, a single function from it, or give it a shorter alias. All three styles show up throughout this book.
+
+```{python}
+# import entire module
+import os
+```
+
+```{python}
+# use the makedirs function from the os module
+os.makedirs("./test", exist_ok=True)
+```
+
+```{python}
+# import the function from the module
+from os import listdir
+```
+
+```{python}
+# use the listdir function from the os module
+listdir("./")
+```
+
+```{python}
+# define an alias for the package numpy (if not installed run !pip or %pip install numpy)
+import numpy as np
+```
+
+::: {.callout-note}
+## Module vs Package
+
+There is some confusion between a modulde and a package in Python. A **module** is a single file (or script) that is imported under one import and used. For example, you have written a script that contains a set of functions to manually engineer a set of features for a machine learning model. You can save this script as `feature_engineering.py` in your folder and then import it in your notebook with `import feature_engineering`. This will allow you to employ the user-defined functions.
+
+A **package**, on the other hand, is a collection of modules in directories that give a package hierarchy. For example, `feature-engine` is a package that contains a collection of modules for advanced feature transformations. You can import the entire package with `import feature_engine` or import a specific module with `from feature_engine import variable_transformers`. Hence, there is no need to create your own scripts and modules when you can use the existing packages that are available in Python.
+:::
+
+## NumPy
+
+### Definition
+
+NumPy is Python's core library for numerical computing. Its central object, the array, stores values of a single type in a grid of one or more dimensions and supports fast, vectorized math operations. This means that NumPy operates on entire arrays at once instead of writing explicit loops. It's also the foundation that libraries like `pandas` and `scikit-learn` are built on, so it's worth being comfortable creating, manipulating, and using NumPy arrays.
+
+```{python}
+# import the numpy package
+import numpy as np
+```
+
+### Multi-dimensional array
+
+#### Creation
+
+An array can have any number of dimensions: a 1D array behaves like a list of numbers, a 2D array like a matrix, and so on.
+
+```{python}
+# define a 1D array
+arr = np.array([3, 4, 1])
+```
+
+```{python}
+print(arr)
+```
+
+```{python}
+# define a 2D array
+arr = np.array([[1, 3, 0], [3, 2, 5]])
+```
+
+```{python}
+print(arr)
+```
+
+NumPy also provides shortcuts for creating arrays filled with a specific set of values, without having to type them out by hand.
+
+```{python}
+# create an array full of zeros with shape (2, 3)
+zeros = np.zeros(shape=(2, 3))
+
+print(zeros)
+```
+
+```{python}
+# create an array full of ones with shape (1, 3)
+ones = np.ones(shape=(1, 3))
+
+print(ones)
+```
+
+```{python}
+# create a matrix full of 5 with the shape (2, 2)
+fives = np.full(fill_value=5, shape=(2, 2))
+
+print(fives)
+```
+
+```{python}
+# create an array of random numbers between 0 and 1 of shape (2, 2)
+random_floats = np.random.random(size=(2, 2))
+
+print(random_floats)
+```
+
+```{python}
+# create an array of random integers between 0 and 10 of shape (2, 2)
+random_ints = np.random.randint(low=0, high=10, size=(2, 2))
+
+print(random_ints)
+```
+
+```{python}
+# create an array of random normal numbers with mean 0 and stdev 1 of shape (2, 2)
+random_normals = np.random.normal(loc=0, scale=1, size=(2, 2))
+
+print(random_normals)
+```
+
+Every array has a `.shape` attribute describing its size along each dimension. It is worth checking this often, since a huge share of NumPy and `pandas` errors come down to arrays not having the shape.
+
+```{python}
+# define another 2D array
+arr = np.array([[1, 3, 0], [3, 2, 5], [5, 7, 1], [3, 4, 1]])
+
+print(arr)
+
+# get the shape of the array
+arr.shape
+```
+
+#### Indexing
+
+Indexing a 2D array takes two coordinates, `[row, column]`, and slicing works along each dimension independently.
+
+```{python}
+# define an array
+arr = np.array([[1, 2, 3], [4, 5, 6]])
+
+print(arr)
+```
+
+```{python}
+# access the element on the first row and second column
+arr[0, 1]
+```
+
+```{python}
+# access the elements on the first row from the first column untill the second column
+arr[1, 0:2]
+```
+
+#### Mathematical Operations
+
+Arithmetic on arrays is **element-wise** by default: adding two arrays adds each pair of matching positions, rather than doing anything like matrix multiplication.
+
+```{python}
+# initialize two arrays
+arr_1 = np.array([[1, 3], [-2, 5]])
+arr_2 = np.array([[2, 4], [3, -1]])
+
+print(arr_1)
+print("\n")
+print(arr_2)
+```
+
+```{python}
+# perform element-wise summation
+arr_3 = arr_1 + arr_2
+
+print(arr_3)
+```
+
+```{python}
+# perform element-wise subtraction
+arr_4 = arr_1 - arr_2
+
+print(arr_4)
+```
+
+```{python}
+# perform element-wise multiplication
+arr_5 = arr_1 * arr_2
+
+print(arr_5)
+```
+
+Element-wise operations require compatible shapes. `arr_1` is a 2×2 array, so adding a length-3 vector to it fails. NumPy has no consistent way to line up 2 columns with 3 values. This is the error you'll get whenever your arrays don't broadcast together.
+
+```{python}
+#| error: true
+arr_5 = arr_1 + np.array([2, 1, 5])
+```
+
+**Broadcasting** is the set of rules NumPy uses to apply an operation between arrays of different (but compatible) shapes, without actually copying data, by conceptually stretching the smaller one to match the bigger one. There are exactly three rules, applied in this order:
+
+1. **Padding:** If the two arrays have a different number of dimensions, the shape of the one with fewer dimensions is padded with `1`s on its leading (left) side, until both shapes have the same number of dimensions.
+2. **Stretching:** Comparing the two (now equal-length) shapes dimension by dimension: wherever one array has size-`1` in a dimension and the other doesn't, the size-`1` dimension is stretched (in other words, duplicated) to match the other array's size in that dimension.
+3. **Mismatch:** If, in any dimension, the two sizes disagree and neither of them is size-`1`, broadcasting fails and NumPy raises an error.
+
+Applied to the failing example above: `arr_1` has shape `(2, 2)` and the vector `np.array([2, 1, 5])` has shape `(3,)`. Rule 1 pads the vector's shape to `(1, 3)`. Comparing dimension by dimension, the last dimension is `2` vs. `3` and neither is size-`1` so they don't match. In this case, Rule 3 kicks in and NumPy raises the error you saw above.
+
+In the example below, the length-2 vector broadcasts successfully across both rows of `arr_1`. Rule 1 pads its shape from `(2,)` to `(1, 2)`, and then Rule 2 stretches that size-`1` first dimension to `2`, matching `arr_1`'s shape.
+
+```{python}
+# broadcasting
+arr_4 = arr_1 + np.array([3, 2])
+
+print(arr_4)
+```
+
+Adding a plain scalar works the same way: a scalar is treated as a 0-dimensional array with shape `()`. Rule 1 pads it to `(1, 1)`, and Rule 2 stretches both dimensions to match `arr_1`'s `(2, 2)`.
+
+```{python}
+# add scalar to array
+arr_1 + 2
+```
+
+```{python}
+# add vector to array
+arr_1 + np.array([2, 3])
+```
+
+A higher-dimensional example is shown below to see all three rules working together on a bigger shape mismatch: `a` has shape `(2, 3, 2)` and `b` has shape `(2,)`. Rule 1 pads `b` to `(1, 1, 2)`. Comparing dimension by dimension, the last dimension already matches (`2` vs. `2`), so there's nothing to stretch there; the middle and first dimensions are `1` vs. `3` and `1` vs. `2`, so Rule 2 stretches both of `b`'s size-`1` dimensions to match, giving a broadcast shape of `(2, 3, 2)`.
+
+```{python}
+a = np.zeros(shape=(2, 3, 2))
+b = np.ones(shape=(2))
+a + b
+```
+
+Beyond element-wise arithmetic, NumPy also provides linear-algebra operations like the dot product, along with aggregation functions (e.g., sum, mean, max, min) that can be applied either over the whole array or along a specific axis.
+
+```{python}
+# do matrix mulitplication between arr_1 and arr_2
+arr = np.dot(arr_1, arr_2)
+
+print(arr)
+```
+
+```{python}
+# take the sum along the second dimension
+np.sum(arr_1, axis=1)
+```
+
+```{python}
+# take the mean along the first dimension
+np.mean(arr_1, axis=0)
+```
+
+```{python}
+# take the maxium of the entire array
+np.max(arr_1)
+```
+
+```{python}
+# take the minimum along the first dimension
+np.min(arr_1, axis=0)
+```
+
+### Array Manipulation
+
+Beyond creating and combining arrays, you'll often need to reshape or reorganize them into a different layout — for example, to match the input shape a model expects.
+
+::: callout-note
+## NumPy version
+
+`np.reshape()`'s second argument was renamed from `newshape` to `shape` in NumPy 2.1, and the old `newshape` keyword has since been removed entirely. Calls with `np.reshape(arr, newshape=...)` now raise a `TypeError` on current NumPy. 
+:::
+
+```{python}
+# define array
+arr_1 = np.array([1, 2, 3, 4])
+
+# reshape array
+arr_2 = np.reshape(arr_1, shape=(2, 2))
+
+# check
+arr_2
+```
+
+```{python}
+# define array
+arr_1 = np.array([[1, 2], [3, 4]])
+
+# check
+print(arr_1)
+```
+
+```{python}
+# transpose array
+arr_2 = np.transpose(arr_1)
+
+# check
+print(arr_2)
+```
+
+```{python}
+# define array
+arr_1 = np.zeros(shape=(2, 3))
+arr_2 = np.ones(shape=(1, 3))
+
+# concatenate along first dimension
+arr_3 = np.concatenate([arr_1, arr_2], axis=0)
+
+# check
+arr_3
+```
+
+## Pandas
+
+`pandas` is Python's main data manipulation library: it makes it easy to read, explore, wrangle, transform, and combine datasets. Its central object, the `DataFrame`, is a table of rows and columns (similar to a spreadsheet in Excel or a database table) built on top of the NumPy arrays from the previous section. Mastering its core operations is crucial before moving into to realm of data understanding, exploration, and preparation, which is exactly what the rest of this book does with it.
+
+
+### Definition
+
+Before you can build or load a DataFrame, you need to import the `pandas` package and use the conventional alias as `pd`.
+
+```{python}
+# import pandas package
+import pandas as pd
+```
+
+::: {.callout-note}
+## Pandas versions
+
+pandas 3.0 was released recently, but this book intentionally stays on **pandas 2.x**
+(`pandas>=2.3,<3`). pandas 3.0 changes default behavior in ways that haven't been fully
+verified yet against the other packages this book relies on (`feature_engine`,
+`sklearn_evaluation`, and friends). For example, copy-on-write semantics are now always on, and string columns default to a new `str` dtype instead of `object`. 
+
+Make sure you install the pinned environment from `requirements.txt` in the project root (see
+also the installation appendix) rather than the default pandas version `pip install pandas` gives
+you today, otherwise a few examples in this book may behave differently or throw errors.
+:::
+
+### DataFrame Creation
+
+You can build a `DataFrame` by hand from a dictionary, but far more often you'll load one directly from a file. `pandas` can read most common tabular formats, like CSV and Excel including files with no header row, or where you want to control each column's type up front. 
+
+```{python}
+# create DataFrame manually
+df = pd.DataFrame(
+    {
+        "name": ["Sarah", "Tom", "Michael", "Lore"],
+        "cust_id": [123, 451, 455, 388],
+        "country": ["Germany", "France", "USA", "Belgium"],
+
+    }
+)
+```
+
+```{python}
+# loading csv file
+df = pd.read_csv("../data/raw/customers.csv", sep=";")
+```
+
+```{python}
+# check
+df.head()
+```
+
+```{python}
+# loading xlsx file
+#Make sure that you have openpyxl package installed: pip install openpyxl
+df = pd.read_excel("../data/raw/customers.xlsx")
+```
+
+```{python}
+# check
+df.head()
+```
+
+```{python}
+# loading csv file
+df = pd.read_csv("../data/raw/customers_no_header.csv",
+                 sep=";",
+                 header=None,
+                 names=["Cust_ID", "Name", "Country", "Number"],
+                 dtype={"Cust_ID": int, "Name": str, "Country": str, "Number": float})
+```
+
+```{python}
+# check
+df.head()
+```
+
+### DataFrame Exploration
+
+Once your data is loaded, the first step is always to take a first look at it: its size, its column types, and basic summary statistics before you change a single value.
+
+```{python}
+# load csv file
+df = pd.read_csv("../data/raw/customer_churn.csv")
+```
+
+```{python}
+# print snapshot of entire dataframe
+df
+```
+
+```{python}
+# print snapshot of a specific variable
+df["gender"]
+```
+
+```{python}
+# inspect first 3 rows of dataframe
+df.head(3)
+```
+
+```{python}
+# inspect last 3 rows of dataframe
+df.tail(3)
+```
+
+```{python}
+# inspect the shape of the dataframe
+df.shape
+```
+
+```{python}
+# inspect column names
+df.columns
+```
+
+```{python}
+# inspect the column names
+df.dtypes
+```
+
+`.describe()` behaves differently depending on the column's type: numeric columns get statistics like mean and quartiles, while a string (object) column gets counts instead.
+
+```{python}
+# get summary statistics of numeric variable
+df["MonthlyCharges"].describe()
+```
+
+```{python}
+# get summary statistics of string variable
+df["gender"].describe()
+```
+
+```{python}
+# get summary statistics of all numeric variables
+df.describe()
+```
+
+```{python}
+# get the mean of the MonthlyCharges variable
+df["MonthlyCharges"].mean()
+```
+
+```{python}
+# get the sum of the MonthlyCharges variable
+df["MonthlyCharges"].sum()
+```
+
+```{python}
+# get the number of categories of the InternetService variable
+df["InternetService"].unique()
+```
+
+```{python}
+# check if the InternetService variable only contains unique values
+df["InternetService"].is_unique
+```
+
+Missing values show up constantly in real data, so knowing how to spot them is essential: `.isnull()` flags them value by value, and chaining `.sum()` onto it counts how many there are.
+
+```{python}
+# inspect missing values per row
+df["InternetService"].isnull()
+```
+
+```{python}
+# get number of missing values for column
+df["InternetService"].isnull().sum()
+```
+
+```{python}
+# get number of missing values for each column of DataFrame
+df.isnull().sum()
+```
+
+### DataFrame Manipulation
+
+Once a DataFrame is loaded, day-to-day work is mostly about reshaping, cleaning and processing it: converting column types, sorting, subsetting, grouping, joining, dropping unwanted rows or columns, handling missing values, and deriving new columns from existing ones.
+
+#### Type Conversion
+
+Data loaded from a file is often read in as text (or as a generic "object") even when it's really numeric or a date. `pd.to_numeric()` and `pd.to_datetime()` convert it explicitly. `astype()` can convert a column to any type you want, including back to string.
+
+```{python}
+# define dataframe
+df_1 = pd.DataFrame(
+                    {"Postal_Code": ["3410", "4515", "5511", "1390"]}
+)
+```
+
+```{python}
+# show
+df_1
+```
+
+```{python}
+# check data types
+df_1.dtypes
+```
+
+```{python}
+# convert string variable to numeric variable
+df_1["Postal_Code"] = pd.to_numeric(df_1["Postal_Code"])
+```
+
+```{python}
+# show
+df_1
+```
+
+```{python}
+# check data types
+df_1.dtypes
+```
+
+```{python}
+# convert numeric variable back to string variable
+df_1["Postal_Code"] = df_1["Postal_Code"].astype(str)
+```
+
+```{python}
+# define dataframe
+df_1 = pd.DataFrame(
+                    {"dates": ["01/04/1993", "04/11/2003", "05/03/1997", "23/06/2001"]}
+)
+```
+
+```{python}
+df_1
+```
+
+```{python}
+# check data types
+df_1.dtypes
+```
+
+```{python}
+# convert string variable to datetime variable
+df_1["dates"] = pd.to_datetime(df_1["dates"], format="%d/%m/%Y")
+```
+
+```{python}
+# check
+df_1
+```
+
+```{python}
+df_1.dtypes
+```
+
+#### Sorting
+
+Sorting a DataFrame means rearranging its rows in ascending or descending order based on the values of one or more columns.
+
+In `pandas`, the `sort_values()` function sorts a DataFrame by one or more columns. By default, it sorts in ascending order.
+
+```{python}
+# define dataframe
+df_1 = pd.DataFrame(
+                    {"Scores": [3, 18, 15, 6],
+                     "Group": [1, 2, 1, 2]}
+)
+```
+
+```{python}
+df_1
+```
+
+```{python}
+# sort in ascending order
+df_1.sort_values(by="Scores")
+```
+
+```{python}
+# sort in descending order
+df_1.sort_values(by="Scores", ascending=False)
+```
+
+```{python}
+# sort by multiple variables
+df_1.sort_values(by=["Group", "Scores"])
+```
+
+#### Subsetting
+
+Subsetting a DataFrame means selecting a sample of the data, either by column, row, or both.
+
+`pandas` allows you to select columns, positions (`.iloc`), or rows matching a condition. The latter, also called boolean indexing, is what you'll use constantly to filter out observations from a table.
+
+```{python}
+# select the gender and tenure columns
+df_sub = df[["gender", "tenure"]]
+```
+
+```{python}
+df_sub.head(3)
+```
+
+```{python}
+# select row 2 and column 3
+df_sub = df.iloc[1, 2]
+```
+
+```{python}
+df_sub
+```
+
+```{python}
+# select rows 2, 5, 6 and columns 4, 5
+df_sub = df.iloc[[1, 4, 5], [3, 4]]
+```
+
+```{python}
+df_sub
+```
+
+```{python}
+# select row 10 until row 30 and columns 3 until 5
+df_sub = df.iloc[9:30, 2:5]
+```
+
+```{python}
+df_sub.head()
+```
+
+```{python}
+# select all the rows where gender equals Male
+df_sub = df[df["gender"] == "Male"]
+```
+
+```{python}
+# select all the rows where tenure equals 1, 2 or 3
+df_sub = df[df["tenure"].isin([1, 2, 3])]
+```
+
+```{python}
+# select all the rows where gender equals Male and OnlineSecurity equals yes
+df_sub = df[(df["gender"] == "Male") & (df["OnlineSecurity"] == "Yes")]
+```
+
+```{python}
+# condition on column
+df["gender"] == "Male"
+```
+
+#### Grouping
+
+Grouping summarizes data by one or more categorical variables.
+
+The `groupby()` function splits the DataFrame into groups based on the unique values of the specified column(s), and then applies a specific aggregation functions to each group.
+
+::: {.callout-note}
+## String names vs. function objects
+
+In earlier versions of pandas, when using the `agg()` function in a groupby operation, you had to pass the **actual function**, like `np.mean`, for aggregation. However, in more recent versions of pandas, you can simply pass the **string name of the function** (e.g., `'mean'`, `'sum'`, etc.) instead of the function object itself. This works because pandas internally maps these string names to the corresponding numpy functions.
+:::
+
+```{python}
+df = pd.read_csv("../data/raw/customer_churn.csv")
+```
+
+```{python}
+df.head()
+```
+
+```{python}
+df.groupby("gender")["MonthlyCharges"].mean()
+```
+
+```{python}
+agg_dict = {"tenure": ['mean', 'sum'], "MonthlyCharges": ['min', 'max']}
+```
+
+```{python}
+df.groupby("gender").agg(agg_dict)
+```
+
+#### Joining
+
+Joining or merging combines two DataFrames based on a common column or index. `pd.concat()` and `pd.merge()` are the two main functions for this purpose.
+
+`pd.concat()` stacks DataFrames on top of each other by default, matching up columns that share the same name and introducing missing values where they don't.
+
+```{python}
+# define dataframe
+df_1 = pd.DataFrame(
+                    {"Country": ["Belgium", "France", "Germany"],
+                     "Name": ["Tom", "Sarah", "Niels"]}
+)
+```
+
+```{python}
+df_1
+```
+
+```{python}
+# define dataframe
+df_2 = pd.DataFrame(
+                    {"Country": ["Belgium", "USA"],
+                     "Name": ["Lies", "Jack"]}
+)
+```
+
+```{python}
+df_2
+```
+
+```{python}
+# stack dataframes
+pd.concat([df_1, df_2])
+```
+
+```{python}
+# define dataframe
+df_1 = pd.DataFrame({"Country": ["Belgium", "France", "Germany"],
+                     "Name": ["Tom", "Sarah", "Niels"]})
+```
+
+```{python}
+df_1
+```
+
+```{python}
+# define dataframe
+df_2 = pd.DataFrame({"Cust_Id": [234, 4531],
+                     "Name": ["Lies", "Jack"]})
+```
+
+```{python}
+df_2
+```
+
+```{python}
+# stack dataframes
+pd.concat([df_1, df_2])
+```
+
+`pd.merge()`, on the other hand, joins two DataFrames side by side based on a shared key column, exactly like a SQL join with the same four options on how to merge your data: outer, inner, left, and right join.
+
+```{python}
+# define dataframe
+df_1 = pd.DataFrame({"Country": ["Belgium", "France", "Germany"],
+                     "Name": ["Tom", "Sarah", "Niels"],})
+```
+
+```{python}
+df_1
+```
+
+```{python}
+# define 2 dataframes
+df_2 = pd.DataFrame({"Country": ["Belgium", "France", "Spain"],
+                     "Prefix": ["+32", "+33", "+34"]})
+```
+
+```{python}
+df_2
+```
+
+```{python}
+# outer join
+pd.merge(df_1, df_2, how="outer", on="Country")
+```
+
+```{python}
+# inner join
+pd.merge(df_1, df_2, how="inner", on="Country")
+```
+
+```{python}
+# left join
+pd.merge(df_1, df_2, how="left", on="Country")
+```
+
+```{python}
+# right join
+pd.merge(df_1, df_2, how="right", on="Country")
+```
+
+#### Dropping
+
+`drop_duplicates()` removes duplicate rows, and `drop()` removes whole columns (or rows) you no longer need.
+
+```{python}
+# define dataframe
+df_1 = pd.DataFrame({"Name": ["Tom", "Sarah", "Niels", "Tom", "Sarah"],
+                     "Country": ["Belgium", "France", "Germany", "USA", "France"]})
+```
+
+```{python}
+df_1
+```
+
+```{python}
+# drop duplicates
+df_1.drop_duplicates()
+```
+
+```{python}
+# drop duplicates based on column
+df_1.drop_duplicates(subset=["Name"])
+```
+
+```{python}
+# drop variable
+df_1.drop(columns=["Name"])
+```
+
+#### Handling Missing Values
+
+`dropna()` removes rows with missing values (with several strategies for exactly which rows to drop), while `fillna()` replaces them with a value you specify — often per column, via a dictionary.
+
+```{python}
+import numpy as np
+# define dataframe
+df_1 = pd.DataFrame({"Name": ["Tom", "Sarah", np.nan, "Tom", np.nan],
+                     "Country": ["Belgium", "France", "Germany", "USA", np.nan]})
+```
+
+```{python}
+df_1
+```
+
+```{python}
+# drop rows with missing values
+df_1.dropna()
+```
+
+```{python}
+# drop rows with missing values for all columns
+df_1.dropna(how="all")
+```
+
+```{python}
+# keep every row with at least 1 non missing value
+df_1.dropna(thresh=1)
+```
+
+```{python}
+# define dataframe
+df_1 = pd.DataFrame({"Name": ["Tom", "Sarah", np.nan, "Tom", np.nan],
+                     "gender": ["male", "female", "male", "male", np.nan],
+                     "Spendings": [1023, 500, 120, np.nan, 203]})
+```
+
+```{python}
+df_1
+```
+
+```{python}
+# define imputation dictionary
+column_imputations = {"Name": "UNKNOWN_NAME",
+                      "Spendings": 0,
+                      "gender": "male"}
+```
+
+```{python}
+# impute missing values
+df_1.fillna(value=column_imputations)
+```
+
+#### Generating new data
+
+`.apply()` lets you run a custom function over a column (or, with `axis=1`, over each row). This a fast way to implement a transformation that doesn't already exist as a built-in method. 
+
+```{python}
+# define dataframe
+df_1 = pd.DataFrame(
+                    {"Spendings": [120, -5, 293, -1]}
+)
+```
+
+```{python}
+df_1
+```
+
+```{python}
+# define function
+def replace_negative_values(column_obs):
+    if column_obs < 0:
+        return(0)
+    else:
+        return(column_obs)
+```
+
+```{python}
+# apply function on column
+df_1["Spendings"].apply(replace_negative_values)
+```
+
+```{python}
+df_1
+```
+
+```{python}
+# apply same function on column with lambda expression
+df_1["Spendings_correct"] = df_1["Spendings"].apply(lambda x: 0 if x < 0 else x)
+```
+
+```{python}
+# define dataframe
+df_1 = pd.DataFrame(
+                    {"Spendings": [120, 34, 293, 30],
+                     "Country": ["Belgium", "France", "France", "Belgium"]}
+)
+```
+
+```{python}
+df_1
+```
+
+```{python}
+# define function that will be applied on each column row
+def replace_wrong_values(country, spendings):
+    if country == "Belgium":
+        return(spendings + 100)
+    else:
+        return(spendings - 50)
+```
+
+```{python}
+# apply function on column
+df_1["Spendings_correct"] = df_1.apply(lambda x: replace_wrong_values(x['Country'], x['Spendings']), axis=1)
+```
+
+```{python}
+df_1
+```

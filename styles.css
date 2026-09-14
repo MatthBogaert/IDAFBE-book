@@ -1,0 +1,6 @@
+/* Custom site styling — optional.
+   Referenced from _quarto.yml as format: html: css: styles.css if you add that line. */
+
+body {
+  font-family: "Georgia", serif;
+}

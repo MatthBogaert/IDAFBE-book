@@ -1,0 +1,29 @@
+# Quarto build output
+/_book/
+/.quarto/
+*_files/
+*_cache/
+
+# Generated student notebooks — rebuilt from chapters/*.qmd, not hand-edited.
+# Keep this commented out if you'd rather version-control the generated notebooks too.
+# notebooks_student/*.ipynb
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# OS / editor cruft
+.DS_Store
+.vscode/
+.claude/
+
+# Copyrighted source PDFs kept locally for citation-checking — not for redistribution.
+# The actual citations live in references.bib, which is tracked.
+/references/
+
+# Large or sensitive data — uncomment/adjust as needed
+# data/raw/*
+# data/processed/*
+# !data/raw/.gitkeep
+# !data/processed/.gitkeep
+
+**/*.quarto_ipynb

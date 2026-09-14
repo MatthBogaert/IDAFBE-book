@@ -1,0 +1,46 @@
+jupyter: da2026 # kernel for the DA2026 conda env; see requirements.txt for pinned versions
+
+project:
+  type: book
+  output-dir: _book
+  render:
+    - "*.qmd"
+    - "chapters/*.qmd"
+    - "!notebooks_student/"   # student notebooks are hand-maintained, never rendered by Quarto
+    - "!notebooks_source/"    # original raw notebooks, also never rendered
+
+book:
+  title: "Introduction to Data Analytics for Business and Economics"
+  subtitle: "Using Python for Data Preprocessing, Visualization, and Modeling"
+  author: "Matthias Bogaert"
+  date: today
+  cover-image: images/cover.png
+  chapters:
+    - index.qmd
+    - chapters/01-intro.qmd
+    - chapters/02-python-basics.qmd
+    - chapters/03-data-understanding.qmd
+    - chapters/04-data-exploration.qmd
+    - chapters/05-data-preparation.qmd
+    - chapters/06-model-evaluation.qmd
+    # add more chapters here as you convert them, e.g.:
+    # - chapters/07-modeling.qmd
+  appendices:
+    - chapters/appendix-installation.qmd
+
+bibliography: references.bib
+# csl: apa.csl   # uncomment and add a .csl file if you want a specific citation style
+
+format:
+  html:
+    theme: cosmo
+    code-fold: true       # code hidden by default, reader can expand it
+    toc: true
+  pdf:
+    documentclass: book
+    geometry:
+      - margin=1in
+    # For KDP paperback you'll adjust this to match your chosen trim size, e.g.:
+    # papersize: "6in,9in"
+  epub:
+    cover-image: images/cover.png
