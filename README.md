@@ -1,49 +1,62 @@
-# my-book
+# Introduction to Data Analytics for Business and Economics
 
-A Quarto book project, built from Jupyter notebooks.
+This is the repository for the book *Introduction to Data Analytics for Business and Economics*,
+written for the Data Analytics course at the University of Namur (UNamur).
 
-## Layout
+**[Read the book online, for free →](https://matthbogaert.github.io/IDAFBE-book/)**
 
-- `_quarto.yml` — master config: chapter order, output formats (html/pdf/epub), theme.
-- `index.qmd` — preface / landing page.
-- `chapters/` — the actual book chapters, as plain-text `.qmd` files.
-- `notebooks_source/` — your ORIGINAL `.ipynb` files, untouched. Source of truth / backup.
-  Never rendered by Quarto (excluded in `_quarto.yml`).
-- `notebooks_student/` — hand-authored notebooks you actually hand to students: minimal
-  explanation, task prompts, code stubs/TODOs. Also never rendered by Quarto — these are
-  plain files you (or Claude Code) write and maintain directly, independent of the book.
-- `data/raw/` — original datasets, untouched.
-- `data/processed/` — cleaned/derived data used by chapters.
-- `images/` — figures, diagrams, cover art.
-- `references.bib` — bibliography (BibTeX), cited in chapters as `[@key]`.
+A paperback and ebook edition are also planned via Amazon KDP.
 
-## Workflow
+## Summary
 
-1. Put an original notebook in `notebooks_source/`.
-2. Convert it to a starting chapter:
-   ```
-   quarto convert notebooks_source/02-linear-models.ipynb -o chapters/02-linear-models.qmd
-   ```
-3. Add the new chapter to the `chapters:` list in `_quarto.yml`.
-4. Edit the `.qmd` file directly — full explanations, code, citations, worked solutions.
-5. Preview the book as you go:
-   ```
-   quarto preview
-   ```
-6. When ready, render the other book formats:
-   ```
-   quarto render --to pdf
-   quarto render --to epub
-   ```
-7. Separately, write or update the matching student notebook in `notebooks_student/` — a
-   trimmed-down version with minimal explanation and task prompts instead of full solutions.
-   This is a manual step: when you meaningfully change a chapter, update its student notebook
-   to match. Claude Code can do this well if you ask it to "update notebooks_student/02-....ipynb
-   to match the changes in chapters/02-....qmd" — treat that as a normal part of editing a
-   chapter, not an afterthought, so the two don't drift apart.
+This book is a hands-on introduction to data analytics for business and economics students,
+covering the full path from raw data to a working predictive model: Python fundamentals, data
+understanding and exploration, data preparation, model evaluation, and modeling. Each chapter
+pairs conceptual explanations with executable Python code, built around a realistic customer
+churn case study. It follows the CRISP-DM process model throughout, so readers see not just *how*
+to run an algorithm, but *why* each step in an analytics project exists and what can go wrong if
+it's skipped.
 
-## Publishing
+The book is written for students with little to no prior programming or statistics background,
+and is used as the primary material for the Data Analytics course at UNamur.
 
-- `epub` output → Kindle via Amazon KDP.
-- `pdf` output → paperback interior via Amazon KDP (adjust `geometry`/trim size in
-  `_quarto.yml` to match KDP's requirements before final export).
+## Repository structure
+
+- `chapters/` — the book chapters, as Quarto (`.qmd`) source files.
+- `notebooks_student/` — companion Jupyter notebooks for students: the same material as the
+  chapters, in runnable notebook form.
+- `data/` — the (anonymised/processed) datasets used throughout the book.
+- `images/` — figures and diagrams used in the chapters.
+- `references.bib` — the book's bibliography.
+
+## Citing this book
+
+If you use this book in your teaching or research, please cite it as:
+
+```
+Bogaert, Matthias. Introduction to Data Analytics for Business and Economics: Using Python for
+Data Preprocessing, Visualization, and Modeling. 2026.
+Available at: https://matthbogaert.github.io/IDAFBE-book/
+```
+
+Or as BibTeX:
+
+```bibtex
+@book{bogaert2026,
+  title={Introduction to Data Analytics for Business and Economics},
+  subtitle={Using Python for Data Preprocessing, Visualization, and Modeling},
+  author={Bogaert, Matthias},
+  year={2026},
+  url={https://matthbogaert.github.io/IDAFBE-book/}
+}
+```
+
+## Found an error?
+
+If you spot a mistake, typo, or bug in the code, please
+[open an issue](https://github.com/MatthBogaert/IDAFBE-book/issues).
+
+## License
+
+© Matthias Bogaert. All rights reserved. This material is made freely available online for
+students and readers; redistribution or commercial use requires permission from the author.

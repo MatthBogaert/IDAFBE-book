@@ -8,6 +8,9 @@
 # Keep this commented out if you'd rather version-control the generated notebooks too.
 # notebooks_student/*.ipynb
 
+# Original lecture notebooks — personal working material, not part of the published book.
+/notebooks_source/
+
 # Jupyter checkpoints
 .ipynb_checkpoints/
 
