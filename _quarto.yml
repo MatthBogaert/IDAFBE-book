@@ -18,6 +18,8 @@ book:
   author: "Matthias Bogaert"
   date: today
   cover-image: images/cover.png
+  repo-url: https://github.com/MatthBogaert/IDAFBE-book
+  repo-actions: [source, issue]
   chapters:
     - index.qmd
     - chapters/01-intro.qmd
