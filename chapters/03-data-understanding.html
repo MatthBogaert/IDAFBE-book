@@ -323,7 +323,7 @@ Figure&nbsp;3.1: Simplified ERD for the NPC case: one customer has one-to-many s
 <section id="confirming-a-relationship-in-code" class="level3" data-number="3.2.2">
 <h3 data-number="3.2.2" class="anchored" data-anchor-id="confirming-a-relationship-in-code"><span class="header-section-number">3.2.2</span> Confirming a relationship in code</h3>
 <p>An ERD describes what you <em>expect</em> the relationships between tables to look like, but it’s worth actually verifying that against the data itself. Real-world data doesn’t always behave the way a diagram says it should. For NPC, we expect a one-to-many relationship between customers and subscriptions: each customer can have several subscriptions over time, but every subscription belongs to exactly one customer. We can check this by joining the two tables on the shared key, <code>CustomerID</code>, and counting how many subscriptions each customer has.</p>
-<div id="add43350" class="cell" data-execution_count="1">
+<div id="6fcf9abd" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -391,7 +391,7 @@ Name: SubscriptionID, dtype: float64</code></pre>
 </tbody>
 </table>
 <p>In practice, you’ll often build this table description directly from <code>pandas</code>. <code>.info()</code> gives you a fast overview of every column’s name, non-null count, and dtype in one call. This will often be the natural starting point before writing out the fuller, business-meaning version manually.</p>
-<div id="ddd6447c" class="cell" data-execution_count="2">
+<div id="a47b207e" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>customers.info()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -443,7 +443,7 @@ memory usage: 65.2+ KB</code></pre>
 <p><code>pandas</code> defaults almost everything it can’t immediately identify as numeric to a generic <code>object</code> type, including dates, categories, and IDs. <code>object</code> is flexible, but it’s rarely what you actually want: it silently hides the fact that a column needs converting, and lets a variable that should be <code>category</code> or <code>datetime</code> sit around as loosely-typed text until something downstream breaks down. Key take-away: be explicit about the type of each column right when you load the data (or after), rather than discovering the problem three steps later.</p>
 </div>
 </div>
-<div id="435e6320" class="cell" data-execution_count="3">
+<div id="59f07cf5" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>col_types <span class="op">=</span> {</span>
@@ -496,7 +496,7 @@ dtype: object</code></pre>
 <section id="working-with-dates" class="level3" data-number="3.4.1">
 <h3 data-number="3.4.1" class="anchored" data-anchor-id="working-with-dates"><span class="header-section-number">3.4.1</span> Working with dates</h3>
 <p>NPC’s date columns (when a subscription started, ended, was last paid, or renewed) are read in as plain text, since that’s how they’re stored in the file. Converting them to an actual <code>datetime</code> type is what lets you do date arithmetic (how long has this subscription run?) or extract components (which month did most subscriptions start?) later on. <code>pd.to_datetime()</code> handles the conversion; since NPC’s dates are written <code>day/month/year</code>, we tell it the format explicitly rather than letting it guess.</p>
-<div id="d05abf66" class="cell" data-execution_count="4">
+<div id="206dfa32" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>date_cols <span class="op">=</span> [<span class="st">"StartDate"</span>, <span class="st">"EndDate"</span>, <span class="st">"PaymentDate"</span>, <span class="st">"RenewalDate"</span>]</span>
@@ -523,7 +523,7 @@ dtype: object</code></pre>
 <h3 data-number="3.4.2" class="anchored" data-anchor-id="describing-individual-variables"><span class="header-section-number">3.4.2</span> Describing individual variables</h3>
 <p>With types and dates sorted out, the last step at the variable level is to actually look at what each column contains: its typical value, its spread, and how it relates to other variables. <code>pandas</code> gives you this directly, without needing a single chart yet (charts are exactly where the next chapter picks up).</p>
 <p>For a categorical variable, <code>.value_counts()</code> shows you every category and how often it occurs:</p>
-<div id="08dd5623" class="cell" data-execution_count="5">
+<div id="7e783614" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>subscriptions[<span class="st">"PaymentStatus"</span>].value_counts(dropna<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -536,7 +536,7 @@ Name: count, dtype: int64</code></pre>
 </div>
 </div>
 <p>For a numeric variable, <code>.describe()</code> gives you count, mean, standard deviation, and quartiles in one call. Calling it on the column of interest, <code>TotalPrice</code>, immediately shows something worth flagging: only 8,091 of the 8,252 subscriptions have a non-missing price.</p>
-<div id="42714820" class="cell" data-execution_count="6">
+<div id="88450317" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>subscriptions[<span class="st">"TotalPrice"</span>].describe()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -554,7 +554,7 @@ Name: TotalPrice, dtype: float64</code></pre>
 </div>
 </div>
 <p>Individual statistics are available as their own methods too, which is handy when you only need one number rather than the full summary. For example, the mean, variance, and standard deviation of <code>TotalPrice</code>:</p>
-<div id="f13a89a5" class="cell" data-execution_count="7">
+<div id="03c6347a" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"mean:"</span>, subscriptions[<span class="st">"TotalPrice"</span>].mean(skipna<span class="op">=</span><span class="va">True</span>))</span>
@@ -568,7 +568,7 @@ std: 95.11994174120815</code></pre>
 </div>
 </div>
 <p>Two variables can also be checked for how strongly they move together, using <code>.corr()</code>. Here, the number of newspapers included in a subscription correlates fairly strongly with what the customer ends up paying, which is reassuring, since the alternative (no relationship at all) would suggest a problem with one of the two columns.</p>
-<div id="41d7c9a2" class="cell" data-execution_count="8">
+<div id="9fcd9050" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>subscriptions[[<span class="st">"TotalPrice"</span>, <span class="st">"NbrNewspapers"</span>]].corr().loc[<span class="st">"TotalPrice"</span>, <span class="st">"NbrNewspapers"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -578,7 +578,7 @@ std: 95.11994174120815</code></pre>
 </div>
 </div>
 <p>Finally, <code>.describe(include="all")</code> extends the summary to every column at once, numeric and categorical alike, and <code>.select_dtypes()</code> lets you restrict that to just the numeric columns when that’s all you need:</p>
-<div id="edfa80c5" class="cell" data-execution_count="9">
+<div id="b6b575b9" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>subscriptions.select_dtypes(include<span class="op">=</span><span class="st">"number"</span>).describe()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -764,7 +764,7 @@ std: 95.11994174120815</code></pre>
 <section id="saving-your-progress" class="level3" data-number="3.4.3">
 <h3 data-number="3.4.3" class="anchored" data-anchor-id="saving-your-progress"><span class="header-section-number">3.4.3</span> Saving your progress</h3>
 <p>Once a table has been read in with the right types, it’s worth saving that cleaned-up version rather than re-deriving it from the raw text file every time you reopen the notebook. <strong>Parquet</strong> is a compressed, columnar file format built for exactly this: it’s faster to read and write than CSV, keeps your dtypes intact (a <code>category</code> column stays a <code>category</code> column), and produces a smaller file on disk.</p>
-<div id="9bd0a426" class="cell" data-execution_count="10">
+<div id="8b714e38" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>subscriptions.to_parquet(<span class="st">"../data/raw/subscriptions.parquet"</span>, index<span class="op">=</span><span class="va">False</span>)</span>
@@ -798,7 +798,7 @@ std: 95.11994174120815</code></pre>
 </tr>
 <tr class="odd">
 <td>Publicly available data</td>
-<td>External data anyone can access — macroeconomic indicators (GDP, inflation, unemployment), or open repositories like the UCI Machine Learning Repository or Kaggle.</td>
+<td>External data anyone can access: macroeconomic indicators (GDP, inflation, unemployment), or open repositories like the UCI Machine Learning Repository or Kaggle.</td>
 </tr>
 <tr class="even">
 <td>Web data</td>
