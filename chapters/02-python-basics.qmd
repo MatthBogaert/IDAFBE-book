@@ -1,4 +1,4 @@
-# Python Basics
+# Python for Data Analytics
 
 This chapter reviews the fundamental building blocks of Python that the rest of the book relies on: variables, collections, control flow, reading and writing files, functions, modules, NumPy arrays, and finally `pandas`, the core data manipulation library within this book. If you already know Python well, treat this chapter as a quick reference; if you're new to the language, work through every code cell yourself before moving on to the running business case in the next chapter.
 

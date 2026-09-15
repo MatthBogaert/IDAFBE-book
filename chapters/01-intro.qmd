@@ -511,7 +511,7 @@ The chapters that follow mirror the CRISP-DM process introduced above, applied c
 single running business case so techniques build on each other instead of feeling like
 disconnected exercises:
 
-- **Python Basics**: the Python fundamentals used throughout the rest of the
+- **Python for Data Analytics**: the Python fundamentals used throughout the rest of the
   book.
 - **Data Understanding**: manipulating, and making sense of raw datasets.
 - **Data Exploration**: visualizing data to find patterns and relationships and quality issues. In CRISP-DM terms, this is part of the data understanding phase, but we separate it out because it's a

@@ -66,7 +66,7 @@ You'll sometimes be tempted to just install the newest version of a package. We 
 don't: for example, `pandas` 3.0 was released recently, but this book stays on `pandas>=2.3,<3`
 because several packages it depends on (`feature_engine`, `sklearn_evaluation`) haven't been
 fully verified against pandas 3.0's changed default behavior yet. See the note in
-[Python Basics](02-python-basics.qmd#pandas) for details. The pinned versions in
+[Python for Data Analytics](02-python-basics.qmd#pandas) for details. The pinned versions in
 `requirements.txt` are the ones every example in this book was actually run against.
 :::
 
