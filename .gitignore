@@ -1,6 +1,7 @@
 # Quarto build output
 /_book/
 /.quarto/
+/_freeze/
 *_files/
 *_cache/
 

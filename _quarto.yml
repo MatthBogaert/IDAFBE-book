@@ -1,5 +1,8 @@
 jupyter: da2026 # kernel for the DA2026 conda env; see requirements.txt for pinned versions
 
+execute:
+  freeze: auto  # re-execute a chapter's code only when that chapter's .qmd file has changed
+
 project:
   type: book
   output-dir: _book
