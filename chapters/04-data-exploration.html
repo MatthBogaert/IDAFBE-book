@@ -320,7 +320,7 @@ window.Quarto = {
 <section id="why-visualize" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="why-visualize"><span class="header-section-number">4.1</span> Why visualize</h2>
 <p>Summary statistics alone can be dangerously misleading. <strong>Anscombe’s quartet</strong> <span class="citation" data-cites="anscombe1973graphs">(<a href="#ref-anscombe1973graphs" role="doc-biblioref">Anscombe 1973</a>)</span> is the classic illustration: four small datasets that share the same mean, variance, and correlation for <code>x</code> and <code>y</code> and yet look completely different when plotted. One is a clean linear relationship, one is a clear curve with a straight line fits poorly due to an outlier, one is a vertical line of points plus one outlier. <code>.describe()</code> can’t tell these apart. A scatter plot can immediatly visualizes the differences. That’s the whole point of visual exploration: it shows patterns, outliers, and relationships that summary statistics alone can hide.</p>
-<div id="02ae4128" class="cell" data-execution_count="1">
+<div id="95dbb620" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display" data-execution_count="1">
 <div>
 
@@ -383,7 +383,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<div id="6f0eef8e" class="cell" data-execution_count="2">
+<div id="7b6dfa3b" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -408,7 +408,7 @@ window.Quarto = {
 <li>An <strong>artist</strong> is everything else you can see (e.g., lines, text, bars, points) .</li>
 </ul>
 <p>In practice, you’ll almost always start a plot the same way: create a figure and axes together with <code>plt.subplots()</code>, draw onto the axes using a specific chart type, then label it.</p>
-<div id="0c8f4fb9" class="cell" data-execution_count="3">
+<div id="4f55ba52" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -441,7 +441,7 @@ window.Quarto = {
 <h2 data-number="4.2" class="anchored" data-anchor-id="the-core-chart-types"><span class="header-section-number">4.2</span> The core chart types</h2>
 <p>There are dozens of chart types, but for data exploration a small toolkit covers almost everything: <strong>bar charts</strong>, <strong>line charts</strong>, <strong>scatter plots</strong>, <strong>histograms</strong>, and <strong>box plots</strong>.</p>
 <p>To demonstrate these, we will load the NPC data we saved at the end of the previous chapter.</p>
-<div id="5db35f9c" class="cell" data-execution_count="4">
+<div id="88a5df5e" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -455,7 +455,7 @@ window.Quarto = {
 <section id="comparing-groups-bar-charts" class="level3" data-number="4.2.1">
 <h3 data-number="4.2.1" class="anchored" data-anchor-id="comparing-groups-bar-charts"><span class="header-section-number">4.2.1</span> Comparing groups: bar charts</h3>
 <p>A bar chart represents each category’s value or frequency as a vertical or horizontal rectangular bar and is useful whenever you want to compare discrete categories against each other.</p>
-<div id="d13dadd7" class="cell" data-execution_count="5">
+<div id="99fd1c1f" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
@@ -479,7 +479,7 @@ window.Quarto = {
 </div>
 </div>
 <p>Whereas a vertical bar chart is often the default, a horizontal one, with the counts written directly on the bars, is often easier to read once category labels get long:</p>
-<div id="0bad2077" class="cell" data-execution_count="6">
+<div id="827ad341" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
@@ -520,7 +520,7 @@ window.Quarto = {
 </div>
 </div>
 <p>A <strong>lollipop chart</strong>, a thin line plus a single dot instead of a full bar, communicates the same comparison with noticeably less visual noise. With a fraction of the ink of a bar chart, it’s often easier for the eye (and brain) to parse (lower noise-to-ink ratio), since there’s less shape to take in per category:</p>
-<div id="cfabc191" class="cell" data-execution_count="7">
+<div id="0548b44e" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
@@ -553,7 +553,7 @@ window.Quarto = {
 <h3 data-number="4.2.2" class="anchored" data-anchor-id="showing-a-trend-line-charts"><span class="header-section-number">4.2.2</span> Showing a trend: line charts</h3>
 <p>A line chart connects data points to show how a variable changes across an ordered sequence, almost always time but not necessarily.</p>
 <p>To show that a line chart can be used to visualize any ordere series, let’s look at a simple example.Plotting <code>TotalPrice</code>’s sorted values against their rank position isn’t a true time series, but it’s a quick way to see the overall shape of a distribution and spot outliers at either end:</p>
-<div id="213236c3" class="cell" data-execution_count="8">
+<div id="a792b270" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
@@ -575,7 +575,7 @@ window.Quarto = {
 </div>
 </div>
 <p>For an actual time series, plot against real dates. Here’s the average subscription price by month:</p>
-<div id="bb130d2e" class="cell" data-execution_count="9">
+<div id="0bf340dc" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>subscriptions_monthly <span class="op">=</span> subscriptions.copy()</span>
@@ -607,7 +607,7 @@ window.Quarto = {
 <section id="showing-relationships-scatter-plots" class="level3" data-number="4.2.3">
 <h3 data-number="4.2.3" class="anchored" data-anchor-id="showing-relationships-scatter-plots"><span class="header-section-number">4.2.3</span> Showing relationships: scatter plots</h3>
 <p>A scatter plot places one point per observation on two numeric axes, making it easy to spot correlations, clusters, and outliers between two variables at once.</p>
-<div id="1340bff2" class="cell" data-execution_count="10">
+<div id="4323dddd" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
@@ -627,7 +627,7 @@ window.Quarto = {
 </div>
 </div>
 <p>Adding a trend line makes the relationship easier to read at a glance. This is where <code>seaborn</code> starts to pay off against plain <code>matplotlib</code>. <code>sns.regplot()</code> draws the scatter plot and fits a line in one call:</p>
-<div id="cd70a4a8" class="cell" data-execution_count="11">
+<div id="0b02a2e0" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
@@ -644,7 +644,7 @@ window.Quarto = {
 </div>
 </div>
 <p>If the relationship isn’t linear, a <strong>LOESS</strong> (locally estimated scatterplot smoothing) curve, a nonparametric fit built from many small local regressions, can reveal a nonlinear trend a straight line would miss:</p>
-<div id="b7a56f76" class="cell" data-execution_count="12">
+<div id="47329be6" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
@@ -662,7 +662,7 @@ window.Quarto = {
 </div>
 </div>
 <p>In practice, you rarely want just one scatter plot in data exploration. You want to see every pair of numeric variables at once to understand their relationships. <code>seaborn</code>’s <code>pairplot()</code> builds that whole grid in a single call, with histograms of each individual variable down the diagonal:</p>
-<div id="37b16826" class="cell" data-execution_count="13">
+<div id="c637e705" class="cell" data-execution_count="13">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>numeric_cols <span class="op">=</span> [<span class="st">"GrossFormulaPrice"</span>, <span class="st">"NetFormulaPrice"</span>, <span class="st">"NetNewspaperPrice"</span>,</span>
@@ -684,7 +684,7 @@ window.Quarto = {
 <section id="showing-a-distribution-histograms-and-box-plots" class="level3" data-number="4.2.4">
 <h3 data-number="4.2.4" class="anchored" data-anchor-id="showing-a-distribution-histograms-and-box-plots"><span class="header-section-number">4.2.4</span> Showing a distribution: histograms and box plots</h3>
 <p>A histogram groups a variable’s values into bins and shows how many observations fall into each one. It is considered the standard way to see a variable’s distribution, shape, spread, and skew.</p>
-<div id="f9a0a6d3" class="cell" data-execution_count="14">
+<div id="d9325bd1" class="cell" data-execution_count="14">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
@@ -705,7 +705,7 @@ window.Quarto = {
 </div>
 </div>
 <p>If you don’t specify the bins, <code>matplotlib</code> picks a bin width automatically (<code>(max - min) / number of bins</code>). You can also fix the bin width directly:</p>
-<div id="14e65411" class="cell" data-execution_count="15">
+<div id="30f5d08b" class="cell" data-execution_count="15">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
@@ -730,7 +730,7 @@ window.Quarto = {
 </div>
 </div>
 <p><code>seaborn</code> offers the same thing with a nicer default look, and lets you set <code>binwidth</code> directly:</p>
-<div id="acc8b901" class="cell" data-execution_count="16">
+<div id="bf882fcb" class="cell" data-execution_count="16">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
@@ -758,7 +758,7 @@ Figure&nbsp;4.1: Anatomy of a box plot: the box spans the interquartile range (I
 </figure>
 </div>
 <p>Building this by hand in <code>matplotlib</code> needs the data reshaped into one list per group, which gets verbose fast:</p>
-<div id="362f9d6f" class="cell" data-execution_count="17">
+<div id="f46a8807" class="cell" data-execution_count="17">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
@@ -785,7 +785,7 @@ Figure&nbsp;4.1: Anatomy of a box plot: the box spans the interquartile range (I
 </div>
 </div>
 <p><code>seaborn</code> does the grouping for you, with no reshaping required:</p>
-<div id="351ebc3a" class="cell" data-execution_count="18">
+<div id="457702a0" class="cell" data-execution_count="18">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
@@ -807,7 +807,7 @@ Figure&nbsp;4.1: Anatomy of a box plot: the box spans the interquartile range (I
 <h2 data-number="4.3" class="anchored" data-anchor-id="data-quality-multicollinearity"><span class="header-section-number">4.3</span> Data quality: multicollinearity</h2>
 <p>Now that you have a toolkit of charts, it’s time to put it to use on the three data quality issues that come up in almost every dataset: multicollinearity, missing values, and outliers.</p>
 <p><strong>Multicollinearity</strong> occurs when two or more independent variables are highly correlated with each other. It matters because it makes individual coefficients unstable and hard to interpret in a causal model, and it inflates confidence intervals. Even though, as we saw in the introduction, a purely predictive model can often tolerate it from a pure predictive perspective, it can still cause issues in interpretation and make the model less robust. <code>pandas</code> computes a full correlation matrix in one call:</p>
-<div id="13083f89" class="cell" data-execution_count="19">
+<div id="bf3c535a" class="cell" data-execution_count="19">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>numeric_cols <span class="op">=</span> subscriptions.select_dtypes(include<span class="op">=</span>[np.number])</span>
@@ -1117,7 +1117,7 @@ Figure&nbsp;4.1: Anatomy of a box plot: the box spans the interquartile range (I
 </div>
 </div>
 <p>A heatmap makes the same information much easier to scan than a table of numbers:</p>
-<div id="6974817d" class="cell" data-execution_count="20">
+<div id="64fe06bf" class="cell" data-execution_count="20">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">10</span>))</span>
@@ -1136,7 +1136,7 @@ Figure&nbsp;4.1: Anatomy of a box plot: the box spans the interquartile range (I
 </div>
 </div>
 <p>A <strong>cluster map</strong> goes one step further, automatically reordering rows and columns so that similar variables sit next to each other, with a dendrogram showing how they were grouped. Dot heatmaps, where a dot’s size or color, rather than a cell’s fill color, encodes the correlation, are another common variant.</p>
-<div id="306c3998" class="cell" data-execution_count="21">
+<div id="7e5b777d" class="cell" data-execution_count="21">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>sns.clustermap(correlation_matrix, annot<span class="op">=</span><span class="va">True</span>, cmap<span class="op">=</span><span class="st">"coolwarm"</span>, center<span class="op">=</span><span class="dv">0</span>,</span>
@@ -1161,7 +1161,7 @@ Figure&nbsp;4.1: Anatomy of a box plot: the box spans the interquartile range (I
 <li><strong>Highest correlation pairs</strong>: scan variables in order of appearance, and for each one, drop any <em>later</em> variable that’s correlated with it above the threshold. This means that you keep the first occurrence and removing the rest.</li>
 </ol>
 <p>The <code>feature_engine</code> library implements the second heuristic directly:</p>
-<div id="a85861de" class="cell" data-execution_count="22">
+<div id="625b8207" class="cell" data-execution_count="22">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> feature_engine.selection <span class="im">import</span> DropCorrelatedFeatures</span>
@@ -1176,7 +1176,7 @@ Figure&nbsp;4.1: Anatomy of a box plot: the box spans the interquartile range (I
 </div>
 </div>
 <p>A plain <code>pandas</code> version of the same idea is just as easy to write yourself:</p>
-<div id="1b29aec2" class="cell" data-execution_count="23">
+<div id="39855b09" class="cell" data-execution_count="23">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> find_correlated_features(corr_matrix, threshold<span class="op">=</span><span class="fl">0.75</span>):</span>
@@ -1194,7 +1194,7 @@ Figure&nbsp;4.1: Anatomy of a box plot: the box spans the interquartile range (I
 </div>
 </div>
 <p>For the first heuristic, you can also easily write your own function:</p>
-<div id="d5a40d6f" class="cell" data-execution_count="24">
+<div id="b0207b2c" class="cell" data-execution_count="24">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> drop_highest_avg_correlation(corr_matrix, threshold<span class="op">=</span><span class="fl">0.75</span>):</span>
@@ -1237,7 +1237,7 @@ Figure&nbsp;4.1: Anatomy of a box plot: the box spans the interquartile range (I
 <li><strong>Informative missing</strong>: the fact that a value is missing is itself a signal (e.g., a social media user who hides their hometown may be more privacy-conscious than average and this <em>absence</em> of the value carries information).</li>
 </ul>
 <p>It’s also worth distinguishing missing data from <strong>censored data</strong>: with censored data, you don’t observe the true value, but you do have partial information about it. It often happens when you have a situation where the true value is not available at the time of observation. For example, a tenancy agreement that’still ongoing when your observation window ends isn’t “missing” its length. You just don’t know the actual end date in the future and you will consider the true length at least as long as what you’ve observed so far. Hence, in predictive analytics, censored values are usually just used as-is (e.g., treating “still ongoing” as the observed length) rather than treated as missing.</p>
-<div id="91d30233" class="cell" data-execution_count="25">
+<div id="e3e3b1f4" class="cell" data-execution_count="25">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(subscriptions.isnull().<span class="bu">sum</span>())</span>
@@ -1270,7 +1270,7 @@ dtype: int64
 Total missing values: 3750</code></pre>
 </div>
 </div>
-<div id="d3e89039" class="cell" data-execution_count="26">
+<div id="2d95f065" class="cell" data-execution_count="26">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(customers.isnull().<span class="bu">sum</span>())</span>
@@ -1292,7 +1292,7 @@ Total missing values: 223</code></pre>
 <section id="a-churn-model-with-missing-values" class="level3" data-number="4.4.1">
 <h3 data-number="4.4.1" class="anchored" data-anchor-id="a-churn-model-with-missing-values"><span class="header-section-number">4.4.1</span> A churn model with missing values</h3>
 <p>To demonstrate missing-value handling on a realistic dataset, we’ll switch to a customer-level table, <code>SubCust</code>, that’s already been built from NPC’s raw tables for a churn model. It comes from joining the <code>subscriptions</code> and <code>customers</code> tables and aggregating to one row per customer, using an <strong>independent period</strong> to compute predictors from and a <strong>dependent period</strong> to check whether a customer actually churned. Building a table like this is its own topic. For now we’ll treat <code>SubCust</code> as a given and load it directly.</p>
-<div id="1dac045f" class="cell" data-execution_count="27">
+<div id="5f2fb09a" class="cell" data-execution_count="27">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>SubCust <span class="op">=</span> pd.read_csv(<span class="st">"../data/raw/SubCust.csv"</span>)</span>
@@ -1461,7 +1461,7 @@ Total missing values: 223</code></pre>
 </div>
 </div>
 </div>
-<div id="7f3d0194" class="cell" data-execution_count="28">
+<div id="3e0e2f21" class="cell" data-execution_count="28">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>missing_counts <span class="op">=</span> SubCust.isnull().<span class="bu">sum</span>()</span>
@@ -1514,7 +1514,7 @@ Total missing values: 223</code></pre>
 <li><strong>Multivariate imputation</strong>: model each variable with missing values as a function of the <em>other</em> variables, and use that model’s predictions to fill the gaps.</li>
 </ul>
 <p>Univariate imputation with <code>SimpleImputer</code> is the natural starting point:</p>
-<div id="f1ae0189" class="cell" data-execution_count="29">
+<div id="a03ecc2c" class="cell" data-execution_count="29">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.impute <span class="im">import</span> SimpleImputer</span>
@@ -1556,7 +1556,7 @@ dtype: int64</code></pre>
 <li>Move to the next variable and repeat, now using the freshly updated values as predictors.</li>
 <li>Cycle through all variables repeatedly (10 times, by default) until the imputed values stop changing much.</li>
 </ol>
-<div id="3ce45259" class="cell" data-execution_count="30">
+<div id="98e800a9" class="cell" data-execution_count="30">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.experimental <span class="im">import</span> enable_iterative_imputer</span>
@@ -1592,7 +1592,7 @@ dtype: int64</code></pre>
 </div>
 </div>
 <p>Let’s redo the imputation the proper way using the <code>SimpleImputer</code>. First, split the data, keeping the target variable (<code>churn</code>) and <code>CustomerID</code> aside:</p>
-<div id="8f5d0bfb" class="cell" data-execution_count="31">
+<div id="e54390a3" class="cell" data-execution_count="31">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
@@ -1613,7 +1613,7 @@ Test set: (589, 38)</code></pre>
 </div>
 </div>
 <p>Before imputing anything, it’s worth keeping a record of <em>which</em> values were originally missing, since that’s information in its own right, and it can’t be recovered once the gaps are filled in:</p>
-<div id="9f340ecf" class="cell" data-execution_count="32">
+<div id="b1c37a62" class="cell" data-execution_count="32">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>train_missing_flags <span class="op">=</span> pd.DataFrame(</span>
@@ -1632,7 +1632,7 @@ Test set: (589, 38)</code></pre>
 </div>
 </div>
 <p>Now fit the simple imputers on the training set only, and apply them to both sets:</p>
-<div id="072b5f1c" class="cell" data-execution_count="33">
+<div id="b3a862a7" class="cell" data-execution_count="33">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>numerical_cols <span class="op">=</span> X_train.select_dtypes(include<span class="op">=</span>[np.number]).columns</span>
@@ -1666,7 +1666,7 @@ Final test set with indicators: (589, 41)</code></pre>
 </div>
 </div>
 <p>The same fit-on-train, transform-to-both pattern works for <code>IterativeImputer</code> too (but only for numerical variables). The only difference is <code>.fit()</code> learns the per-variable regression models from the training set, and <code>.transform()</code> applies them to new rows without re-learning anything:</p>
-<div id="bea834cc" class="cell" data-execution_count="34">
+<div id="0b6098f0" class="cell" data-execution_count="34">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>iterative_imputer <span class="op">=</span> IterativeImputer(random_state<span class="op">=</span><span class="dv">42</span>, max_iter<span class="op">=</span><span class="dv">10</span>, verbose<span class="op">=</span><span class="dv">0</span>)</span>
@@ -1692,7 +1692,7 @@ Final test set with indicators: (589, 41)</code></pre>
 <h3 data-number="4.5.1" class="anchored" data-anchor-id="detecting-outliers"><span class="header-section-number">4.5.1</span> Detecting outliers</h3>
 <p>Detection is either visual (scatter plots, histograms, box plots) or numerical (checking the min/max, or computing a <strong>z-score</strong> to check how many standard deviations a value sits from the mean). Under a roughly normal distribution, about 95% of values fall within 2 standard deviations of the mean, and 99.7% within 3. So a z-score beyond about ±3 is a common threshold for flagging a point as a potential outlier.</p>
 <p>As with imputation, outlier detection should also be done on the training data only, so that whatever rule you land on is validated against data the model hasn’t seen. We’ll also restrict this to numeric variables, since the notion of an “outlier” is mostly a continuous-data concept.</p>
-<div id="548b9f27" class="cell" data-execution_count="35">
+<div id="da10e162" class="cell" data-execution_count="35">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>X_train_numeric <span class="op">=</span> train_data.select_dtypes(include<span class="op">=</span>[np.number])</span>
@@ -1702,7 +1702,7 @@ Final test set with indicators: (589, 41)</code></pre>
 <pre><code>Dimensions of the training data: (589, 37)</code></pre>
 </div>
 </div>
-<div id="2fb9a779" class="cell" data-execution_count="36">
+<div id="162cf526" class="cell" data-execution_count="36">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>n_vars <span class="op">=</span> <span class="bu">len</span>(X_train_numeric.columns)</span>
@@ -1728,7 +1728,7 @@ Final test set with indicators: (589, 41)</code></pre>
 </div>
 </div>
 </div>
-<div id="ef8d93a6" class="cell" data-execution_count="37">
+<div id="bb9aaea3" class="cell" data-execution_count="37">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(n_rows, n_cols, figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">5</span> <span class="op">*</span> n_rows))</span>
@@ -1753,7 +1753,7 @@ Final test set with indicators: (589, 41)</code></pre>
 </div>
 </div>
 <p>The plots are a starting point, not the analysis itself and it’s worth putting a number on what they show. The box plot rule (anything past 1.5×IQR from the box) gives a quick count of flagged points per variable:</p>
-<div id="286d9cb9" class="cell" data-execution_count="38">
+<div id="f9651c94" class="cell" data-execution_count="38">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>Q1 <span class="op">=</span> X_train_numeric.quantile(<span class="fl">0.25</span>)</span>
@@ -1937,7 +1937,7 @@ Final test set with indicators: (589, 41)</code></pre>
 </div>
 </div>
 <p>On some variables, this flags well over 10% of all training rows which is far too many to all be genuine data errors. The <strong>z-score</strong> rule (flag anything with <span class="math inline">\(|z| &gt; 3\)</span>) is a useful second opinion, since it reacts differently to skew:</p>
-<div id="7862b7ea" class="cell" data-execution_count="39">
+<div id="c86b6b3f" class="cell" data-execution_count="39">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>z_scores <span class="op">=</span> (X_train_numeric <span class="op">-</span> X_train_numeric.mean()) <span class="op">/</span> X_train_numeric.std()</span>
@@ -2129,7 +2129,7 @@ Final test set with indicators: (589, 41)</code></pre>
 <li><strong>Valid but extreme observations</strong>: you have three options. Leave them as-is, <strong>cap</strong> them (also called truncating or winsorizing: clamp any value beyond a chosen lower/upper limit back to that limit), or convert the variable into categories, which we’ll cover in the next chapter.</li>
 </ul>
 <p>In our case, the <code>Age</code> variable needs to be treated, since it includes some negative values. These are invalid since nobody has a negative age. That’s a case where the fix is simple: treat the invalid values as missing, and impute them like any other missing value.</p>
-<div id="dbfb7fbb" class="cell" data-execution_count="40">
+<div id="54a185a8" class="cell" data-execution_count="40">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>age_median <span class="op">=</span> train_data[<span class="st">"Age"</span>][train_data[<span class="st">"Age"</span>] <span class="op">&gt;=</span> <span class="dv">0</span>].median()</span>
@@ -2158,7 +2158,7 @@ Final test set with indicators: (589, 41)</code></pre>
 <section id="saving-your-progress" class="level2" data-number="4.6">
 <h2 data-number="4.6" class="anchored" data-anchor-id="saving-your-progress"><span class="header-section-number">4.6</span> Saving your progress</h2>
 <p>We’ll pick this up again in the next chapter, so let’s save the cleaned, imputed training and test sets including the target variable as <code>parquet</code> files.</p>
-<div id="c22f0f04" class="cell" data-execution_count="41">
+<div id="7c9083c5" class="cell" data-execution_count="41">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>train_complete <span class="op">=</span> train_data.copy()</span>

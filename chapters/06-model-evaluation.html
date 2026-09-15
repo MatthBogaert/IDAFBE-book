@@ -316,7 +316,7 @@ window.Quarto = {
 <li><strong>An experimental setup</strong>: a sampling strategy that produces a fair, unseen sample to measure performance on (holdout, cross-validation, nested cross-validation, the bootstrap), plus the data-leakage traps that quietly break all of them.</li>
 <li><strong>Performance metrics</strong>: how to actually score a model once you have an honest test set, for both regression and classification targets.</li>
 </ul>
-<div id="88d9dc1d" class="cell" data-execution_count="1">
+<div id="5456f4dd" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -332,7 +332,7 @@ window.Quarto = {
 <p>The single most important principle in predictive modelling is that a model must be evaluated on <strong>unseen</strong> data. Scoring a model on the same rows it was trained on is a self-fulfilling prophecy: it will look accurate because you’re checking patterns against the exact data those patterns were extracted from. If every elderly customer in the training data happened to churn, the model will “learn” that elderly customers churn, and score perfectly on that training data, whether or not the relationship is real. Only data the model has never touched can tell you whether a learned pattern generalizes well or not.</p>
 <p>The fix is to split the available data into separate parts: one for <em>learning</em> the patterns, another for <em>evaluating</em> them. Several strategies exist for doing that, and the rest of this section works through them.</p>
 <p>We’ll use a compact <strong>churn</strong> basetable with just four predictors: a monetary score, a transaction count, a recency score, and the number of days the customer has been active. This is an RFM plus length-of-relationship feature set, exactly the kind discussed in the previous chapter.</p>
-<div id="013fd3d8" class="cell" data-execution_count="2">
+<div id="c7c335ed" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>basetable <span class="op">=</span> pd.read_csv(<span class="st">"../data/processed/basetable.csv"</span>)</span>
@@ -407,7 +407,7 @@ Churn rate: 0.038</code></pre>
 </div>
 </div>
 </div>
-<div id="4991fa51" class="cell" data-execution_count="3">
+<div id="37a2a5d7" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> basetable.drop(<span class="st">"churn"</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
@@ -428,7 +428,7 @@ Figure&nbsp;6.1: A single holdout split: most of the data trains the model, the 
 </figure>
 </div>
 <p>Two practical points. We use a <strong>60/40 split</strong>: slightly more data in training (more training data generally means a better model) while still leaving a substantial test set. And we set a <strong>random state</strong> (seed) so the “random” sample is reproducible. That is essential while learning and debugging, so everyone gets the same split. <code>stratify=y</code> keeps the churn rate the same in both sets, which matters when the positive class is rare.</p>
-<div id="c0645d75" class="cell" data-execution_count="4">
+<div id="4ceb85da" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
@@ -476,7 +476,7 @@ Figure&nbsp;6.2: A three-way split: the validation set is used to compare models
 </figcaption>
 </figure>
 </div>
-<div id="303a1e79" class="cell" data-execution_count="5">
+<div id="092eef60" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>X_temp, X_test, y_temp, y_test <span class="op">=</span> train_test_split(</span>
@@ -508,7 +508,7 @@ Figure&nbsp;6.2: A three-way split: the validation set is used to compare models
 </div>
 <p>To make this concrete, let’s tune one hyperparameter of a <strong>K-nearest-neighbours (KNN)</strong> classifier. KNN classifies an observation by finding the <em>K</em> most similar observations in the training data (by Euclidean distance) and taking a majority vote. <em>K</em> is a <strong>hyperparameter</strong>: it controls the model’s behaviour but isn’t estimated from the data the way a regression coefficient is, so we have to choose it ourselves by trying several values.</p>
 <p>Because KNN uses distances, all features must be on the same scale, so we wrap a <code>StandardScaler</code> and the classifier in a <strong>pipeline</strong>, which guarantees the scaler is fit on training data only and the same transformation is reapplied to every other set. We score each <em>K</em> by AUC on the validation set (AUC is covered later in this chapter; for now, read it as “higher is better, 0.5 is random”).</p>
-<div id="3199370a" class="cell" data-execution_count="6">
+<div id="0a772af5" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> KNeighborsClassifier</span>
@@ -555,7 +555,7 @@ K=50: validation AUC = 0.7377</code></pre>
 </div>
 </div>
 <p>Once the best <em>K</em> is identified on the validation set, we combine train + validation, refit the final model on all of it, and touch the test set exactly once:</p>
-<div id="84ca030e" class="cell" data-execution_count="7">
+<div id="2d035f50" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>best_k <span class="op">=</span> k_values[<span class="bu">int</span>(np.argmax(validation_scores))]</span>
@@ -597,7 +597,7 @@ Figure&nbsp;6.3: K-fold cross-validation: the data is cut into K folds, and each
 </figure>
 </div>
 <p><code>sklearn</code>’s <code>cross_validate</code> handles all the splitting, fitting, and scoring internally. Here we run it with a fixed KNN (<em>K</em> = 50) just to see how much a single split can vary. This is sometimes called the <strong>big outer loop</strong>: cross-validation used only to estimate final performance, with no hyperparameter tuning. We’ll reuse this exact <em>K</em>-fold strategy twice more below: first as the tuning mechanism <em>inside</em> a search, then wrapped <em>around</em> that search. The “Nested cross-validation” section further down names these three roles precisely.</p>
-<div id="9507072c" class="cell" data-execution_count="8">
+<div id="4e482f43" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> cross_validate, KFold</span>
@@ -642,7 +642,7 @@ Figure&nbsp;6.3: K-fold cross-validation: the data is cut into K folds, and each
 <p>The workflow becomes: split off a test set manually (the <strong>outer loop</strong>), let <code>GridSearchCV</code> do the validation splitting (the <strong>inner loop</strong>), and evaluate once on the test set at the end. This is less code, harder to get wrong, and needs no manual refitting.</p>
 <p>A single holdout split for the outer loop, combined with full <em>K</em>-fold CV for the inner loop, is what’s called the <strong>big inner loop</strong>: cheaper than also repeating the outer split, and the usual choice in engineering and research settings, where getting the hyperparameter right matters more than polishing the final performance number and the test set is already large enough to be reliable.</p>
 <p>Below we tune <em>K</em> for KNN, but this time with <code>GridSearchCV</code>. The scoring metric is AUC, and the inner CV loop is 10-fold. The final test set in the outer loop is already present with the existing 20% holdout, and only touched once at the very end.</p>
-<div id="91560325" class="cell" data-execution_count="9">
+<div id="9d564b5e" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> GridSearchCV</span>
@@ -708,7 +708,7 @@ Figure&nbsp;6.4: Nested cross-validation with 5-fold CV at both levels: one oute
 </figure>
 </div>
 <p>The code below uses 10-fold at both levels, matching the rest of the chapter. The result is 10 performance estimates instead of one, which gives a mean, a standard deviation, and a confidence interval, and no single lucky split can distort it. The cost is computation: 10 × 10 × 7 = 700 model fits instead of 70. As a rule of thumb, academic work favours fully nested CV for maximum rigour; industry usually settles for the big inner loop (<code>GridSearchCV</code>, inner CV only) for speed.</p>
-<div id="d39cd90d" class="cell" data-execution_count="10">
+<div id="87bbe025" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>nested_results <span class="op">=</span> cross_validate(grid_search, X, y, cv<span class="op">=</span>kfold, scoring<span class="op">=</span><span class="st">"roc_auc"</span>, n_jobs<span class="op">=</span><span class="dv">1</span>)</span>
@@ -742,7 +742,7 @@ Figure&nbsp;6.5: Leave-one-out cross-validation: each model trains on every row 
 </figure>
 </div>
 <p>We demonstrate it on a 500-row stratified subsample to keep the runtime reasonable:</p>
-<div id="ff74d968" class="cell" data-execution_count="11">
+<div id="c37cb4ff" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> LeaveOneOut</span>
@@ -770,7 +770,7 @@ Figure&nbsp;6.5: Leave-one-out cross-validation: each model trains on every row 
 <section id="the-bootstrap" class="level3" data-number="6.1.7">
 <h3 data-number="6.1.7" class="anchored" data-anchor-id="the-bootstrap"><span class="header-section-number">6.1.7</span> The bootstrap</h3>
 <p>The <strong>bootstrap</strong> builds a training set by sampling <em>n</em> rows <strong>with replacement</strong> from the data, so some rows appear multiple times and, on average, about 36.8% never get drawn at all. Those unused rows form the <strong>out-of-bag (OOB)</strong> test set. Repeating this many times gives a distribution of scores, much like CV, but with training sets that stay the original size. Note that the bootstrap was mainly designed as a statistical resampling technique, not a true model evaluation method, so it is less common in practice than CV. <code>sklearn</code> has no built-in bootstrap splitter, so we use <code>resample</code>:</p>
-<div id="1db13d50" class="cell" data-execution_count="12">
+<div id="11dc2a59" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.utils <span class="im">import</span> resample</span>
@@ -793,7 +793,7 @@ Figure&nbsp;6.5: Leave-one-out cross-validation: each model trains on every row 
 </section>
 <section id="comparing-the-resampling-strategies" class="level3" data-number="6.1.8">
 <h3 data-number="6.1.8" class="anchored" data-anchor-id="comparing-the-resampling-strategies"><span class="header-section-number">6.1.8</span> Comparing the resampling strategies</h3>
-<div id="af8fc80e" class="cell" data-execution_count="13">
+<div id="637d82a6" class="cell" data-execution_count="13">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>methods <span class="op">=</span> [<span class="st">"Holdout</span><span class="ch">\n</span><span class="st">(3-way)"</span>, <span class="st">"Big outer loop</span><span class="ch">\n</span><span class="st">(10-fold)"</span>, <span class="st">"Big inner loop</span><span class="ch">\n</span><span class="st">(GridSearchCV)"</span>, <span class="st">"Fully nested</span><span class="ch">\n</span><span class="st">CV"</span>, <span class="st">"LOOCV</span><span class="ch">\n</span><span class="st">(500)"</span>, <span class="st">"Bootstrap</span><span class="ch">\n</span><span class="st">(50)"</span>]</span>
@@ -887,7 +887,7 @@ Figure&nbsp;6.6: The bias–variance trade-off: as model complexity increases, b
 </div>
 <p>Expected test error is roughly bias² + variance + an <strong>irreducible</strong> noise floor you can never beat. Lowering one of the first two tends to raise the other, so there’s an optimal complexity where the total error is smallest. Increasing complexity beyond this (more variables, comples transformations trees) makes things <em>worse</em>, not better <span class="citation" data-cites="james2013introduction">(<a href="#ref-james2013introduction" role="doc-biblioref">James et al. 2013</a>)</span>.</p>
 <p>The synthetic example below shows things clearer. We generate data from a known quadratic relationship plus noise, then fit three models of increasing complexity:</p>
-<div id="d5165d84" class="cell" data-execution_count="14">
+<div id="4696565d" class="cell" data-execution_count="14">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
@@ -945,7 +945,7 @@ Figure&nbsp;6.6: The bias–variance trade-off: as model complexity increases, b
 </ul>
 <p>Only R² is maximised; the rest are minimised.</p>
 <p>To make this concrete, let’s consdider a synthetic time series example: <code>x</code> is a time index, <code>y</code> is profit in that period, and we want to predict future profit. We split it <strong>chronologically</strong> rather than randomly (for a time series, the validation and test set must be the <em>later</em> periods): 60% train, 20% validation, 20% test. Then we compare a linear, a quadratic, and a high-order polynomial fit.</p>
-<div id="7eeb3dc0" class="cell" data-execution_count="15">
+<div id="b9e16b83" class="cell" data-execution_count="15">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>reg <span class="op">=</span> pd.DataFrame({<span class="st">"x"</span>: x, <span class="st">"x2"</span>: x<span class="op">**</span><span class="dv">2</span>, <span class="st">"x4"</span>: x<span class="op">**</span><span class="dv">4</span>, <span class="st">"x5"</span>: x<span class="op">**</span><span class="dv">5</span>, <span class="st">"y"</span>: y_noisy})</span>
@@ -963,7 +963,7 @@ Figure&nbsp;6.6: The bias–variance trade-off: as model complexity increases, b
 </details>
 </div>
 <p>Scoring the three candidate models on the validation set:</p>
-<div id="576e3278" class="cell" data-execution_count="16">
+<div id="b8a3ffb8" class="cell" data-execution_count="16">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error, mean_absolute_error</span>
@@ -1029,7 +1029,7 @@ Figure&nbsp;6.6: The bias–variance trade-off: as model complexity increases, b
 </div>
 </div>
 <p>The quadratic model wins on every metric. The linear model underfits: it systematically underestimates the high values. The high-order polynomial overfits, producing poor predictions off the training range. Refitting the quadratic on train + validation and scoring once on the test set gives the final number:</p>
-<div id="1bd276a1" class="cell" data-execution_count="17">
+<div id="6d2becae" class="cell" data-execution_count="17">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>final_model <span class="op">=</span> LinearRegression().fit(</span>
@@ -1056,7 +1056,7 @@ Figure&nbsp;6.6: The bias–variance trade-off: as model complexity increases, b
 <h3 data-number="6.4.2" class="anchored" data-anchor-id="classification-metrics"><span class="header-section-number">6.4.2</span> Classification metrics</h3>
 <p>Classification needs different evaluation metrics: you can’t average an “error” when every prediction is either exactly right (1–1 or 0–0) or exactly wrong.</p>
 <p>We switch back to the churn basetable, take a fresh <strong>50/50 split</strong> (so the test set is large enough for stable metrics), and fit a <strong>random forest</strong> model. Random forests build hundreds of decision trees and average them; they’re one of the best off-the-shelf classifiers even without tuning. You don’t have to know the details of this model, but just see it as a good performing default model. Here the random forest is just a means to generate predictions to evaluate.</p>
-<div id="e0b2eb8f" class="cell" data-execution_count="18">
+<div id="998177f7" class="cell" data-execution_count="18">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
@@ -1125,7 +1125,7 @@ F_\beta = (1 + \beta^2) \cdot \frac{\text{Precision} \cdot \text{Recall}}{(\beta
 \]</span></p>
 <p><strong>Balanced accuracy</strong> averages the per-class accuracies instead of counting rows: a model that just predicts the majority class gets 50% here, not the inflated number plain accuracy would give it, because a large majority class can no longer hide a near-zero recall on the minority class. <strong><span class="math inline">\(F_\beta\)</span></strong> generalises <span class="math inline">\(F_1\)</span> (the special case <span class="math inline">\(\beta = 1\)</span>) to let you weight the two error types by how much they actually cost: <span class="math inline">\(\beta &gt; 1\)</span> weights recall more heavily, appropriate when missing a churner is worse than a false alarm; <span class="math inline">\(\beta &lt; 1\)</span> weights precision more, when a false alarm is the more expensive mistake.</p>
 <p>Let’s see these metrics in action on the random forest model above, at the default 0.5 threshold:</p>
-<div id="69e01fb4" class="cell" data-execution_count="19">
+<div id="f5d9ce67" class="cell" data-execution_count="19">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> (confusion_matrix, accuracy_score, precision_score,</span>
@@ -1172,7 +1172,7 @@ F2-score:          0.0585   (weights recall twice as much as precision)</code></
 </div>
 <p>The numbers show the classic failure mode on imbalanced data. Accuracy looks great at 96%, but that is almost entirely the 96% of customers who don’t churn: specificity is 99.7%, the model clears almost every non-churner. Balanced accuracy tells the true story: 52.3%, barely above the 50% coin flip, because it no longer lets the huge non-churn class hide the model’s near-zero recall. Recall itself confirms it: only 4.8% of actual churners are caught, an FNR above 95%. At a 0.5 threshold the model almost never predicts churn, because churn probabilities rarely climb above 0.5 when only ~4% of customers churn in the first place. Weighting recall more heavily makes this even more visible: F2 drops to 0.058, below F1’s already weak 0.086, because F2 punishes the missed churners harder than F1 does. Every one of these numbers depends on the threshold, which is exactly the weakness the next section addresses.</p>
 <p>Let’s drop the threshold to 0.05 and the picture changes completely:</p>
-<div id="afa86a7a" class="cell" data-execution_count="20">
+<div id="137bacc3" class="cell" data-execution_count="20">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> t <span class="kw">in</span> [<span class="fl">0.5</span>, <span class="fl">0.05</span>]:</span>
@@ -1200,7 +1200,7 @@ threshold 0.05:  recall 0.615   precision 0.099   specificity 0.781   FPR 0.219 
 <li><strong>Post-tune the threshold after training</strong>, searching for the threshold that maximises a chosen performance metric via cross-validation, so the choice isn’t overfit to the training data.</li>
 </ol>
 <p>Solution 2 is simple enough to do by hand:</p>
-<div id="f524aee1" class="cell" data-execution_count="21">
+<div id="6cf26056" class="cell" data-execution_count="21">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>pos_rate <span class="op">=</span> y_tr.mean()</span>
@@ -1222,7 +1222,7 @@ Score cut-off at that percentile: 0.230
 </div>
 </div>
 <p>Solution 3 does the same job more rigorously. <code>TunedThresholdClassifierCV</code> searches for the threshold that maximises a chosen metric, using internal cross-validation . For churn, F1 (balancing precision and recall) is a reasonable target. Note the use of <code>StratifiedKFold</code>: with imbalanced data you always want folds that preserve the class ratio.</p>
-<div id="5194785d" class="cell" data-execution_count="22">
+<div id="1f266979" class="cell" data-execution_count="22">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> TunedThresholdClassifierCV, StratifiedKFold</span>
@@ -1259,7 +1259,7 @@ Score cut-off at that percentile: 0.230
 \text{AUC} = \int_0^1 TPR(FPR) \; d(FPR)
 \]</span></p>
 <p>The integral has a cleaner, ranking-based interpretation in practice: the probability that a randomly chosen positive instance (e.g., churn) is scored higher than a randomly chosen negative instance (e.g., non-churn). A random classifier scores 0.5; a perfect one scores 1.</p>
-<div id="1e72bf52" class="cell" data-execution_count="23">
+<div id="b778902c" class="cell" data-execution_count="23">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> roc_curve, roc_auc_score</span>
@@ -1290,7 +1290,7 @@ Score cut-off at that percentile: 0.230
 <section id="precisionrecall-curves-and-average-precision" class="level4" data-number="6.4.2.5">
 <h4 data-number="6.4.2.5" class="anchored" data-anchor-id="precisionrecall-curves-and-average-precision"><span class="header-section-number">6.4.2.5</span> Precision–recall curves and average precision</h4>
 <p>On strongly imbalanced data, ROC/AUC can be misleading too, even producing overly optimistic results. Since the false positive rate has a huge true-negative denominator, so it stays low even when the model is producing many false alarms in absolute terms <span class="citation" data-cites="vanbelle2022inductive">(<a href="#ref-vanbelle2022inductive" role="doc-biblioref">Van Belle et al. 2022</a>)</span>. The <strong>precision–recall (PR) curve</strong> ignores true negatives entirely and focuses on the minority class. Its summary number, <strong>average precision (AP)</strong> or <strong>area under the PR curve (AUC-PR)</strong>, is the PR curve’s alternative to AUC. Note that a random classifier’s AP equals the positive rate in the test set (its “no-skill” baseline).</p>
-<div id="b60d511d" class="cell" data-execution_count="24">
+<div id="7e982a05" class="cell" data-execution_count="24">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> precision_recall_curve, average_precision_score</span>
@@ -1328,7 +1328,7 @@ Score cut-off at that percentile: 0.230
 <h4 data-number="6.4.2.6" class="anchored" data-anchor-id="roc-vs.-pr-a-worked-comparison"><span class="header-section-number">6.4.2.6</span> ROC vs.&nbsp;PR: a worked comparison</h4>
 <p>A workable decision rule for imbalanced problems is to look at <strong>both</strong> curves. If the ROC curves don’t cross, pick the dominant one on AUC. If they cross, or the AUC gap is small (under ~0.02), fall back to <strong>AP</strong> and the <strong>PR curves</strong> instead, since that ambiguous case is exactly where ROC/AUC’s optimism on imbalanced data can hide a real difference between models.</p>
 <p>Here it is in practice, comparing random forest against logistic regression:</p>
-<div id="9a2f87df" class="cell" data-execution_count="25">
+<div id="aa04fbc6" class="cell" data-execution_count="25">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
@@ -1376,7 +1376,7 @@ Score cut-off at that percentile: 0.230
 \]</span></p>
 <p>The numerator is precision at that cut-off: of the customers targeted, how many actually churn. The denominator is the base rate: how many would churn if targeted at random. A lift of 1 means the targeted slice is no more concentrated in churners than the population as a whole, the model adds nothing; a lift of 3 means it is three times as concentrated.</p>
 <p>The <strong>top-decile lift (TDL)</strong>, the lift at the cut-off that flags exactly the top 10% of customers by score, is the most common single-number version in practice. Ten percent isn’t mathematically special: Neslin et al.&nbsp;(2006) showed that a retention campaign’s expected profit is a direct, increasing function of lift, which is why (top-decile) lift became one of the most widely used performance criteria in churn prediction in the first place <span class="citation" data-cites="verbeke2012newinsights decaigny2018hybrid">(<a href="#ref-verbeke2012newinsights" role="doc-biblioref">Verbeke et al. 2012</a>; <a href="#ref-decaigny2018hybrid" role="doc-biblioref">De Caigny et al. 2018</a>)</span>.</p>
-<div id="9edac04f" class="cell" data-execution_count="26">
+<div id="2131d8bf" class="cell" data-execution_count="26">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>order <span class="op">=</span> np.argsort(y_proba)[::<span class="op">-</span><span class="dv">1</span>]</span>
@@ -1403,7 +1403,7 @@ Score cut-off at that percentile: 0.230
 </div>
 </div>
 <p>The <strong>cumulative lift curve</strong> extends the top decile lift to every possible campaign size, from the top 1% to the whole population: at each point it’s the cumulative churn rate among the highest-scored customers divided by the overall rate. It starts highest at the very smallest, most concentrated slice (lift of about 9 at the top 1% here), decays as more, less certain customers are added, and settles at 1 once the whole population is targeted, since targeting everyone is the same as targeting at random.</p>
-<div id="bfd9f03d" class="cell" data-execution_count="27">
+<div id="dae92f6f" class="cell" data-execution_count="27">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn_evaluation.plot <span class="im">import</span> lift_curve</span>
@@ -1438,7 +1438,7 @@ Score cut-off at that percentile: 0.230
 \]</span></p>
 <p>That’s exactly <strong>recall</strong>. The cumulative gains chart is nothing more than recall traced across every possible cut-off instead of read at one fixed threshold: of all actual churners, what share are in the group targeted so far. Targeting a larger fraction <span class="math inline">\(x\)</span> always trades a lower lift for a larger absolute share of churners caught. Targeting the top 10% here captures roughly 40% of all churners (<span class="math inline">\(0.10 \times 4.17 \approx 0.42\)</span>, the same top-decile lift computed above, just read as a running total instead of a ratio).</p>
 <p>Let’s see that in action, and read the cumulative gains at 10% directly off the chart:</p>
-<div id="2fd82516" class="cell" data-execution_count="28">
+<div id="8e63f61f" class="cell" data-execution_count="28">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn_evaluation.plot <span class="im">import</span> cumulative_gain</span>
@@ -1467,7 +1467,7 @@ Score cut-off at that percentile: 0.230
 </div>
 <p>The <strong>Kolmogorov–Smirnov (KS) statistic</strong> measures how well the scores <em>separate</em> the two classes. It comes from a classic two-sample test: plot the cumulative distribution of scores separately for churners and for non-churners, and KS is the largest vertical gap between those two curves. Since TPR and FPR are themselves just those two cumulative distributions read from the top down, that same gap shows up on the ROC curve as <code>max(TPR - FPR)</code>. Hence, it is the widest vertical distance between the ROC curve and the diagonal.</p>
 <p>Let’s compute KS both ways and see that they agree:</p>
-<div id="e6b53fa5" class="cell" data-execution_count="29">
+<div id="afb91ca4" class="cell" data-execution_count="29">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> ks_2samp</span>

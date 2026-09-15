@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Matthias Bogaert">
-<meta name="dcterms.date" content="2026-09-14">
+<meta name="dcterms.date" content="2026-09-15">
 
 <title>Introduction to Data Analytics for Business and Economics</title>
 <style>
@@ -180,7 +180,13 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a></li>
+  <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a>
+  <ul class="collapse">
+  <li><a href="#who-this-book-is-for" id="toc-who-this-book-is-for" class="nav-link" data-scroll-target="#who-this-book-is-for">Who this book is for</a></li>
+  <li><a href="#what-this-book-covers" id="toc-what-this-book-covers" class="nav-link" data-scroll-target="#what-this-book-covers">What this book covers</a></li>
+  <li><a href="#how-to-read-it" id="toc-how-to-read-it" class="nav-link" data-scroll-target="#how-to-read-it">How to read it</a></li>
+  <li><a href="#license" id="toc-license" class="nav-link" data-scroll-target="#license">License</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -207,7 +213,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 14, 2026</p>
+      <p class="date">September 15, 2026</p>
     </div>
   </div>
   
@@ -222,10 +228,31 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="preface" class="level1 unnumbered">
 <h1 class="unnumbered">Preface</h1><p><img src="images/cover.png" title="Introduction to Data Analytics for Business and Economics" class="quarto-cover-image nolightbox img-fluid"></p>
-<p>Write a short introduction to the book here: who it’s for, what it covers, and how to read it.</p>
-<p>This page becomes the landing page of the website and the front matter of the PDF/EPUB.</p>
+<p>This book was written for the business engineering students at the University of Namur (UNamur), but it stems from years of experience teaching introductory and advanced data analytics courses across different institutions. There is no shortage of excellent books in this space: theoretical handbooks like <em>An Introduction to Statistical Learning</em> build the statistical foundations rigorously, and applied books like <em>Hands-On Machine Learning</em> cover the modeling toolkit in depth. What none of them focus on is what business and economics students actually need most: the tools and methods to turn a messy, real-world business problem into a proper data analytics project. That is what this book tries to do differently. There is no lengthy mathematical derivation here, but plenty of hands-on code, and the practical tips and tricks that make the difference between a model that works on a slide and one that survives contact with a real business problem.</p>
+<section id="who-this-book-is-for" class="level2">
+<h2 class="anchored" data-anchor-id="who-this-book-is-for">Who this book is for</h2>
+<p>This book offers a gentle introduction to Python, so no prior programming experience is required to start. That said, a basic introductory programming or Python course would benefit the reader, since the programming covered here is aimed squarely at what you need for data analytics, not the general fundamentals of programming as such. A basic statistics course is similarly useful, since not every statistical concept is re-derived from first principles. In practice, this makes the book a good fit for undergraduate or Bachelor-level teaching once students have already had some exposure to programming and statistics, even a light one.</p>
+</section>
+<section id="what-this-book-covers" class="level2">
+<h2 class="anchored" data-anchor-id="what-this-book-covers">What this book covers</h2>
+<p>The book walks through a full data analytics pipeline, from raw, messy data to a working, evaluated predictive model: Python fundamentals, data understanding, data exploration, data preparation, model evaluation, and modeling. Each chapter pairs a concept with runnable code, so the code is never a black box you’re asked to accept on faith.</p>
+</section>
+<section id="how-to-read-it" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-read-it">How to read it</h2>
+<p>Chapters build on each other and are meant to be read in order. Each one comes with a companion Jupyter notebook (<code>notebooks_student/</code>) so you can run the code yourself, not just read it. If you want to run the code locally, the Installation Guide appendix walks through setting up everything you need.</p>
+</section>
+<section id="license" class="level2">
+<h2 class="anchored" data-anchor-id="license">License</h2>
+<p>This book is licensed under the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> license.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" class="img-fluid figure-img"></a></p>
+<figcaption>Creative Commons License</figcaption>
+</figure>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
