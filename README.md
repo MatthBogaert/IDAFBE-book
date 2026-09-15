@@ -11,16 +11,20 @@ A paperback and ebook edition are also planned via Amazon KDP.
 
 ## Summary
 
-This book is a hands-on introduction to data analytics for business and economics students,
-covering the full path from raw data to a working predictive model: Python fundamentals, data
-understanding and exploration, data preparation, model evaluation, and modeling. Each chapter
-pairs conceptual explanations with executable Python code, built around a realistic customer
-churn case study. It follows the CRISP-DM process model throughout, so readers see not just *how*
-to run an algorithm, but *why* each step in an analytics project exists and what can go wrong if
-it's skipped.
+This book stems from years of experience teaching introductory and advanced data analytics
+courses across different institutions. There are excellent theoretical handbooks like *An
+Introduction to Statistical Learning* and excellent applied books like *Hands-On Machine
+Learning*, but none of them focus on what business and economics students actually need most: the
+tools and methods to turn a messy, real-world business problem into a proper data analytics
+project. That's what this book does differently: no lengthy mathematical derivations, but plenty
+of hands-on code, built around a single running case study (predicting customer churn) that
+carries through every chapter, from raw data to a working, evaluated predictive model.
 
-The book is written for students with little to no prior programming or statistics background,
-and is used as the primary material for the Data Analytics course at UNamur.
+The book offers a gentle introduction to Python, so no prior programming experience is strictly
+required to start. That said, a light background in programming and statistics helps, since the
+material focuses on what you need for data analytics specifically rather than re-teaching either
+subject from scratch. It's a good fit for undergraduate or Bachelor-level teaching, and is used as
+the primary material for the Data Analytics course at UNamur.
 
 ## Repository structure
 
@@ -30,6 +34,8 @@ and is used as the primary material for the Data Analytics course at UNamur.
 - `data/` — the (anonymised/processed) datasets used throughout the book.
 - `images/` — figures and diagrams used in the chapters.
 - `references.bib` — the book's bibliography.
+- `scripts/` — helper scripts, e.g. the one that regenerates the student notebooks from the
+  chapters.
 
 ## Citing this book
 
