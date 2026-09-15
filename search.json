@@ -34,7 +34,7 @@
     "href": "index.html#how-to-read-it",
     "title": "Introduction to Data Analytics for Business and Economics",
     "section": "How to read it",
-    "text": "How to read it\nChapters build on each other and are meant to be read in order. Each one comes with a companion Jupyter notebook (notebooks_student/) so you can run the code yourself, not just read it. If you want to run the code locally, the Installation Guide appendix walks through setting up everything you need.",
+    "text": "How to read it\nChapters build on each other and are meant to be read in order. Each one comes with a companion Jupyter notebook so you can run the code yourself, not just read it. These notebooks aren’t published on this website; they live in the notebooks_student/ folder of the book’s GitHub repository, linked from the sidebar on every page of this site. If you want to run the code locally, the Installation Guide appendix walks through setting up everything you need.",
     "crumbs": [
       "Preface"
     ]
