@@ -46,7 +46,7 @@ to store, process, and analyze data at scale. The
 result is that analytical models now sit behind decisions that used to rely purely on human
 judgment and increasingly outperform it.
 
-A **seventh period** arguably began with the arrival of generative AI — though this is our own
+A **seventh period** arguably began with the arrival of generative AI, though this is our own
 extension, not part of @mortenson2015operational's original 2015 framework, which predates the
 release of ChatGPT by several years. The shift from models that *describe and predict* to models
 that *generate and respond* (a distinction we return to later in this chapter), and, with
@@ -57,7 +57,7 @@ A few examples make this concrete. In late December 2019, an AI system monitorin
 and airline ticketing data flagged unusual pneumonia activity in Wuhan, China, days before
 public health authorities issued their own warnings. A nice illustration of how analytics
 can act as an early detection system for a signal humans hadn't yet noticed. 
-That signal, of course,  would go on to become COVID-19 — and everything else from there is history. 
+That signal, of course, would go on to become COVID-19, and everything else from there is history.
 Around the same period, revelations about Cambridge Analytica showed how predictive models built on 
 Facebook data (e.g., likes, comments, status updates, groups, etc.) could infer
 personality traits and how these personality traits could be used to target voters individually. 
@@ -81,18 +81,18 @@ and violent crime. An investigation found the tool was biased against Black defe
 flagged as high-risk more often despite not reoffending at a higher rate. What makes the case
 genuinely instructive, though, is not just *that* the model was biased, but *why*:
 @Lagioia2022 show that COMPAS was, overall, roughly equally accurate for Black and White
-defendants — yet it still made one particular kind of mistake, wrongly flagging someone as
+defendants, yet it still made one particular kind of mistake, wrongly flagging someone as
 high-risk who never went on to reoffend, far more often for Black defendants. Trying to remove
 that specific problem can, in turn, make a different imbalance worse elsewhere, because the two
 groups didn't reoffend at the same rate to begin with. In other words, "being fair" isn't a
-single, clear-cut target a data scientist can just optimize for — different, equally reasonable
+single, clear-cut target a data scientist can just optimize for: different, equally reasonable
 ideas of what counts as fair can pull in different directions, so choosing between them ends up
 being as much a value judgment as a technical one.
 
 The EU has responded to cases like this in stages. GDPR
 [@http://data.europa.eu/eli/reg/2016/679/oj], which became enforceable in 2018, was a first
 step. It doesn't target AI specifically, but it sets out several key principles for processing
-personal data — among them fairness, purpose limitation, and data minimisation — together with a
+personal data (among them fairness, purpose limitation, and data minimisation) together with a
 right to meaningful information about automated decisions made about you. We'll come back to
 these principles in more detail later in this book, once we start working with real personal
 data ourselves. The EU AI Act [@http://data.europa.eu/eli/reg/2024/1689/oj] builds on that
@@ -101,7 +101,7 @@ applications into risk tiers, from "unacceptable" (e.g., real-time biometric sco
 credit purposes) down to "minimal" (e.g., spam filters), with correspondingly stricter
 requirements for higher risks (e.g., high-stakes criminal-justice risk scoring like COMPAS).
 
-![EU AI Act risk pyramid — unacceptable, high, limited, and minimal risk tiers. Source: European 
+![EU AI Act risk pyramid: unacceptable, high, limited, and minimal risk tiers. Source: European
 Commission.](../images/ch01-fig-ai-risk-pyramid.jpg){#fig-ai-risk fig-alt="The EU AI Act risk pyramid, 
 showing four tiers from top to bottom: Unacceptable Risk, High Risk, Limited Risk (AI systems with 
 specific transparency obligations), and Minimal Risk."}
@@ -114,7 +114,7 @@ govern all of the above, which is exactly why it is crucial to business and econ
 
 In essence, **data analytics is about transforming raw data into actionable insights for
 business**. It does so by applying descriptive, diagnostic, predictive, and prescriptive models
-to heterogeneous — and often large — data sources, so that organizations can make quicker,
+to heterogeneous, and often large, data sources, so that organizations can make quicker,
 better, and more intelligent decisions that create business value.
 
 Business analytics sits at the intersection of several disciplines: operations research,
@@ -166,7 +166,7 @@ Prescriptive analytics goes one step further and recommends the actual pricing s
 
 These four types are also hierarchical in complexity and organizational maturity: most
 organizations start with descriptive analytics, move into predictive analytics as their data and
-modeling capabilities mature, and only later exploit prescriptive analytics — the analytics
+modeling capabilities mature, and only later exploit prescriptive analytics: the analytics
 equivalent of asking not just "what will happen," but "what should I do about it,"
 using optimization, simulation, and decision modeling techniques [@delen2018research]. In
 practice the boundaries blur: an organization can be firmly in descriptive-analytics territory
@@ -253,7 +253,7 @@ point of this entire book. Most routine business activity now generates data tha
 visualized, and analyzed, and as storage and compute keep getting cheaper, previously
 uneconomical analyses now become viable and create value.
 
-![The 5 Vs of big data: volume, velocity, variety, veracity, and value — the impact on your firm.](../images/ch01-fig-bigdata-4vs.png){#fig-bigdata fig-alt="Five core elements arranged around the concepts of 'Big Data': Volume (amount), Velocity (speed), Variety (forms), Veracity (uncertainty), and Value (impact), with Value added as a distinct element."}
+![The 5 Vs of big data (volume, velocity, variety, veracity, and value) and their impact on your firm.](../images/ch01-fig-bigdata-4vs.png){#fig-bigdata fig-alt="Five core elements arranged around the concepts of 'Big Data': Volume (amount), Velocity (speed), Variety (forms), Veracity (uncertainty), and Value (impact), with Value added as a distinct element."}
 
 **Generative AI** has pushed analytics from *describing and predicting* into *responding and
 creating*. Generative models produce text, images, audio, or video from a user-supplied prompt,
@@ -326,7 +326,7 @@ data** [@wickham2014tidy] is the standard way to structure a dataset so that lat
 statistics, visualizations, further processing) is easy: each variable forms a
 column, each observation forms a row, and each type of observational unit forms its own table. A
 "messy" table with one column per store and one row per year, versus a "tidy" table with one row
-per store-year combination, contain the same information — but only one of them is easy to
+per store-year combination, contain the same information, but only one of them is easy to
 filter, aggregate, and model. We'll come back to tidying data concretely once we start working
 with `pandas`.
 
@@ -390,13 +390,13 @@ correspondingly more subjective to evaluate. Its goals include:
 
 ## The data analytics process: CRISP-DM
 
-Producing a reliable, robust analytical model isn't something you improvise — practitioners
+Producing a reliable, robust analytical model isn't something you improvise: practitioners
 follow a fixed framework that lets a project be carefully defined, organized, and structured.
 The two best-known frameworks are KDD or Knowledge Discovery in Databases [@fayyad1996from] and, more widely used
 today, **CRISP-DM** or the Cross-Industry Standard Process for Data Mining
 [@chapman2000crisp].
 
-![The CRISP-DM process: business understanding, data understanding, data preparation, modeling, evaluation, and deployment, cycling back around a central data store.](../images/ch01-fig-crispdm.png){#fig-crispdm fig-alt="A circular diagram with six boxes — Business Understanding, Data Understanding, Data Preparation, Modeling, Evaluation, and Deployment — arranged around a central 'Data' hub, connected by arrows showing the typical sequence between adjacent phases, with an outer arrow looping from Deployment back to Business Understanding."}
+![The CRISP-DM process: business understanding, data understanding, data preparation, modeling, evaluation, and deployment, cycling back around a central data store.](../images/ch01-fig-crispdm.png){#fig-crispdm fig-alt="A circular diagram with six boxes (Business Understanding, Data Understanding, Data Preparation, Modeling, Evaluation, and Deployment) arranged around a central 'Data' hub, connected by arrows showing the typical sequence between adjacent phases, with an outer arrow looping from Deployment back to Business Understanding."}
 
 CRISP-DM organizes an analytics project into six phases:
 

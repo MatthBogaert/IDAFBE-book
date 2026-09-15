@@ -294,7 +294,7 @@ from a handful of sources, each with its own trade-offs:
 |---|---|
 | Transactional data | Structured, detailed records of transactions (purchases, payments, claims), typically stored in a relational database. Easy to aggregate into sums, averages, or trends over time. |
 | Qualitative, expert data | Domain expertise from people with substantial business experience (a credit portfolio manager, a brand manager). Useful for sanity-checking a model's output against what a human expert would expect. |
-| Publicly available data | External data anyone can access — macroeconomic indicators (GDP, inflation, unemployment), or open repositories like the UCI Machine Learning Repository or Kaggle. |
+| Publicly available data | External data anyone can access: macroeconomic indicators (GDP, inflation, unemployment), or open repositories like the UCI Machine Learning Repository or Kaggle. |
 | Web data | Data gathered from social media, search engines, or websites, either via an API or by web scraping. |
 
 **Web data** deserves a closer look, since the two ways of collecting it, APIs and scraping, differ
