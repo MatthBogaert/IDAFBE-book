@@ -1,5 +1,44 @@
 # Preface {.unnumbered}
 
-Write a short introduction to the book here: who it's for, what it covers, and how to read it.
+This book was written for the business engineering students at the University of Namur (UNamur),
+but it stems from years of experience teaching introductory and advanced data analytics courses
+across different institutions. There is no shortage of excellent books in this space: theoretical
+handbooks like *An Introduction to Statistical Learning* build the statistical foundations
+rigorously, and applied books like *Hands-On Machine Learning* cover the modeling toolkit in
+depth. What none of them focus on is what business and economics students actually need most: the
+tools and methods to turn a messy, real-world business problem into a proper data analytics
+project. That is what this book tries to do differently. There is no lengthy mathematical
+derivation here, but plenty of hands-on code, and the practical tips and tricks that make the
+difference between a model that works on a slide and one that survives contact with a real
+business problem.
 
-This page becomes the landing page of the website and the front matter of the PDF/EPUB.
+## Who this book is for
+
+This book offers a gentle introduction to Python, so no prior programming experience is required
+to start. That said, a basic introductory programming or Python course would benefit the reader,
+since the programming covered here is aimed squarely at what you need for data analytics, not the
+general fundamentals of programming as such. A basic statistics course is similarly useful, since
+not every statistical concept is re-derived from first principles. In practice, this makes the
+book a good fit for undergraduate or Bachelor-level teaching once students have already had some
+exposure to programming and statistics, even a light one.
+
+## What this book covers
+
+The book walks through a full data analytics pipeline, from raw, messy data to a working,
+evaluated predictive model: Python fundamentals, data understanding, data exploration, data
+preparation, model evaluation, and modeling. Each chapter pairs a concept with runnable code, so
+the code is never a black box you're asked to accept on faith.
+
+## How to read it
+
+Chapters build on each other and are meant to be read in order. Each one comes with a companion
+Jupyter notebook (`notebooks_student/`) so you can run the code yourself, not just read it. If you
+want to run the code locally, the Installation Guide appendix walks through setting up everything
+you need.
+
+## License
+
+This book is licensed under the
+[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) license.
+
+[![Creative Commons License](https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
