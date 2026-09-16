@@ -5,12 +5,34 @@ laptop for this course, so that every chapter in this book runs exactly as shown
 to create a dedicated, self-contained **virtual environment** with a known-good set of package
 versions, rather than relying on whatever happens to already be installed on your machine.
 
+## Getting the course files
+
+Before installing anything, get a local copy of the book's repository. The notebooks refer to
+`requirements.txt` and the `data/` folder by a relative path, so those only resolve correctly
+once you have the whole project folder, not just one downloaded notebook. Downloading a single
+notebook by itself, for example via right-click "Save link as" on one file, will not work: it
+won't come with `requirements.txt` or `data/` alongside it, and every `pip install` or
+`pd.read_csv` call in this book assumes they're there.
+
+The simplest way, no `git` required:
+
+1. Go to the book's [GitHub repository](https://github.com/MatthBogaert/IDAFBE-book).
+2. Click the green **Code** button, then **Download ZIP**.
+3. Unzip it somewhere on your machine. This folder is your project root for the rest of this
+   appendix and for every notebook in the course.
+
+If you're already comfortable with `git`, cloning works the same way and makes it easier to
+pull future updates to the course material:
+
+```bash
+git clone https://github.com/MatthBogaert/IDAFBE-book.git
+```
 
 ## Create a virtual environment
 
 A virtual environment is a self-contained directory that holds a Python installation for a
 particular version of Python, plus a specific set of additional packages. Without one, packages
-installed for different projects can silently conflict with each other — a version of `pandas`
+installed for different projects can silently conflict with each other: a version of `pandas`
 that one project needs might break another. Learning to use virtual environments now is a
 worthwhile habit: it's exactly how you'll be expected to manage Python projects later, e.g. in a
 company.
@@ -23,7 +45,7 @@ installed Anaconda). This book pins everything to **Python 3.11**: see
 
 If you'd like a visual walkthrough of creating a conda environment from within VS Code, this
 [video](https://www.youtube.com/watch?v=fnb4_MzpZFU) covers the general steps. Note that the
-video uses its own example environment name and Python version — when it gets to
+video uses its own example environment name and Python version: when it gets to
 `conda create --name mynewenv`, use the command from the next section instead, with **this
 book's** environment name and Python version.
 
@@ -42,7 +64,7 @@ conda activate DA2026
 ```
 
 You may need to restart VS Code (or your notebook) afterward and explicitly select this new
-environment as your kernel — see [Selecting the right kernel](#selecting-the-right-kernel)
+environment as your kernel: see [Selecting the right kernel](#selecting-the-right-kernel)
 below.
 
 ## Installing required packages
@@ -54,7 +76,7 @@ written and tested against:
 pip install -r requirements.txt
 ```
 
-Make sure `requirements.txt` is the one in the root of this book's project folder — running
+Make sure `requirements.txt` is the one in the root of this book's project folder: running
 this from the wrong directory, or skipping it entirely and just `pip install`-ing packages
 one at a time, is the single most common source of "it works in the book but not on my
 machine."
@@ -80,7 +102,7 @@ the same requirements with:
 
 ## Selecting the right kernel
 
-Installing the packages into the `DA2026` environment isn't enough on its own — VS Code (or
+Installing the packages into the `DA2026` environment isn't enough on its own: VS Code (or
 Jupyter) also needs to actually *use* that environment when it runs your code. This trips
 people up more often than the installation itself, so it's worth being deliberate about it.
 
@@ -95,26 +117,26 @@ the interpreter inside your `DA2026` environment.
 **For `quarto preview`/`quarto render` on `.qmd` files:** this project's `_quarto.yml` already
 pins `jupyter: da2026` at the top, so Quarto picks the right kernel automatically regardless of
 whatever interpreter VS Code itself is set to. If a preview still seems to be using the wrong
-environment, close and reopen the preview tab — it can cache the kernel it started with from
+environment, close and reopen the preview tab: it can cache the kernel it started with from
 before you had `DA2026` set up.
 
 ::: {.callout-warning}
 ## The conda environment trap
 
 If you have multiple conda environments with the *same* Python version, they can look
-identical in VS Code's picker unless you check the environment name specifically — not just
+identical in VS Code's picker unless you check the environment name specifically, not just
 the version number. Picking the wrong one is easy to do, and the symptom is usually confusing:
 code that runs fine in one environment throws an error like `AttributeError: _ARRAY_API not
 found` or `A module that was compiled using NumPy 1.x cannot be run in NumPy 2.x` in another.
 That specific error means the active kernel has a `numpy` version that doesn't match the
-`pandas`/`pyarrow` build it's trying to import — i.e., you're not actually in `DA2026`. Re-check
+`pandas`/`pyarrow` build it's trying to import: you're not actually in `DA2026`. Re-check
 the kernel/interpreter selection above.
 :::
 
 ## Running Python
 
 Once your kernel is set correctly, you're ready to run code. As a first check, try the
-classic **"Hello, world!"** example — Python's `print()` function displays text or results.
+classic **"Hello, world!"** example: Python's `print()` function displays text or results.
 
 ```{python}
 print("Hello, world!")
