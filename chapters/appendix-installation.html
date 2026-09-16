@@ -216,14 +216,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#create-a-virtual-environment" id="toc-create-a-virtual-environment" class="nav-link active" data-scroll-target="#create-a-virtual-environment"><span class="header-section-number">A.1</span> Create a virtual environment</a>
+  <li><a href="#getting-the-course-files" id="toc-getting-the-course-files" class="nav-link active" data-scroll-target="#getting-the-course-files"><span class="header-section-number">A.1</span> Getting the course files</a></li>
+  <li><a href="#create-a-virtual-environment" id="toc-create-a-virtual-environment" class="nav-link" data-scroll-target="#create-a-virtual-environment"><span class="header-section-number">A.2</span> Create a virtual environment</a>
   <ul class="collapse">
-  <li><a href="#vs-code" id="toc-vs-code" class="nav-link" data-scroll-target="#vs-code"><span class="header-section-number">A.1.1</span> VS Code</a></li>
-  <li><a href="#command-line" id="toc-command-line" class="nav-link" data-scroll-target="#command-line"><span class="header-section-number">A.1.2</span> Command line</a></li>
+  <li><a href="#vs-code" id="toc-vs-code" class="nav-link" data-scroll-target="#vs-code"><span class="header-section-number">A.2.1</span> VS Code</a></li>
+  <li><a href="#command-line" id="toc-command-line" class="nav-link" data-scroll-target="#command-line"><span class="header-section-number">A.2.2</span> Command line</a></li>
   </ul></li>
-  <li><a href="#installing-required-packages" id="toc-installing-required-packages" class="nav-link" data-scroll-target="#installing-required-packages"><span class="header-section-number">A.2</span> Installing required packages</a></li>
-  <li><a href="#selecting-the-right-kernel" id="toc-selecting-the-right-kernel" class="nav-link" data-scroll-target="#selecting-the-right-kernel"><span class="header-section-number">A.3</span> Selecting the right kernel</a></li>
-  <li><a href="#running-python" id="toc-running-python" class="nav-link" data-scroll-target="#running-python"><span class="header-section-number">A.4</span> Running Python</a></li>
+  <li><a href="#installing-required-packages" id="toc-installing-required-packages" class="nav-link" data-scroll-target="#installing-required-packages"><span class="header-section-number">A.3</span> Installing required packages</a></li>
+  <li><a href="#selecting-the-right-kernel" id="toc-selecting-the-right-kernel" class="nav-link" data-scroll-target="#selecting-the-right-kernel"><span class="header-section-number">A.4</span> Selecting the right kernel</a></li>
+  <li><a href="#running-python" id="toc-running-python" class="nav-link" data-scroll-target="#running-python"><span class="header-section-number">A.5</span> Running Python</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/MatthBogaert/IDAFBE-book/blob/main/chapters/appendix-installation.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/MatthBogaert/IDAFBE-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -250,28 +251,40 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>This appendix walks through setting up Python and an IDE (VS Code is recommended) on your own laptop for this course, so that every chapter in this book runs exactly as shown. The idea is to create a dedicated, self-contained <strong>virtual environment</strong> with a known-good set of package versions, rather than relying on whatever happens to already be installed on your machine.</p>
-<section id="create-a-virtual-environment" class="level2" data-number="A.1">
-<h2 data-number="A.1" class="anchored" data-anchor-id="create-a-virtual-environment"><span class="header-section-number">A.1</span> Create a virtual environment</h2>
-<p>A virtual environment is a self-contained directory that holds a Python installation for a particular version of Python, plus a specific set of additional packages. Without one, packages installed for different projects can silently conflict with each other — a version of <code>pandas</code> that one project needs might break another. Learning to use virtual environments now is a worthwhile habit: it’s exactly how you’ll be expected to manage Python projects later, e.g.&nbsp;in a company.</p>
+<section id="getting-the-course-files" class="level2" data-number="A.1">
+<h2 data-number="A.1" class="anchored" data-anchor-id="getting-the-course-files"><span class="header-section-number">A.1</span> Getting the course files</h2>
+<p>Before installing anything, get a local copy of the book’s repository. The notebooks refer to <code>requirements.txt</code> and the <code>data/</code> folder by a relative path, so those only resolve correctly once you have the whole project folder, not just one downloaded notebook. Downloading a single notebook by itself, for example via right-click “Save link as” on one file, will not work: it won’t come with <code>requirements.txt</code> or <code>data/</code> alongside it, and every <code>pip install</code> or <code>pd.read_csv</code> call in this book assumes they’re there.</p>
+<p>The simplest way, no <code>git</code> required:</p>
+<ol type="1">
+<li>Go to the book’s <a href="https://github.com/MatthBogaert/IDAFBE-book">GitHub repository</a>.</li>
+<li>Click the green <strong>Code</strong> button, then <strong>Download ZIP</strong>.</li>
+<li>Unzip it somewhere on your machine. This folder is your project root for the rest of this appendix and for every notebook in the course.</li>
+</ol>
+<p>If you’re already comfortable with <code>git</code>, cloning works the same way and makes it easier to pull future updates to the course material:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/MatthBogaert/IDAFBE-book.git</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="create-a-virtual-environment" class="level2" data-number="A.2">
+<h2 data-number="A.2" class="anchored" data-anchor-id="create-a-virtual-environment"><span class="header-section-number">A.2</span> Create a virtual environment</h2>
+<p>A virtual environment is a self-contained directory that holds a Python installation for a particular version of Python, plus a specific set of additional packages. Without one, packages installed for different projects can silently conflict with each other: a version of <code>pandas</code> that one project needs might break another. Learning to use virtual environments now is a worthwhile habit: it’s exactly how you’ll be expected to manage Python projects later, e.g.&nbsp;in a company.</p>
 <p>In this book <code>conda</code> is used to create the environment (you should already have <code>conda</code> available if you installed Anaconda). This book pins everything to <strong>Python 3.11</strong>: see <code>requirements.txt</code> in the project root for the exact package versions.</p>
-<section id="vs-code" class="level3" data-number="A.1.1">
-<h3 data-number="A.1.1" class="anchored" data-anchor-id="vs-code"><span class="header-section-number">A.1.1</span> VS Code</h3>
-<p>If you’d like a visual walkthrough of creating a conda environment from within VS Code, this <a href="https://www.youtube.com/watch?v=fnb4_MzpZFU">video</a> covers the general steps. Note that the video uses its own example environment name and Python version — when it gets to <code>conda create --name mynewenv</code>, use the command from the next section instead, with <strong>this book’s</strong> environment name and Python version.</p>
+<section id="vs-code" class="level3" data-number="A.2.1">
+<h3 data-number="A.2.1" class="anchored" data-anchor-id="vs-code"><span class="header-section-number">A.2.1</span> VS Code</h3>
+<p>If you’d like a visual walkthrough of creating a conda environment from within VS Code, this <a href="https://www.youtube.com/watch?v=fnb4_MzpZFU">video</a> covers the general steps. Note that the video uses its own example environment name and Python version: when it gets to <code>conda create --name mynewenv</code>, use the command from the next section instead, with <strong>this book’s</strong> environment name and Python version.</p>
 </section>
-<section id="command-line" class="level3" data-number="A.1.2">
-<h3 data-number="A.1.2" class="anchored" data-anchor-id="command-line"><span class="header-section-number">A.1.2</span> Command line</h3>
+<section id="command-line" class="level3" data-number="A.2.2">
+<h3 data-number="A.2.2" class="anchored" data-anchor-id="command-line"><span class="header-section-number">A.2.2</span> Command line</h3>
 <p>Open a terminal (not a notebook cell) and run:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">--name</span> DA2026 python=3.11</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">--name</span> DA2026 python=3.11</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Then activate it:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate DA2026</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>You may need to restart VS Code (or your notebook) afterward and explicitly select this new environment as your kernel — see <a href="#selecting-the-right-kernel">Selecting the right kernel</a> below.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate DA2026</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You may need to restart VS Code (or your notebook) afterward and explicitly select this new environment as your kernel: see <a href="#selecting-the-right-kernel">Selecting the right kernel</a> below.</p>
 </section>
 </section>
-<section id="installing-required-packages" class="level2" data-number="A.2">
-<h2 data-number="A.2" class="anchored" data-anchor-id="installing-required-packages"><span class="header-section-number">A.2</span> Installing required packages</h2>
+<section id="installing-required-packages" class="level2" data-number="A.3">
+<h2 data-number="A.3" class="anchored" data-anchor-id="installing-required-packages"><span class="header-section-number">A.3</span> Installing required packages</h2>
 <p>With the <code>DA2026</code> environment activated, install the exact package versions this book was written and tested against:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-r</span> requirements.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Make sure <code>requirements.txt</code> is the one in the root of this book’s project folder — running this from the wrong directory, or skipping it entirely and just <code>pip install</code>-ing packages one at a time, is the single most common source of “it works in the book but not on my machine.”</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-r</span> requirements.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Make sure <code>requirements.txt</code> is the one in the root of this book’s project folder: running this from the wrong directory, or skipping it entirely and just <code>pip install</code>-ing packages one at a time, is the single most common source of “it works in the book but not on my machine.”</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -286,19 +299,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>If you’re running this from inside a Jupyter notebook rather than a terminal, you can install the same requirements with:</p>
-<div id="430bd9b4" class="cell" data-execution_count="1">
+<div id="a1ddaa75" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>pip install <span class="op">-</span>r requirements.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>pip install <span class="op">-</span>r requirements.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
-<section id="selecting-the-right-kernel" class="level2" data-number="A.3">
-<h2 data-number="A.3" class="anchored" data-anchor-id="selecting-the-right-kernel"><span class="header-section-number">A.3</span> Selecting the right kernel</h2>
-<p>Installing the packages into the <code>DA2026</code> environment isn’t enough on its own — VS Code (or Jupyter) also needs to actually <em>use</em> that environment when it runs your code. This trips people up more often than the installation itself, so it’s worth being deliberate about it.</p>
+<section id="selecting-the-right-kernel" class="level2" data-number="A.4">
+<h2 data-number="A.4" class="anchored" data-anchor-id="selecting-the-right-kernel"><span class="header-section-number">A.4</span> Selecting the right kernel</h2>
+<p>Installing the packages into the <code>DA2026</code> environment isn’t enough on its own: VS Code (or Jupyter) also needs to actually <em>use</em> that environment when it runs your code. This trips people up more often than the installation itself, so it’s worth being deliberate about it.</p>
 <p><strong>For <code>.ipynb</code> notebooks:</strong> open the notebook, click the kernel name in the top-right corner of the notebook editor, choose <strong>“Select Another Kernel…”</strong>, and pick <strong>“Python (DA2026)”</strong> from the list.</p>
 <p><strong>For your overall Python interpreter</strong> (affects linting, IntelliSense, and some extensions): <code>Cmd+Shift+P</code> (or <code>Ctrl+Shift+P</code> on Windows/Linux) → <strong>“Python: Select Interpreter”</strong> → choose the interpreter inside your <code>DA2026</code> environment.</p>
-<p><strong>For <code>quarto preview</code>/<code>quarto render</code> on <code>.qmd</code> files:</strong> this project’s <code>_quarto.yml</code> already pins <code>jupyter: da2026</code> at the top, so Quarto picks the right kernel automatically regardless of whatever interpreter VS Code itself is set to. If a preview still seems to be using the wrong environment, close and reopen the preview tab — it can cache the kernel it started with from before you had <code>DA2026</code> set up.</p>
+<p><strong>For <code>quarto preview</code>/<code>quarto render</code> on <code>.qmd</code> files:</strong> this project’s <code>_quarto.yml</code> already pins <code>jupyter: da2026</code> at the top, so Quarto picks the right kernel automatically regardless of whatever interpreter VS Code itself is set to. If a preview still seems to be using the wrong environment, close and reopen the preview tab: it can cache the kernel it started with from before you had <code>DA2026</code> set up.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -309,17 +322,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>If you have multiple conda environments with the <em>same</em> Python version, they can look identical in VS Code’s picker unless you check the environment name specifically — not just the version number. Picking the wrong one is easy to do, and the symptom is usually confusing: code that runs fine in one environment throws an error like <code>AttributeError: _ARRAY_API not found</code> or <code>A module that was compiled using NumPy 1.x cannot be run in NumPy 2.x</code> in another. That specific error means the active kernel has a <code>numpy</code> version that doesn’t match the <code>pandas</code>/<code>pyarrow</code> build it’s trying to import — i.e., you’re not actually in <code>DA2026</code>. Re-check the kernel/interpreter selection above.</p>
+<p>If you have multiple conda environments with the <em>same</em> Python version, they can look identical in VS Code’s picker unless you check the environment name specifically, not just the version number. Picking the wrong one is easy to do, and the symptom is usually confusing: code that runs fine in one environment throws an error like <code>AttributeError: _ARRAY_API not found</code> or <code>A module that was compiled using NumPy 1.x cannot be run in NumPy 2.x</code> in another. That specific error means the active kernel has a <code>numpy</code> version that doesn’t match the <code>pandas</code>/<code>pyarrow</code> build it’s trying to import: you’re not actually in <code>DA2026</code>. Re-check the kernel/interpreter selection above.</p>
 </div>
 </div>
 </section>
-<section id="running-python" class="level2" data-number="A.4">
-<h2 data-number="A.4" class="anchored" data-anchor-id="running-python"><span class="header-section-number">A.4</span> Running Python</h2>
-<p>Once your kernel is set correctly, you’re ready to run code. As a first check, try the classic <strong>“Hello, world!”</strong> example — Python’s <code>print()</code> function displays text or results.</p>
-<div id="92f3676a" class="cell" data-execution_count="2">
+<section id="running-python" class="level2" data-number="A.5">
+<h2 data-number="A.5" class="anchored" data-anchor-id="running-python"><span class="header-section-number">A.5</span> Running Python</h2>
+<p>Once your kernel is set correctly, you’re ready to run code. As a first check, try the classic <strong>“Hello, world!”</strong> example: Python’s <code>print()</code> function displays text or results.</p>
+<div id="4c3a5d4d" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Hello, world!"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Hello, world!"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Hello, world!</code></pre>
