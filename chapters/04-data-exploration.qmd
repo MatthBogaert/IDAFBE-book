@@ -45,6 +45,7 @@ summary.round(2)
 ```
 
 ```{python}
+#| echo: false
 fig, axes = plt.subplots(2, 2, figsize=(10, 8), sharex=True, sharey=True)
 
 for ax, (name, group) in zip(axes.flat, anscombe.groupby("dataset")):
