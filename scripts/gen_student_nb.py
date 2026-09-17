@@ -8,9 +8,10 @@ are dropped, other `#|` option lines are stripped), and content inside
 ::: {.callout-*} ... ::: divs is skipped entirely (that's book narration,
 not something a student runs). Unless --no-colab is passed, a Google Colab
 setup cell (mount Drive, cd into the shared course folder) is inserted right
-after the title cell, matching this course's Drive layout: a single
-"Data Analytics" folder on MyDrive containing notebooks_student/ and data/,
-mirroring this repo's own top-level layout.
+after the title cell, matching this course's Drive layout: a "Data
+Analytics/2026" folder on MyDrive containing notebooks_student/ and data/,
+mirroring this repo's own top-level layout. Update the year in
+COLAB_CHDIR_CELL below when this is reused for a future cohort.
 """
 import json
 import re
@@ -29,7 +30,7 @@ COLAB_DRIVE_CELL = [
 ]
 COLAB_CHDIR_CELL = [
     "import os\n",
-    'os.chdir("/content/drive/MyDrive/Data Analytics/notebooks_student")\n',
+    'os.chdir("/content/drive/MyDrive/Data Analytics/2026/notebooks_student")\n',
 ]
 
 
