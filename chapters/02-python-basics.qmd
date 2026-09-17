@@ -26,7 +26,7 @@ drive.mount('/content/drive')
 #| eval: false
 # Set working directory to proper location
 import os
-os.chdir("/content/drive/MyDrive/Data Analytics/2026/notebooks_student")
+os.chdir("/content/drive/MyDrive/Colab Notebooks/Data Analytics/2026/notebooks_student")
 ```
 
 If you're working locally with VS Code (see the installation guide in the appendix), your working directory is already the folder containing your notebook, so you can skip both cells above.
