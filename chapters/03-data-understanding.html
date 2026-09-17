@@ -327,8 +327,6 @@ Figure&nbsp;3.1: Simplified ERD for the NPC case: one customer has one-to-many s
 <h3 data-number="3.2.2" class="anchored" data-anchor-id="confirming-a-relationship-in-code"><span class="header-section-number">3.2.2</span> Confirming a relationship in code</h3>
 <p>An ERD describes what you <em>expect</em> the relationships between tables to look like, but it’s worth actually verifying that against the data itself. Real-world data doesn’t always behave the way a diagram says it should. For NPC, we expect a one-to-many relationship between customers and subscriptions: each customer can have several subscriptions over time, but every subscription belongs to exactly one customer. We can check this by joining the two tables on the shared key, <code>CustomerID</code>, and counting how many subscriptions each customer has.</p>
 <div id="6fcf9abd" class="cell" data-execution_count="1">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>customers <span class="op">=</span> pd.read_csv(<span class="st">"../data/raw/customers.txt"</span>, sep<span class="op">=</span><span class="st">";"</span>)</span>
@@ -345,7 +343,6 @@ Figure&nbsp;3.1: Simplified ERD for the NPC case: one customer has one-to-many s
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># count how many subscriptions each customer has</span></span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>subs_per_customer <span class="op">=</span> merged.groupby(<span class="st">"CustomerID"</span>)[<span class="st">"SubscriptionID"</span>].count()</span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>subs_per_customer.describe()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>count    1389.000000
 mean        5.940965
@@ -395,10 +392,7 @@ Name: SubscriptionID, dtype: float64</code></pre>
 </table>
 <p>In practice, you’ll often build this table description directly from <code>pandas</code>. <code>.info()</code> gives you a fast overview of every column’s name, non-null count, and dtype in one call. This will often be the natural starting point before writing out the fuller, business-meaning version manually.</p>
 <div id="a47b207e" class="cell" data-execution_count="2">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>customers.info()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
 RangeIndex: 1389 entries, 0 to 1388
@@ -447,8 +441,6 @@ memory usage: 65.2+ KB</code></pre>
 </div>
 </div>
 <div id="59f07cf5" class="cell" data-execution_count="3">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>col_types <span class="op">=</span> {</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"CustomerID"</span>: <span class="st">"string"</span>,</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Gender"</span>: <span class="st">"category"</span>,</span>
@@ -462,7 +454,6 @@ memory usage: 65.2+ KB</code></pre>
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    customers[col] <span class="op">=</span> customers[col].astype(dtype)</span>
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>customers.dtypes</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>CustomerID    string[python]
 Gender              category
@@ -500,8 +491,6 @@ dtype: object</code></pre>
 <h3 data-number="3.4.1" class="anchored" data-anchor-id="working-with-dates"><span class="header-section-number">3.4.1</span> Working with dates</h3>
 <p>NPC’s date columns (when a subscription started, ended, was last paid, or renewed) are read in as plain text, since that’s how they’re stored in the file. Converting them to an actual <code>datetime</code> type is what lets you do date arithmetic (how long has this subscription run?) or extract components (which month did most subscriptions start?) later on. <code>pd.to_datetime()</code> handles the conversion; since NPC’s dates are written <code>day/month/year</code>, we tell it the format explicitly rather than letting it guess.</p>
 <div id="206dfa32" class="cell" data-execution_count="4">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>date_cols <span class="op">=</span> [<span class="st">"StartDate"</span>, <span class="st">"EndDate"</span>, <span class="st">"PaymentDate"</span>, <span class="st">"RenewalDate"</span>]</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># errors="coerce" turns any value that doesn't match the format into a missing value (NaT),</span></span>
@@ -512,7 +501,6 @@ dtype: object</code></pre>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>customers[<span class="st">"DOB"</span>] <span class="op">=</span> pd.to_datetime(customers[<span class="st">"DOB"</span>], <span class="bu">format</span><span class="op">=</span><span class="st">"</span><span class="sc">%d</span><span class="st">/%m/%Y"</span>, errors<span class="op">=</span><span class="st">"coerce"</span>)</span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>subscriptions[date_cols].dtypes</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>StartDate      datetime64[ns]
 EndDate        datetime64[ns]
@@ -527,10 +515,7 @@ dtype: object</code></pre>
 <p>With types and dates sorted out, the last step at the variable level is to actually look at what each column contains: its typical value, its spread, and how it relates to other variables. <code>pandas</code> gives you this directly, without needing a single chart yet (charts are exactly where the next chapter picks up).</p>
 <p>For a categorical variable, <code>.value_counts()</code> shows you every category and how often it occurs:</p>
 <div id="7e783614" class="cell" data-execution_count="5">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>subscriptions[<span class="st">"PaymentStatus"</span>].value_counts(dropna<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>PaymentStatus
 Paid        7831
@@ -540,10 +525,7 @@ Name: count, dtype: int64</code></pre>
 </div>
 <p>For a numeric variable, <code>.describe()</code> gives you count, mean, standard deviation, and quartiles in one call. Calling it on the column of interest, <code>TotalPrice</code>, immediately shows something worth flagging: only 8,091 of the 8,252 subscriptions have a non-missing price.</p>
 <div id="88450317" class="cell" data-execution_count="6">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>subscriptions[<span class="st">"TotalPrice"</span>].describe()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>count    8091.000000
 mean      125.372010
@@ -558,12 +540,9 @@ Name: TotalPrice, dtype: float64</code></pre>
 </div>
 <p>Individual statistics are available as their own methods too, which is handy when you only need one number rather than the full summary. For example, the mean, variance, and standard deviation of <code>TotalPrice</code>:</p>
 <div id="03c6347a" class="cell" data-execution_count="7">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"mean:"</span>, subscriptions[<span class="st">"TotalPrice"</span>].mean(skipna<span class="op">=</span><span class="va">True</span>))</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"variance:"</span>, subscriptions[<span class="st">"TotalPrice"</span>].var(skipna<span class="op">=</span><span class="va">True</span>))</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"std:"</span>, subscriptions[<span class="st">"TotalPrice"</span>].std(skipna<span class="op">=</span><span class="va">True</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>mean: 125.3720096403411
 variance: 9047.803316850834
@@ -572,20 +551,14 @@ std: 95.11994174120815</code></pre>
 </div>
 <p>Two variables can also be checked for how strongly they move together, using <code>.corr()</code>. Here, the number of newspapers included in a subscription correlates fairly strongly with what the customer ends up paying, which is reassuring, since the alternative (no relationship at all) would suggest a problem with one of the two columns.</p>
 <div id="9fcd9050" class="cell" data-execution_count="8">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>subscriptions[[<span class="st">"TotalPrice"</span>, <span class="st">"NbrNewspapers"</span>]].corr().loc[<span class="st">"TotalPrice"</span>, <span class="st">"NbrNewspapers"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <pre><code>np.float64(0.898895317946639)</code></pre>
 </div>
 </div>
 <p>Finally, <code>.describe(include="all")</code> extends the summary to every column at once, numeric and categorical alike, and <code>.select_dtypes()</code> lets you restrict that to just the numeric columns when that’s all you need:</p>
 <div id="b6b575b9" class="cell" data-execution_count="9">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>subscriptions.select_dtypes(include<span class="op">=</span><span class="st">"number"</span>).describe()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <div>
 
@@ -768,11 +741,8 @@ std: 95.11994174120815</code></pre>
 <h3 data-number="3.4.3" class="anchored" data-anchor-id="saving-your-progress"><span class="header-section-number">3.4.3</span> Saving your progress</h3>
 <p>Once a table has been read in with the right types, it’s worth saving that cleaned-up version rather than re-deriving it from the raw text file every time you reopen the notebook. <strong>Parquet</strong> is a compressed, columnar file format built for exactly this: it’s faster to read and write than CSV, keeps your dtypes intact (a <code>category</code> column stays a <code>category</code> column), and produces a smaller file on disk.</p>
 <div id="8b714e38" class="cell" data-execution_count="10">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>subscriptions.to_parquet(<span class="st">"../data/raw/subscriptions.parquet"</span>, index<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>customers.to_parquet(<span class="st">"../data/raw/customers.parquet"</span>, index<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 </div>
 </section>
 </section>
