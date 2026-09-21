@@ -584,7 +584,9 @@ print((5, 6, 7) > (7, 5, 6))
 print((4, 3, 2) <= (4.0, 3.0, 2.0))
 ```
 
-In the examples above, you compare tuples of numbers using the standard comparison operators. Python runs an **element-by-element comparison**. So, for example:
+Focus on the four numeric comparisons in the code cell directly above, not the earlier city-name
+examples: they compare tuples of numbers using the standard comparison operators. Python runs an
+**element-by-element comparison**. So, for example:
 
 - In the first expression above, Python compares the 2 in the left tuple and the 2 in the right one. They're equal, and Python continues by comparing 3 and 3 to conclude that both tuples are equal.
 - In the second expression, Python compares 5 and 7. They're different. Because 5 is less than 7, this *individual comparison* determines the result of the entire expression, and you get `True` as a result. If we perform the opposite action, using `>` instead of `<`, 5 is not greater than 7, so we get `False` as a result.
