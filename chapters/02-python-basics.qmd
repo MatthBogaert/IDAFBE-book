@@ -882,7 +882,7 @@ for line in f:
     # create dictionary
     cust_dict = {"name": data[1], "country": data[2], "phone": data[3]}
     # store in customers dict with id as key
-    customers_dict[line[0]] = cust_dict
+    customers_dict[data[0]] = cust_dict
 
 # inspect dict
 customers_dict
@@ -1180,7 +1180,7 @@ import numpy as np
 ::: {.callout-note}
 ## Module vs Package
 
-There is some confusion between a modulde and a package in Python. A **module** is a single file (or script) that is imported under one import and used. For example, you have written a script that contains a set of functions to manually engineer a set of features for a machine learning model. You can save this script as `feature_engineering.py` in your folder and then import it in your notebook with `import feature_engineering`. This will allow you to employ the user-defined functions.
+There is some confusion between a module and a package in Python. A **module** is a single file (or script) that is imported under one import and used. For example, you have written a script that contains a set of functions to manually engineer a set of features for a machine learning model. You can save this script as `feature_engineering.py` in your folder and then import it in your notebook with `import feature_engineering`. This will allow you to employ the user-defined functions.
 
 A **package**, on the other hand, is a collection of modules in directories that give a package hierarchy. For example, `feature-engine` is a package that contains a collection of modules for advanced feature transformations. You can import the entire package with `import feature_engine` or import a specific module with `from feature_engine import variable_transformers`. Hence, there is no need to create your own scripts and modules when you can use the existing packages that are available in Python.
 :::
