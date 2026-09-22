@@ -39,6 +39,14 @@ published on this website; they live in the `notebooks_student/` folder of the b
 every page of this site. If you want to run the code locally, the Installation Guide appendix
 walks through setting up everything you need.
 
+## A note on generative AI
+
+Parts of this book's text and code examples were drafted or polished with the help of a
+generative AI assistant, always under the direct guidance of, and with final review by, the
+author. Every explanation, dataset, and line of code has been checked for accuracy before
+publication. Chapter 1 discusses this shift in writing and coding practice in a bit more
+detail.
+
 ## License
 
 This book is licensed under the
