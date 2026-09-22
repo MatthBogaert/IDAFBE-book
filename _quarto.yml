@@ -2,6 +2,8 @@ jupyter: da2026 # kernel for the DA2026 conda env; see requirements.txt for pinn
 
 execute:
   freeze: auto  # re-execute a chapter's code only when that chapter's .qmd file has changed
+  cache: true   # within a re-execution, skip individual code cells unchanged since the last run
+                # (a pure prose/markdown edit won't invalidate any code cell at all)
 
 project:
   type: book
@@ -28,8 +30,7 @@ book:
     - chapters/04-data-exploration.qmd
     - chapters/05-data-preparation.qmd
     - chapters/06-model-evaluation.qmd
-    # add more chapters here as you convert them, e.g.:
-    # - chapters/07-modeling.qmd
+    - chapters/07-modeling.qmd
   appendices:
     - chapters/appendix-installation.qmd
 
