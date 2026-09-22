@@ -285,8 +285,7 @@ Comparing candidate linear models does not always require a held-out test set. S
 two broad routes [@james2013introduction]: **directly estimating** the test error via
 cross-validation (covered in the previous chapter, and the more broadly correct approach), or
 **approximating** it by adjusting the training error for the number of predictors used, via
-measures like adjusted $R^2$, AIC, or BIC. These metrics add a penalty for the number of predictors used, helping to prevent overfitting and app
-roximate the true test error. The second route is popular in classical statistics,
+measures like adjusted $R^2$, AIC, or BIC. These metrics add a penalty for the number of predictors used, helping to prevent overfitting and approximate the true test error. The second route is popular in classical statistics,
 mainly because it doesn't require setting aside data you might not have much of, but
 cross-validation is generally preferred whenever enough data is available for it.
 :::
@@ -376,7 +375,7 @@ of `n_features_to_select` against each other). The RMSE with only 5 of the 9 fea
 essentially tied with the full model, so nothing of real value was lost by cutting the feature
 count almost in half. 
 
-Notice, that this cross-validated selection doesn't fully match the
+Notice that this cross-validated selection doesn't fully match the
 p-value picture from before: it correctly drops `host_id` and `response`, the two genuinely
 non-significant features, but it also drops `washer_drier` and `price_pp`, which *were*
 statistically significant. That isn't a contradiction, a coefficient can be significant on its own
@@ -580,9 +579,11 @@ plt.show()
 
 Every Ridge line bends toward zero but never quite touches it. Several Lasso lines flatten out at
 exactly zero well before the largest alpha values, and stay there: those are the features Lasso
-has fully excluded. In general, Lasso tends to work well when only a handful of predictors actually
-matter and high variance between the predictors (a small "true" model hiding among many candidates), while Ridge tends to work well when
-most predictors carry a similar, modest amount of signal (low variance between the predictors). Lasso's sparser, more selective solutions
+has fully excluded. In general, Lasso tends to work well when there is high variance in the true
+effect sizes: a small number of predictors have large coefficients while the rest are close to
+zero (a small "true" model hiding among many candidates). Ridge tends to work well when the
+effect sizes have low variance instead, i.e. most predictors carry a similar, modest amount of
+signal. Lasso's sparser, more selective solutions
 also make it the more commonly preferred default of the two, especially when interpretability
 matters as much as raw predictive accuracy.
 
@@ -735,8 +736,8 @@ always worth checking, as noted in the previous chapter.
 
 ### Interpreting coefficients: log-odds and odds ratios
 
-The main advantage of logistic regression is that it is essentially a linear regression model, but with a link function that maps the linear combination of predictors to the $(0, 1)$ range. The coefficients can also easily be interpreted in terms of
-log-odds and odds ratios, which are more interpretable than the raw regression coefficients.
+The main advantage of logistic regression is that it is essentially a linear regression model, but with a link function that maps the linear combination of predictors to the $(0, 1)$ range. Its coefficients can also easily be converted into
+odds ratios, which are considerably more interpretable than the raw log-odds coefficients themselves.
 
 Rearranging the logistic function gives the **log-odds**, or **logit**, which is linear in the
 predictors, exactly like ordinary linear regression:
@@ -745,7 +746,7 @@ $$
 \log\left(\frac{p(X)}{1 - p(X)}\right) = \beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p
 $$
 
-This is why logistic regression is actually fitting a straight line to. A one-unit increase in
+This is what logistic regression is actually fitting a straight line to. A one-unit increase in
 $X_j$, holding everything else fixed, adds $\beta_j$ to the log-odds, or equivalently, multiplies
 the **odds** themselves, $p(X) / (1 - p(X))$, by $e^{\beta_j}$: the **odds ratio**. So:
 
@@ -936,8 +937,8 @@ takes one of two standard strategies:
 
 - **One-vs-rest** (also one-vs-all): fit $K$ binary classifiers, each one separating a single class
   from all the others combined, and assign each observation to whichever classifier is most
-  confident. This is the most common default and scales linearly in the number of classes. This
-  is impractical for very large $K$ because each classifier sees the full dataset, which can be slow for some algorithms.
+  confident. This is the most common default and scales linearly in the number of classes. It
+  becomes impractical for very large $K$ because each classifier sees the full dataset, which can be slow for some algorithms.
 - **One-vs-one**: fit a binary classifier for every *pair* of classes ($K(K-1)/2$ of them in total)
   and let them vote. Each individual classifier only ever trains on the rows belonging to its two
   classes, rather than the full dataset, which helps for algorithms that get disproportionately
@@ -967,6 +968,6 @@ trees, random forests, and gradient boosting (of which the random forest from th
 was one, deliberately unexplained, example) relax the linearity assumption entirely and often
 predict better on complex, real-world data at the cost of some interpretability
 [@prokhorenkova2018catboost; @decaigny2018hybrid]. Learning to build them well is a natural next
-step once the fundamentals covered in this book. However, with proper feature engineering combined with proper regularization and variable 
+step once the fundamentals covered in this book are second nature. However, with proper feature engineering combined with proper regularization and variable
 selection, linear and logistic regression can be powerful tools and competitive baselines for many real-world problems, and they are often the 
 first models deployed because of their speed, simplicity, and interpretability.

@@ -1,13 +1,13 @@
 # Model Evaluation
 
-The previous two chapters turned a raw tables into a clean, model-ready basetable. The
+The previous two chapters turned a raw table into a clean, model-ready basetable. The
 obvious next step is to fit a model to it. Before that's worth doing, though, we need to answer a
 more basic question: *how would we even properly set up an experiment and how would we know if the model is any good?*
 
 In CRISP-DM terms this is the **evaluation** phase, and it's where most predictive modelling
 projects actually go wrong. The mistakes rarely happen in the modelling itself; they happen in
 the **experimental setup**, the way the data is split into parts for learning and for testing.
-Get that wrong and every performance number you report afterwards is fiction and unreliable. 
+Get that wrong and every performance number you report afterwards is fictional and unreliable.
 
 This chapter covers the two things you need before you can trust a model:
 
@@ -101,8 +101,8 @@ random split can give a meaningfully different number.
 
 ### The holdout set: train, validation, and test
 
-As soon as you compare several models or fine-tune hyperparameter set
-tings, a plain train/test split isn't
+As soon as you compare several models or fine-tune hyperparameter
+settings, a plain train/test split isn't
 enough. If you evaluate many candidate models on the test set and keep the best, you've effectively
 tuned to that specific test set (also called *test-set torturing*) and its score is no longer an 
 honest estimate of future performance.
@@ -268,7 +268,7 @@ choice in engineering and research settings, where getting the hyperparameter ri
 than polishing the final performance number and the test set is already large enough to be reliable.
 
 Below we tune *K* for KNN, but this time with `GridSearchCV`. The scoring metric is AUC, and the inner
-CV loop is 10-fold. The final test set in the outer loop is already present  with the existing 20% holdout, and only touched once at the very end.
+CV loop is 10-fold. The final test set in the outer loop is already present with the existing 20% holdout, and only touched once at the very end.
 
 ```{python}
 from sklearn.model_selection import GridSearchCV
@@ -314,7 +314,7 @@ Every example above is built from the same two roles, combined differently:
   tuning and model selection, choosing the best configuration before that configuration is ever
   scored on the outer test fold.
 
-Cross-validation can play either role, or both at once, which gives potential setups:
+Cross-validation can play either role, or both at once, which gives three potential setups:
 
 - **Big outer loop**: *K*-fold CV in the outer loop, a simple holdout split for tuning in the
   inner loop. The plain 10-fold example above is the most simple case of this, where there's no
@@ -326,7 +326,7 @@ Cross-validation can play either role, or both at once, which gives potential se
 - **Fully nested CV**: *K*-fold CV in *both* loops. The most rigorous of the three,
   and the most expensive.
 
-Hence, **fully nested cross-validation** is the fully nested setup and it removes the last dependence on a
+Hence, **fully nested cross-validation** removes the last dependence on a
 single lucky split by running CV at two levels:
 
 - an **outer loop** (e.g., 10-fold CV) that produces 10 independent train/test splits for performance
@@ -492,7 +492,7 @@ folds were never truly unseen. The key lesson here is that feature selection is 
 the training portion only.
 :::
 
-**How do you detect it?** Performance that looks too good-to-be-true, is also often not true. For example, a churn model with AUC 0.99 should
+**How do you detect it?** Performance that looks too good-to-be-true is also often not true. For example, a churn model with AUC 0.99 should
 raise suspicion before celebration. A large drop in performance once the model meets a genuinely new batch of
 data, for example next month's customers, should also raise suspicion. That drop is leakage showing itself: the model looked
 great on data it had secretly already seen, and it collapses once it can no longer cheat.
@@ -500,7 +500,7 @@ great on data it had secretly already seen, and it collapses once it can no long
 **How do you prevent it?**
 
 - Decide on the time separation up front: know exactly which point in time separates "known" from
-  "future" before touching the data and stick to this is in your preprocessing and splitting.
+  "future" before touching the data and stick to this in your preprocessing and splitting.
 - Run *every* preprocessing step (scaling, imputation, encoding, feature selection) *inside* the
   cross-validation loop, never on the full dataset beforehand. In `sklearn`, a `Pipeline` passed
   to `cross_validate` or `GridSearchCV` does exactly this automatically.
@@ -522,7 +522,7 @@ parameters) is a balancing act between two kinds of error (@fig-bias-variance):
 
 Expected test error is roughly bias² + variance + an **irreducible** noise floor you can never
 beat. Lowering one of the first two tends to raise the other, so there's an optimal complexity
-where the total error is smallest. Increasing complexity beyond this (more variables, comples transformations trees) makes things *worse*, not better [@james2013introduction].
+where the total error is smallest. Increasing complexity beyond this (more variables, complex transformations, trees) makes things *worse*, not better [@james2013introduction].
 
 The synthetic example below shows things clearer. We generate data from a known quadratic relationship plus noise, then fit three models of increasing complexity:
 
@@ -591,7 +591,7 @@ Four metrics cover most needs:
 
 Only R² is maximised; the rest are minimised.
 
-To make this concrete, let's consdider a synthetic time series example: `x` is a time index, `y` is
+To make this concrete, let's consider a synthetic time series example: `x` is a time index, `y` is
 profit in that period, and we want to predict future profit. We split it **chronologically**
 rather than randomly (for a time series, the validation and test set must be the *later* periods): 
 60% train, 20% validation, 20% test. Then we compare a linear, a quadratic, and a high-order polynomial fit.
@@ -712,7 +712,7 @@ depends on which cut-off you chose.
 
 That split runs through everything that follows. **Threshold-dependent metrics**, like accuracy,
 precision, recall, and the rest, are computed from the confusion matrix at one specific cut-off.
-**Threshold-independent metrics**, ROC and AUC, precision-recall curves, lift, look instead at
+**Threshold-independent metrics**, ROC and AUC, precision-recall curves, and lift, look instead at
 how a scoring classifier performs across *every possible* cut-off at once. We cover the 
 threshold-dependent metrics first,
 then move on to the threshold-independent ones.
@@ -867,7 +867,7 @@ print(f"  F1        {f1_score(y_te, y_pred_pct):.3f}")
 ```
 
 Solution 3 does the same job more rigorously. `TunedThresholdClassifierCV` searches for the
-threshold that maximises a chosen metric, using internal cross-validation . For churn, F1 
+threshold that maximises a chosen metric, using internal cross-validation. For churn, F1
 (balancing precision and recall) is a reasonable
 target. Note the use of `StratifiedKFold`: with imbalanced data you always want folds that
 preserve the class ratio.
@@ -954,14 +954,14 @@ looks.
 
 #### Precision–recall curves and average precision
 
-On strongly imbalanced data, ROC/AUC can be misleading too, even producing overly optimistic 
-results. Since the false positive rate has a huge true-negative denominator, so it stays low even 
+On strongly imbalanced data, ROC/AUC can be misleading too, even producing overly optimistic
+results. The false positive rate has a huge true-negative denominator, so it stays low even
 when the model is producing many false
 alarms in absolute terms [@vanbelle2022inductive]. The **precision–recall (PR) curve** ignores
 true negatives entirely and
 focuses on the minority class. Its summary number, **average precision (AP)** or 
-**area under the PR curve (AUC-PR)**, is the PR curve's alternative to AUC. Note that a random 
-classifier's  AP equals the positive rate in the test set (its "no-skill" baseline).
+**area under the PR curve (AUC-PR)**, is the PR curve's alternative to AUC. Note that a random
+classifier's AP equals the positive rate in the test set (its "no-skill" baseline).
 
 ```{python}
 from sklearn.metrics import precision_recall_curve, average_precision_score
@@ -1023,7 +1023,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-The AUCs are clsoe to each other and the ROC curves cross, exactly the ambiguous case the
+The AUCs are close to each other and the ROC curves cross, exactly the ambiguous case the
 rule above is for. Falling back to AP settles the discussion: random forest's AP is clearly 
 higher, so it's the pick.
 
@@ -1052,7 +1052,7 @@ adds nothing; a lift of 3 means it is three times as concentrated.
 
 The **top-decile lift (TDL)**, the lift at the cut-off that flags exactly the top 10% of
 customers by score, is the most common single-number version in practice. Ten percent isn't
-mathematically special: Neslin et al. (2006) showed that a retention campaign's expected profit
+mathematically special: @neslin2006defection show that a retention campaign's expected profit
 is a direct, increasing function of lift, which is why (top-decile) lift became one of the most
 widely used performance criteria in churn prediction in the first place
 [@verbeke2012newinsights; @decaigny2018hybrid].

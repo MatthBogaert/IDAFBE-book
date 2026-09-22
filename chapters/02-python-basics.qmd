@@ -8,7 +8,7 @@ This chapter reviews the fundamental building blocks of Python that the rest of 
 If you want to exercise your Python skills even more, consider asking a Large Language Model (LLM) to create additional practice exercises tailored to the concepts in this chapter. For example, you could ask it to show you how to select specific rows from a pandas DataFrame or filter a NumPy array based on a condition, then implement and test them yourself. This is a useful way to learn a new programming language and a proper way of using generative AI in your learning experience.
 :::
 
-Throughout, we use small business-flavored examples (e.g., customers and newpapers subscriptions data) rather than simulated toy examples. In that way, the syntax remains close to the context you'll actually use it in.
+Throughout, we use small business-flavored examples (e.g., customers and newspaper subscriptions data) rather than simulated toy examples. In that way, the syntax remains close to the context you'll actually use it in.
 
 ::: callout-note
 ## Using Google Colab
@@ -491,7 +491,7 @@ Dictionaries can hold other dictionaries as values, which is a natural way to re
 
 ```{python}
 # nested dictionary
-customer_info = {"tom": {"city": "brussels", "email": "tom@hotmail.com", "age": 24},
+customer_info = {"tom": {"city": "Brussels", "email": "tom@hotmail.com", "age": 24},
                  "sarah": {"city": "Ghent", "email": "sarah@gmail.com", "age": 32},
                  "jack": {"city": "Ghent", "email": "jackjack@gmail.com", "age": 12}}
 
@@ -1149,7 +1149,7 @@ Almost everything useful you'll do in Python relies on packages beyond the stand
 # install package from within Jupyter Notebook
 # NOTE: replace package_name by the name of the package you want to install!
 !pip install package_name
-#in VSCode it better to use: %pip install package_name
+# in VSCode it's better to use: %pip install package_name
 ```
 
 Once a package (or a built-in module) is installed, you bring it into your script with `import`. You can import an entire module, a single function from it, or give it a shorter alias. All three styles show up throughout this book.
@@ -1266,7 +1266,7 @@ random_normals = np.random.normal(loc=0, scale=1, size=(2, 2))
 print(random_normals)
 ```
 
-Every array has a `.shape` attribute describing its size along each dimension. It is worth checking this often, since a huge share of NumPy and `pandas` errors come down to arrays not having the shape.
+Every array has a `.shape` attribute describing its size along each dimension. It is worth checking this often, since a huge share of NumPy and `pandas` errors come down to arrays not having the shape you expect.
 
 ```{python}
 # define another 2D array
@@ -1458,7 +1458,7 @@ arr_3
 
 ## Pandas
 
-`pandas` is Python's main data manipulation library: it makes it easy to read, explore, wrangle, transform, and combine datasets. Its central object, the `DataFrame`, is a table of rows and columns (similar to a spreadsheet in Excel or a database table) built on top of the NumPy arrays from the previous section. Mastering its core operations is crucial before moving into to realm of data understanding, exploration, and preparation, which is exactly what the rest of this book does with it.
+`pandas` is Python's main data manipulation library: it makes it easy to read, explore, wrangle, transform, and combine datasets. Its central object, the `DataFrame`, is a table of rows and columns (similar to a spreadsheet in Excel or a database table) built on top of the NumPy arrays from the previous section. Mastering its core operations is crucial before moving into the realm of data understanding, exploration, and preparation, which is exactly what the rest of this book does with it.
 
 
 ### Definition
@@ -1485,7 +1485,7 @@ you today, otherwise a few examples in this book may behave differently or throw
 
 ### DataFrame Creation
 
-You can build a `DataFrame` by hand from a dictionary, but far more often you'll load one directly from a file. `pandas` can read most common tabular formats, like CSV and Excel including files with no header row, or where you want to control each column's type up front. 
+You can build a `DataFrame` by hand from a dictionary, but far more often you'll load one directly from a file. `pandas` can read most common tabular formats, like CSV and Excel, including files with no header row, or where you want to control each column's type up front.
 
 ```{python}
 # create DataFrame manually
@@ -1806,7 +1806,7 @@ df["gender"] == "Male"
 
 Grouping summarizes data by one or more categorical variables.
 
-The `groupby()` function splits the DataFrame into groups based on the unique values of the specified column(s), and then applies a specific aggregation functions to each group.
+The `groupby()` function splits the DataFrame into groups based on the unique values of the specified column(s), and then applies specific aggregation functions to each group.
 
 ::: {.callout-note}
 ## String names vs. function objects
@@ -2020,7 +2020,7 @@ df_1.fillna(value=column_imputations)
 
 #### Generating new data
 
-`.apply()` lets you run a custom function over a column (or, with `axis=1`, over each row). This a fast way to implement a transformation that doesn't already exist as a built-in method. 
+`.apply()` lets you run a custom function over a column (or, with `axis=1`, over each row). This is a fast way to implement a transformation that doesn't already exist as a built-in method.
 
 ```{python}
 # define dataframe

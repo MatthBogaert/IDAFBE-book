@@ -65,7 +65,7 @@ values. There are two main reasons to do this:
 campaign's response rate against how many days it's been since the customer was last contacted.
 Response is low right after contact (fatigue since nobody likes being messaged twice in a row),
 climbs to a "sweet spot" a few weeks out, then drops again as the customer disengages. A straight
-line can't capture this rise-then-plateau-then-fall pattern. What it actually does is creating a misleading
+line can't capture this rise-then-plateau-then-fall pattern. What it actually does is create a misleading
 representation of the true relationship. Binning recency into a handful of ranges lets even a plain linear model
 pick up the sweet spot, since each range gets its own estimated response level.
 
@@ -399,12 +399,12 @@ print(f"Test set: {test_final.shape}")
 ::: {.callout-tip}
 ## Dummy encoding vs. WoE: use both, for different variables
 
-They're not competitors and they try to solve the same problem, namely turning a categorical variable into numbers, but they sit
+They try to solve the same problem, namely turning a categorical variable into numbers, but they're not really competitors, since they sit
 at opposite ends of the cardinality spectrum. Dummy encoding preserves the most detail per
 category but doesn't scale well after 10 categories; WoE scales to hundreds of categories and
 guarantees a monotonic relationship with the target, at the cost of collapsing each category down
 to a single number. In practice, a single dataset often needs both at once, depending on the needs
-of different columnsn, which is exactly as we just did.
+of different columns, which is exactly as we just did.
 :::
 
 ## Feature engineering
@@ -577,7 +577,7 @@ That's not always the case, though. Sometimes a transformation like this is the 
 between a model that's good enough to detect a real, actionable relationship and one that isn't.
 @wang2019optimal study how a seller's mix of marketing versus non-marketing social media posts
 relates to how popular those posts become, and specifically whether there's an *optimal* level of
-marketing aggressiveness. Their actual aggressiveness level is an inverted U-shape curve, 
+marketing aggressiveness. The effect of aggressiveness level is an inverted U-shape curve, 
 quantified with a quadratic term in a plain linear regression too. But applying a 
 Yeo-Johnson 
 transform to one of their control variables (a seller's number of followers) nearly triples the
@@ -637,7 +637,7 @@ plt.show()
 The fit-on-train, transform-on-both rule from the previous chapter applies here too: fit the
 scaler on training data only, then use it to transform both sets. There's a second, easy-to-miss
 mistake specific to scaling: **don't scale dummy/binary columns**. A one-hot column only ever
-takes the values 0 and 1 and standardizing it doesn't make it more useful. More importantly, it 
+takes the values 0 and 1, and standardizing it doesn't make it more useful. More importantly, it
 destroys the direct
 0/1 interpretation. Hence, only continuous features should go through the scaler.
 :::
@@ -851,7 +851,7 @@ fe_encoder.fit(X_train_ordinal, y_train_ordinal)
 print(f"Categories ordered by churn rate (ascending): {fe_encoder.encoder_dict_['customer_tier']}")
 ```
 
-**Target (mean) encoding**, which goes a step further and replaces each category with the actual
+**Target (mean) encoding** goes a step further and replaces each category with the actual
 mean of the target for that category, rather than just a rank. This is the plain target statistic
 flagged back in the Weight of Evidence section. Here, it's reliable enough since our synthetic tiers are
 each backed by hundreds of observations. But remember, this is exactly the kind of raw, unshrunk per-category mean
@@ -878,12 +878,12 @@ comparison.sort_values("target_encoding")
 
 Which to use depends on what you have and what you need:
 
-- **Manual encoding** when you have a clear, defensible business hierarchy, it stays
+- **Manual encoding**: use when you have a clear, defensible business hierarchy. It stays
   interpretable, but isn't necessarily optimal for prediction.
-- **Automated (feature-engine) encoding** when you'd rather let the data reveal the order, useful
-  for finding surprising patterns, at some cost to interpretability (e.g., it might not be obvious *why*
+- **Automated (feature-engine) encoding**: use when you'd rather let the data reveal the order.
+  Useful for finding surprising patterns, at some cost to interpretability (e.g., it might not be obvious *why*
   Platinum ends up coded as 0 in a given fit).
-- **Target encoding** when predictive power matters most it creates the strongest statistical
+- **Target encoding**: use when predictive power matters most. It creates the strongest statistical
   relationship with the target, but is also the most prone to overfitting, especially with small
   categories, and needs careful cross-validation (or an approach like WoE) to use safely.
 

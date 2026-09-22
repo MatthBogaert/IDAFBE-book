@@ -13,9 +13,9 @@ We'll continue with NPC's customers and subscriptions tables from the previous c
 Summary statistics alone can be dangerously misleading. **Anscombe's quartet**
 [@anscombe1973graphs] is the classic illustration: four small datasets that share the same mean,
 variance, and correlation for `x` and `y` and yet look completely different when plotted. One
-is a clean linear relationship, one is a clear curve with a straight line fits poorly due to an outlier, 
-one is a vertical line of points plus one outlier.
-`.describe()` can't tell these apart. A scatter plot can immediatly visualizes the differences. That's 
+is a clean linear relationship, one is a clear curve, another has a straight line that fits poorly
+due to a single outlier, and one is a vertical line of points plus one outlier.
+`.describe()` can't tell these apart. A scatter plot can immediately visualize the differences. That's
 the whole point of visual exploration: it shows patterns, outliers, and relationships that summary 
 statistics alone can hide.
 
@@ -74,9 +74,9 @@ This chapter is entirely about the first one. The charts you'll build here are w
 presentation slides.
 
 The charts covered in this chapter are what you need for exploration, but they're a small
-fraction of what's out there. For examlpe, treemaps, Sankey diagrams, spatial maps, slope charts, and
+fraction of what's out there. For example, treemaps, Sankey diagrams, spatial maps, slope charts, and
 dozens of others each have situations where they're the right option. Once your goal shifts from
-*exploring* to *explaining* the chart itself is only 
+*exploring* to *explaining*, the chart itself is only
 half the job; the other half is design choices (how to remove clutter, where the attention should go, what to cut) that turn a chart into a story. That's a large enough topic that it deserves books of its
 own. Two excellent reading materials, if you want to go deeper: Cole Nussbaumer
 Knaflic's [*Storytelling with Data*](https://www.storytellingwithdata.com/) and Brent Dykes's
@@ -90,7 +90,7 @@ same three-part structure:
 - A **figure** is the overall canvas.
 - One or more **axes** are the actual plotting areas inside that pane (confusingly, one "axes"
   is a single plot, not an axis line).
-- An **artist** is everything else you can see (e.g., lines, text, bars, points) .
+- An **artist** is everything else you can see (e.g., lines, text, bars, points).
 
 In practice, you'll almost always start a plot the same way: create a figure and axes together
 with `plt.subplots()`, draw onto the axes using a specific chart type, then label it.
@@ -211,7 +211,7 @@ plt.show()
 A line chart connects data points to show how a variable changes across an ordered sequence,
 almost always time but not necessarily.
 
-To show that a line chart can be used to visualize any ordere series, let's look at a simple example.Plotting `TotalPrice`'s sorted values 
+To show that a line chart can be used to visualize any ordered series, let's look at a simple example. Plotting `TotalPrice`'s sorted values
 against their rank position isn't a true time series, but it's a quick way to see the overall shape of a distribution and spot
 outliers at either end:
 
@@ -389,7 +389,8 @@ issues that come up in almost every dataset: multicollinearity, missing values, 
 **Multicollinearity** occurs when two or more independent variables are highly correlated with
 each other. It matters because it makes individual coefficients unstable and hard to interpret
 in a causal model, and it inflates confidence intervals. Even though, as we saw in the
-introduction, a purely predictive model can often tolerate it from a pure predictive perspective, it can still cause issues in interpretation and 
+introduction, a purely predictive model can often tolerate it without losing accuracy, it can still
+undermine any post-hoc explanation of that model (e.g., unstable feature importances) and
 make the model less robust. `pandas` computes a full
 correlation matrix in one call:
 
@@ -427,7 +428,7 @@ A common rule of thumb is to consider correlation problematic if it's above **0.
    is left above the threshold.
 2. **Highest correlation pairs**: scan variables in order of appearance, and for each one, drop any *later*
    variable that's correlated with it above the threshold. This means that you keep the first occurrence and
-   removing the rest.
+   remove the rest.
 
 The `feature_engine` library implements the second heuristic directly:
 
@@ -493,10 +494,10 @@ lot on *why* they're missing in the first place:
   *absence* of the value carries information).
 
 It's also worth distinguishing missing data from **censored data**: with censored data, you don't
-observe the true value, but you do have partial information about it. It often happens when you have a situation where the true value is not 
+observe the true value, but you do have partial information about it. It often happens when the true value is not
 available at the time of observation. For example, a
-tenancy agreement that'still ongoing when your observation window ends isn't "missing" its length. You just don't know the actual end date in the 
-future and you will consider the true length at least as long as what you've observed so far. Hence, in predictive analytics, censored
+tenancy agreement that's still ongoing when your observation window ends isn't "missing" its length. You just don't know the actual end date in the
+future, and you will consider the true length at least as long as what you've observed so far. Hence, in predictive analytics, censored
 values are usually just used as-is (e.g., treating "still ongoing" as the observed length) rather
 than treated as missing.
 
@@ -787,7 +788,7 @@ iqr_outlier_pct = (iqr_outliers / len(X_train_numeric) * 100).round(1)
 pd.DataFrame({"n_flagged": iqr_outliers, "pct_flagged": iqr_outlier_pct}).query("n_flagged > 0").sort_values("pct_flagged", ascending=False)
 ```
 
-On some variables, this flags well over 10% of all training rows which is far too many to all be genuine
+On some variables, this flags well over 10% of all training rows, which is far too many to all be genuine
 data errors. The **z-score** rule (flag anything with $|z| > 3$) is a useful second opinion, since
 it reacts differently to skew:
 
@@ -811,7 +812,7 @@ judgment call needs the shape of the distribution, which is exactly what the his
 ::: {.callout-warning}
 ## Box plots and histograms can tell different stories
 
-As noticed above, box plots flag anything past 1.5×IQR from the box as a potential outlier.  On some variables here,
+As noticed above, box plots flag anything past 1.5×IQR from the box as a potential outlier. On some variables here,
 that flags a *lot* of points as problematic. But look at the matching histograms: several of those distributions
 are just genuinely skewed (a long right tail of high spenders, say), not full of data errors. The
 box plot rule is a mechanical threshold, not a verdict. The take-away is: always check the actual shape of the

@@ -6,7 +6,7 @@ anything, or build a single model, you need to know what you're actually working
 tables exist, how they relate to each other, what each variable means, where the data came from,
 and what you're legally allowed to do with it. Skipping this step is a classic rookie mistake:
 it's tempting to jump straight to modeling, but a model built on data you don't understand is a
-model you can't trust. And if the data can be trusted, the model itself can't be trusted either: garbage in, garbage out.
+model you can't trust. And if the data can't be trusted, the model itself can't be trusted either: garbage in, garbage out.
 
 Throughout this chapter, we'll use a single running case to keep things concrete. A newspaper
 publishing company (NPC) has approached us to help address rising customer
@@ -127,8 +127,8 @@ Every variable falls into one of a few basic types:
   - **Ordinal**: with a meaningful order (e.g., a credit rating, a letter grade (A, B, C, D)).
   - **Binary**: with exactly two values (e.g., gender, employment status, churn (yes/no)).
 
-Getting this classification right matters more than it might seem: if a categorical variable like marital 
-status gets read in as numeric, `pandas` (or any other tool) will happily compute its mean which is a 
+Getting this classification right matters more than it might seem: if a categorical variable like marital
+status gets read in as numeric, `pandas` (or any other tool) will happily compute its mean, which is a
 number with no meaning whatsoever.
 
 When you read a file straight off disk, `pandas` doesn't know any of this by default.
@@ -175,15 +175,15 @@ Almost every analytical model is trained on a **sample** of the original data: a
 customers, rather than every customer a company will ever have. The key requirement for a good sample is 
 that it stays **representative** of the customers the model will actually be applied to in the future. 
 This creates a real trade-off: more historical data generally means a more robust model, but older
-data is less representative of today's customers and their behavior. For exampl, a churn model trained
-mostly on data from pre-COVID times might not generalize well to the post-COVID world, where there behavior changed drastically. The key takeaway is that your sample should be representative for the population and the business problem you actually care about, not just the largest sample you can get your hands on (however, the more the better, as long as it's still representative).
+data is less representative of today's customers and their behavior. For example, a churn model trained
+mostly on data from pre-COVID times might not generalize well to the post-COVID world, where their behavior changed drastically. The key takeaway is that your sample should be representative for the population and the business problem you actually care about, not just the largest sample you can get your hands on (however, the more the better, as long as it's still representative).
 
 ::: {.callout-warning}
 ## Watch out for sampling bias
 
 It's easy to introduce bias without meaning to. If you sample only *currently active* customers
 to build a churn model, you've quietly excluded everyone who already churned and those are exactly the
-customers you most need examples of. Focussing on only the active customers is also a nice example of survivorship bias as seen in Chatper 1.
+customers you most need examples of. Focusing on only the active customers is also a clear example of survivorship bias as seen in Chapter 1.
 :::
 
 When the outcome you care about is rare, a random sample can end up with too few positive cases to
@@ -198,7 +198,7 @@ churners, a stratified sample preserves that exact 99/1 split, rather than leavi
 
 ### Working with dates
 
-NPC's date columns  (when a subscription started, ended, was last paid, or renewed) are read in as plain
+NPC's date columns (when a subscription started, ended, was last paid, or renewed) are read in as plain
 text, since that's how they're stored in the file. Converting them to an actual `datetime` type
 is what lets you do date arithmetic (how long has this subscription run?) or extract components
 (which month did most subscriptions start?) later on. `pd.to_datetime()` handles the conversion;
@@ -308,7 +308,7 @@ though that each platform serves its own specific audience, so data pulled from 
 carries that audience's biases, and its
 veracity is worth treating with some skepticism.
 
-Another option is **web scraping** which involves programmatically loading a page and extracting data 
+Another option is **web scraping**, which involves programmatically loading a page and extracting data
 from its HTML, without
 going through an API. This method is more powerful and flexible, since it works on virtually any site.
 Modern scraping tools actually drive a real browser rather than just parsing raw HTML: they
@@ -343,7 +343,7 @@ cookies.
 Even data that looks harmless on its own can carry real **re-identification risk**. An address
 alone might seem anonymous, but "Chapel Street 88, Brussels" identifies a specific person the
 moment there's only one occupant at that address. Stripping out obvious identifiers like names
-isn't the same as making data anonymous and you have to think about what a *combination* of
+isn't the same as making data anonymous, and you have to think about what a *combination* of
 seemingly harmless fields can reveal.
 :::
 
@@ -355,22 +355,22 @@ produced a long list of real fines that make the abstract principles concrete.
   discrimination, and be transparent about how it's used. Spain's La Liga football association
   was fined €250,000 after its official app used fans' phones to record ambient audio and check
   location, to detect bars illegally streaming matches. Fans were never clearly told their
-  microphone would be used this way which is a clear violation of transparency.[^laliga]
+  microphone would be used this way, which is a clear violation of transparency.[^laliga]
 - **Purpose limitation**: don't use data for anything beyond the purpose it was originally
   collected for. In the first-ever fine issued under Belgium's data protection authority, a mayor
   was fined €2,000 for emailing election campaign material to civilians whose addresses he'd
-  only obtained via a copied-in complaint email. Of course if was never the intended that the complaints would be used for this purpose.[^mayor]
+  only obtained via a copied-in complaint email. Of course, it was never intended that the complaints would be used for this purpose.[^mayor]
 - **Data minimization**: only collect what you actually need for the stated purpose, and be
   especially careful with sensitive attributes (ethnicity, religion, sexual or political
   preference). A Greek leasing company was fined €10,000 after a property-sale ad it posted
   included a photo showing a customer's car with its license plate clearly visible. This allowed
-  identifying him to his own social circle as someone whose family property was being sold off, far more
+  his own social circle to identify him as someone whose family property was being sold off, far more
   personal data than the ad needed to include.[^piraeus]
 - **Accuracy**: keep data correct and up to date. For example, a loan decision based on stale income 
   data, or repeated contact attempts using an address you know is wrong, can itself be a violation. The
   starkest real-world example: the Dutch tax authority was fined €750,000 specifically for
   accuracy violations in an internal fraud-risk blacklist that kept incorrect and outdated fraud
-  indicators on file. On some cases, someone stayed flagged as a suspected fraudster even after
+  indicators on file. In some cases, someone stayed flagged as a suspected fraudster even after
   an investigation had cleared them, because that clearance was never recorded. Tens of thousands
   of families were wrongly accused of childcare benefits fraud as a result, in a scandal that
   eventually brought down the Dutch government.[^nltax]

@@ -17,7 +17,7 @@ most likely to keep you engaged. On streaming services a recommender system has 
 its entire catalogue around what it predicts you'll want to watch or listen to next. If you apply for
 a loan or an insurance policy, a risk model estimates how likely you are to default or file a
 claim, and a bank or insurer uses that estimate to decide whether to approve your application and at
-what price. However, you might now assume that the realm of analytics is limited to
+what price. However, you might assume that the realm of analytics is limited to
 business-to-consumer applications. It's not! In industrial settings, analytics is used to optimize 
 production processes, reduce energy consumption, and improve product quality. On the factory floor, 
 sensor data feeds predictive maintenance models that monitor when a machine is likely 
@@ -64,10 +64,9 @@ personality traits and how these personality traits could be used to target vote
 Progress has only accelerated since: modern large language models now routinely match or exceed 
 professional-level performance on standardized exams in law and medicine, and in 2025 both OpenAI and 
 Google DeepMind's reasoning models achieved a gold-medal-level score at the International 
-Mathematical Olympiad, solving 5 of the 6 contest problems under official conditions. OpenAI's 
-result was graded by former IMO medalists, DeepMind's performance was independently verified by 
-official IMO coordinators.
-[^imo-2025] In medicine specifically, deep learning models have been shown to match or outperform 
+Mathematical Olympiad, solving 5 of the 6 contest problems under official conditions. OpenAI's
+result was graded by former IMO medalists; DeepMind's performance was independently verified by
+official IMO coordinators.[^imo-2025] In medicine specifically, deep learning models have been shown to match or outperform
 radiologists at detecting breast cancer in screening mammograms.
 
 [^imo-2025]: ["AI Reasoning Models Achieve Gold-Medal Performance at the International Mathematical Olympiad"](https://intuitionlabs.ai/articles/ai-reasoning-math-olympiad-imo), IntuitionLabs, accessed 2026.
@@ -127,9 +126,9 @@ technique at a problem worth solving.
 
 ![Business analytics. Source: Figure 1 in @mortenson2015operational, licensed under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/).](../images/ch01-fig-analytics-intersection.jpg){#fig-analytics-intersection fig-alt="Venn diagram showing Analytics at the center of three overlapping circles: Technologies (Electrical Engineering, Computer Science), Decision Making (Psychology, Behavioural Science), and Quantitative Methods (Mathematics, Statistics, Economics/Econometrics), with pairwise overlaps labeled Information Systems, Artificial Intelligence (Machine Learning), and Operational Research."}
 
-A long list of near-synonyms for this field have been used throughout the years (mainly depending on the 
-hype of that moment): artificial intelligence (AI), big data, machine learning, data mining, data 
-science, deep learning, and in the old days knowledge discovery, pattern recognition. In practice, these 
+A long list of near-synonyms for this field has been used throughout the years (mainly depending on the
+hype of that moment): artificial intelligence (AI), big data, machine learning, data mining, data
+science, deep learning, and in the old days, knowledge discovery, pattern recognition. In practice, these 
 terms overlap heavily and are often used interchangeably, though later in this chapter we'll draw out a 
 few real distinctions (particularly between AI, machine learning and statistics) that matter once you 
 start building models yourself.
@@ -158,9 +157,9 @@ redesign) to reverse that trend.
 
 A slightly more elaborate version of the same idea: a B2C e-commerce platform wants to optimize
 its pricing strategy. Descriptive analytics tells it how prices and sales have historically
-moved together. Diagnostic analytics uncovers why prices had an impact on sales in the past (e.g., perhaps 
-a past  price cut drove a spike in  demand). Predictive analytics forecasts how a proposed price change 
-would  affect future sales.
+moved together. Diagnostic analytics uncovers why prices had an impact on sales in the past (e.g., perhaps
+a past price cut drove a spike in demand). Predictive analytics forecasts how a proposed price change
+would affect future sales.
 Prescriptive analytics goes one step further and recommends the actual pricing strategy 
 (e.g., dynamic pricing, product bundling) that maximizes profit given that forecast.
 
@@ -197,7 +196,7 @@ learning have been used almost interchangeably, but if you want a precise distin
 analytics is about predicting the *future*, while machine learning is about predicting *unseen
 data* more generally (which is often, but not always, in the future). Under that reading,
 predictive analytics is a subfield of machine learning, even though the underlying algorithms
-are frequently identical only the setup differs.
+are frequently identical; only the setup differs.
 
 ### Machine learning vs. statistics
 
@@ -210,7 +209,7 @@ matters for how you'll approach modeling problems throughout this book.
   something happens. Although interpretable machine learning is an active research area [@DeBock2024], the
   objective function being optimized is still accuracy.
 - **Statistics**, by contrast, is often more concerned with the *explanatory power* of a model:
-  how do the independent variables influence the dependent variable, and by how much? This goal is rather
+  how do the independent variables influence the dependent variable, and by how much? This goal is
   *causal analysis* rather than pure prediction.
 
 This distinction between prediction and causal analysis has practical consequences for how you
@@ -233,7 +232,7 @@ changes what you should worry about, along at least three dimensions:
    prioritizing retention offers, no matter how large the training data was.
 3. **Multicollinearity.** Suppose tenure and number of products owned are highly correlated
    across your customers. For a *causal* model, that's a real problem since it becomes hard to say how
-   much of the churn effect is really due to tenure vs product count, since the two are so intertwined. For a *predictive* model, that ambiguity barely matters: as long as the correlated
+   much of the churn effect is really due to tenure vs product count, because the two are so intertwined. For a *predictive* model, that ambiguity barely matters: as long as the correlated
    variables jointly improve how well you flag at-risk customers, you don't need to cleanly
    separate out each one's individual contribution. We'll return to multicollinearity once we dive into data preprocessing later in this book.
 
@@ -246,7 +245,7 @@ this field.
 **velocity** (how fast the data is generated and needs to be processed), **variety** (how many
 different forms the data takes, like structured, text, image, or network data), and **veracity** (how
 uncertain or noisy the data is, especially when it comes from many different, unchecked sources). In
-this book, we propose adding a fifth V: **value**. We see this as a one of the core Vs rather than an 
+this book, we propose adding a fifth V: **value**. We see this as one of the core Vs rather than an 
 optional add-on: data that doesn't create value for a business, in any of its processes, simply isn't
 worth collecting, storing, or analyzing in the first place. Extracting that value is arguably the
 point of this entire book. Most routine business activity now generates data that can be stored,
@@ -257,7 +256,7 @@ uneconomical analyses now become viable and create value.
 
 **Generative AI** has pushed analytics from *describing and predicting* into *responding and
 creating*. Generative models produce text, images, audio, or video from a user-supplied prompt,
-after being trained on very large amounts of data. Whereas these models can respond without supplying 
+after being trained on very large amounts of data. Whereas these models can respond by supplying
 the prompt without any training data, under the hood they're still built on a
 predictive learning task: a large language model is, at its core, repeatedly predicting "given
 this context, what's the most likely next word?"; an image diffusion model is repeatedly
@@ -302,7 +301,7 @@ business. Five requirements tend to come up again and again [@Baesens2014]:
 
 #### Terminology and structure
 
-Before working with data hands-on in the next chapters, it helps to fix some vocabulary about a data set that you'll see used more or less interchangeably throughout this book and elsewhere:
+Before working with data hands-on in the next chapters, it helps to fix some vocabulary about a data set, terms you'll see used more or less interchangeably throughout this book and elsewhere:
 
 - **Independent variables**: also called features, predictors, inputs, attributes, or
   descriptors. These are the variables you use to predict something.
@@ -326,7 +325,7 @@ data** [@wickham2014tidy] is the standard way to structure a dataset so that lat
 statistics, visualizations, further processing) is easy: each variable forms a
 column, each observation forms a row, and each type of observational unit forms its own table. A
 "messy" table with one column per store and one row per year, versus a "tidy" table with one row
-per store-year combination, contain the same information, but only one of them is easy to
+per store-year combination, contains the same information, but only one of them is easy to
 filter, aggregate, and model. We'll come back to tidying data concretely once we start working
 with `pandas`.
 
@@ -349,13 +348,13 @@ back*! The planes that didn't survive were hit somewhere else entirely, and that
 collected. The correct conclusion was the opposite of the intuitive one: reinforce the spots with
 *no* damage on the survivors, since those are the hits that bring a plane down.
 
-![WWII bomber survivorship bias: hypothetical damage pattern on  a returning aircraft. The areas *without* red dots are the ones that actually bring a plane down, since planes hit there never made it back. Source: Martin Grandjean, McGeddon, and the US Air Force, licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).](../images/ch01-fig-survivorship-bias.png){#fig-survivorship fig-alt="A World War II bomber aircraft seen from above, covered in red dots marking a hypothetical hit pattern concentrated on the wings, tail, and fuselage, with the engines and cockpit conspicuously free of dots."}
+![WWII bomber survivorship bias: hypothetical damage pattern on a returning aircraft. The areas *without* red dots are the ones that actually bring a plane down, since planes hit there never made it back. Source: Martin Grandjean, McGeddon, and the US Air Force, licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).](../images/ch01-fig-survivorship-bias.png){#fig-survivorship fig-alt="A World War II bomber aircraft seen from above, covered in red dots marking a hypothetical hit pattern concentrated on the wings, tail, and fuselage, with the engines and cockpit conspicuously free of dots."}
 
 The business analogy is straightforward. If you build a model of "what makes a store successful" using
 only data from your current top-performing stores, you'll miss out on the factors that
 made other locations fail and your conclusions will be biased toward the survivors. Because any sample is collected at a particular point in time, under a particular strategy and
 economic climate, it's worth asking not just "is this sample biased," but "biased in what way, and
-does that bias matter for the decision I'm about to make?". For example, a model trained on pre-COVID-19 retail data might be biased toward in-store shopping behavior, and a model trained on 2020-2021 data might be biased toward online shopping behavior. If you use either of those models to make decisions about the post-pandemic retail landscape, you'll likely make mistakes.
+does that bias matter for the decision I'm about to make?" For example, a model trained on pre-COVID-19 retail data might be biased toward in-store shopping behavior, and a model trained on 2020-2021 data might be biased toward online shopping behavior. If you use either of those models to make decisions about the post-pandemic retail landscape, you'll likely make mistakes.
 
 ### Supervised and unsupervised learning
 
@@ -426,7 +425,7 @@ correspond to one phase of CRISP-DM, applied in a business setting.
 
 ## Where data analytics shows up
 
-Data analytics is genuinely everywhere in modern business, not just in usual tech companies, and well
+Data analytics is genuinely everywhere in modern business, not just in the usual tech companies, and well
 beyond the handful of examples already mentioned in this chapter's opening. A streaming
 platform's next-series recommendations, the dynamically adjusted fare prices on a ride-hailing app, a
 spam filter quietly sorting your inbox, an automatic reorder triggered the moment a warehouse's
@@ -465,22 +464,22 @@ practice.
 
 **Credit risk modeling.** Credit scoring is concerned with assessing financial risk and informing
 lending decisions: a credit score is a model-based estimate of the probability that a borrower
-will default and fail to meet their financial obligations [@Lessmann2015]. Consumer loans and mortgages often exceed corporate lending in total volume at the country level,  which is exactly why credit scoring 
+will default and fail to meet their financial obligations [@Lessmann2015]. Consumer loans and mortgages often exceed corporate lending in total volume at the country level, which is exactly why credit scoring
 has been called "one of the most successful applications of statistics and OR in industry"
 [@Crook2007]. It's also one of the most mature and heavily benchmarked applications of predictive
 analytics in business. Despite a steady stream of more complex algorithms, logistic regression has 
 remained a surprisingly hard baseline to beat in practice [@Lessmann2015]. There are two main types of 
 credit scoring models: application scorecards and behavioral scorecards. *Application scorecards* score 
 new credit applications for creditworthiness, typically built from two snapshots; application data and 
-credit bureau data. Both snapshots are taken at loan origination  matched against whether the applicant 
+credit bureau data. Both snapshots are taken at loan origination and matched against whether the applicant
 actually defaulted 12 or 18 months later. *Behavioral scorecards* go further, scoring the existing 
 customer portfolio using both application data and behavioral trends (account balance movement, 
-delinquency history,credit limit changes), and tend to outperform application scorecards since they have 
+delinquency history, credit limit changes), and tend to outperform application scorecards since they have 
 more (and more current) information to work with.
 
 ## Why Python
 
-The data, AI, analytics, and machine learning tooling landscape is enormous. Ranging from off-the-shelf
+The data, AI, analytics, and machine learning tooling landscape is enormous, ranging from off-the-shelf
 business-intelligence (BI) tools optimized for point-and-click visual analysis on one end, to full
 programming languages on the other. As a business student, you'll mostly work with the
 programming-language end of that spectrum, since it's what gives you the flexibility to go beyond
@@ -515,10 +514,10 @@ disconnected exercises:
 
 - **Python for Data Analytics**: the Python fundamentals used throughout the rest of the
   book.
-- **Data Understanding**: manipulating, and making sense of raw datasets.
-- **Data Exploration**: visualizing data to find patterns and relationships and quality issues. In CRISP-DM terms, this is part of the data understanding phase, but we separate it out because it's a
+- **Data Understanding**: manipulating and making sense of raw datasets.
+- **Data Exploration**: visualizing data to find patterns, relationships, and quality issues. In CRISP-DM terms, this is part of the data understanding phase, but we separate it out because it's a
   distinct skill set that deserves its own chapter.
-- **Data Preparation**: cleaning, and transforming data so it's ready for modeling.
+- **Data Preparation**: cleaning and transforming data so it's ready for modeling.
 - **Model Evaluation**: how to set up a fair experiment and measure whether a model is any good,
   *before* worrying about which model to use.
 - **Modeling**: building and interpreting linear and logistic regression models.
