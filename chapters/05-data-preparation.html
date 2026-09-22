@@ -160,6 +160,7 @@ window.Quarto = {
 };
 </script>
 
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-sidebar floating quarto-light">
@@ -330,7 +331,7 @@ window.Quarto = {
 <li><strong>Variable selection</strong>: reducing the number of features to only those that actually carry predictive value.</li>
 </ul>
 <p>Let’s pick up where the previous chapter left off, and load the cleaned training and test sets:</p>
-<div id="86f1ed46" class="cell" data-execution_count="1">
+<div id="762ddb78" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -370,7 +371,7 @@ Name: Age, dtype: float64</code></pre>
 <li><strong>Fewer parameters to estimate:</strong> A categorical variable with a lot of levels (e.g., in our case the <code>ZIP</code> variable has well over a hundred) needs one dummy variable per level (minus one) in an analytical model. Grouping those levels into a handful of bins keeps the model far more compact and robust.</li>
 <li><strong>Capturing non-monotonic relationships in linear models:</strong> A linear model can only fit a straight line. If the true relationship between a variable and the outcome isn’t monotonic, binning lets a linear model approximate it anyway, since each bin gets its own coefficient. For example, in a real credit-scoring model <span class="citation" data-cites="vangool2012credit">Van Gool et al. (<a href="#ref-vangool2012credit" role="doc-biblioref">2012</a>)</span> find exactly this for requested loan duration: the riskiest loans turn out to be the medium-term ones, not the longest ones. This is a pattern a single linear term would have missed entirely, and one their binned model picks up directly.</li>
 </ul>
-<p><a href="#fig-binning-recency" class="quarto-xref">Figure&nbsp;<span>5.1</span></a> illustrates the second point with a hypothetical marketing example: a campaign’s response rate against how many days it’s been since the customer was last contacted. Response is low right after contact (fatigue since nobody likes being messaged twice in a row), climbs to a “sweet spot” a few weeks out, then drops again as the customer disengages. A straight line can’t capture this rise-then-plateau-then-fall pattern. What it actually does is creating a misleading representation of the true relationship. Binning recency into a handful of ranges lets even a plain linear model pick up the sweet spot, since each range gets its own estimated response level.</p>
+<p><a href="#fig-binning-recency" class="quarto-xref">Figure&nbsp;<span>5.1</span></a> illustrates the second point with a hypothetical marketing example: a campaign’s response rate against how many days it’s been since the customer was last contacted. Response is low right after contact (fatigue since nobody likes being messaged twice in a row), climbs to a “sweet spot” a few weeks out, then drops again as the customer disengages. A straight line can’t capture this rise-then-plateau-then-fall pattern. What it actually does is create a misleading representation of the true relationship. Binning recency into a handful of ranges lets even a plain linear model pick up the sweet spot, since each range gets its own estimated response level.</p>
 <div id="fig-binning-recency" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Scatter plot of an inverted-U relationship between days since last contact and campaign response rate, with a shallow, misleading linear fit and a five-step binned function closely tracking the true rise-then-fall pattern.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-binning-recency-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -389,7 +390,7 @@ Figure&nbsp;5.1: Why binning helps a linear model fit a non-monotonic relationsh
 <li><strong><code>DecisionTreeDiscretiser</code></strong>: uses a decision tree to find the optimal split points taking into account the target variable (out of scope here).</li>
 </ul>
 <p>As with everything so far, binning is <em>fit</em> on the training data only, then <em>applied</em> or <em>transformed</em> to the test set:</p>
-<div id="f8a1e1de" class="cell" data-execution_count="2">
+<div id="2fef562b" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> feature_engine.discretisation <span class="im">import</span> EqualFrequencyDiscretiser, EqualWidthDiscretiser</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>freq_binner <span class="op">=</span> EqualFrequencyDiscretiser(variables<span class="op">=</span>[<span class="st">"Age"</span>], q<span class="op">=</span><span class="dv">10</span>)</span>
@@ -412,7 +413,7 @@ Equal-width bin edges (3 bins):
 </div>
 </div>
 <p>Whether a binning is actually <em>useful</em> is a separate question from whether it’s <em>possible</em>. The way to check is to look at how well it separates the outcome you care about. If churn rate differs clearly and fairly monotonically across bins, and each bin still has enough observations to be reliable, the binning is doing real work:</p>
-<div id="7cb93595" class="cell" data-execution_count="3">
+<div id="e47c1cd4" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>train_freq_binned[<span class="st">"churn"</span>] <span class="op">=</span> train_target</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>train_width_binned[<span class="st">"churn"</span>] <span class="op">=</span> train_target</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -435,7 +436,7 @@ Equal-width bin edges (3 bins):
 </div>
 </div>
 <p>The bars are worth reading with actual numbers next to them:</p>
-<div id="ae241f3e" class="cell" data-execution_count="4">
+<div id="674e909c" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Equal-frequency bins (target: 10):"</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(freq_churn)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Equal-width bins (target: 3):"</span>)</span>
@@ -507,7 +508,7 @@ Age
 </ul>
 <p>One thing to watch for in a predictive setting: training and test data need to end up with the <em>same</em> dummy columns. If a category shows up only in the test set, a model trained without it simply can’t make use of it. <code>sklearn</code>’s <code>OneHotEncoder</code>, fit on the training set with <code>handle_unknown="ignore"</code>, handles this cleanly. Any category the test set has that training didn’t will just come out as all zeros, rather than raising an error.</p>
 <p>Let’s apply it to <code>Gender</code> and <code>District</code>:</p>
-<div id="1564dfd1" class="cell" data-execution_count="5">
+<div id="81016246" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> OneHotEncoder</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>categorical_vars <span class="op">=</span> [<span class="st">"Gender"</span>, <span class="st">"District"</span>]</span>
@@ -524,7 +525,7 @@ Age
 <pre><code>Categories in test but not train: {'District': {np.float64(4.0)}}</code></pre>
 </div>
 </div>
-<div id="2d0b9bcf" class="cell" data-execution_count="6">
+<div id="c7b653ad" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># drop="first" avoids the dummy-variable multicollinearity from the reference category above</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># handle_unknown="ignore" sets any unseen test-time category to all zeros</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>dummy_encoder <span class="op">=</span> OneHotEncoder(drop<span class="op">=</span><span class="st">"first"</span>, sparse_output<span class="op">=</span><span class="va">False</span>, handle_unknown<span class="op">=</span><span class="st">"ignore"</span>)</span>
@@ -630,7 +631,7 @@ Test dummies shape: (589, 7)</code></pre>
 </div>
 </div>
 <p>Finally, swap the original categorical columns for their dummy versions:</p>
-<div id="a9f030ec" class="cell" data-execution_count="7">
+<div id="2af3aeb3" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>train_with_dummies <span class="op">=</span> pd.concat([train_data.drop(columns<span class="op">=</span>categorical_vars), train_dummies], axis<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>test_with_dummies <span class="op">=</span> pd.concat([test_data.drop(columns<span class="op">=</span>categorical_vars), test_dummies], axis<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -650,7 +651,7 @@ Test data with dummies shape: (589, 46)</code></pre>
 <li><strong>Weight of Evidence (WoE)</strong>, which is much better suited to high-cardinality variables.</li>
 </ol>
 <p>Let’s first check just how high the cardinality actually is:</p>
-<div id="b95c5d26" class="cell" data-execution_count="8">
+<div id="92a495e1" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>high_cardinality_vars <span class="op">=</span> [<span class="st">"ZIP"</span>, <span class="st">"StreeID"</span>]</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> var <span class="kw">in</span> high_cardinality_vars:</span>
@@ -781,7 +782,7 @@ StreeID: 562 unique categories</code></pre>
 <p>Two things make WoE attractive for high-cardinality variables: it <strong>reduces dimensionality</strong> (many categories become one numeric column), and it creates a <strong>monotonic relationship</strong> with the target, which linear models can exploit directly.</p>
 <p>Implementing WoE takes a few steps: check data quality, group rare categories, fit WoE, then apply it to build the final dataset.</p>
 <p><strong>Step 1: check data quality.</strong> WoE breaks down for a category that’s 100% or 0% one class (the log ratio is undefined), so it’s worth checking how common that is per variable first. A rough heuristic: if more than about 80% of a variable’s categories are problematic like this, it’s probably not a good candidate for WoE at all.</p>
-<div id="e88240b3" class="cell" data-execution_count="9">
+<div id="93f8c4e7" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>train_demo <span class="op">=</span> train_with_dummies.copy()</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>train_demo[<span class="st">"churn"</span>] <span class="op">=</span> train_target</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -801,7 +802,7 @@ StreeID: 562 categories, 555 problematic (99%)</code></pre>
 </div>
 <p><code>StreeID</code> turns out to be almost entirely problematic categories, so we’ll exclude it from WoE and just drop it later. <code>ZIP</code> looks usable.</p>
 <p><strong>Step 2: group rare categories.</strong> Before fitting WoE, grouping infrequent categories into a single “Rare” bucket with <code>RareLabelEncoder</code> makes the resulting WoE values more stable:</p>
-<div id="1f7313be" class="cell" data-execution_count="10">
+<div id="d0742f98" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> feature_engine.encoding <span class="im">import</span> RareLabelEncoder</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>suitable_vars <span class="op">=</span> [<span class="st">"ZIP"</span>]</span>
@@ -820,7 +821,7 @@ StreeID: 562 categories, 555 problematic (99%)</code></pre>
 </div>
 </div>
 <p><strong>Step 3: fit WoE on the training set, apply to both:</strong></p>
-<div id="9b428199" class="cell" data-execution_count="11">
+<div id="c3b6e7cc" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> feature_engine.encoding <span class="im">import</span> WoEEncoder</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>woe_encoder <span class="op">=</span> WoEEncoder(variables<span class="op">=</span>suitable_vars, ignore_format<span class="op">=</span><span class="va">True</span>)</span>
@@ -904,7 +905,7 @@ StreeID: 562 categories, 555 problematic (99%)</code></pre>
 </div>
 </div>
 <p><strong>Step 4: assemble the final dataset</strong>, replacing <code>ZIP</code> with its WoE column and dropping <code>StreeID</code> entirely:</p>
-<div id="105952cc" class="cell" data-execution_count="12">
+<div id="a1dab3b8" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>train_final <span class="op">=</span> train_with_dummies.copy()</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>test_final <span class="op">=</span> test_with_dummies.copy()</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -931,7 +932,7 @@ Test set: (589, 45)</code></pre>
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>They’re not competitors and they try to solve the same problem, namely turning a categorical variable into numbers, but they sit at opposite ends of the cardinality spectrum. Dummy encoding preserves the most detail per category but doesn’t scale well after 10 categories; WoE scales to hundreds of categories and guarantees a monotonic relationship with the target, at the cost of collapsing each category down to a single number. In practice, a single dataset often needs both at once, depending on the needs of different columnsn, which is exactly as we just did.</p>
+<p>They try to solve the same problem, namely turning a categorical variable into numbers, but they’re not really competitors, since they sit at opposite ends of the cardinality spectrum. Dummy encoding preserves the most detail per category but doesn’t scale well after 10 categories; WoE scales to hundreds of categories and guarantees a monotonic relationship with the target, at the cost of collapsing each category down to a single number. In practice, a single dataset often needs both at once, depending on the needs of different columns, which is exactly as we just did.</p>
 </div>
 </div>
 </section>
@@ -947,7 +948,7 @@ Test set: (589, 45)</code></pre>
 </ul>
 <p>A fourth dimension, <strong>length of relationship</strong> (time since the customer’s <em>first</em> transaction), is often added alongside the classic three. In fact, it’s closely related to the customer-tenure and duration modeling used in CRM attrition research <span class="citation" data-cites="VandenPoel2004">(<a href="#ref-VandenPoel2004" role="doc-biblioref">Van den Poel and Larivière 2004</a>)</span>. Each dimension can also be operationalized in several ways: frequency over different windows (last month vs.&nbsp;last year), monetary value summarized differently (average vs.&nbsp;highest vs.&nbsp;lowest), or any of the above computed separately per product, time period, or channel. RFM-style features are heavily used in CRM <span class="citation" data-cites="buckinx2005customer">(<a href="#ref-buckinx2005customer" role="doc-biblioref">Buckinx and Van den Poel 2005</a>)</span>, fraud analytics <span class="citation" data-cites="baesens2021dataengineering">(<a href="#ref-baesens2021dataengineering" role="doc-biblioref">Baesens et al. 2021</a>)</span>, and credit scoring <span class="citation" data-cites="hsieh2004integrated">(<a href="#ref-hsieh2004integrated" role="doc-biblioref">Hsieh 2004</a>)</span>. Several of the aggregated columns already in our dataset (purchase counts, average discount, days since last payment) are exactly this kind of feature. We won’t build RFM features from scratch here since they’re already present, but it’s worth knowing the term and the reasoning behind it.</p>
 <p>Let’s take stock of where the dataset stands after value representation:</p>
-<div id="581f1a78" class="cell" data-execution_count="13">
+<div id="54f211c4" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Shape: </span><span class="sc">{</span>train_final<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>train_final.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -1117,7 +1118,7 @@ Test set: (589, 45)</code></pre>
 <section id="visual-inspection-for-non-linear-relationships" class="level4" data-number="5.3.1.1">
 <h4 data-number="5.3.1.1" class="anchored" data-anchor-id="visual-inspection-for-non-linear-relationships"><span class="header-section-number">5.3.1.1</span> Visual inspection for non-linear relationships</h4>
 <p>Before reaching for a transformation, it’s worth checking whether one is actually needed. A convenient way to do that for a binary target is to fit a logistic regression on everything, then plot each feature against the model’s <strong>logit</strong> (the log-odds it predicts). If a LOESS curve through that relationship tracks a straight line closely, the feature is already behaving roughly linearly with respect to the target; if it diverges, a transformation might help.</p>
-<div id="69d00622" class="cell" data-execution_count="14">
+<div id="9c281a11" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>numerical_features <span class="op">=</span> [<span class="st">"TotalDiscount_mean"</span>, <span class="st">"PaymentDate_rec"</span>]</span>
@@ -1169,7 +1170,7 @@ Please also refer to the documentation for alternative solver options:
 <section id="polynomial-features" class="level4" data-number="5.3.1.2">
 <h4 data-number="5.3.1.2" class="anchored" data-anchor-id="polynomial-features"><span class="header-section-number">5.3.1.2</span> Polynomial features</h4>
 <p><strong>Polynomial features</strong> add higher-order and interaction terms, letting a linear model capture curvature it otherwise couldn’t. Let’s create a degree-2 polynomial expansion of <code>TotalDiscount_mean</code>:</p>
-<div id="2c520c7b" class="cell" data-execution_count="15">
+<div id="dfa5444a" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> PolynomialFeatures</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>target_feature <span class="op">=</span> numerical_features[<span class="dv">0</span>]</span>
@@ -1185,7 +1186,7 @@ Please also refer to the documentation for alternative solver options:
 </div>
 </div>
 <p>Adding it to the dataset and comparing training accuracy against the original model shows whether it actually helped:</p>
-<div id="856de911" class="cell" data-execution_count="16">
+<div id="c444bef9" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>train_final_with_poly <span class="op">=</span> pd.concat([train_final, target_poly_df.iloc[:, <span class="dv">1</span>:]], axis<span class="op">=</span><span class="dv">1</span>)  <span class="co"># skip the original feature</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>model_poly <span class="op">=</span> LogisticRegression(random_state<span class="op">=</span><span class="dv">42</span>, max_iter<span class="op">=</span><span class="dv">1000</span>)</span>
@@ -1217,7 +1218,7 @@ Please also refer to the documentation for alternative solver options:
 <h4 data-number="5.3.1.3" class="anchored" data-anchor-id="power-transformations"><span class="header-section-number">5.3.1.3</span> Power transformations</h4>
 <p><strong>Power transformations</strong> reshape a variable’s distribution, often to make it more Gaussian-like and to stabilize its variance, which can help both linear models and any method that assumes a normal distribution of errors. A simple <strong>logarithmic transformation</strong> (<code>x -&gt; log(x)</code>, or <code>x -&gt; log(1 + x)</code> when zeros are present) is the most common case, typically applied to strictly-positive, right-skewed “size” variables like loan amounts or revenue. More general power transforms (<code>x -&gt; x^λ</code>) trade off skew in either direction depending on λ, at the cost of needing to fit that λ.</p>
 <p><strong>Box-Cox</strong> and <strong>Yeo-Johnson</strong> are the two standard ways to fit λ automatically rather than guessing it. Box-Cox only works for strictly positive values; Yeo-Johnson extends it to handle zero and negative values too (and reduces to Box-Cox exactly when all values are positive). In <code>sklearn</code>, this works the same way as everything else fit in this book: <code>PowerTransformer</code>’s <code>.fit()</code> estimates λ directly from the training data (i.e., the value that makes the transformed distribution closest to Gaussian) rather than you having to search for it by hand. Let’s try Yeo-Johnson on the same feature:</p>
-<div id="c20839eb" class="cell" data-execution_count="17">
+<div id="d1a2d09d" class="cell" data-execution_count="18">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> PowerTransformer</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>power_transformer <span class="op">=</span> PowerTransformer(method<span class="op">=</span><span class="st">"yeo-johnson"</span>, standardize<span class="op">=</span><span class="va">False</span>)</span>
@@ -1243,7 +1244,7 @@ Please also refer to the documentation for alternative solver options:
 </div>
 </div>
 </div>
-<div id="e41ccb23" class="cell" data-execution_count="18">
+<div id="3467cd72" class="cell" data-execution_count="19">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>train_final_with_yj <span class="op">=</span> train_final.copy()</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>train_final_with_yj[<span class="ss">f"</span><span class="sc">{</span>target_feature<span class="sc">}</span><span class="ss">_yj"</span>] <span class="op">=</span> target_transformed.flatten()</span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1270,7 +1271,7 @@ Please also refer to the documentation for alternative solver options:
 </div>
 </div>
 <p>In this case, neither the polynomial term nor the Yeo-Johnson transform moved training accuracy much. This is consistent with the logit plots above, which already showed a fairly linear relationship. That’s a useful negative result: it means we can discard both here rather than carrying extra, unhelpful complexity forward.</p>
-<p>That’s not always the case, though. Sometimes a transformation like this is the difference between a model that’s good enough to detect a real, actionable relationship and one that isn’t. <span class="citation" data-cites="wang2019optimal">Wang et al. (<a href="#ref-wang2019optimal" role="doc-biblioref">2019</a>)</span> study how a seller’s mix of marketing versus non-marketing social media posts relates to how popular those posts become, and specifically whether there’s an <em>optimal</em> level of marketing aggressiveness. Their actual aggressiveness level is an inverted U-shape curve, quantified with a quadratic term in a plain linear regression too. But applying a Yeo-Johnson transform to one of their control variables (a seller’s number of followers) nearly triples the model’s R² compared to the untransformed version. The take-away: the transformation itself didn’t reveal the U-shape; it made the model reliable enough to trust the U-shape it found.</p>
+<p>That’s not always the case, though. Sometimes a transformation like this is the difference between a model that’s good enough to detect a real, actionable relationship and one that isn’t. <span class="citation" data-cites="wang2019optimal">Wang et al. (<a href="#ref-wang2019optimal" role="doc-biblioref">2019</a>)</span> study how a seller’s mix of marketing versus non-marketing social media posts relates to how popular those posts become, and specifically whether there’s an <em>optimal</em> level of marketing aggressiveness. The effect of aggressiveness level is an inverted U-shape curve, quantified with a quadratic term in a plain linear regression too. But applying a Yeo-Johnson transform to one of their control variables (a seller’s number of followers) nearly triples the model’s R² compared to the untransformed version. The take-away: the transformation itself didn’t reveal the U-shape; it made the model reliable enough to trust the U-shape it found.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1295,7 +1296,7 @@ Please also refer to the documentation for alternative solver options:
 <li><strong>Min-max normalization</strong>: rescale to a fixed range, typically [0, 1]. Common for neural networks and any method that expects bounded input.</li>
 </ul>
 <p>As with the transformations above, <code>sklearn</code> estimates the numbers each scaler needs directly from the data: <code>StandardScaler.fit()</code> computes each feature’s mean and standard deviation, <code>MinMaxScaler.fit()</code> computes its min and max, and <code>.transform()</code> applies them.</p>
-<div id="b06ae938" class="cell" data-execution_count="19">
+<div id="fe6aa2ae" class="cell" data-execution_count="20">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler, MinMaxScaler</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>scaler_standard <span class="op">=</span> StandardScaler()</span>
@@ -1333,10 +1334,10 @@ Please also refer to the documentation for alternative solver options:
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The fit-on-train, transform-on-both rule from the previous chapter applies here too: fit the scaler on training data only, then use it to transform both sets. There’s a second, easy-to-miss mistake specific to scaling: <strong>don’t scale dummy/binary columns</strong>. A one-hot column only ever takes the values 0 and 1 and standardizing it doesn’t make it more useful. More importantly, it destroys the direct 0/1 interpretation. Hence, only continuous features should go through the scaler.</p>
+<p>The fit-on-train, transform-on-both rule from the previous chapter applies here too: fit the scaler on training data only, then use it to transform both sets. There’s a second, easy-to-miss mistake specific to scaling: <strong>don’t scale dummy/binary columns</strong>. A one-hot column only ever takes the values 0 and 1, and standardizing it doesn’t make it more useful. More importantly, it destroys the direct 0/1 interpretation. Hence, only continuous features should go through the scaler.</p>
 </div>
 </div>
-<div id="69e9c2fe" class="cell" data-execution_count="20">
+<div id="dfdba1ed" class="cell" data-execution_count="21">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>binary_features, continuous_features <span class="op">=</span> [], []</span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> train_final.columns:</span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>    unique_values <span class="op">=</span> <span class="bu">set</span>(train_final[col].unique())</span>
@@ -1355,7 +1356,7 @@ Please also refer to the documentation for alternative solver options:
 Continuous features (scaled): 34</code></pre>
 </div>
 </div>
-<div id="c4282764" class="cell" data-execution_count="21">
+<div id="f8ade0c6" class="cell" data-execution_count="22">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler()</span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>scaler.fit(train_continuous)</span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1453,7 +1454,7 @@ Final scaled test shape: (589, 45)</code></pre>
 </tbody>
 </table>
 <p>For our continuous features against the (categorical) churn target, <code>sklearn</code>’s <code>f_classif</code> plays the role of the Fisher score, paired with <code>SelectKBest</code> to keep only the top-scoring ones:</p>
-<div id="dd76c4f0" class="cell" data-execution_count="22">
+<div id="76fc8117" class="cell" data-execution_count="23">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> SelectKBest, f_classif</span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>k_best_numerical <span class="op">=</span> <span class="bu">min</span>(<span class="dv">20</span>, <span class="bu">len</span>(continuous_features))</span>
@@ -1543,7 +1544,7 @@ Final scaled test shape: (589, 45)</code></pre>
 </div>
 </div>
 <p>For the binary (dummy) features, chi-squared and mutual information are the equivalent tools:</p>
-<div id="6acef9b9" class="cell" data-execution_count="23">
+<div id="b83cbab9" class="cell" data-execution_count="24">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> mutual_info_classif, chi2</span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>k_best_categorical <span class="op">=</span> <span class="bu">min</span>(<span class="dv">5</span>, <span class="bu">len</span>(binary_features))</span>
@@ -1560,11 +1561,11 @@ Final scaled test shape: (589, 45)</code></pre>
 <span id="cb46-14"><a href="#cb46-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Top by mutual information: </span><span class="sc">{</span>selected_mi<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Top by chi-squared: ['RenewalDate_rec_missing', 'PaymentDate_rec_missing', 'Gender_missing', 'District_7.0', 'District_9.0']
-Top by mutual information: ['Pattern_0000100_sum', 'RenewalDate_rec_missing', 'PaymentDate_rec_missing', 'Gender_missing', 'Gender_M']</code></pre>
+Top by mutual information: ['Pattern_0000100_sum', 'RenewalDate_rec_missing', 'District_2.0', 'District_8.0', 'District_9.0']</code></pre>
 </div>
 </div>
 <p>Combining the two: take every continuous feature the numerical filter selected, plus only the binary features <em>both</em> categorical filters agreed on:</p>
-<div id="9403152c" class="cell" data-execution_count="24">
+<div id="52723460" class="cell" data-execution_count="25">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>selected_binary <span class="op">=</span> <span class="bu">list</span>(<span class="bu">set</span>(selected_chi2) <span class="op">&amp;</span> <span class="bu">set</span>(selected_mi))</span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>all_selected_features <span class="op">=</span> selected_numerical_features <span class="op">+</span> selected_binary</span>
 <span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1575,7 +1576,7 @@ Top by mutual information: ['Pattern_0000100_sum', 'RenewalDate_rec_missing', 'P
 <span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>      <span class="ss">f"(</span><span class="sc">{</span><span class="bu">len</span>(selected_numerical_features)<span class="sc">}</span><span class="ss"> continuous, </span><span class="sc">{</span><span class="bu">len</span>(selected_binary)<span class="sc">}</span><span class="ss"> binary), "</span></span>
 <span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>      <span class="ss">f"down from </span><span class="sc">{</span>train_final_scaled_df<span class="sc">.</span>shape[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Selected 23 features (20 continuous, 3 binary), down from 45</code></pre>
+<pre><code>Selected 22 features (20 continuous, 2 binary), down from 45</code></pre>
 </div>
 </div>
 <p>Filter methods are fast and a good first pass, but they’re univariate. They don’t account for correlations <em>between</em> features, so a certain amount of redundancy can slip through. That’s exactly why they’re normally used as a quick first cut, often followed by a wrapper or embedded method for the final selection. Determining the actual optimal number of features is left for later, once cross-validation is introduced.</p>
@@ -1597,7 +1598,7 @@ Top by mutual information: ['Pattern_0000100_sum', 'RenewalDate_rec_missing', 'P
 <p>The customer tiers and the churn labels used below are artificially generated purely to illustrate the three encoding methods. They are <em>not</em> the real <code>churn</code> target from earlier in the chapter, even though the code reuses familiar variable names for convenience.</p>
 </div>
 </div>
-<div id="0b92f3b2" class="cell" data-execution_count="25">
+<div id="f607b0da" class="cell" data-execution_count="26">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>product_cols <span class="op">=</span> [col <span class="cf">for</span> col <span class="kw">in</span> train_final.columns <span class="cf">if</span> <span class="st">"ProductID"</span> <span class="kw">in</span> col <span class="kw">and</span> <span class="st">"_sum"</span> <span class="kw">in</span> col]</span>
@@ -1626,7 +1627,7 @@ Gold        141
 Name: count, dtype: int64</code></pre>
 </div>
 </div>
-<div id="ef8b7895" class="cell" data-execution_count="26">
+<div id="bc3952a7" class="cell" data-execution_count="27">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Synthetic churn, deliberately lower for higher tiers, so the encodings below have something to pick up on</span></span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>tier_churn_probs <span class="op">=</span> {<span class="st">"Bronze"</span>: <span class="fl">0.6</span>, <span class="st">"Silver"</span>: <span class="fl">0.4</span>, <span class="st">"Gold"</span>: <span class="fl">0.25</span>, <span class="st">"Platinum"</span>: <span class="fl">0.15</span>}</span>
 <span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>synthetic_churn <span class="op">=</span> [np.random.binomial(<span class="dv">1</span>, tier_churn_probs[tier]) <span class="cf">for</span> tier <span class="kw">in</span> customer_tiers]</span>
@@ -1646,7 +1647,7 @@ Silver         0.399    153</code></pre>
 </div>
 </div>
 <p><strong>Manual ordinal encoding</strong> uses domain knowledge to specify the order directly (Bronze &lt; Silver &lt; Gold &lt; Platinum):</p>
-<div id="85ee1592" class="cell" data-execution_count="27">
+<div id="b146d1f5" class="cell" data-execution_count="28">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> OrdinalEncoder</span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>tier_order <span class="op">=</span> [[<span class="st">"Bronze"</span>, <span class="st">"Silver"</span>, <span class="st">"Gold"</span>, <span class="st">"Platinum"</span>]]</span>
@@ -1659,7 +1660,7 @@ Silver         0.399    153</code></pre>
 </div>
 </div>
 <p><strong>Automated ordinal encoding</strong> orders categories by their relationship with the target instead of by domain knowledge. <code>feature-engine</code>’s version always orders ascending by target mean:</p>
-<div id="c553c019" class="cell" data-execution_count="28">
+<div id="ca4457c3" class="cell" data-execution_count="29">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> feature_engine.encoding <span class="im">import</span> OrdinalEncoder <span class="im">as</span> FeatureEngineOrdinalEncoder</span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>fe_encoder <span class="op">=</span> FeatureEngineOrdinalEncoder(variables<span class="op">=</span>[<span class="st">"customer_tier"</span>])</span>
@@ -1670,8 +1671,8 @@ Silver         0.399    153</code></pre>
 <pre><code>Categories ordered by churn rate (ascending): {'Platinum': 0, 'Gold': 1, 'Silver': 2, 'Bronze': 3}</code></pre>
 </div>
 </div>
-<p><strong>Target (mean) encoding</strong>, which goes a step further and replaces each category with the actual mean of the target for that category, rather than just a rank. This is the plain target statistic flagged back in the Weight of Evidence section. Here, it’s reliable enough since our synthetic tiers are each backed by hundreds of observations. But remember, this is exactly the kind of raw, unshrunk per-category mean that gets noisy fast on a variable with many small categories:</p>
-<div id="231ff693" class="cell" data-execution_count="29">
+<p><strong>Target (mean) encoding</strong> goes a step further and replaces each category with the actual mean of the target for that category, rather than just a rank. This is the plain target statistic flagged back in the Weight of Evidence section. Here, it’s reliable enough since our synthetic tiers are each backed by hundreds of observations. But remember, this is exactly the kind of raw, unshrunk per-category mean that gets noisy fast on a variable with many small categories:</p>
+<div id="ddb8814a" class="cell" data-execution_count="30">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> feature_engine.encoding <span class="im">import</span> MeanEncoder</span>
 <span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>target_encoder <span class="op">=</span> MeanEncoder(variables<span class="op">=</span>[<span class="st">"customer_tier"</span>])</span>
@@ -1682,7 +1683,7 @@ Silver         0.399    153</code></pre>
 <pre><code>Encoding: {'Bronze': 0.5540540540540541, 'Gold': 0.2907801418439716, 'Platinum': 0.1292517006802721, 'Silver': 0.39869281045751637}</code></pre>
 </div>
 </div>
-<div id="d3132597" class="cell" data-execution_count="30">
+<div id="b419c3a3" class="cell" data-execution_count="31">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>comparison <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"customer_tier"</span>: X_train_ordinal[<span class="st">"customer_tier"</span>].unique(),</span>
 <span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>})</span>
@@ -1741,9 +1742,9 @@ Silver         0.399    153</code></pre>
 </div>
 <p>Which to use depends on what you have and what you need:</p>
 <ul>
-<li><strong>Manual encoding</strong> when you have a clear, defensible business hierarchy, it stays interpretable, but isn’t necessarily optimal for prediction.</li>
-<li><strong>Automated (feature-engine) encoding</strong> when you’d rather let the data reveal the order, useful for finding surprising patterns, at some cost to interpretability (e.g., it might not be obvious <em>why</em> Platinum ends up coded as 0 in a given fit).</li>
-<li><strong>Target encoding</strong> when predictive power matters most it creates the strongest statistical relationship with the target, but is also the most prone to overfitting, especially with small categories, and needs careful cross-validation (or an approach like WoE) to use safely.</li>
+<li><strong>Manual encoding</strong>: use when you have a clear, defensible business hierarchy. It stays interpretable, but isn’t necessarily optimal for prediction.</li>
+<li><strong>Automated (feature-engine) encoding</strong>: use when you’d rather let the data reveal the order. Useful for finding surprising patterns, at some cost to interpretability (e.g., it might not be obvious <em>why</em> Platinum ends up coded as 0 in a given fit).</li>
+<li><strong>Target encoding</strong>: use when predictive power matters most. It creates the strongest statistical relationship with the target, but is also the most prone to overfitting, especially with small categories, and needs careful cross-validation (or an approach like WoE) to use safely.</li>
 </ul>
 </section>
 <section id="putting-it-all-together" class="level2" data-number="5.7">

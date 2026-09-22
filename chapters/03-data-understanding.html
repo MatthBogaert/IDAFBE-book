@@ -131,6 +131,7 @@ div.csl-indent {
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-sidebar floating quarto-light">
@@ -294,7 +295,7 @@ div.csl-indent {
 </header>
 
 
-<p>With the Python and <code>pandas</code> fundamentals from the previous chapter in hand, we can start on the first real phase of CRISP-DM: <strong>data understanding</strong>. Before you clean anything, visualize anything, or build a single model, you need to know what you’re actually working with: which tables exist, how they relate to each other, what each variable means, where the data came from, and what you’re legally allowed to do with it. Skipping this step is a classic rookie mistake: it’s tempting to jump straight to modeling, but a model built on data you don’t understand is a model you can’t trust. And if the data can be trusted, the model itself can’t be trusted either: garbage in, garbage out.</p>
+<p>With the Python and <code>pandas</code> fundamentals from the previous chapter in hand, we can start on the first real phase of CRISP-DM: <strong>data understanding</strong>. Before you clean anything, visualize anything, or build a single model, you need to know what you’re actually working with: which tables exist, how they relate to each other, what each variable means, where the data came from, and what you’re legally allowed to do with it. Skipping this step is a classic rookie mistake: it’s tempting to jump straight to modeling, but a model built on data you don’t understand is a model you can’t trust. And if the data can’t be trusted, the model itself can’t be trusted either: garbage in, garbage out.</p>
 <p>Throughout this chapter, we’ll use a single running case to keep things concrete. A newspaper publishing company (NPC) has approached us to help address rising customer <strong>churn</strong> rates, a trend accelerated by the rise of online news, tablets, and news aggregator apps. The NPC has handed over two tables: one describing its customers, and one describing their newspaper subscriptions. Getting to know these two tables is what this chapter is about.</p>
 <section id="the-three-levels-of-data-understanding" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="the-three-levels-of-data-understanding"><span class="header-section-number">3.1</span> The three levels of data understanding</h2>
@@ -332,7 +333,7 @@ Figure&nbsp;3.1: Simplified ERD for the NPC case: one customer has one-to-many s
 <section id="confirming-a-relationship-in-code" class="level3" data-number="3.2.2">
 <h3 data-number="3.2.2" class="anchored" data-anchor-id="confirming-a-relationship-in-code"><span class="header-section-number">3.2.2</span> Confirming a relationship in code</h3>
 <p>An ERD describes what you <em>expect</em> the relationships between tables to look like, but it’s worth actually verifying that against the data itself. Real-world data doesn’t always behave the way a diagram says it should. For NPC, we expect a one-to-many relationship between customers and subscriptions: each customer can have several subscriptions over time, but every subscription belongs to exactly one customer. We can check this by joining the two tables on the shared key, <code>CustomerID</code>, and counting how many subscriptions each customer has.</p>
-<div id="6fcf9abd" class="cell" data-execution_count="1">
+<div id="c4ec318b" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>customers <span class="op">=</span> pd.read_csv(<span class="st">"../data/raw/customers.txt"</span>, sep<span class="op">=</span><span class="st">";"</span>)</span>
@@ -397,7 +398,7 @@ Name: SubscriptionID, dtype: float64</code></pre>
 </tbody>
 </table>
 <p>In practice, you’ll often build this table description directly from <code>pandas</code>. <code>.info()</code> gives you a fast overview of every column’s name, non-null count, and dtype in one call. This will often be the natural starting point before writing out the fuller, business-meaning version manually.</p>
-<div id="a47b207e" class="cell" data-execution_count="2">
+<div id="c298495b" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>customers.info()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
@@ -431,7 +432,7 @@ memory usage: 65.2+ KB</code></pre>
 <li><strong>Binary</strong>: with exactly two values (e.g., gender, employment status, churn (yes/no)).</li>
 </ul></li>
 </ul>
-<p>Getting this classification right matters more than it might seem: if a categorical variable like marital status gets read in as numeric, <code>pandas</code> (or any other tool) will happily compute its mean which is a number with no meaning whatsoever.</p>
+<p>Getting this classification right matters more than it might seem: if a categorical variable like marital status gets read in as numeric, <code>pandas</code> (or any other tool) will happily compute its mean, which is a number with no meaning whatsoever.</p>
 <p>When you read a file straight off disk, <code>pandas</code> doesn’t know any of this by default.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -446,7 +447,7 @@ memory usage: 65.2+ KB</code></pre>
 <p><code>pandas</code> defaults almost everything it can’t immediately identify as numeric to a generic <code>object</code> type, including dates, categories, and IDs. <code>object</code> is flexible, but it’s rarely what you actually want: it silently hides the fact that a column needs converting, and lets a variable that should be <code>category</code> or <code>datetime</code> sit around as loosely-typed text until something downstream breaks down. Key take-away: be explicit about the type of each column right when you load the data (or after), rather than discovering the problem three steps later.</p>
 </div>
 </div>
-<div id="59f07cf5" class="cell" data-execution_count="3">
+<div id="92ae48c8" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>col_types <span class="op">=</span> {</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"CustomerID"</span>: <span class="st">"string"</span>,</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Gender"</span>: <span class="st">"category"</span>,</span>
@@ -474,7 +475,7 @@ dtype: object</code></pre>
 </section>
 <section id="sampling" class="level3" data-number="3.3.2">
 <h3 data-number="3.3.2" class="anchored" data-anchor-id="sampling"><span class="header-section-number">3.3.2</span> Sampling</h3>
-<p>Almost every analytical model is trained on a <strong>sample</strong> of the original data: a subset of past customers, rather than every customer a company will ever have. The key requirement for a good sample is that it stays <strong>representative</strong> of the customers the model will actually be applied to in the future. This creates a real trade-off: more historical data generally means a more robust model, but older data is less representative of today’s customers and their behavior. For exampl, a churn model trained mostly on data from pre-COVID times might not generalize well to the post-COVID world, where there behavior changed drastically. The key takeaway is that your sample should be representative for the population and the business problem you actually care about, not just the largest sample you can get your hands on (however, the more the better, as long as it’s still representative).</p>
+<p>Almost every analytical model is trained on a <strong>sample</strong> of the original data: a subset of past customers, rather than every customer a company will ever have. The key requirement for a good sample is that it stays <strong>representative</strong> of the customers the model will actually be applied to in the future. This creates a real trade-off: more historical data generally means a more robust model, but older data is less representative of today’s customers and their behavior. For example, a churn model trained mostly on data from pre-COVID times might not generalize well to the post-COVID world, where their behavior changed drastically. The key takeaway is that your sample should be representative for the population and the business problem you actually care about, not just the largest sample you can get your hands on (however, the more the better, as long as it’s still representative).</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -485,7 +486,7 @@ dtype: object</code></pre>
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>It’s easy to introduce bias without meaning to. If you sample only <em>currently active</em> customers to build a churn model, you’ve quietly excluded everyone who already churned and those are exactly the customers you most need examples of. Focussing on only the active customers is also a nice example of survivorship bias as seen in Chatper 1.</p>
+<p>It’s easy to introduce bias without meaning to. If you sample only <em>currently active</em> customers to build a churn model, you’ve quietly excluded everyone who already churned and those are exactly the customers you most need examples of. Focusing on only the active customers is also a clear example of survivorship bias as seen in Chapter 1.</p>
 </div>
 </div>
 <p>When the outcome you care about is rare, a random sample can end up with too few positive cases to learn from reliably. Churn is a classic example of this, since most customers in any given period <em>don’t</em> churn. A more extreme case is fraud detection, where the number of fraudulent transactions is typically much smaller than legitimate ones, which is a good thing from a social perspective but poses a challenge for modeling. <strong>Stratified sampling</strong> addresses this by sampling separately within predefined groups (strata): if the full population is 99% non-churners and 1% churners, a stratified sample preserves that exact 99/1 split, rather than leaving it to chance.</p>
@@ -496,7 +497,7 @@ dtype: object</code></pre>
 <section id="working-with-dates" class="level3" data-number="3.4.1">
 <h3 data-number="3.4.1" class="anchored" data-anchor-id="working-with-dates"><span class="header-section-number">3.4.1</span> Working with dates</h3>
 <p>NPC’s date columns (when a subscription started, ended, was last paid, or renewed) are read in as plain text, since that’s how they’re stored in the file. Converting them to an actual <code>datetime</code> type is what lets you do date arithmetic (how long has this subscription run?) or extract components (which month did most subscriptions start?) later on. <code>pd.to_datetime()</code> handles the conversion; since NPC’s dates are written <code>day/month/year</code>, we tell it the format explicitly rather than letting it guess.</p>
-<div id="206dfa32" class="cell" data-execution_count="4">
+<div id="3eb1a638" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>date_cols <span class="op">=</span> [<span class="st">"StartDate"</span>, <span class="st">"EndDate"</span>, <span class="st">"PaymentDate"</span>, <span class="st">"RenewalDate"</span>]</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># errors="coerce" turns any value that doesn't match the format into a missing value (NaT),</span></span>
@@ -520,7 +521,7 @@ dtype: object</code></pre>
 <h3 data-number="3.4.2" class="anchored" data-anchor-id="describing-individual-variables"><span class="header-section-number">3.4.2</span> Describing individual variables</h3>
 <p>With types and dates sorted out, the last step at the variable level is to actually look at what each column contains: its typical value, its spread, and how it relates to other variables. <code>pandas</code> gives you this directly, without needing a single chart yet (charts are exactly where the next chapter picks up).</p>
 <p>For a categorical variable, <code>.value_counts()</code> shows you every category and how often it occurs:</p>
-<div id="7e783614" class="cell" data-execution_count="5">
+<div id="b159104c" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>subscriptions[<span class="st">"PaymentStatus"</span>].value_counts(dropna<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>PaymentStatus
@@ -530,7 +531,7 @@ Name: count, dtype: int64</code></pre>
 </div>
 </div>
 <p>For a numeric variable, <code>.describe()</code> gives you count, mean, standard deviation, and quartiles in one call. Calling it on the column of interest, <code>TotalPrice</code>, immediately shows something worth flagging: only 8,091 of the 8,252 subscriptions have a non-missing price.</p>
-<div id="88450317" class="cell" data-execution_count="6">
+<div id="3c2bccb2" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>subscriptions[<span class="st">"TotalPrice"</span>].describe()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>count    8091.000000
@@ -545,7 +546,7 @@ Name: TotalPrice, dtype: float64</code></pre>
 </div>
 </div>
 <p>Individual statistics are available as their own methods too, which is handy when you only need one number rather than the full summary. For example, the mean, variance, and standard deviation of <code>TotalPrice</code>:</p>
-<div id="03c6347a" class="cell" data-execution_count="7">
+<div id="1e89856f" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"mean:"</span>, subscriptions[<span class="st">"TotalPrice"</span>].mean(skipna<span class="op">=</span><span class="va">True</span>))</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"variance:"</span>, subscriptions[<span class="st">"TotalPrice"</span>].var(skipna<span class="op">=</span><span class="va">True</span>))</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"std:"</span>, subscriptions[<span class="st">"TotalPrice"</span>].std(skipna<span class="op">=</span><span class="va">True</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -556,14 +557,14 @@ std: 95.11994174120815</code></pre>
 </div>
 </div>
 <p>Two variables can also be checked for how strongly they move together, using <code>.corr()</code>. Here, the number of newspapers included in a subscription correlates fairly strongly with what the customer ends up paying, which is reassuring, since the alternative (no relationship at all) would suggest a problem with one of the two columns.</p>
-<div id="9fcd9050" class="cell" data-execution_count="8">
+<div id="5b8a003a" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>subscriptions[[<span class="st">"TotalPrice"</span>, <span class="st">"NbrNewspapers"</span>]].corr().loc[<span class="st">"TotalPrice"</span>, <span class="st">"NbrNewspapers"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <pre><code>np.float64(0.898895317946639)</code></pre>
 </div>
 </div>
 <p>Finally, <code>.describe(include="all")</code> extends the summary to every column at once, numeric and categorical alike, and <code>.select_dtypes()</code> lets you restrict that to just the numeric columns when that’s all you need:</p>
-<div id="b6b575b9" class="cell" data-execution_count="9">
+<div id="4b48fc7c" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>subscriptions.select_dtypes(include<span class="op">=</span><span class="st">"number"</span>).describe()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <div>
@@ -746,7 +747,7 @@ std: 95.11994174120815</code></pre>
 <section id="saving-your-progress" class="level3" data-number="3.4.3">
 <h3 data-number="3.4.3" class="anchored" data-anchor-id="saving-your-progress"><span class="header-section-number">3.4.3</span> Saving your progress</h3>
 <p>Once a table has been read in with the right types, it’s worth saving that cleaned-up version rather than re-deriving it from the raw text file every time you reopen the notebook. <strong>Parquet</strong> is a compressed, columnar file format built for exactly this: it’s faster to read and write than CSV, keeps your dtypes intact (a <code>category</code> column stays a <code>category</code> column), and produces a smaller file on disk.</p>
-<div id="8b714e38" class="cell" data-execution_count="10">
+<div id="0d88c26f" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>subscriptions.to_parquet(<span class="st">"../data/raw/subscriptions.parquet"</span>, index<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>customers.to_parquet(<span class="st">"../data/raw/customers.parquet"</span>, index<span class="op">=</span><span class="va">False</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -786,7 +787,7 @@ std: 95.11994174120815</code></pre>
 </tbody>
 </table>
 <p><strong>Web data</strong> deserves a closer look, since the two ways of collecting it, APIs and scraping, differ a lot in practice. An <strong>API</strong> (application programming interface) is a channel a platform deliberately provides for programmatic access to its data; it’s usually the quicker, cleaner route, and most programming languages ship packages for talking to the APIs of major platforms. But most platforms require you to apply for access first, and the landscape has gotten stingier in recent years. For example, Meta/Facebook has severely restricted its API, and X/Twitter turned its into a paid service, even Reddit has recently tightened its API access. A few platforms still offer a free API worth knowing about, including decentralized X-alternatives like Mastodon and Bluesky. Be aware though that each platform serves its own specific audience, so data pulled from any single platform carries that audience’s biases, and its veracity is worth treating with some skepticism.</p>
-<p>Another option is <strong>web scraping</strong> which involves programmatically loading a page and extracting data from its HTML, without going through an API. This method is more powerful and flexible, since it works on virtually any site. Modern scraping tools actually drive a real browser rather than just parsing raw HTML: they render the page’s JavaScript, letting them log in, scroll, and click the way a human user would. That power comes with more legal exposure, and scraping sits in more of a legal gray zone. However, several platforms (X and Facebook among them) actively restrict automated access, and you should always check a site’s terms of service before scraping it.</p>
+<p>Another option is <strong>web scraping</strong>, which involves programmatically loading a page and extracting data from its HTML, without going through an API. This method is more powerful and flexible, since it works on virtually any site. Modern scraping tools actually drive a real browser rather than just parsing raw HTML: they render the page’s JavaScript, letting them log in, scroll, and click the way a human user would. That power comes with more legal exposure, and scraping sits in more of a legal gray zone. However, several platforms (X and Facebook among them) actively restrict automated access, and you should always check a site’s terms of service before scraping it.</p>
 </section>
 <section id="data-regulation-privacy-and-intellectual-property-rights" class="level2" data-number="3.6">
 <h2 data-number="3.6" class="anchored" data-anchor-id="data-regulation-privacy-and-intellectual-property-rights"><span class="header-section-number">3.6</span> Data regulation: privacy and intellectual property rights</h2>
@@ -808,15 +809,15 @@ std: 95.11994174120815</code></pre>
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Even data that looks harmless on its own can carry real <strong>re-identification risk</strong>. An address alone might seem anonymous, but “Chapel Street 88, Brussels” identifies a specific person the moment there’s only one occupant at that address. Stripping out obvious identifiers like names isn’t the same as making data anonymous and you have to think about what a <em>combination</em> of seemingly harmless fields can reveal.</p>
+<p>Even data that looks harmless on its own can carry real <strong>re-identification risk</strong>. An address alone might seem anonymous, but “Chapel Street 88, Brussels” identifies a specific person the moment there’s only one occupant at that address. Stripping out obvious identifiers like names isn’t the same as making data anonymous, and you have to think about what a <em>combination</em> of seemingly harmless fields can reveal.</p>
 </div>
 </div>
 <p>GDPR is built around <strong>seven key principles</strong>. Rather than list them in the abstract, it’s more useful to see what actually happens when a company violates each one. By now GDPR enforcement has produced a long list of real fines that make the abstract principles concrete.</p>
 <ul>
-<li><strong>Lawfulness, fairness, and transparency</strong>: process data legally, without unfair discrimination, and be transparent about how it’s used. Spain’s La Liga football association was fined €250,000 after its official app used fans’ phones to record ambient audio and check location, to detect bars illegally streaming matches. Fans were never clearly told their microphone would be used this way which is a clear violation of transparency.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></li>
-<li><strong>Purpose limitation</strong>: don’t use data for anything beyond the purpose it was originally collected for. In the first-ever fine issued under Belgium’s data protection authority, a mayor was fined €2,000 for emailing election campaign material to civilians whose addresses he’d only obtained via a copied-in complaint email. Of course if was never the intended that the complaints would be used for this purpose.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></li>
-<li><strong>Data minimization</strong>: only collect what you actually need for the stated purpose, and be especially careful with sensitive attributes (ethnicity, religion, sexual or political preference). A Greek leasing company was fined €10,000 after a property-sale ad it posted included a photo showing a customer’s car with its license plate clearly visible. This allowed identifying him to his own social circle as someone whose family property was being sold off, far more personal data than the ad needed to include.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></li>
-<li><strong>Accuracy</strong>: keep data correct and up to date. For example, a loan decision based on stale income data, or repeated contact attempts using an address you know is wrong, can itself be a violation. The starkest real-world example: the Dutch tax authority was fined €750,000 specifically for accuracy violations in an internal fraud-risk blacklist that kept incorrect and outdated fraud indicators on file. On some cases, someone stayed flagged as a suspected fraudster even after an investigation had cleared them, because that clearance was never recorded. Tens of thousands of families were wrongly accused of childcare benefits fraud as a result, in a scandal that eventually brought down the Dutch government.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></li>
+<li><strong>Lawfulness, fairness, and transparency</strong>: process data legally, without unfair discrimination, and be transparent about how it’s used. Spain’s La Liga football association was fined €250,000 after its official app used fans’ phones to record ambient audio and check location, to detect bars illegally streaming matches. Fans were never clearly told their microphone would be used this way, which is a clear violation of transparency.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></li>
+<li><strong>Purpose limitation</strong>: don’t use data for anything beyond the purpose it was originally collected for. In the first-ever fine issued under Belgium’s data protection authority, a mayor was fined €2,000 for emailing election campaign material to civilians whose addresses he’d only obtained via a copied-in complaint email. Of course, it was never intended that the complaints would be used for this purpose.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></li>
+<li><strong>Data minimization</strong>: only collect what you actually need for the stated purpose, and be especially careful with sensitive attributes (ethnicity, religion, sexual or political preference). A Greek leasing company was fined €10,000 after a property-sale ad it posted included a photo showing a customer’s car with its license plate clearly visible. This allowed his own social circle to identify him as someone whose family property was being sold off, far more personal data than the ad needed to include.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></li>
+<li><strong>Accuracy</strong>: keep data correct and up to date. For example, a loan decision based on stale income data, or repeated contact attempts using an address you know is wrong, can itself be a violation. The starkest real-world example: the Dutch tax authority was fined €750,000 specifically for accuracy violations in an internal fraud-risk blacklist that kept incorrect and outdated fraud indicators on file. In some cases, someone stayed flagged as a suspected fraudster even after an investigation had cleared them, because that clearance was never recorded. Tens of thousands of families were wrongly accused of childcare benefits fraud as a result, in a scandal that eventually brought down the Dutch government.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></li>
 <li><strong>Storage limitation</strong>: don’t keep identifiable data longer than the purpose actually requires. Athens’s public transport operator was fined €50,000 for retaining ticketing data including passport numbers for years with no justified retention period,<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> and French retailer Brico Privé was fined €500,000 for, among other issues, keeping inactive customers’ data for over five years.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></li>
 <li><strong>Integrity and confidentiality</strong>: keep data secure, and restrict access to only the people who genuinely need it. An Amsterdam hospital, OLVG, was fined €440,000 after an investigation found no effective checks on which staff were accessing patient medical records, some without any work-related need to.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></li>
 <li><strong>Accountability</strong>: organizations must be able to actively demonstrate their compliance, not just claim it. The same Dutch tax authority case is instructive here too: investigators found the agency hadn’t properly involved its own data protection officer before rolling out the fraud blacklist. This is exactly the kind of documented internal oversight the accountability principle exists to guarantee.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></li>

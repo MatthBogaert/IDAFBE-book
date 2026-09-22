@@ -1,0 +1,12 @@
+/* Custom site styling. Linked via format: html: css: styles.css in _quarto.yml. */
+
+body {
+  font-family: "Georgia", serif;
+}
+
+/* Keep figures and other images within their container on any screen size,
+   instead of overflowing or staying fixed at their native pixel width. */
+img {
+  max-width: 100%;
+  height: auto;
+}
