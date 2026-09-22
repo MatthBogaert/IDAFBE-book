@@ -1,0 +1,1707 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>7&nbsp; Modeling – Introduction to Data Analytics for Business and Economics</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/appendix-installation.html" rel="next">
+<link href="../chapters/06-model-evaluation.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-5ccb035bea26c1e21f80f44cf7c27909.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/07-modeling.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Modeling</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Introduction to Data Analytics for Business and Economics</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/MatthBogaert/IDAFBE-book" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-python-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Python for Data Analytics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-data-understanding.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Understanding</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-data-exploration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Exploration</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-data-preparation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Preparation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/06-model-evaluation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Model Evaluation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/07-modeling.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Modeling</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-installation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Installation Guide</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#linear-regression" id="toc-linear-regression" class="nav-link active" data-scroll-target="#linear-regression"><span class="header-section-number">7.1</span> Linear Regression</a>
+  <ul class="collapse">
+  <li><a href="#when-the-linear-assumption-fails" id="toc-when-the-linear-assumption-fails" class="nav-link" data-scroll-target="#when-the-linear-assumption-fails"><span class="header-section-number">7.1.1</span> When the linear assumption fails</a></li>
+  <li><a href="#fitting-the-line-sklearn-versus-statsmodels" id="toc-fitting-the-line-sklearn-versus-statsmodels" class="nav-link" data-scroll-target="#fitting-the-line-sklearn-versus-statsmodels"><span class="header-section-number">7.1.2</span> Fitting the line: sklearn versus statsmodels</a></li>
+  <li><a href="#a-worked-example-predicting-airbnb-demand" id="toc-a-worked-example-predicting-airbnb-demand" class="nav-link" data-scroll-target="#a-worked-example-predicting-airbnb-demand"><span class="header-section-number">7.1.3</span> A worked example: predicting Airbnb demand</a></li>
+  <li><a href="#where-linear-regression-breaks-down" id="toc-where-linear-regression-breaks-down" class="nav-link" data-scroll-target="#where-linear-regression-breaks-down"><span class="header-section-number">7.1.4</span> Where linear regression breaks down</a></li>
+  </ul></li>
+  <li><a href="#selecting-variables-and-taming-complexity" id="toc-selecting-variables-and-taming-complexity" class="nav-link" data-scroll-target="#selecting-variables-and-taming-complexity"><span class="header-section-number">7.2</span> Selecting Variables and Taming Complexity</a>
+  <ul class="collapse">
+  <li><a href="#wrapper-methods-sequential-feature-selection" id="toc-wrapper-methods-sequential-feature-selection" class="nav-link" data-scroll-target="#wrapper-methods-sequential-feature-selection"><span class="header-section-number">7.2.1</span> Wrapper methods: sequential feature selection</a></li>
+  <li><a href="#embedded-methods-regularization" id="toc-embedded-methods-regularization" class="nav-link" data-scroll-target="#embedded-methods-regularization"><span class="header-section-number">7.2.2</span> Embedded methods: regularization</a></li>
+  <li><a href="#importance-based-selection-selectfrommodel" id="toc-importance-based-selection-selectfrommodel" class="nav-link" data-scroll-target="#importance-based-selection-selectfrommodel"><span class="header-section-number">7.2.3</span> Importance-based selection: SelectFromModel</a></li>
+  <li><a href="#comparing-the-approaches" id="toc-comparing-the-approaches" class="nav-link" data-scroll-target="#comparing-the-approaches"><span class="header-section-number">7.2.4</span> Comparing the approaches</a></li>
+  </ul></li>
+  <li><a href="#logistic-regression" id="toc-logistic-regression" class="nav-link" data-scroll-target="#logistic-regression"><span class="header-section-number">7.3</span> Logistic Regression</a>
+  <ul class="collapse">
+  <li><a href="#why-not-just-use-linear-regression" id="toc-why-not-just-use-linear-regression" class="nav-link" data-scroll-target="#why-not-just-use-linear-regression"><span class="header-section-number">7.3.1</span> Why not just use linear regression?</a></li>
+  <li><a href="#interpreting-coefficients-log-odds-and-odds-ratios" id="toc-interpreting-coefficients-log-odds-and-odds-ratios" class="nav-link" data-scroll-target="#interpreting-coefficients-log-odds-and-odds-ratios"><span class="header-section-number">7.3.2</span> Interpreting coefficients: log-odds and odds ratios</a></li>
+  <li><a href="#a-worked-example-predicting-churn" id="toc-a-worked-example-predicting-churn" class="nav-link" data-scroll-target="#a-worked-example-predicting-churn"><span class="header-section-number">7.3.3</span> A worked example: predicting churn</a></li>
+  <li><a href="#beyond-two-classes" id="toc-beyond-two-classes" class="nav-link" data-scroll-target="#beyond-two-classes"><span class="header-section-number">7.3.4</span> Beyond two classes</a></li>
+  <li><a href="#where-logistic-regression-breaks-down" id="toc-where-logistic-regression-breaks-down" class="nav-link" data-scroll-target="#where-logistic-regression-breaks-down"><span class="header-section-number">7.3.5</span> Where logistic regression breaks down</a></li>
+  </ul></li>
+  <li><a href="#where-we-go-from-here" id="toc-where-we-go-from-here" class="nav-link" data-scroll-target="#where-we-go-from-here"><span class="header-section-number">7.4</span> Where we go from here</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/MatthBogaert/IDAFBE-book/blob/main/chapters/07-modeling.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/MatthBogaert/IDAFBE-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Modeling</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>The previous chapter treated the models producing predictions, a random forest and a KNN classifier, as black boxes: useful for generating scores to evaluate, not yet fully explained. This chapter introduces the two workhorses of predictive modeling instead: <strong>linear regression</strong> for a quantitative response, and <strong>logistic regression</strong> for a qualitative (typically binary) one. Both are <strong>parametric</strong> techniques: they assume a specific functional form for the relationship between predictors and response up front, which is what makes them fast to fit and, unlike a random forest, directly interpretable. That interpretability is also why, despite decades of newer alternatives, they remain the workhorse models in many business settings such as credit scoring and churn management, where a model’s predictions often have to be explained to a regulator, a manager, or a customer, not just be accurate <span class="citation" data-cites="Lessmann2015 Crook2007">(<a href="#ref-Lessmann2015" role="doc-biblioref">Lessmann et al. 2015</a>; <a href="#ref-Crook2007" role="doc-biblioref">Crook et al. 2007</a>)</span>.</p>
+<div id="6ff28832" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>RANDOM_STATE <span class="op">=</span> <span class="dv">123</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="linear-regression" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="linear-regression"><span class="header-section-number">7.1</span> Linear Regression</h2>
+<p>Linear regression predicts a <strong>quantitative</strong> response, a number rather than a category: next month’s sales, a customer’s lifetime value, the price of a house, stock prices, or, in the professor’s own published research, the number of friends a person has on a social network, predicted from their activity on the platform <span class="citation" data-cites="ballings2016social">(<a href="#ref-ballings2016social" role="doc-biblioref">Ballings et al. 2016</a>)</span>. It is a <strong>parametric</strong> technique: it assumes the response <span class="math inline">\(Y\)</span> is a straight-line (linear) function of the predictors <span class="math inline">\(X\)</span>, plus some irreducible noise <span class="math inline">\(\varepsilon\)</span>:</p>
+<p><span class="math display">\[
+Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_p X_p + \varepsilon
+\]</span></p>
+<p>With one predictor (<span class="math inline">\(p = 1\)</span>) this is <strong>simple linear regression</strong>, a straight line through a scatterplot. With more than one, it’s <strong>multiple linear regression</strong>, and the same equation now describes a plane (two predictors) or a hyperplane (more than two), but the intuition doesn’t change. Two things are being estimated, and both have a direct, plain-language reading:</p>
+<ul>
+<li><strong>The intercept, <span class="math inline">\(\beta_0\)</span></strong>, is the model’s prediction when every predictor equals zero: the baseline the rest of the model adjusts up or down from. It’s not always meaningful on its own, a customer with zero transactions and zero recency may not exist in practice, but it’s still needed to place the line (or plane) correctly.</li>
+<li><strong>Each slope, <span class="math inline">\(\beta_j\)</span></strong>, is the change in <span class="math inline">\(Y\)</span> for a one-unit increase in <span class="math inline">\(X_j\)</span>, holding every other predictor fixed. This “holding everything else fixed” part matters: it is the coefficient’s own, isolated effect, not the raw correlation you’d see from that predictor alone.</li>
+</ul>
+<section id="when-the-linear-assumption-fails" class="level3" data-number="7.1.1">
+<h3 data-number="7.1.1" class="anchored" data-anchor-id="when-the-linear-assumption-fails"><span class="header-section-number">7.1.1</span> When the linear assumption fails</h3>
+<p>Because linear regression commits to a straight line, it struggles whenever the true relationship bends. The example below is synthetic on purpose, so we know the true relationship: it grows steeply up to a point, then flattens out, a common shape for e.g.&nbsp;diminishing returns on an advertising budget.</p>
+<div id="2f4c25ff" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(RANDOM_STATE)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">60</span>, <span class="dv">200</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>y_true <span class="op">=</span> np.where(x <span class="op">&lt;</span> <span class="dv">30</span>, <span class="dv">2</span> <span class="op">*</span> x, <span class="dv">60</span> <span class="op">+</span> <span class="fl">0.2</span> <span class="op">*</span> (x <span class="op">-</span> <span class="dv">30</span>))</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> y_true <span class="op">+</span> rng.normal(<span class="dv">0</span>, <span class="dv">8</span>, size<span class="op">=</span><span class="bu">len</span>(x))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="a10b8ca1" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>lin_reg <span class="op">=</span> LinearRegression().fit(x.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>), y)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> lin_reg.predict(x.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Intercept: </span><span class="sc">{</span>lin_reg<span class="sc">.</span>intercept_<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Slope:     </span><span class="sc">{</span>lin_reg<span class="sc">.</span>coef_[<span class="dv">0</span>]<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Intercept: 14.36
+Slope:     1.09</code></pre>
+</div>
+</div>
+<div id="b65f549b" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">4</span>))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(x, y, alpha<span class="op">=</span><span class="fl">0.4</span>, label<span class="op">=</span><span class="st">"Observed data"</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>plt.plot(x, y_true, color<span class="op">=</span><span class="st">"green"</span>, linewidth<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">"True relationship"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>plt.plot(x, y_pred, color<span class="op">=</span><span class="st">"red"</span>, linewidth<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">"Linear fit"</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"x"</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"y"</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="07-modeling_files/figure-html/cell-5-output-1.png" width="585" height="356" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The fitted line, with an intercept around 14 and a slope around 1.1, is a compromise: a single slope has to average the true, steeper early growth rate (2 per unit of <span class="math inline">\(x\)</span>) against the flatter later one (0.2 per unit), so it ends up too steep for the flat part and too flat for the steep part. On average the error is not catastrophic, but the model systematically misses both ends of the range. Even so, linear regression remains a reasonable first model to try in practice: it is cheap to fit, easy to explain to a non-technical audience, and, as this example shows, “wrong” does not always mean “useless”. As covered in the previous chapter, interaction terms and polynomial features let a linear model absorb some of this curvature without abandoning the linear framework entirely.</p>
+</section>
+<section id="fitting-the-line-sklearn-versus-statsmodels" class="level3" data-number="7.1.2">
+<h3 data-number="7.1.2" class="anchored" data-anchor-id="fitting-the-line-sklearn-versus-statsmodels"><span class="header-section-number">7.1.2</span> Fitting the line: sklearn versus statsmodels</h3>
+<p>Fitting a line means choosing the intercept and slope that make the line pass as close as possible to the data points, in the sense of minimizing the <strong>residual sum of squares</strong> (RSS), the sum of the squared vertical distances between each observed point and the line:</p>
+<p><span class="math display">\[
+\text{RSS} = \sum_{i=1}^n \left(y_i - \hat{y}_i\right)^2
+\]</span></p>
+<p><code>sklearn</code>’s <code>LinearRegression</code> and the traditional statistical technique <strong>Ordinary Least Squares</strong> (OLS) both minimize exactly this quantity and will always produce identical coefficients. Where they differ is in what they report back:</p>
+<div id="3de8161c" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>X_const <span class="op">=</span> sm.add_constant(x)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>ols_model <span class="op">=</span> sm.OLS(y, X_const).fit()</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"sklearn:     intercept = </span><span class="sc">{</span>lin_reg<span class="sc">.</span>intercept_<span class="sc">:.4f}</span><span class="ss">, slope = </span><span class="sc">{</span>lin_reg<span class="sc">.</span>coef_[<span class="dv">0</span>]<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"statsmodels: intercept = </span><span class="sc">{</span>ols_model<span class="sc">.</span>params[<span class="dv">0</span>]<span class="sc">:.4f}</span><span class="ss">, slope = </span><span class="sc">{</span>ols_model<span class="sc">.</span>params[<span class="dv">1</span>]<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>sklearn:     intercept = 14.3557, slope = 1.0932
+statsmodels: intercept = 14.3557, slope = 1.0932</code></pre>
+</div>
+</div>
+<p>The coefficients match exactly. <code>statsmodels</code>, however, also gives you the full statistical picture: standard errors, <span class="math inline">\(t\)</span>-statistics, and p-values for every coefficient, along with <span class="math inline">\(R^2\)</span> for the whole model.</p>
+<div id="8cc268f9" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ols_model.summary())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                      y   R-squared:                       0.758
+Model:                            OLS   Adj. R-squared:                  0.757
+Method:                 Least Squares   F-statistic:                     619.7
+Date:                Tue, 22 Sep 2026   Prob (F-statistic):           6.82e-63
+Time:                        10:52:04   Log-Likelihood:                -758.88
+No. Observations:                 200   AIC:                             1522.
+Df Residuals:                     198   BIC:                             1528.
+Df Model:                           1                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P&gt;|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+const         14.3557      1.523      9.425      0.000      11.352      17.359
+x1             1.0932      0.044     24.894      0.000       1.007       1.180
+==============================================================================
+Omnibus:                        0.007   Durbin-Watson:                   0.904
+Prob(Omnibus):                  0.997   Jarque-Bera (JB):                0.069
+Skew:                           0.012   Prob(JB):                        0.966
+Kurtosis:                       2.912   Cond. No.                         69.2
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</code></pre>
+</div>
+</div>
+<p>Two things in this particular table are worth reading concretely, not just knowing where to find. The slope’s p-value is essentially 0, so the relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> is real, not noise, which is unsurprising since we built the data ourselves. More interesting is <span class="math inline">\(R^2 = 0.758\)</span>: the line explains about 76% of the variance in <span class="math inline">\(y\)</span>, which on its own would read as a strong fit. It isn’t one, since we already know this exact model systematically misfits both ends of the range. A high <span class="math inline">\(R^2\)</span> only tells you the predictors and the response move together strongly; it says nothing about whether a straight line is the <em>right shape</em> for that relationship. It is entirely possible to have a good <span class="math inline">\(R^2\)</span> and a wrong functional form at the same time, exactly as shown above.</p>
+<p><code>sklearn</code> deliberately leaves all of this out. It is built for prediction, where the coefficients themselves are a means to an end, so it optimizes for speed and for working the same way across dozens of very different model types. <code>statsmodels</code> is built for inference, where the coefficients <em>are</em> the end, so it computes the extra statistics that let you ask “is this effect real, or could it just be noise?” Use <code>sklearn</code> when the goal is a prediction pipeline; reach for <code>statsmodels</code> whenever you need to defend a specific coefficient’s value.</p>
+</section>
+<section id="a-worked-example-predicting-airbnb-demand" class="level3" data-number="7.1.3">
+<h3 data-number="7.1.3" class="anchored" data-anchor-id="a-worked-example-predicting-airbnb-demand"><span class="header-section-number">7.1.3</span> A worked example: predicting Airbnb demand</h3>
+<p>Let’s apply this to a real dataset: predicting how many days per month (<code>demand</code>) an Airbnb listing gets booked, based on properties of the listing and its host.</p>
+<div id="f2294490" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>airbnb <span class="op">=</span> pd.read_csv(<span class="st">"../data/processed/basetable_regression.csv"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>airbnb <span class="op">=</span> airbnb.drop(columns<span class="op">=</span>[<span class="st">"Unnamed: 0"</span>])</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Shape: </span><span class="sc">{</span>airbnb<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>airbnb.isnull().<span class="bu">sum</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Shape: (6862, 10)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>host_id                    0
+accommodates               0
+review_scores_rating    1292
+distance                   0
+demand                     0
+entire_home                0
+washer_drier               0
+superhost                  0
+response                 869
+price_pp                   0
+dtype: int64</code></pre>
+</div>
+</div>
+<p>Two columns have missing values, <code>review_scores_rating</code> and <code>response</code>, so the pipeline built below needs an imputation step. One predictor, <code>host_id</code>, is not a real feature at all, it is just an identifier, and is deliberately kept in the basetable as a check: a well-behaved variable selection method should be able to recognize it carries no signal and downweight or drop it.</p>
+<div id="4080b0ea" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> airbnb.drop(columns<span class="op">=</span>[<span class="st">"demand"</span>])</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> airbnb[<span class="st">"demand"</span>]</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    X, y, test_size<span class="op">=</span><span class="fl">0.3</span>, random_state<span class="op">=</span>RANDOM_STATE</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Training set: </span><span class="sc">{</span>X_train<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> rows, test set: </span><span class="sc">{</span>X_test<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> rows"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Training set: 4803 rows, test set: 2059 rows</code></pre>
+</div>
+</div>
+<p>As with any model, missing values need to be handled before fitting. Rather than imputing by hand as in earlier chapters, we wrap the imputer and the model together in a single <code>Pipeline</code>. That guarantees the exact same imputation logic (fit only on the training data) is applied consistently to both the training and the test set, and it lets the whole thing be treated, fit, and reused as one object.</p>
+<div id="ff0641a4" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.impute <span class="im">import</span> SimpleImputer</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error, r2_score</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>lr_pipeline <span class="op">=</span> Pipeline([</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"imputer"</span>, SimpleImputer(strategy<span class="op">=</span><span class="st">"median"</span>)),</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"regressor"</span>, LinearRegression()),</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>lr_pipeline.fit(X_train, y_train)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> lr_pipeline.predict(X_test)</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>test_rmse <span class="op">=</span> np.sqrt(mean_squared_error(y_test, y_pred))</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>test_r2 <span class="op">=</span> r2_score(y_test, y_pred)</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>baseline_rmse <span class="op">=</span> np.sqrt(mean_squared_error(y_test, np.full_like(y_test, y_train.mean(), dtype<span class="op">=</span><span class="bu">float</span>)))</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Test RMSE:     </span><span class="sc">{</span>test_rmse<span class="sc">:.3f}</span><span class="ss"> days"</span>)</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Baseline RMSE: </span><span class="sc">{</span>baseline_rmse<span class="sc">:.3f}</span><span class="ss"> days (always predicting the training mean)"</span>)</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Test R²:       </span><span class="sc">{</span>test_r2<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Test RMSE:     5.482 days
+Baseline RMSE: 5.659 days (always predicting the training mean)
+Test R²:       0.061</code></pre>
+</div>
+</div>
+<p>RMSE on its own is hard to judge: is 5 days good or bad? It depends entirely on the scale of the target. The <strong>baseline</strong> above answers that: predicting nothing but the training set’s average <code>demand</code> for every listing is the simplest model imaginable, so any model worth using has to beat it. The gap between the two numbers is the actual value the model adds, and here that gap is narrow: the model only edges out the baseline by a small margin.</p>
+<p>The <span class="math inline">\(R^2\)</span> tells the same story from a different angle. At around 0.06, the model explains only about 6% of the variance in <code>demand</code>, which sounds discouraging next to the OLS demo’s <span class="math inline">\(R^2\)</span> of 0.758 above. That comparison isn’t quite fair, though: the synthetic demo used a single predictor built to have a strong, direct relationship with <span class="math inline">\(y\)</span> by construction, while booking demand for a real listing depends heavily on things this basetable simply doesn’t capture, seasonality, location beyond a single distance measure, competing listings nearby, price relative to the market, and plain randomness in traveller behaviour. A low <span class="math inline">\(R^2\)</span> here isn’t a sign the model was fit badly; it’s a sign that host and listing attributes alone are a genuinely weak predictor of demand, which is itself a useful finding to report back to a business stakeholder who might have expected more.</p>
+<div id="15cede21" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>feature_names <span class="op">=</span> X_train.columns</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>lr_model <span class="op">=</span> lr_pipeline.named_steps[<span class="st">"regressor"</span>]</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>coef_df <span class="op">=</span> pd.concat([</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    pd.DataFrame({<span class="st">"Feature"</span>: [<span class="st">"Intercept"</span>], <span class="st">"Coefficient"</span>: [lr_model.intercept_]}),</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    pd.DataFrame({<span class="st">"Feature"</span>: feature_names, <span class="st">"Coefficient"</span>: lr_model.coef_}),</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>coef_df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Feature</th>
+<th data-quarto-table-cell-role="th">Coefficient</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>Intercept</td>
+<td>11.068960</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">0</th>
+<td>host_id</td>
+<td>0.244975</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">1</th>
+<td>accommodates</td>
+<td>-0.352595</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">2</th>
+<td>review_scores_rating</td>
+<td>-0.079644</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">3</th>
+<td>distance</td>
+<td>0.210747</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">4</th>
+<td>entire_home</td>
+<td>1.113333</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">5</th>
+<td>washer_drier</td>
+<td>-0.684775</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">6</th>
+<td>superhost</td>
+<td>2.336448</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">7</th>
+<td>response</td>
+<td>0.006102</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">8</th>
+<td>price_pp</td>
+<td>-0.002349</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>The <strong>intercept</strong> is the model’s predicted <code>demand</code> when every feature equals zero, the baseline that every slope below then adjusts. Since a real listing with zero <code>accommodates</code> and zero <code>distance</code> doesn’t exist, that exact baseline is a mathematical anchor for the line rather than a prediction you’d ever actually use on its own, but it is still required to place the fitted plane correctly.</p>
+<p>The <strong>slopes</strong> are read one at a time, holding everything else in the model fixed. For example, a positive coefficient on <code>superhost</code> means that, for two otherwise identical listings, being a superhost is associated with more booked days per month, on top of whatever the intercept already accounts for. This is what makes linear regression attractive to a business audience: every number in the table above is a direct, additive statement about the outcome, with no translation required.</p>
+<p>Not every coefficient in that table is trustworthy, though. Some of these features may just be adding noise rather than signal, exactly what <code>host_id</code> was included to test for. To find out which, we need the p-values <code>sklearn</code> doesn’t give us:</p>
+<div id="7af192c8" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>X_train_imputed <span class="op">=</span> lr_pipeline.named_steps[<span class="st">"imputer"</span>].transform(X_train)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>X_train_with_const <span class="op">=</span> sm.add_constant(X_train_imputed)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>ols_airbnb <span class="op">=</span> sm.OLS(y_train.values, X_train_with_const).fit()</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>coef_stats <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Feature"</span>: feature_names,</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Coefficient"</span>: ols_airbnb.params[<span class="dv">1</span>:],</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"P_value"</span>: ols_airbnb.pvalues[<span class="dv">1</span>:],</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>coef_stats[<span class="st">"Significant"</span>] <span class="op">=</span> coef_stats[<span class="st">"P_value"</span>] <span class="op">&lt;</span> <span class="fl">0.05</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>coef_stats.sort_values(<span class="st">"P_value"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Feature</th>
+<th data-quarto-table-cell-role="th">Coefficient</th>
+<th data-quarto-table-cell-role="th">P_value</th>
+<th data-quarto-table-cell-role="th">Significant</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">6</th>
+<td>superhost</td>
+<td>2.336448</td>
+<td>1.580566e-42</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>accommodates</td>
+<td>-0.352595</td>
+<td>6.628124e-15</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">3</th>
+<td>distance</td>
+<td>0.210747</td>
+<td>3.795619e-12</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">4</th>
+<td>entire_home</td>
+<td>1.113333</td>
+<td>8.311393e-10</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>review_scores_rating</td>
+<td>-0.079644</td>
+<td>1.030395e-09</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>washer_drier</td>
+<td>-0.684775</td>
+<td>1.139220e-04</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">8</th>
+<td>price_pp</td>
+<td>-0.002349</td>
+<td>1.643469e-03</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">0</th>
+<td>host_id</td>
+<td>0.244975</td>
+<td>1.284363e-01</td>
+<td>False</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">7</th>
+<td>response</td>
+<td>0.006102</td>
+<td>4.401556e-01</td>
+<td>False</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="5ed292cd" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">4</span>))</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> coef_stats[<span class="st">"Significant"</span>].<span class="bu">map</span>({<span class="va">True</span>: <span class="st">"steelblue"</span>, <span class="va">False</span>: <span class="st">"lightcoral"</span>})</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>plt.barh(coef_stats[<span class="st">"Feature"</span>], coef_stats[<span class="st">"Coefficient"</span>], color<span class="op">=</span>colors)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>plt.axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">"black"</span>, linewidth<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Coefficient"</span>)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Coefficient significance (blue = p &lt; 0.05)"</span>)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="07-modeling_files/figure-html/cell-13-output-1.png" width="668" height="374" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><code>host_id</code> and <code>response</code> come back not significant, <code>host_id</code> exactly as expected, since it’s an identifier with no real relationship to demand, and <code>response</code> more usefully: a host’s response rate looks like it should matter, but it doesn’t move the needle once the other predictors are already in the model. Both are still sitting in the model above, quietly adding complexity without adding predictive power. <code>washer_drier</code>, on the other hand, <em>is</em> significant despite looking like a minor amenity, a reminder that statistical significance depends on the actual data, not on how important a feature sounds. The next section covers how to find and remove the genuinely uninformative ones, rather than by eye or an arbitrary p-value threshold.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Model comparison beyond a single test set
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Comparing candidate linear models does not always require a held-out test set. Statistics offers two broad routes <span class="citation" data-cites="james2013introduction">(<a href="#ref-james2013introduction" role="doc-biblioref">James et al. 2013</a>)</span>: <strong>directly estimating</strong> the test error via cross-validation (covered in the previous chapter, and the more broadly correct approach), or <strong>approximating</strong> it by adjusting the training error for the number of predictors used, via measures like adjusted <span class="math inline">\(R^2\)</span>, AIC, or BIC. These metrics add a penalty for the number of predictors used, helping to prevent overfitting and app roximate the true test error. The second route is popular in classical statistics, mainly because it doesn’t require setting aside data you might not have much of, but cross-validation is generally preferred whenever enough data is available for it.</p>
+</div>
+</div>
+</section>
+<section id="where-linear-regression-breaks-down" class="level3" data-number="7.1.4">
+<h3 data-number="7.1.4" class="anchored" data-anchor-id="where-linear-regression-breaks-down"><span class="header-section-number">7.1.4</span> Where linear regression breaks down</h3>
+<p>Linear regression rests on a handful of assumptions about the data that real datasets routinely violate to some degree:</p>
+<ul>
+<li><strong>Nonlinearity</strong>: the true relationship isn’t actually a straight line, as in the first example of this chapter.</li>
+<li><strong>Correlated errors</strong>: residuals aren’t independent of each other, common in time series data, where an unusually large error today makes an unusually large error tomorrow more likely.</li>
+<li><strong>Heteroscedasticity</strong>: the spread of the residuals changes across the range of the predictors, instead of staying roughly constant.</li>
+<li><strong>Multicollinearity</strong>: two or more predictors are highly correlated with each other, which makes their individual coefficients unstable, sometimes even flipping sign between two very similar samples of the same data.</li>
+</ul>
+<p>Diagnosing and correcting these properly is an econometrics topic, well beyond this book’s scope. The one thing worth carrying over into a predictive-modelling context is where the damage actually lands: these violations usually hurt a model’s raw predictive accuracy far less than you would expect, but they hurt the reliability of its <em>coefficients</em> much more. A coefficient’s size, and even its sign, can become unstable well before the model’s predictions do. This maps directly onto the sklearn-versus-statsmodels distinction from earlier: if the model is only ever used to produce a score, these assumption violations are a secondary concern, but the moment you tell a manager “increasing <span class="math inline">\(X\)</span> by one unit changes <span class="math inline">\(Y\)</span> by <span class="math inline">\(\beta\)</span>”, it is worth checking whether that particular assumption actually holds.</p>
+</section>
+</section>
+<section id="selecting-variables-and-taming-complexity" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="selecting-variables-and-taming-complexity"><span class="header-section-number">7.2</span> Selecting Variables and Taming Complexity</h2>
+<p>The previous chapter’s variable selection section introduced three families of methods: <strong>filter</strong> methods, which score each predictor against the target independently of any model, <strong>wrapper</strong> methods, which retrain a model on different feature subsets and keep the best-performing one, and <strong>embedded</strong> methods, which build variable selection directly into how the model is fit. Filter methods were covered there; both of the remaining families belong here, since they only make sense once you have an actual model to wrap around or embed into.</p>
+<section id="wrapper-methods-sequential-feature-selection" class="level3" data-number="7.2.1">
+<h3 data-number="7.2.1" class="anchored" data-anchor-id="wrapper-methods-sequential-feature-selection"><span class="header-section-number">7.2.1</span> Wrapper methods: sequential feature selection</h3>
+<p>The classical wrapper approach is <strong>stepwise selection</strong>: start from nothing and add the single best predictor at each step (forward selection), start from everything and remove the least useful one at each step (backward selection), or some combination of both. The trouble is what “best” and “least useful” get judged by: a p-value or an AIC score, re-tested again and again on the exact same training data, once per candidate variable at every single step.</p>
+<p>That repeated testing against one fixed dataset is exactly what <strong>data dredging</strong> (also called <strong>p-hacking</strong>) means: the more hypotheses you test on the same data, the more likely you are to find one that exactly matches your preconceptions, not because it reflects a real pattern. A p-value of 0.05 already means a 1-in-20 false-positive rate on a <em>single</em> test; run dozens of these tests along the way, one per candidate predictor at every step, and finding a handful of “significant” variables that are really just noise stops being unlikely and starts being expected. This is why stepwise selection is unstable: run it again on a slightly different sample of the same population, and you will often get a different final set of variables, exactly what you’d expect if some of the original picks were random noise rather than genuine signal in the first place.</p>
+<p><code>sklearn</code> sidesteps this by never testing a candidate feature against the data it was chosen from. <code>SequentialFeatureSelector</code> is a modern equivalent that judges each candidate by cross-validated performance instead of a p-value: every decision is checked against held-out folds the feature had no part in, so a feature can only look good by actually improving out-of-sample predictions, not by getting lucky on the training data.</p>
+<div id="3b6ae140" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> SequentialFeatureSelector</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>sfs_pipeline <span class="op">=</span> Pipeline([</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"imputer"</span>, SimpleImputer(strategy<span class="op">=</span><span class="st">"median"</span>)),</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"selector"</span>, SequentialFeatureSelector(</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>        LinearRegression(), n_features_to_select<span class="op">=</span><span class="dv">5</span>, direction<span class="op">=</span><span class="st">"forward"</span>,</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>        scoring<span class="op">=</span><span class="st">"neg_root_mean_squared_error"</span>, cv<span class="op">=</span><span class="dv">5</span>,</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    )),</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"regressor"</span>, LinearRegression()),</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>sfs_pipeline.fit(X_train, y_train)</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>selected_sfs <span class="op">=</span> feature_names[sfs_pipeline.named_steps[<span class="st">"selector"</span>].get_support()]</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>rmse_sfs <span class="op">=</span> np.sqrt(mean_squared_error(y_test, sfs_pipeline.predict(X_test)))</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Selected features: </span><span class="sc">{</span><span class="bu">list</span>(selected_sfs)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Test RMSE: </span><span class="sc">{</span>rmse_sfs<span class="sc">:.3f}</span><span class="ss"> days (full model: </span><span class="sc">{</span>test_rmse<span class="sc">:.3f}</span><span class="ss">)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Selected features: ['accommodates', 'review_scores_rating', 'distance', 'entire_home', 'superhost']
+Test RMSE: 5.497 days (full model: 5.482)</code></pre>
+</div>
+</div>
+<p>Forward selection here means specifying up front how many features to keep, <code>5</code> above, which is both its main advantage (aggressive, deliberate feature reduction) and its main limitation (finding the <em>right</em> number still needs its own cross-validation loop, comparing several choices of <code>n_features_to_select</code> against each other). The RMSE with only 5 of the 9 features is essentially tied with the full model, so nothing of real value was lost by cutting the feature count almost in half.</p>
+<p>Notice, that this cross-validated selection doesn’t fully match the p-value picture from before: it correctly drops <code>host_id</code> and <code>response</code>, the two genuinely non-significant features, but it also drops <code>washer_drier</code> and <code>price_pp</code>, which <em>were</em> statistically significant. That isn’t a contradiction, a coefficient can be significant on its own and still be redundant once combined with the other four features that already explain most of what it was picking up, which is exactly the kind of correlation-driven redundancy a p-value alone can’t detect.</p>
+</section>
+<section id="embedded-methods-regularization" class="level3" data-number="7.2.2">
+<h3 data-number="7.2.2" class="anchored" data-anchor-id="embedded-methods-regularization"><span class="header-section-number">7.2.2</span> Embedded methods: regularization</h3>
+<p><strong>Regularization</strong> takes a different approach entirely: instead of removing predictors from the model, keep all of them, but add a penalty to the fitting procedure that discourages large coefficients. The model is <em>constrained</em> rather than <em>reduced</em>. This “shrinks” coefficients toward zero, which trades a little bias for a real reduction in variance, making the model more robust to noise and less sensitive to any one training sample <span class="citation" data-cites="james2013introduction kuhn2013applied">(<a href="#ref-james2013introduction" role="doc-biblioref">James et al. 2013</a>; <a href="#ref-kuhn2013applied" role="doc-biblioref">Kuhn and Johnson 2013</a>)</span>. Two types of penalty are most common: <strong>Ridge</strong> (L2) regularization, which penalizes the sum of squared coefficients, and <strong>Lasso</strong> (L1) regularization, which penalizes the sum of absolute coefficients:</p>
+<p><span class="math display">\[
+\text{Ridge (L2): } \min_\beta \; \text{RSS} + \lambda \sum_{j=1}^p \beta_j^2
+\qquad\qquad
+\text{Lasso (L1): } \min_\beta \; \text{RSS} + \lambda \sum_{j=1}^p |\beta_j|
+\]</span></p>
+<p>The parameter <span class="math inline">\(\lambda\)</span> controls how aggressively coefficients are penalized, and it is a direct lever on the bias-variance trade-off from the previous chapter: <span class="math inline">\(\lambda = 0\)</span> recovers ordinary least squares (low bias, potentially high variance), while a very large <span class="math inline">\(\lambda\)</span> shrinks every coefficient toward zero and eventually toward a model that predicts only the mean (high bias, low variance). The right value in between is found the same way any other hyperparameter is, via cross-validation.</p>
+<p>The practical difference between the two penalties matters for interpretation. <strong>Ridge</strong> shrinks every coefficient but essentially never sets one to exactly zero, so all predictors stay in the model, just with smaller weights. <strong>Lasso</strong> can shrink a coefficient all the way to zero, which makes it a built-in variable selection method: whichever predictors survive are the ones the model considers worth keeping.</p>
+<p>There is a simple geometric reason for that difference. Minimizing RSS plus a penalty is mathematically equivalent to minimizing RSS alone subject to a hard budget on the coefficients: a total absolute size for Lasso (a <strong>diamond</strong>-shaped region of allowed coefficient values) or a total squared size for Ridge (a <strong>circular</strong> region). The unconstrained least-squares solution <span class="math inline">\(\hat{\beta}\)</span> usually sits outside that budget, so the regularized solution is whichever point is closest to it.</p>
+<div id="f37a1e32" class="cell" data-execution_count="15">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="07-modeling_files/figure-html/cell-15-output-1.png" width="988" height="489" class="figure-img"></p>
+<figcaption>Why Lasso zeroes coefficients and Ridge doesn’t: the diamond has corners on the axes, the circle has none.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The red circles are contours of equal RSS, growing outward from <span class="math inline">\(\hat{\beta}\)</span> as the fit gets worse. The regularized solution is wherever the smallest such contour first touches the shaded budget region. Because the diamond has corners sitting exactly on the axes, that first touch often lands on a corner, where one coefficient is exactly zero. The circle has no corners: its closest point is just some point on its boundary, essentially never exactly on an axis. That is the entire geometric reason Lasso performs variable selection and Ridge does not.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Always scale before you regularize
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Both penalties act directly on the coefficients’ <em>magnitudes</em>, and a coefficient’s magnitude depends on the scale of its predictor: a variable measured in the thousands only needs a tiny coefficient to have a meaningful effect on the outcome, while one measured in single digits needs a much larger coefficient for that same effect, regardless of how important either actually is. Left uncorrected, the penalty would fall almost entirely on the small-scale predictor: its naturally larger coefficient gets shrunk hard, while the large-scale predictor’s already-tiny coefficient barely feels the penalty at all, even if the two are equally important to the outcome.</p>
+<p>The fix is exactly the <strong>standardization</strong> step from the previous chapter: scale every predictor before fitting a regularized model, fit the scaler on the training data only inside a pipeline, and apply it to the test data.</p>
+</div>
+</div>
+<p>Below, Ridge and Lasso both get fit the exact same way: impute, scale, then search a grid of <span class="math inline">\(\lambda\)</span> values (<code>alpha</code> in <code>sklearn</code>) with cross-validation to find the one that minimizes RMSE, and evaluate the winner on the held-out test set. Only the estimator and its hyperparameter grid change between the two, so rather than repeat that recipe twice, the cell below writes it once as a reusable helper function, <code>fit_regularized</code>. Right after defining it, we call it once for Ridge on the Airbnb data.</p>
+<div id="a1ae2106" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Ridge, Lasso, ElasticNet</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> GridSearchCV</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fit_regularized(estimator, param_grid, X_train, y_train, X_test, y_test):</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    pipeline <span class="op">=</span> Pipeline([</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"imputer"</span>, SimpleImputer(strategy<span class="op">=</span><span class="st">"median"</span>)),</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"scaler"</span>, StandardScaler()),</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"regressor"</span>, estimator),</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    ])</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    grid <span class="op">=</span> GridSearchCV(pipeline, param_grid, cv<span class="op">=</span><span class="dv">5</span>, scoring<span class="op">=</span><span class="st">"neg_root_mean_squared_error"</span>, n_jobs<span class="op">=-</span><span class="dv">1</span>)</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>    grid.fit(X_train, y_train)</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>    rmse <span class="op">=</span> np.sqrt(mean_squared_error(y_test, grid.predict(X_test)))</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>    coefs <span class="op">=</span> grid.best_estimator_.named_steps[<span class="st">"regressor"</span>].coef_</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> grid, rmse, coefs</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>alpha_grid <span class="op">=</span> {<span class="st">"regressor__alpha"</span>: np.logspace(<span class="op">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">10</span>)}</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>ridge_grid, ridge_rmse, ridge_coefs <span class="op">=</span> fit_regularized(</span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>    Ridge(), alpha_grid, X_train, y_train, X_test, y_test</span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Ridge:  best alpha = </span><span class="sc">{</span>ridge_grid<span class="sc">.</span>best_params_[<span class="st">'regressor__alpha'</span>]<span class="sc">:.3f}</span><span class="ss">, test RMSE = </span><span class="sc">{</span>ridge_rmse<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Features with a non-zero coefficient: </span><span class="sc">{</span>(ridge_coefs <span class="op">!=</span> <span class="dv">0</span>)<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">}</span><span class="ss"> / </span><span class="sc">{</span><span class="bu">len</span>(feature_names)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Ridge:  best alpha = 100.000, test RMSE = 5.482
+Features with a non-zero coefficient: 9 / 9</code></pre>
+</div>
+</div>
+<p>Cross-validation picked a fairly large alpha here, near the top of the range searched, yet Ridge’s test RMSE barely moves from the unregularized model’s. That is consistent with the earlier finding that this basetable isn’t carrying much harmful noise: there’s little overfitting for regularization to fix, so shrinking the coefficients costs essentially nothing, but it doesn’t buy much either. Ridge keeps every feature at a non-zero weight regardless.</p>
+<div id="3d4a402f" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>lasso_grid, lasso_rmse, lasso_coefs <span class="op">=</span> fit_regularized(</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    Lasso(max_iter<span class="op">=</span><span class="dv">5000</span>), alpha_grid, X_train, y_train, X_test, y_test</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Lasso:  best alpha = </span><span class="sc">{</span>lasso_grid<span class="sc">.</span>best_params_[<span class="st">'regressor__alpha'</span>]<span class="sc">:.3f}</span><span class="ss">, test RMSE = </span><span class="sc">{</span>lasso_rmse<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Features with a non-zero coefficient: </span><span class="sc">{</span>(lasso_coefs <span class="op">!=</span> <span class="dv">0</span>)<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">}</span><span class="ss"> / </span><span class="sc">{</span><span class="bu">len</span>(feature_names)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Dropped: </span><span class="sc">{</span><span class="bu">list</span>(feature_names[lasso_coefs <span class="op">==</span> <span class="dv">0</span>])<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Lasso:  best alpha = 0.010, test RMSE = 5.482
+Features with a non-zero coefficient: 9 / 9
+Dropped: []</code></pre>
+</div>
+</div>
+<p>The cross-validated alpha for Lasso lands at the <em>smallest</em> value in the search grid, and the “Dropped” list above comes back empty: on this dataset, even Lasso’s built-in variable selection concludes that every feature is worth at least a small, non-zero weight. That is a legitimate result, not a failed demo. It simply means none of the remaining noise here is harmful enough for cross-validated RMSE to reward removing it outright, which is a different, milder conclusion than the p-value test found (<code>host_id</code> and <code>response</code> weren’t statistically significant) or the wrapper method found (it happily dropped four features for a similar RMSE). All three answers are consistent with each other: this basetable has some redundant, low-value features, but no features that actively hurt a plain, unregularized fit.</p>
+<p>Watching the coefficients shrink as <span class="math inline">\(\lambda\)</span> (called <code>alpha</code> in <code>sklearn</code>) increases makes the Ridge-versus-Lasso difference visible directly:</p>
+<div id="9fdaedcd" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>alphas_path <span class="op">=</span> np.logspace(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">100</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler()</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>X_train_scaled <span class="op">=</span> scaler.fit_transform(</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    SimpleImputer(strategy<span class="op">=</span><span class="st">"median"</span>).fit_transform(X_train)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>ridge_paths <span class="op">=</span> np.array([Ridge(alpha<span class="op">=</span>a).fit(X_train_scaled, y_train).coef_ <span class="cf">for</span> a <span class="kw">in</span> alphas_path])</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>lasso_paths <span class="op">=</span> np.array([Lasso(alpha<span class="op">=</span>a, max_iter<span class="op">=</span><span class="dv">5000</span>).fit(X_train_scaled, y_train).coef_ <span class="cf">for</span> a <span class="kw">in</span> alphas_path])</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">5</span>))</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, name <span class="kw">in</span> <span class="bu">enumerate</span>(feature_names):</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">0</span>].plot(alphas_path, ridge_paths[:, i], label<span class="op">=</span>name)</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">1</span>].plot(alphas_path, lasso_paths[:, i], label<span class="op">=</span>name)</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax, title <span class="kw">in</span> <span class="bu">zip</span>(axes, [<span class="st">"Ridge (L2)"</span>, <span class="st">"Lasso (L1)"</span>]):</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>    ax.set_xscale(<span class="st">"log"</span>)</span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">"alpha (lambda)"</span>)</span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>    ax.axhline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">"black"</span>, linewidth<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>    ax.set_title(title)</span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">"Coefficient"</span>)</span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].legend(loc<span class="op">=</span><span class="st">"upper left"</span>, bbox_to_anchor<span class="op">=</span>(<span class="fl">1.02</span>, <span class="dv">1</span>), fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="07-modeling_files/figure-html/cell-18-output-1.png" width="1136" height="469" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Every Ridge line bends toward zero but never quite touches it. Several Lasso lines flatten out at exactly zero well before the largest alpha values, and stay there: those are the features Lasso has fully excluded. In general, Lasso tends to work well when only a handful of predictors actually matter and high variance between the predictors (a small “true” model hiding among many candidates), while Ridge tends to work well when most predictors carry a similar, modest amount of signal (low variance between the predictors). Lasso’s sparser, more selective solutions also make it the more commonly preferred default of the two, especially when interpretability matters as much as raw predictive accuracy.</p>
+<p>Ridge and Lasso aren’t the only two options. <strong>Elastic Net</strong> combines both penalties, controlled by a mixing parameter <code>l1_ratio</code> between 0 (pure Ridge) and 1 (pure Lasso), which is useful when predictors are highly correlated with each other: pure Lasso tends to arbitrarily keep just one variable from a correlated group and drop the rest, while Elastic Net’s Ridge component encourages correlated predictors to be kept or reduced together. Fitting it needs nothing new: it’s the same <code>fit_regularized</code> helper from above, just called a third time with <code>ElasticNet</code> and its own hyperparameter grid.</p>
+<div id="6b3e4927" class="cell" data-execution_count="19">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>elastic_grid_params <span class="op">=</span> {</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"regressor__alpha"</span>: np.logspace(<span class="op">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">6</span>),</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"regressor__l1_ratio"</span>: [<span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">0.9</span>],</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>elastic_grid, elastic_rmse, elastic_coefs <span class="op">=</span> fit_regularized(</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    ElasticNet(max_iter<span class="op">=</span><span class="dv">5000</span>), elastic_grid_params, X_train, y_train, X_test, y_test</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Elastic Net: best alpha = </span><span class="sc">{</span>elastic_grid<span class="sc">.</span>best_params_[<span class="st">'regressor__alpha'</span>]<span class="sc">:.3f}</span><span class="ss">, "</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>      <span class="ss">f"l1_ratio = </span><span class="sc">{</span>elastic_grid<span class="sc">.</span>best_params_[<span class="st">'regressor__l1_ratio'</span>]<span class="sc">}</span><span class="ss">, test RMSE = </span><span class="sc">{</span>elastic_rmse<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Elastic Net: best alpha = 0.010, l1_ratio = 0.1, test RMSE = 5.482</code></pre>
+</div>
+</div>
+<p>Cross-validation settles on a low <code>l1_ratio</code>, meaning Elastic Net’s own search concluded this problem is closer to a Ridge-style one than a Lasso-style one, and, unsurprisingly given the last two results, its RMSE lands in the same narrow band as both of them. Three different penalty shapes converging on the same performance is itself informative: it says the <em>choice</em> of penalty matters far less here than the decision to regularize at all, which for this dataset barely moved the needle either.</p>
+</section>
+<section id="importance-based-selection-selectfrommodel" class="level3" data-number="7.2.3">
+<h3 data-number="7.2.3" class="anchored" data-anchor-id="importance-based-selection-selectfrommodel"><span class="header-section-number">7.2.3</span> Importance-based selection: SelectFromModel</h3>
+<p>A quicker, less exhaustive alternative to wrapping a model in cross-validation is <code>SelectFromModel</code>: fit an estimator once, then keep whichever features have a coefficient (or, for tree-based models, a feature importance) above some threshold. Passing <code>threshold="median"</code> keeps roughly the stronger half of the features by coefficient magnitude. It is commonly applied right after a Lasso fit, to turn “many small coefficients” into an explicit, smaller feature list.</p>
+<div id="44afe09f" class="cell" data-execution_count="20">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> SelectFromModel</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>sfm_pipeline <span class="op">=</span> Pipeline([</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"imputer"</span>, SimpleImputer(strategy<span class="op">=</span><span class="st">"median"</span>)),</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"scaler"</span>, StandardScaler()),</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"selector"</span>, SelectFromModel(Lasso(alpha<span class="op">=</span>lasso_grid.best_params_[<span class="st">"regressor__alpha"</span>], max_iter<span class="op">=</span><span class="dv">5000</span>),</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>                                   threshold<span class="op">=</span><span class="st">"median"</span>)),</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"regressor"</span>, LinearRegression()),</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>sfm_pipeline.fit(X_train, y_train)</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>selected_sfm <span class="op">=</span> feature_names[sfm_pipeline.named_steps[<span class="st">"selector"</span>].get_support()]</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>rmse_sfm <span class="op">=</span> np.sqrt(mean_squared_error(y_test, sfm_pipeline.predict(X_test)))</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Selected features: </span><span class="sc">{</span><span class="bu">list</span>(selected_sfm)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Test RMSE: </span><span class="sc">{</span>rmse_sfm<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Selected features: ['accommodates', 'review_scores_rating', 'distance', 'entire_home', 'superhost']
+Test RMSE: 5.497</code></pre>
+</div>
+</div>
+<p><code>SelectFromModel</code> fits the Lasso passed into it, takes the absolute value of its coefficients as each feature’s importance, and drops every feature below the threshold. <code>threshold="median"</code> sets that cutoff to the median of those 9 importances, so roughly the weaker half gets dropped and the stronger half survives.</p>
+<p>The <code>threshold="median"</code> above is not optional decoration, though. Leave it unset, and for an L1-penalized estimator like Lasso, <code>SelectFromModel</code> quietly swaps in a tiny fixed threshold instead of the median, one small enough that it drops nothing once most coefficients are already nonzero. That’s exactly the situation the cross-validated Lasso above left us in: at its best alpha it zeroed out none of the 9 features, so an unset threshold would let all 9 straight through. Setting <code>threshold="median"</code> explicitly is what actually gets a smaller model out of this step.</p>
+<p>With it, the method lands on the same five features Sequential Feature Selection picked out earlier, from a completely different selection process (coefficient magnitude here, cross-validated performance there), at essentially the same test RMSE. Two unrelated methods agreeing is a good sign that these five really are the ones carrying the signal in this basetable.</p>
+</section>
+<section id="comparing-the-approaches" class="level3" data-number="7.2.4">
+<h3 data-number="7.2.4" class="anchored" data-anchor-id="comparing-the-approaches"><span class="header-section-number">7.2.4</span> Comparing the approaches</h3>
+<div id="fd55f5c7" class="cell" data-execution_count="21">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>comparison <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Method"</span>: [<span class="st">"Full model"</span>, <span class="st">"Sequential selection"</span>, <span class="st">"Ridge"</span>, <span class="st">"Lasso"</span>, <span class="st">"Elastic Net"</span>, <span class="st">"SelectFromModel"</span>],</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Features used"</span>: [</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>        <span class="bu">len</span>(feature_names), <span class="bu">len</span>(selected_sfs),</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>        (ridge_coefs <span class="op">!=</span> <span class="dv">0</span>).<span class="bu">sum</span>(), (lasso_coefs <span class="op">!=</span> <span class="dv">0</span>).<span class="bu">sum</span>(),</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>        (elastic_coefs <span class="op">!=</span> <span class="dv">0</span>).<span class="bu">sum</span>(), <span class="bu">len</span>(selected_sfm),</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    ],</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Test RMSE"</span>: [test_rmse, rmse_sfs, ridge_rmse, lasso_rmse, elastic_rmse, rmse_sfm],</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>}).<span class="bu">round</span>(<span class="dv">3</span>)</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>comparison</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="20">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Method</th>
+<th data-quarto-table-cell-role="th">Features used</th>
+<th data-quarto-table-cell-role="th">Test RMSE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>Full model</td>
+<td>9</td>
+<td>5.482</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>Sequential selection</td>
+<td>5</td>
+<td>5.497</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>Ridge</td>
+<td>9</td>
+<td>5.482</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>Lasso</td>
+<td>9</td>
+<td>5.482</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>Elastic Net</td>
+<td>9</td>
+<td>5.482</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>SelectFromModel</td>
+<td>5</td>
+<td>5.497</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>No method here beats the full model by much: this particular dataset just doesn’t have enough truly harmful noise variables for aggressive selection to pay off. That is a realistic outcome, not a failed experiment. What every method <em>does</em> agree on is that a meaningfully smaller model is possible at little to no cost in performance, and a smaller, cleaner model is worth having on its own merits: easier to explain, faster to maintain, and less exposed to the “noise” predictors identified earlier.</p>
+</section>
+</section>
+<section id="logistic-regression" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="logistic-regression"><span class="header-section-number">7.3</span> Logistic Regression</h2>
+<p>The Airbnb example predicted a number, namely the demand for listings. Many business problems instead ask for a yes/no answer: will this customer churn, will this transaction turn out to be fraud, will this loan default? <code>churn</code>, the target used throughout the last two chapters, is exactly this kind of <strong>qualitative</strong> (binary, 0/1) response, and <strong>logistic regression</strong> is its natural, linear-regression-style counterpart.</p>
+<section id="why-not-just-use-linear-regression" class="level3" data-number="7.3.1">
+<h3 data-number="7.3.1" class="anchored" data-anchor-id="why-not-just-use-linear-regression"><span class="header-section-number">7.3.1</span> Why not just use linear regression?</h3>
+<p>It’s tempting to just plug a 0/1 target straight into <code>LinearRegression</code> and see what happens.</p>
+<div id="d7b344fa" class="cell" data-execution_count="22">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>basetable <span class="op">=</span> pd.read_csv(<span class="st">"../data/processed/basetable.csv"</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>X_naive <span class="op">=</span> basetable.drop(columns<span class="op">=</span>[<span class="st">"churn"</span>])</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>y_naive <span class="op">=</span> basetable[<span class="st">"churn"</span>]</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>naive_fit <span class="op">=</span> LinearRegression().fit(X_naive, y_naive)</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>naive_preds <span class="op">=</span> naive_fit.predict(X_naive)</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Predicted values range from </span><span class="sc">{</span>naive_preds<span class="sc">.</span><span class="bu">min</span>()<span class="sc">:.3f}</span><span class="ss"> to </span><span class="sc">{</span>naive_preds<span class="sc">.</span><span class="bu">max</span>()<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Predicted values range from -0.153 to 0.898</code></pre>
+</div>
+</div>
+<p>Some of the “predicted probabilities” fall below 0 or above 1, values that make no sense as a probability of churn. Linear regression has no built-in notion that the response should stay between 0 and 1; it just fits the best straight line it can through a cloud of 0s and 1s. <strong>Logistic regression</strong> fixes exactly this by passing the linear combination of predictors through the <strong>logistic/sigmoid</strong> function, which squashes any real number into the <span class="math inline">\((0, 1)\)</span> range:</p>
+<p><span class="math display">\[
+p(X) = \frac{e^{\beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p}}{1 + e^{\beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p}}
+\]</span></p>
+<div id="dc608bdd" class="cell" data-execution_count="23">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">200</span>)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> np.exp(z) <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> np.exp(z))</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>plt.plot(z, p, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>plt.axhline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">"gray"</span>, linewidth<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>plt.axhline(<span class="dv">1</span>, color<span class="op">=</span><span class="st">"gray"</span>, linewidth<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="vs">r"</span><span class="dv">$\b</span><span class="vs">eta_0 </span><span class="op">+</span><span class="vs"> </span><span class="dv">\b</span><span class="vs">eta_1 X_1 </span><span class="op">+</span><span class="vs"> </span><span class="dv">\d</span><span class="vs">ots</span><span class="dv">$</span><span class="vs">"</span>)</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"p(X)"</span>)</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"The logistic function"</span>)</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="07-modeling_files/figure-html/cell-23-output-1.png" width="515" height="377" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Regardless of how extreme the linear combination of predictors gets, <span class="math inline">\(p(X)\)</span> stays safely inside <span class="math inline">\((0, 1)\)</span>, which is exactly the S-shaped curve above. This probability comes directly out of a proper statistical estimation procedure, which also tends to make logistic regression’s predicted probabilities somewhat better calibrated out of the box than many tree ensembles <span class="citation" data-cites="niculescumizil2005predicting">(<a href="#ref-niculescumizil2005predicting" role="doc-biblioref">Niculescu-Mizil and Caruana 2005</a>)</span>, though calibration is never guaranteed and is always worth checking, as noted in the previous chapter.</p>
+</section>
+<section id="interpreting-coefficients-log-odds-and-odds-ratios" class="level3" data-number="7.3.2">
+<h3 data-number="7.3.2" class="anchored" data-anchor-id="interpreting-coefficients-log-odds-and-odds-ratios"><span class="header-section-number">7.3.2</span> Interpreting coefficients: log-odds and odds ratios</h3>
+<p>The main advantage of logistic regression is that it is essentially a linear regression model, but with a link function that maps the linear combination of predictors to the <span class="math inline">\((0, 1)\)</span> range. The coefficients can also easily be interpreted in terms of log-odds and odds ratios, which are more interpretable than the raw regression coefficients.</p>
+<p>Rearranging the logistic function gives the <strong>log-odds</strong>, or <strong>logit</strong>, which is linear in the predictors, exactly like ordinary linear regression:</p>
+<p><span class="math display">\[
+\log\left(\frac{p(X)}{1 - p(X)}\right) = \beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p
+\]</span></p>
+<p>This is why logistic regression is actually fitting a straight line to. A one-unit increase in <span class="math inline">\(X_j\)</span>, holding everything else fixed, adds <span class="math inline">\(\beta_j\)</span> to the log-odds, or equivalently, multiplies the <strong>odds</strong> themselves, <span class="math inline">\(p(X) / (1 - p(X))\)</span>, by <span class="math inline">\(e^{\beta_j}\)</span>: the <strong>odds ratio</strong>. So:</p>
+<ul>
+<li><span class="math inline">\(\beta_j &gt; 0\)</span> (so <span class="math inline">\(e^{\beta_j} &gt; 1\)</span>): the odds, and therefore the probability, of the event increase with <span class="math inline">\(X_j\)</span>.</li>
+<li><span class="math inline">\(\beta_j &lt; 0\)</span> (so <span class="math inline">\(e^{\beta_j} &lt; 1\)</span>): the odds, and therefore the probability, decrease with <span class="math inline">\(X_j\)</span>.</li>
+</ul>
+<p>Odds ratios are a genuinely useful way to talk to a business audience: “each extra point of <code>recency_score</code> multiplies the odds of churn by 1.4” is a concrete, actionable statement in a way that a raw logit coefficient is not. We’ll compute actual odds ratios for the churn model below.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Estimating the coefficients: maximum likelihood
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Unlike linear regression’s RSS, logistic regression’s coefficients are fit by <strong>maximum likelihood</strong>: choose the <span class="math inline">\(\beta\)</span>’s that make the observed outcomes (e.g., who actually churned and who didn’t) as probable as possible under the model. In practice this means finding the <span class="math inline">\(\beta\)</span>’s that push <span class="math inline">\(p(X)\)</span> close to 1 for every customer who did churn, and close to 0 for every customer who didn’t. <code>sklearn</code> and <code>statsmodels</code> both solve this optimization for you internally, so writing the likelihood function out by hand is not something you need to do in practice, but it explains why a logistic regression fit can occasionally fail to converge on separable or near-separable data, where a very extreme coefficient would make the likelihood arbitrarily large.</p>
+</div>
+</div>
+</section>
+<section id="a-worked-example-predicting-churn" class="level3" data-number="7.3.3">
+<h3 data-number="7.3.3" class="anchored" data-anchor-id="a-worked-example-predicting-churn"><span class="header-section-number">7.3.3</span> A worked example: predicting churn</h3>
+<p>We reuse the same churn basetable and train/test split convention as the previous chapter with a stratified split, so the churn rate stays the same in both sets.</p>
+<div id="c592da05" class="cell" data-execution_count="24">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> roc_auc_score, accuracy_score, roc_curve</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> basetable.drop(columns<span class="op">=</span>[<span class="st">"churn"</span>])</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> basetable[<span class="st">"churn"</span>]</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>    X, y, test_size<span class="op">=</span><span class="fl">0.3</span>, random_state<span class="op">=</span>RANDOM_STATE, stratify<span class="op">=</span>y</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Churn rate: </span><span class="sc">{</span>y_test<span class="sc">.</span>mean()<span class="sc">:.3%}</span><span class="ss">"</span>)</span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Accuracy of always predicting </span><span class="ch">\"</span><span class="ss">no churn</span><span class="ch">\"</span><span class="ss">: </span><span class="sc">{</span><span class="dv">1</span> <span class="op">-</span> y_test<span class="sc">.</span>mean()<span class="sc">:.3%}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Churn rate: 3.769%
+Accuracy of always predicting "no churn": 96.231%</code></pre>
+</div>
+</div>
+<p>That second line matters for what comes next: only about 4% of customers actually churn, so a classifier that never bothers to learn anything and just predicts “no churn” every time would already be right roughly 96% of the time. Keep that number in mind, since accuracy on its own will be almost useless for judging the models below, exactly the class-imbalance problem covered in the previous chapter.</p>
+<p>Ridge, Lasso, and Elastic Net logistic regression follow the same one-recipe-three-calls pattern as their linear counterparts above, so the cell below again defines a single reusable helper, <code>fit_regularized_logistic</code>, and each of the three techniques just calls it with a different <code>l1_ratio</code>.</p>
+<p>Two things are worth mentioning. First, just like the regularized linear models earlier, regularized logistic regression is scale-sensitive, so the pipeline again includes a <code>StandardScaler</code>. Second, <code>sklearn</code> parameterizes the penalty strength as <code>C</code>, the <em>inverse</em> of <span class="math inline">\(\lambda\)</span>: a <strong>smaller</strong> <code>C</code> means <strong>stronger</strong> regularization, the opposite of how <span class="math inline">\(\lambda\)</span>/<code>alpha</code> worked above, so it is easy to get backwards. The penalty type itself is set through <code>l1_ratio</code>: <code>0</code> for a pure L2 (Ridge) penalty, <code>1</code> for a pure L1 (Lasso) penalty, and anything in between for Elastic Net, all handled by the same <code>"saga"</code> solver.</p>
+<div id="4a97b58f" class="cell" data-execution_count="25">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fit_regularized_logistic(l1_ratio_grid, C_grid<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    pipeline <span class="op">=</span> Pipeline([</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"imputer"</span>, SimpleImputer(strategy<span class="op">=</span><span class="st">"median"</span>)),</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"scaler"</span>, StandardScaler()),</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"classifier"</span>, LogisticRegression(solver<span class="op">=</span><span class="st">"saga"</span>, random_state<span class="op">=</span>RANDOM_STATE, max_iter<span class="op">=</span><span class="dv">5000</span>)),</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>    ])</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>    param_grid <span class="op">=</span> {<span class="st">"classifier__l1_ratio"</span>: l1_ratio_grid}</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> C_grid <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>        param_grid[<span class="st">"classifier__C"</span>] <span class="op">=</span> C_grid</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>    grid <span class="op">=</span> GridSearchCV(pipeline, param_grid, cv<span class="op">=</span><span class="dv">5</span>, scoring<span class="op">=</span><span class="st">"roc_auc"</span>, n_jobs<span class="op">=-</span><span class="dv">1</span>)</span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>    grid.fit(X_train, y_train)</span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>    proba <span class="op">=</span> grid.predict_proba(X_test)[:, <span class="dv">1</span>]</span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>    auc <span class="op">=</span> roc_auc_score(y_test, proba)</span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>    acc <span class="op">=</span> accuracy_score(y_test, grid.predict(X_test))</span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>    coefs <span class="op">=</span> grid.best_estimator_.named_steps[<span class="st">"classifier"</span>].coef_[<span class="dv">0</span>]</span>
+<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> grid, auc, acc, coefs, proba</span>
+<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a>C_grid <span class="op">=</span> np.logspace(<span class="op">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">10</span>)</span>
+<span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-22"><a href="#cb37-22" aria-hidden="true" tabindex="-1"></a>ridge_log, ridge_auc, ridge_acc, ridge_log_coefs, ridge_proba <span class="op">=</span> fit_regularized_logistic([<span class="fl">0.0</span>], C_grid)</span>
+<span id="cb37-23"><a href="#cb37-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Ridge logistic: best C = </span><span class="sc">{</span>ridge_log<span class="sc">.</span>best_params_[<span class="st">'classifier__C'</span>]<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb37-24"><a href="#cb37-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Test AUC = </span><span class="sc">{</span>ridge_auc<span class="sc">:.3f}</span><span class="ss">, test accuracy = </span><span class="sc">{</span>ridge_acc<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Ridge logistic: best C = 1000.0000
+Test AUC = 0.774, test accuracy = 0.963</code></pre>
+</div>
+</div>
+<p>Look at those two numbers side by side, and the trap from the previous chapter shows up immediately: the test accuracy is barely above the “always predict no churn” baseline computed above, roughly a fraction of a percentage point better. Read on its own, that accuracy looks like the model learned almost nothing. The AUC tells a completely different story: at around 0.77, the model is substantially better than random (0.5) at ranking customers by churn risk, it just doesn’t change many predicted <em>labels</em> at the default 0.5 cut-off, because churn is rare enough that most predicted probabilities stay under 0.5 regardless. This is precisely why the previous chapter insisted on threshold-independent metrics for imbalanced targets: accuracy alone would have you conclude this model is worthless, when it’s actually doing real, usable work at separating higher-risk customers from lower-risk ones.</p>
+<p>With the model fit, the odds-ratio interpretation from earlier becomes concrete:</p>
+<div id="8766be69" class="cell" data-execution_count="26">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>odds_ratios <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Feature"</span>: X_train.columns,</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Coefficient"</span>: ridge_log_coefs,</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Odds ratio"</span>: np.exp(ridge_log_coefs),</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>}).sort_values(<span class="st">"Odds ratio"</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>odds_ratios</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="25">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Feature</th>
+<th data-quarto-table-cell-role="th">Coefficient</th>
+<th data-quarto-table-cell-role="th">Odds ratio</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>recency_score</td>
+<td>0.549717</td>
+<td>1.732763</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>days_customer</td>
+<td>-0.420364</td>
+<td>0.656808</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">1</th>
+<td>Total_quantity</td>
+<td>-1.168432</td>
+<td>0.310854</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">0</th>
+<td>Monetary_score</td>
+<td>-4.169311</td>
+<td>0.015463</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>An odds ratio above 1 increases the odds of churning, below 1 lowers them. Note that because every predictor was standardized first, each odds ratio is “per one standard deviation increase”, not “per one raw unit”, which is the price of the scaling step from earlier: convenient for a fair comparison across coefficients, less convenient for a direct real-world statement like “per extra euro spent.”</p>
+<p><code>recency_score</code> is the only predictor above 1: a standard-deviation increase multiplies the odds of churn by roughly 1.7, so customers who haven’t purchased in a while are noticeably more likely to leave, which matches the intuition behind including recency in the basetable in the first place. <code>Monetary_score</code> sits at the other extreme, an odds ratio near 0.015, an unusually large protective effect: customers who have spent more are less likely to churn. <code>days_customer</code> and <code>Total_quantity</code> also pull the odds down, more moderately. All four line up with a simple business story: recent, frequent, high-spending customers stay, and it took nothing more than a logistic regression to read that off the model directly.</p>
+<div id="81beffde" class="cell" data-execution_count="27">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>lasso_log, lasso_auc, lasso_acc, lasso_log_coefs, lasso_proba <span class="op">=</span> fit_regularized_logistic([<span class="fl">1.0</span>], C_grid)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Lasso logistic: best C = </span><span class="sc">{</span>lasso_log<span class="sc">.</span>best_params_[<span class="st">'classifier__C'</span>]<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Test AUC = </span><span class="sc">{</span>lasso_auc<span class="sc">:.3f}</span><span class="ss">, test accuracy = </span><span class="sc">{</span>lasso_acc<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Non-zero coefficients: </span><span class="sc">{</span>(lasso_log_coefs <span class="op">!=</span> <span class="dv">0</span>)<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">}</span><span class="ss"> / </span><span class="sc">{</span><span class="bu">len</span>(X_train.columns)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Lasso logistic: best C = 1000.0000
+Test AUC = 0.774, test accuracy = 0.963
+Non-zero coefficients: 4 / 4</code></pre>
+</div>
+</div>
+<p>With only four predictors to begin with, and all four already carrying predictive value, Lasso keeps every one of them, and AUC and accuracy both come out essentially identical to Ridge’s. There just isn’t a weak predictor here for Lasso to prune.</p>
+<div id="38091e58" class="cell" data-execution_count="28">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>elastic_log, elastic_auc, elastic_acc, elastic_log_coefs, elastic_proba <span class="op">=</span> fit_regularized_logistic(</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>    [<span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">0.9</span>], np.logspace(<span class="op">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">6</span>)</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Elastic Net logistic: best C = </span><span class="sc">{</span>elastic_log<span class="sc">.</span>best_params_[<span class="st">'classifier__C'</span>]<span class="sc">:.4f}</span><span class="ss">, "</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>      <span class="ss">f"l1_ratio = </span><span class="sc">{</span>elastic_log<span class="sc">.</span>best_params_[<span class="st">'classifier__l1_ratio'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Test AUC = </span><span class="sc">{</span>elastic_auc<span class="sc">:.3f}</span><span class="ss">, test accuracy = </span><span class="sc">{</span>elastic_acc<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Elastic Net logistic: best C = 100.0000, l1_ratio = 0.9
+Test AUC = 0.774, test accuracy = 0.963</code></pre>
+</div>
+</div>
+<p>Cross-validation leans Elastic Net heavily toward the Lasso end (<code>l1_ratio</code> close to 1) but, again, lands on essentially the same AUC as the other two.</p>
+<div id="26d6b3c1" class="cell" data-execution_count="29">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">13</span>, <span class="dv">5</span>))</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> proba, name <span class="kw">in</span> [(ridge_proba, <span class="st">"Ridge"</span>), (lasso_proba, <span class="st">"Lasso"</span>), (elastic_proba, <span class="st">"Elastic Net"</span>)]:</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>    fpr, tpr, _ <span class="op">=</span> roc_curve(y_test, proba)</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>    auc <span class="op">=</span> roc_auc_score(y_test, proba)</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">0</span>].plot(fpr, tpr, linewidth<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="ss">f"</span><span class="sc">{</span>name<span class="sc">}</span><span class="ss"> (AUC = </span><span class="sc">{</span>auc<span class="sc">:.3f}</span><span class="ss">)"</span>)</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot([<span class="dv">0</span>, <span class="dv">1</span>], [<span class="dv">0</span>, <span class="dv">1</span>], <span class="st">"k--"</span>, alpha<span class="op">=</span><span class="fl">0.5</span>, label<span class="op">=</span><span class="st">"Random"</span>)</span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">"False positive rate"</span>)</span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">"True positive rate"</span>)</span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">"ROC curves"</span>)</span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].legend()</span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a>coef_comparison <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Ridge"</span>: np.<span class="bu">abs</span>(ridge_log_coefs),</span>
+<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Lasso"</span>: np.<span class="bu">abs</span>(lasso_log_coefs),</span>
+<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Elastic Net"</span>: np.<span class="bu">abs</span>(elastic_log_coefs),</span>
+<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a>}, index<span class="op">=</span>X_train.columns)</span>
+<span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a>coef_comparison.plot(kind<span class="op">=</span><span class="st">"barh"</span>, ax<span class="op">=</span>axes[<span class="dv">1</span>])</span>
+<span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">"|Coefficient|"</span>)</span>
+<span id="cb44-20"><a href="#cb44-20" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">"Coefficient magnitude by method"</span>)</span>
+<span id="cb44-21"><a href="#cb44-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-22"><a href="#cb44-22" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb44-23"><a href="#cb44-23" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="07-modeling_files/figure-html/cell-29-output-1.png" width="1240" height="470" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>With only four predictors to begin with, all three regularization methods land on very similar AUC, and Lasso doesn’t have much room to drop any of them entirely. That is a genuinely common outcome once the feature set is already compact and each predictor carries some real signal: the choice between Ridge, Lasso, and Elastic Net then comes down more to interpretability and how you want coefficients to behave than to a meaningful difference in predictive accuracy.</p>
+</section>
+<section id="beyond-two-classes" class="level3" data-number="7.3.4">
+<h3 data-number="7.3.4" class="anchored" data-anchor-id="beyond-two-classes"><span class="header-section-number">7.3.4</span> Beyond two classes</h3>
+<p>Logistic regression, as defined above, assumes a binary response. Extending it to <span class="math inline">\(K &gt; 2\)</span> classes takes one of two standard strategies:</p>
+<ul>
+<li><strong>One-vs-rest</strong> (also one-vs-all): fit <span class="math inline">\(K\)</span> binary classifiers, each one separating a single class from all the others combined, and assign each observation to whichever classifier is most confident. This is the most common default and scales linearly in the number of classes. This is impractical for very large <span class="math inline">\(K\)</span> because each classifier sees the full dataset, which can be slow for some algorithms.</li>
+<li><strong>One-vs-one</strong>: fit a binary classifier for every <em>pair</em> of classes (<span class="math inline">\(K(K-1)/2\)</span> of them in total) and let them vote. Each individual classifier only ever trains on the rows belonging to its two classes, rather than the full dataset, which helps for algorithms that get disproportionately slow as the training set grows. Logistic regression isn’t one of them, so for it, one-vs-rest’s smaller number of classifiers is simply the better default.</li>
+</ul>
+</section>
+<section id="where-logistic-regression-breaks-down" class="level3" data-number="7.3.5">
+<h3 data-number="7.3.5" class="anchored" data-anchor-id="where-logistic-regression-breaks-down"><span class="header-section-number">7.3.5</span> Where logistic regression breaks down</h3>
+<p>Like linear regression, logistic regression assumes a specific functional form, here a linear relationship between the predictors and the log-odds, so genuinely nonlinear relationships are just as much of a blind spot as they were before. It is also prone to the same overfitting pattern as linear regression when the predictor set grows large relative to the amount of data: low training error, poor generalization, low bias, high variance. Everything covered under regularization above applies identically here; it is not a coincidence that <code>sklearn</code>’s <code>LogisticRegression</code> accepts the same <code>l1_ratio</code> and <code>C</code> arguments a regularized linear model does.</p>
+</section>
+</section>
+<section id="where-we-go-from-here" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="where-we-go-from-here"><span class="header-section-number">7.4</span> Where we go from here</h2>
+<p>Across the last four chapters, a raw, messy table has gone through the full analytics pipeline: understood, cleaned and prepared into a model-ready basetable, evaluated with a proper experimental setup and the right metrics, and finally modeled with two of the most widely used techniques in business analytics. That is the complete loop this book set out to cover.</p>
+<p>Linear and logistic regression are not the end of the modeling story, only its foundation. Decision trees, random forests, and gradient boosting (of which the random forest from the previous chapter was one, deliberately unexplained, example) relax the linearity assumption entirely and often predict better on complex, real-world data at the cost of some interpretability <span class="citation" data-cites="prokhorenkova2018catboost decaigny2018hybrid">(<a href="#ref-prokhorenkova2018catboost" role="doc-biblioref">Prokhorenkova et al. 2018</a>; <a href="#ref-decaigny2018hybrid" role="doc-biblioref">De Caigny et al. 2018</a>)</span>. Learning to build them well is a natural next step once the fundamentals covered in this book. However, with proper feature engineering combined with proper regularization and variable selection, linear and logistic regression can be powerful tools and competitive baselines for many real-world problems, and they are often the first models deployed because of their speed, simplicity, and interpretability.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-ballings2016social" class="csl-entry" role="listitem">
+Ballings, Michel, Dirk Van den Poel, and Matthias Bogaert. 2016. <span>“Social Media Optimization: Identifying an Optimal Strategy for Increasing Network Size on <span>Facebook</span>.”</span> <em>Omega</em> 59: 15–25. <a href="https://doi.org/10.1016/j.omega.2015.04.017">https://doi.org/10.1016/j.omega.2015.04.017</a>.
+</div>
+<div id="ref-Crook2007" class="csl-entry" role="listitem">
+Crook, Jonathan N., David B. Edelman, and Lyn C. Thomas. 2007. <span>“Recent Developments in Consumer Credit Risk Assessment.”</span> <em>European Journal of Operational Research</em> 183: 1447–65.
+</div>
+<div id="ref-decaigny2018hybrid" class="csl-entry" role="listitem">
+De Caigny, Arno, Kristof Coussement, and Koen W. De Bock. 2018. <span>“A New Hybrid Classification Algorithm for Customer Churn Prediction Based on Logistic Regression and Decision Trees.”</span> <em>European Journal of Operational Research</em> 269 (2): 760–72. <a href="https://doi.org/10.1016/j.ejor.2018.02.009">https://doi.org/10.1016/j.ejor.2018.02.009</a>.
+</div>
+<div id="ref-james2013introduction" class="csl-entry" role="listitem">
+James, Gareth, Daniela Witten, Trevor Hastie, and Robert Tibshirani. 2013. <em>An Introduction to Statistical Learning: With Applications in r</em>. Springer.
+</div>
+<div id="ref-kuhn2013applied" class="csl-entry" role="listitem">
+Kuhn, Max, and Kjell Johnson. 2013. <em>Applied Predictive Modeling</em>. Springer.
+</div>
+<div id="ref-Lessmann2015" class="csl-entry" role="listitem">
+Lessmann, Stefan, Bart Baesens, Hsin Vonn Seow, and Lyn C. Thomas. 2015. <span>“Benchmarking State-of-the-Art Classification Algorithms for Credit Scoring: An Update of Research.”</span> <em>European Journal of Operational Research</em> 247 (November): 124–36. <a href="https://doi.org/10.1016/J.EJOR.2015.05.030">https://doi.org/10.1016/J.EJOR.2015.05.030</a>.
+</div>
+<div id="ref-niculescumizil2005predicting" class="csl-entry" role="listitem">
+Niculescu-Mizil, Alexandru, and Rich Caruana. 2005. <span>“Predicting Good Probabilities with Supervised Learning.”</span> <em>Proceedings of the 22nd International Conference on Machine Learning</em>, 625–32. <a href="https://doi.org/10.1145/1102351.1102430">https://doi.org/10.1145/1102351.1102430</a>.
+</div>
+<div id="ref-prokhorenkova2018catboost" class="csl-entry" role="listitem">
+Prokhorenkova, Liudmila, Gleb Gusev, Aleksandr Vorobev, Anna Veronika Dorogush, and Andrey Gulin. 2018. <span>“<span>CatBoost</span>: Unbiased Boosting with Categorical Features.”</span> <em>Advances in Neural Information Processing Systems</em> 31.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/06-model-evaluation.html" class="pagination-link" aria-label="Model Evaluation">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Model Evaluation</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/appendix-installation.html" class="pagination-link" aria-label="Installation Guide">
+        <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Installation Guide</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/MatthBogaert/IDAFBE-book/blob/main/chapters/07-modeling.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/MatthBogaert/IDAFBE-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
