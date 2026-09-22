@@ -1,7 +1,8 @@
 # Introduction to Data Analytics for Business and Economics
 
 This is the repository for the book *Introduction to Data Analytics for Business and Economics*,
-written for the Data Analytics course at the University of Namur (UNamur).
+a practical, code-first introduction to the data analytics pipeline for business and economics
+students.
 
 [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 

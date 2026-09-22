@@ -1,7 +1,6 @@
 # Preface {.unnumbered}
 
-This book was written for the business engineering students at the University of Namur (UNamur),
-but it stems from years of experience teaching introductory and advanced data analytics courses
+This book stems from years of experience teaching introductory and advanced data analytics courses
 across different institutions. There is no shortage of excellent books in this space: theoretical
 handbooks like *An Introduction to Statistical Learning* build the statistical foundations
 rigorously, and applied books like *Hands-On Machine Learning* cover the modeling toolkit in
@@ -20,7 +19,9 @@ since the programming covered here is aimed squarely at what you need for data a
 general fundamentals of programming as such. A basic statistics course is similarly useful, since
 not every statistical concept is re-derived from first principles. In practice, this makes the
 book a good fit for undergraduate or Bachelor-level teaching once students have already had some
-exposure to programming and statistics, even a light one.
+exposure to programming and statistics, even a light one. It is also the primary teaching material
+for the Data Analytics course at the University of Namur (UNamur), though it is written to be
+useful to any reader with the right background, regardless of institution.
 
 ## What this book covers
 
