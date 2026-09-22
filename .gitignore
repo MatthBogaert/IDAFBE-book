@@ -20,6 +20,9 @@
 .vscode/
 .claude/
 
+# Internal review log — not for public distribution.
+/CHANGES.md
+
 # Copyrighted source PDFs kept locally for citation-checking — not for redistribution.
 # The actual citations live in references.bib, which is tracked.
 /references/
