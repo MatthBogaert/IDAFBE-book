@@ -18,7 +18,8 @@ book:
   title: "Introduction to Data Analytics for Business and Economics"
   subtitle: "Using Python for Data Preprocessing, Visualization, and Modeling"
   author: "Matthias Bogaert"
-  date: today
+  date: "2026"   # fixed publication year, not a live render timestamp
+  date-format: "YYYY"   # otherwise Quarto expands "2026" into a full date like "2026-01-01"
   cover-image: images/cover.png
   repo-url: https://github.com/MatthBogaert/IDAFBE-book
   repo-actions: [source, issue]
@@ -33,6 +34,7 @@ book:
     - chapters/07-modeling.qmd
   appendices:
     - chapters/appendix-installation.qmd
+    - chapters/references.qmd   # unnumbered, so it renders as plain "References", not "Appendix B"
 
 bibliography: references.bib
 # csl: apa.csl   # uncomment and add a .csl file if you want a specific citation style
