@@ -20,7 +20,7 @@ book:
   author: "Matthias Bogaert"
   date: "2026"   # fixed publication year, not a live render timestamp
   date-format: "YYYY"   # otherwise Quarto expands "2026" into a full date like "2026-01-01"
-  cover-image: images/cover.png
+  cover-image: images/cover-web.png   # website cover; EPUB keeps images/cover.png until its own new cover is ready
   repo-url: https://github.com/MatthBogaert/IDAFBE-book
   repo-actions: [source, issue]
   chapters:
