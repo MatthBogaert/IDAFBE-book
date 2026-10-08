@@ -8,8 +8,4 @@ Get the Kindle edition
 ::: {.buy-alt}
 Also on [Amazon.fr](https://www.amazon.fr/dp/B0HMBLLJBD) · [Amazon.nl](https://www.amazon.nl/dp/B0HMBLLJBD)
 :::
-
-::: {.buy-box-note}
-The book stays free to read online.
-:::
 :::
