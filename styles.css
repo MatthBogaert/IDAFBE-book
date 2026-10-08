@@ -10,3 +10,44 @@ img {
   max-width: 100%;
   height: auto;
 }
+
+/* "Get the Kindle edition" card in the right margin, below the table of contents. */
+.buy-box {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border: 1px solid #47801a;
+  border-radius: 0.6rem;
+  text-align: center;
+}
+.buy-box-title {
+  margin: 0 0 0.6rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #47801a;
+}
+.buy-box img {
+  display: block;
+  max-width: 70%;
+  height: auto;
+  margin: 0 auto 0.8rem;
+  border: 1px solid #ddd;
+}
+.buy-box a.buy-btn {
+  display: block;
+  margin: 0.35rem 0;
+  padding: 0.45rem 0.6rem;
+  border-radius: 0.4rem;
+  background: #47801a;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+.buy-box a.buy-btn:hover { background: #356214; color: #fff; }
+.buy-box-note {
+  margin: 0.6rem 0 0;
+  font-size: 0.75rem;
+  color: #666;
+}
+.buy-box p { margin: 0; }
+.buy-box .buy-box-note { margin: 0.6rem 0 0; }
