@@ -23,6 +23,17 @@ book:
   cover-image: images/cover-kdp.png   # website cover; EPUB keeps images/cover.png until its own new cover is ready
   repo-url: https://github.com/MatthBogaert/IDAFBE-book
   repo-actions: [source, issue]
+  sidebar:
+    tools:
+      - icon: amazon
+        text: Kindle edition
+        menu:
+          - text: Amazon.com
+            href: https://www.amazon.com/dp/B0HMBLLJBD
+          - text: Amazon.fr
+            href: https://www.amazon.fr/dp/B0HMBLLJBD
+          - text: Amazon.nl
+            href: https://www.amazon.nl/dp/B0HMBLLJBD
   chapters:
     - index.qmd
     - chapters/01-intro.qmd
