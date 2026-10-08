@@ -3,7 +3,7 @@
 Get the Kindle edition
 :::
 
-[![Cover of Introduction to Data Analytics for Business and Economics](https://matthbogaert.github.io/IDAFBE-book/images/cover-kdp.png)](https://www.amazon.com/dp/B0HMBLLJBD)
+[![](https://matthbogaert.github.io/IDAFBE-book/images/cover-kdp.png){fig-alt="Cover of Introduction to Data Analytics for Business and Economics"}](https://www.amazon.com/dp/B0HMBLLJBD)
 
 [Kindle · Amazon.com](https://www.amazon.com/dp/B0HMBLLJBD){.buy-btn}
 
