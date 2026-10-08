@@ -37,12 +37,6 @@ img {
   text-decoration: none;
 }
 .buy-box a.buy-btn:hover { background: #356214; color: #fff; }
-.buy-box-note {
-  margin: 0.6rem 0 0;
-  font-size: 0.75rem;
-  color: #666;
-}
 .buy-box p { margin: 0; }
-.buy-box .buy-box-note { margin: 0.6rem 0 0; }
-
+.buy-box 
 .buy-box .buy-alt { margin: 0.5rem 0 0; font-size: 0.8rem; }
