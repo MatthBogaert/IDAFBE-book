@@ -1295,7 +1295,7 @@ arr[0, 1]
 ```
 
 ```{python}
-# access the elements on the first row from the first column untill the second column
+# access the elements on the second row from the first column until the second column
 arr[1, 0:2]
 ```
 
