@@ -8,7 +8,11 @@ students.
 
 **[Read the book online, for free →](https://matthbogaert.github.io/IDAFBE-book/)**
 
-A paperback and ebook edition are also planned via Amazon KDP.
+**Kindle edition:** [Amazon.com](https://www.amazon.com/dp/B0HMBLLJBD) ·
+[Amazon.fr](https://www.amazon.fr/dp/B0HMBLLJBD) ·
+[Amazon.nl](https://www.amazon.nl/dp/B0HMBLLJBD)
+
+A paperback edition is also planned via Amazon KDP.
 
 ## Summary
 
