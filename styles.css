@@ -25,13 +25,6 @@ img {
   font-weight: 700;
   color: #47801a;
 }
-.buy-box img {
-  display: block;
-  max-width: 70%;
-  height: auto;
-  margin: 0 auto 0.8rem;
-  border: 1px solid #ddd;
-}
 .buy-box a.buy-btn {
   display: block;
   margin: 0.35rem 0;
@@ -51,3 +44,5 @@ img {
 }
 .buy-box p { margin: 0; }
 .buy-box .buy-box-note { margin: 0.6rem 0 0; }
+
+.buy-box .buy-alt { margin: 0.5rem 0 0; font-size: 0.8rem; }
