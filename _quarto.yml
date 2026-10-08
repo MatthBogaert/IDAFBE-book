@@ -23,6 +23,7 @@ book:
   cover-image: images/cover-kdp.png   # website cover; EPUB keeps images/cover.png until its own new cover is ready
   repo-url: https://github.com/MatthBogaert/IDAFBE-book
   repo-actions: [source, issue]
+  margin-footer: _buy-box.md
   sidebar:
     tools:
       - icon: amazon
