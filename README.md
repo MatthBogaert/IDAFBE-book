@@ -12,7 +12,7 @@ students.
 [Amazon.fr](https://www.amazon.fr/dp/B0HMBLLJBD) ·
 [Amazon.nl](https://www.amazon.nl/dp/B0HMBLLJBD)
 
-A paperback edition is also planned via Amazon KDP.
+**Paperback:** [Amazon.com](https://www.amazon.com/dp/B0HMFP8LM2)
 
 ## Summary
 
