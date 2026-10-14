@@ -1,6 +1,13 @@
 """Generate a student notebook from a book chapter .qmd file.
 
-Usage: python gen_student_nb.py <qmd_path> <out_path> [--no-colab]
+Usage: python gen_student_nb.py <qmd_path> <out_path> [--no-colab] [--with-text]
+
+By default the notebook is LEAN: only the chapter title, the section headers that
+contain code, and the code cells. The book's prose is not copied (students read it in the
+book). Pass --with-text to also keep the prose cells (not recommended: it duplicates the
+chapter and carries Quarto-only syntax such as [@cite] and footnotes).
+Exception: the installation guide (appendix-installation) keeps its text, because students
+actually need to read it there. Generate it with --with-text.
 
 Parses the chapter line-by-line: level 2-4 headers become their own markdown
 cells, ```{python} fences become code cells (cells marked `#| eval: false`
@@ -111,6 +118,39 @@ def parse_qmd(qmd_path):
     return cells
 
 
+HEADER_ANY_RE = re.compile(r"^(#{1,6})\s+(.*?)\s*(\{[^}]*\})?\s*$")
+
+
+def lean_cells(cells):
+    """Keep the chapter title, headers of sections that contain code, and all code cells.
+    Drop every prose markdown cell."""
+    items = []  # (kind, header level, cell)
+    for c in cells:
+        if c["cell_type"] == "code":
+            items.append(("code", 0, c))
+            continue
+        text = "".join(c["source"]).strip()
+        first = text.split("\n")[0]
+        m = HEADER_ANY_RE.match(first)
+        if m and (text == first or len(m.group(1)) == 1):
+            nc = dict(c)
+            nc["source"] = [f"{m.group(1)} {m.group(2)}\n"]
+            items.append(("hdr", len(m.group(1)), nc))
+        # anything else is prose and is dropped
+    out = []
+    for i, (kind, level, c) in enumerate(items):
+        if kind == "code" or level == 1:
+            out.append(c)
+            continue
+        for kind2, level2, _ in items[i + 1:]:
+            if kind2 == "hdr" and level2 <= level:
+                break
+            if kind2 == "code":
+                out.append(c)
+                break
+    return out
+
+
 def insert_colab_cell(cells):
     # Insert right after the first cell (the chapter title / intro markdown).
     insert_at = 1 if cells else 0
@@ -142,7 +182,11 @@ if __name__ == "__main__":
     out_path = sys.argv[2]
     no_colab = "--no-colab" in sys.argv[3:]
 
+    with_text = "--with-text" in sys.argv[3:]
+
     cells = parse_qmd(qmd_path)
+    if not with_text:
+        cells = lean_cells(cells)
     if not no_colab:
         cells = insert_colab_cell(cells)
     write_notebook(cells, out_path)
