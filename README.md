@@ -36,8 +36,8 @@ the primary material for the Data Analytics course at UNamur.
 ## Repository structure
 
 - `chapters/` — the book chapters, as Quarto (`.qmd`) source files.
-- `notebooks_student/` — companion Jupyter notebooks for students: the same material as the
-  chapters, in runnable notebook form.
+- `notebooks_student/` — companion Jupyter notebooks for students: the code of each chapter,
+  in runnable notebook form (the explanations are in the book).
 - `data/` — the (anonymised/processed) datasets used throughout the book.
 - `images/` — figures and diagrams used in the chapters.
 - `references.bib` — the book's bibliography.
