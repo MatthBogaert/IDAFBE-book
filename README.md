@@ -41,8 +41,6 @@ the primary material for the Data Analytics course at UNamur.
 - `data/` — the (anonymised/processed) datasets used throughout the book.
 - `images/` — figures and diagrams used in the chapters.
 - `references.bib` — the book's bibliography.
-- `scripts/` — helper scripts, e.g. the one that regenerates the student notebooks from the
-  chapters.
 
 ## Citing this book
 
