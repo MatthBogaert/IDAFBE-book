@@ -395,7 +395,7 @@ produced a long list of real fines that make the abstract principles concrete.
 
 [^piraeus]: ["HDPA (Greece) - 34/2023"](https://gdprhub.eu/index.php?title=HDPA_(Greece)_-_34/2023), GDPRhub, 2023. €10,000 fine for violating the data minimization principle (Article 5(1)(c) GDPR).
 
-[^nltax]: ["Dutch government fraud scandal leads to record-breaking GDPR fine"](https://www.cliffordchance.com/insights/resources/blogs/talking-tech/en/articles/2022/04/dutch-government-fraud-scandal-leads-to-record-breaking-gdpr-fin.html), Clifford Chance, April 2022. Dutch DPA (Autoriteit Persoonsgegevens) decision, €2.75 million total fine, including €750,000 for violating the accuracy principle (Article 5(1)(d) GDPR).
+[^nltax]: ["Dutch government fraud scandal leads to record-breaking GDPR fine"](https://www.cliffordchance.com/insights/resources/blogs/talking-tech/en/articles/2022/04/dutch-government-fraud-scandal-leads-to-record-breaking-gdpr-fin.html), Clifford Chance, April 2022. Dutch DPA (Autoriteit Persoonsgegevens) decision of 12 April 2022, €3.7 million total fine made up of six separate fines, including €750,000 for violating the accuracy principle (Article 5(1)(d) GDPR).
 
 [^oasa]: ["HDPA (Greece) - 30/2023"](https://gdprhub.eu/index.php?title=HDPA_(Greece)_-_30/2023), GDPRhub, 2023. €50,000 fine for violating the storage limitation principle (Article 5(1)(e) GDPR).
 
