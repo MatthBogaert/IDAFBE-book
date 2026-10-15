@@ -302,7 +302,7 @@ a lot in practice. An **API** (application programming interface) is a channel a
 deliberately provides for programmatic access to its data; it's usually the quicker, cleaner
 route, and most programming languages ship packages for talking to the APIs of major platforms.
 But most platforms require you to apply for access first, and the landscape has gotten stingier
-in recent years. For example, Meta/Facebook has severely restricted its API, and X/Twitter turned its into a paid service, even Reddit has recently tightened its API access. A few platforms still offer a 
+in recent years. For example, Meta/Facebook has severely restricted its API, and X/Twitter turned it into a paid service, even Reddit has recently tightened its API access. A few platforms still offer a 
 free API worth knowing about, including decentralized X-alternatives like Mastodon and Bluesky. Be aware 
 though that each platform serves its own specific audience, so data pulled from any single platform 
 carries that audience's biases, and its
