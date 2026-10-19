@@ -801,13 +801,20 @@ pd.DataFrame({"n_flagged": z_outliers, "pct_flagged": z_outlier_pct}).query("n_f
 ```
 
 The z-score rule flags far fewer points overall, and not always the same variables: `Age` tops the
-IQR list at over 45%, yet doesn't show up in the z-score table at all. Its few negative values
-skew the quartiles enough to flag a big chunk of otherwise ordinary ages, without being extreme
-enough (relative to `Age`'s overall spread) to trip the ±3 z-score threshold. That gap is the
-point: neither rule is simply "right" and a mechanical threshold, on its own, doesn't tell you
-whether a flagged point is a data error or a genuinely extreme (but valid) observation. That
-judgment call needs the shape of the distribution, which is exactly what the histograms above show and, in `Age`'s case, some domain knowledge 
-(negative ages aren't valid, full stop).
+IQR list at over 45% (267 customers), yet the z-score rule flags only 2 of them (0.3%). The
+explanation is in the data itself. More than half of the customers in the training set (54.7%) have
+exactly the same age, 61. That looks like a placeholder for an unknown date of birth: in the raw
+customers table, 715 of the 1,389 customers have a date of birth of 1900-01-01. When more than half
+of the values are identical, the first quartile, the median and the third quartile are all 61, so the
+interquartile range is 0 and the box plot rule flags every age that is not exactly 61. The z-score
+rule reacts differently: it is based on the mean and the standard deviation, and the one clearly
+invalid age (-213) pushes the standard deviation up from about 11 to about 16, so only the most
+extreme values get flagged. That gap is the point: neither rule is simply "right" and a mechanical
+threshold, on its own, doesn't tell you whether a flagged point is a data error or a genuinely extreme
+(but valid) observation. That judgment call needs the shape of the distribution, which is exactly what
+the histograms above show, and, in `Age`'s case, some domain knowledge: negative ages aren't valid, and
+an age shared by more than half of the customers deserves a closer look at where it comes from. (The
+median we impute with below is that same value, 61.)
 
 ::: {.callout-warning}
 ## Box plots and histograms can tell different stories
@@ -837,12 +844,18 @@ point is worth addressing:
 
 In our case, the `Age` variable needs to be treated, since it includes some negative values. These are
 invalid since nobody has a negative age. That's a case where the fix is simple: treat
-the invalid values as missing, and impute them like any other missing value.
+the invalid values as missing, and impute them like any other missing value. As with every other
+transformation in this chapter, the median is computed on the training set only and then applied to
+the test set as well.
 
 ```{python}
 age_median = train_data["Age"][train_data["Age"] >= 0].median()
 train_data.loc[train_data["Age"] < 0, "Age"] = np.nan
 train_data["Age"] = train_data["Age"].fillna(age_median)
+
+# apply the same rule to the test set, using the median learned on the training set
+test_data.loc[test_data["Age"] < 0, "Age"] = np.nan
+test_data["Age"] = test_data["Age"].fillna(age_median)
 
 plt.figure(figsize=(8, 5))
 plt.hist(train_data["Age"], bins=30, alpha=0.7, edgecolor="black")
