@@ -737,6 +737,7 @@ numerical_results.head(10)
 For the binary (dummy) features, chi-squared and mutual information are the equivalent tools:
 
 ```{python}
+from functools import partial
 from sklearn.feature_selection import mutual_info_classif, chi2
 
 k_best_categorical = min(5, len(binary_features))
@@ -745,7 +746,8 @@ selector_chi2 = SelectKBest(score_func=chi2, k=k_best_categorical)
 selector_chi2.fit(train_binary, train_target)
 selected_chi2 = [f for f, keep in zip(binary_features, selector_chi2.get_support()) if keep]
 
-selector_mi = SelectKBest(score_func=mutual_info_classif, k=k_best_categorical)
+# mutual_info_classif adds a little random noise internally: fix the seed so the result is reproducible
+selector_mi = SelectKBest(score_func=partial(mutual_info_classif, random_state=42), k=k_best_categorical)
 selector_mi.fit(train_binary, train_target)
 selected_mi = [f for f, keep in zip(binary_features, selector_mi.get_support()) if keep]
 
