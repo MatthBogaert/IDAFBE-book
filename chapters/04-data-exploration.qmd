@@ -359,7 +359,7 @@ verbose fast:
 fig, ax = plt.subplots(figsize=(10, 6))
 
 data_for_boxplot = [group["TotalPrice"].dropna().values
-                     for name, group in subscriptions.groupby("PaymentType")]
+                     for name, group in subscriptions.groupby("PaymentType", observed=True)]
 labels = subscriptions["PaymentType"].dropna().unique()
 
 ax.boxplot(data_for_boxplot, tick_labels=labels, patch_artist=True,
@@ -392,7 +392,8 @@ in a causal model, and it inflates confidence intervals. Even though, as we saw 
 introduction, a purely predictive model can often tolerate it without losing accuracy, it can still
 undermine any post-hoc explanation of that model (e.g., unstable feature importances) and
 make the model less robust. `pandas` computes a full
-correlation matrix in one call:
+correlation matrix in one call, here on the numeric columns only. (That is one reason the identifier
+columns were stored as text in the previous chapter: a correlation between two IDs would mean nothing.)
 
 ```{python}
 numeric_cols = subscriptions.select_dtypes(include=[np.number])

@@ -160,6 +160,23 @@ for col, dtype in col_types.items():
 customers.dtypes
 ```
 
+```{python}
+col_types_subs = {
+    "SubscriptionID": "string",
+    "CustomerID": "string",
+    "ProductID": "string",
+    "FormulaID": "string",
+    "Pattern": "string",
+    "PaymentType": "category",
+    "PaymentStatus": "category",
+}
+
+for col, dtype in col_types_subs.items():
+    subscriptions[col] = subscriptions[col].astype(dtype)
+
+subscriptions.dtypes
+```
+
 A few of these choices are worth explaining. IDs (`CustomerID`, `ZIP`) are set to `string` rather
 than a numeric type. Even though they're written as digits, you'll never compute their mean or
 sum, and treating them as numbers risks losing leading zeros. `Gender` and `District` become
@@ -168,6 +185,12 @@ categories far more compactly than repeated strings, and several downstream tool
 plotting libraries) treat `category` columns specially. Dates like `DOB` are
 left as `string` for now and converted explicitly in the next section, once we've picked a
 consistent date format.
+
+The subscriptions table gets the same treatment. Its four ID columns (`SubscriptionID`, `CustomerID`,
+`ProductID` and `FormulaID`) and `Pattern`, which is a code rather than a quantity, become `string`,
+and the payment columns `PaymentType` and `PaymentStatus` become `category`. Giving `CustomerID` the
+same type in both tables matters too: a `string` key cannot be merged with an `int64` key. The date
+columns stay `string` for now, just like `DOB`.
 
 ### Sampling
 
