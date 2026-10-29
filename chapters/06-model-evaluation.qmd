@@ -431,15 +431,17 @@ for bar, s in zip(bars, scores):
     plt.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.004, f"{s:.3f}",
              ha="center", fontsize=9)
 plt.ylabel("AUC")
-plt.title("The resampling strategies give similar answers here")
+plt.title("AUC by resampling strategy")
 plt.ylim(min(scores) - 0.03, max(scores) + 0.03)
 plt.xticks(fontsize=8)
 plt.tight_layout()
 plt.show()
 ```
 
-For this dataset every strategy lands around AUC 0.74 to 0.75, which is itself reassuring: it
-means the model is stable and not sensitive to how the data is split. In general:
+For this dataset the four strategies that use all of the data land around AUC 0.74 to 0.75, which is
+itself reassuring: it means the model is stable and not sensitive to how the data is split. LOOCV is lower
+(0.629) because it was run on a 500-row subsample, and the bootstrap is a little lower too (0.725), because
+each bootstrap model sees only about 63% of the distinct rows. In general:
 
 - **Fully nested CV** is the most robust approach: an unbiased estimate with a confidence interval.
 - **The big outer loop** (outer CV only) is a good compromise between speed and reliability, and is the usual choice in business research and applied settings.
@@ -819,6 +821,10 @@ for t in [0.5, 0.05]:
           f"specificity {tn / (tn + fp):.3f}   FPR {fp / (fp + tn):.3f}   "
           f"FNR {fn / (fn + tp):.3f}   accuracy {accuracy_score(y_te, yp):.3f}")
 ```
+
+(The 0.5 row differs slightly from the confusion matrix above, recall 5.3% instead of 4.8%: this loop
+counts the 8 customers whose probability is exactly 0.5 as churners with `>=`, while `predict()` rounds an
+exact 0.5 down to 0.)
 
 Recall jumps from 5% to 61%, and the FNR falls from 95% to 38%: three times as many churners
 caught. That comes at a real cost. The false-alarm rate is read directly off specificity: it
