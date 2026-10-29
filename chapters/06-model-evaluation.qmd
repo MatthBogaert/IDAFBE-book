@@ -537,7 +537,9 @@ y_true = 3 + 2 * x**2
 y_noisy = y_true + np.random.normal(0, 4000, len(x))
 
 def fit_poly(degree):
-    Xp = PolynomialFeatures(degree=degree, include_bias=False).fit_transform(x.reshape(-1, 1))
+    # standardize x first: raw powers up to x**20 are so large that the fit becomes numerically unstable
+    x_std = (x - x.mean()) / x.std()
+    Xp = PolynomialFeatures(degree=degree, include_bias=False).fit_transform(x_std.reshape(-1, 1))
     model = LinearRegression().fit(Xp, y_noisy)
     return model.predict(Xp)
 
@@ -581,7 +583,7 @@ Four metrics cover most needs:
 
 - **R²**: the proportion of variance in $y$ explained by $\hat{y}$ (higher is better, max 1). It
   is primarily a goodness-of-fit measure. On a test set it can even go **negative** if the model
-  does worse than just predicting the mean. Note that when using a train and test split, the R² actually boils down to the squared correlation between $\hat{y}$ and $y$.
+  does worse than just predicting the mean. Note that R² is not the same as the squared correlation between $\hat{y}$ and $y$: the two coincide on the data a linear model was fitted to, but on held-out data a model can have a high correlation and still a poor (even negative) R², for example when its predictions are systematically shifted or scaled.
 - **RMSE**: the root mean squared difference between $\hat{y}$ and $y$, in the same units as the
   target. It squares the errors, so large errors are penalised heavily (sensitive to outliers).
 - **MAE**: the mean absolute difference between $\hat{y}$ and $y$, also in target units, but
