@@ -766,7 +766,7 @@ $$
 **Balanced accuracy** averages the per-class accuracies instead of counting rows: a model that
 just predicts the majority class gets 50% here, not the inflated number plain accuracy would
 give it, because a large majority class can no longer hide a near-zero recall on the minority
-class. **$F_\beta$** generalises $F_1$ (the special case $\beta = 1$) to let you weight the two
+class. The **F-beta score** ($F_\beta$) generalises $F_1$ (the special case $\beta = 1$) to let you weight the two
 error types by how much they actually cost: $\beta > 1$ weights recall more heavily, appropriate
 when missing a churner is worse than a false alarm; $\beta < 1$ weights precision more, when a
 false alarm is the more expensive mistake.
