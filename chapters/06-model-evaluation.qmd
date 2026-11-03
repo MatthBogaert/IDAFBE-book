@@ -806,7 +806,7 @@ clears almost every non-churner. Balanced accuracy tells the true story: 52.3%, 
 near-zero recall. Recall itself confirms it: only 4.8% of actual churners are caught, an FNR
 above 95%. At a 0.5 threshold the model almost never predicts churn, because churn probabilities
 rarely climb above 0.5 when only ~4% of customers churn in the first place. Weighting recall more
-heavily makes this even more visible: F2 drops to 0.058, below F1's already weak 0.086, because
+heavily makes this even more visible: F2 drops to 0.058, below F1's already weak 0.085, because
 F2 punishes the missed churners harder than F1 does. Every one of these numbers depends on the
 threshold, which is exactly the weakness the next section addresses.
 
