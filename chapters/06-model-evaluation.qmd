@@ -826,8 +826,8 @@ for t in [0.5, 0.05]:
 counts the 8 customers whose probability is exactly 0.5 as churners with `>=`, while `predict()` rounds an
 exact 0.5 down to 0.)
 
-Recall jumps from 5% to 61%, and the FNR falls from 95% to 38%: three times as many churners
-caught. That comes at a real cost. The false-alarm rate is read directly off specificity: it
+Recall jumps from 5% to 61%, and the FNR falls from 95% to 38%: more than eleven times as many
+churners caught (484 instead of 42). That comes at a real cost. The false-alarm rate is read directly off specificity: it
 drops from 99.7% to 78%, which is the same as saying the **false positive rate** (1 minus
 specificity) rises from 0.3% to 22%, so far more non-churners now get incorrectly flagged.
 Precision falls too, from 38% to 10%, but for a related, distinct reason: it's not a rate over
