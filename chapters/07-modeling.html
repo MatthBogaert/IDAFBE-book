@@ -364,7 +364,7 @@ window.Quarto = {
 
 
 <p>The previous chapter treated the models producing predictions, a random forest and a KNN classifier, as black boxes: useful for generating scores to evaluate, not yet fully explained. This chapter introduces the two workhorses of predictive modeling instead: <strong>linear regression</strong> for a quantitative response, and <strong>logistic regression</strong> for a qualitative (typically binary) one. Both are <strong>parametric</strong> techniques: they assume a specific functional form for the relationship between predictors and response up front, which is what makes them fast to fit and, unlike a random forest, directly interpretable. That interpretability is also why, despite decades of newer alternatives, they remain the workhorse models in many business settings such as credit scoring and churn management, where a model’s predictions often have to be explained to a regulator, a manager, or a customer, not just be accurate <span class="citation" data-cites="Lessmann2015 Crook2007">(<a href="references.html#ref-Lessmann2015" role="doc-biblioref">Lessmann et al. 2015</a>; <a href="references.html#ref-Crook2007" role="doc-biblioref">Crook et al. 2007</a>)</span>.</p>
-<div id="6ff28832" class="cell" data-execution_count="2">
+<div id="f07d4a67" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -385,14 +385,14 @@ Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_p X_p + \varepsilon
 <section id="when-the-linear-assumption-fails" class="level3" data-number="7.1.1">
 <h3 data-number="7.1.1" class="anchored" data-anchor-id="when-the-linear-assumption-fails"><span class="header-section-number">7.1.1</span> When the linear assumption fails</h3>
 <p>Because linear regression commits to a straight line, it struggles whenever the true relationship bends. The example below is synthetic on purpose, so we know the true relationship: it grows steeply up to a point, then flattens out, a common shape for e.g.&nbsp;diminishing returns on an advertising budget.</p>
-<div id="2f4c25ff" class="cell" data-execution_count="3">
+<div id="5ada6ffb" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(RANDOM_STATE)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">60</span>, <span class="dv">200</span>)</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>y_true <span class="op">=</span> np.where(x <span class="op">&lt;</span> <span class="dv">30</span>, <span class="dv">2</span> <span class="op">*</span> x, <span class="dv">60</span> <span class="op">+</span> <span class="fl">0.2</span> <span class="op">*</span> (x <span class="op">-</span> <span class="dv">30</span>))</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> y_true <span class="op">+</span> rng.normal(<span class="dv">0</span>, <span class="dv">8</span>, size<span class="op">=</span><span class="bu">len</span>(x))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="a10b8ca1" class="cell" data-execution_count="4">
+<div id="d01e62c3" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>lin_reg <span class="op">=</span> LinearRegression().fit(x.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>), y)</span>
@@ -405,7 +405,7 @@ Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_p X_p + \varepsilon
 Slope:     1.09</code></pre>
 </div>
 </div>
-<div id="b65f549b" class="cell" data-execution_count="5">
+<div id="67b6f09e" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">4</span>))</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(x, y, alpha<span class="op">=</span><span class="fl">0.4</span>, label<span class="op">=</span><span class="st">"Observed data"</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>plt.plot(x, y_true, color<span class="op">=</span><span class="st">"green"</span>, linewidth<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">"True relationship"</span>)</span>
@@ -431,7 +431,7 @@ Slope:     1.09</code></pre>
 \text{RSS} = \sum_{i=1}^n \left(y_i - \hat{y}_i\right)^2
 \]</span></p>
 <p><code>sklearn</code>’s <code>LinearRegression</code> and the traditional statistical technique <strong>Ordinary Least Squares</strong> (OLS) both minimize exactly this quantity and will always produce identical coefficients. Where they differ is in what they report back:</p>
-<div id="3de8161c" class="cell" data-execution_count="6">
+<div id="b7a8e50b" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>X_const <span class="op">=</span> sm.add_constant(x)</span>
@@ -445,7 +445,7 @@ statsmodels: intercept = 14.3557, slope = 1.0932</code></pre>
 </div>
 </div>
 <p>The coefficients match exactly. <code>statsmodels</code>, however, also gives you the full statistical picture: standard errors, <span class="math inline">\(t\)</span>-statistics, and p-values for every coefficient, along with <span class="math inline">\(R^2\)</span> for the whole model.</p>
-<div id="8cc268f9" class="cell" data-execution_count="7">
+<div id="c40aff5e" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ols_model.summary())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                            OLS Regression Results                            
@@ -453,8 +453,8 @@ statsmodels: intercept = 14.3557, slope = 1.0932</code></pre>
 Dep. Variable:                      y   R-squared:                       0.758
 Model:                            OLS   Adj. R-squared:                  0.757
 Method:                 Least Squares   F-statistic:                     619.7
-Date:                Tue, 22 Sep 2026   Prob (F-statistic):           6.82e-63
-Time:                        10:52:04   Log-Likelihood:                -758.88
+Date:                Mon, 09 Nov 2026   Prob (F-statistic):           6.82e-63
+Time:                        08:57:42   Log-Likelihood:                -758.88
 No. Observations:                 200   AIC:                             1522.
 Df Residuals:                     198   BIC:                             1528.
 Df Model:                           1                                         
@@ -481,7 +481,7 @@ Notes:
 <section id="a-worked-example-predicting-airbnb-demand" class="level3" data-number="7.1.3">
 <h3 data-number="7.1.3" class="anchored" data-anchor-id="a-worked-example-predicting-airbnb-demand"><span class="header-section-number">7.1.3</span> A worked example: predicting Airbnb demand</h3>
 <p>Let’s apply this to a real dataset: predicting how many days per month (<code>demand</code>) an Airbnb listing gets booked, based on properties of the listing and its host.</p>
-<div id="f2294490" class="cell" data-execution_count="8">
+<div id="53e6b0bb" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>airbnb <span class="op">=</span> pd.read_csv(<span class="st">"../data/processed/basetable_regression.csv"</span>)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>airbnb <span class="op">=</span> airbnb.drop(columns<span class="op">=</span>[<span class="st">"Unnamed: 0"</span>])</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -505,7 +505,7 @@ dtype: int64</code></pre>
 </div>
 </div>
 <p>Two columns have missing values, <code>review_scores_rating</code> and <code>response</code>, so the pipeline built below needs an imputation step. One predictor, <code>host_id</code>, is not a real feature at all, it is just an identifier, and is deliberately kept in the basetable as a check: a well-behaved variable selection method should be able to recognize it carries no signal and downweight or drop it.</p>
-<div id="4080b0ea" class="cell" data-execution_count="9">
+<div id="a473e1ff" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> airbnb.drop(columns<span class="op">=</span>[<span class="st">"demand"</span>])</span>
@@ -521,7 +521,7 @@ dtype: int64</code></pre>
 </div>
 </div>
 <p>As with any model, missing values need to be handled before fitting. Rather than imputing by hand as in earlier chapters, we wrap the imputer and the model together in a single <code>Pipeline</code>. That guarantees the exact same imputation logic (fit only on the training data) is applied consistently to both the training and the test set, and it lets the whole thing be treated, fit, and reused as one object.</p>
-<div id="ff0641a4" class="cell" data-execution_count="10">
+<div id="fc006b81" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.impute <span class="im">import</span> SimpleImputer</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error, r2_score</span>
@@ -549,7 +549,7 @@ Test R²:       0.061</code></pre>
 </div>
 <p>RMSE on its own is hard to judge: is 5 days good or bad? It depends entirely on the scale of the target. The <strong>baseline</strong> above answers that: predicting nothing but the training set’s average <code>demand</code> for every listing is the simplest model imaginable, so any model worth using has to beat it. The gap between the two numbers is the actual value the model adds, and here that gap is narrow: the model only edges out the baseline by a small margin.</p>
 <p>The <span class="math inline">\(R^2\)</span> tells the same story from a different angle. At around 0.06, the model explains only about 6% of the variance in <code>demand</code>, which sounds discouraging next to the OLS demo’s <span class="math inline">\(R^2\)</span> of 0.758 above. That comparison isn’t quite fair, though: the synthetic demo used a single predictor built to have a strong, direct relationship with <span class="math inline">\(y\)</span> by construction, while booking demand for a real listing depends heavily on things this basetable simply doesn’t capture, seasonality, location beyond a single distance measure, competing listings nearby, price relative to the market, and plain randomness in traveller behaviour. A low <span class="math inline">\(R^2\)</span> here isn’t a sign the model was fit badly; it’s a sign that host and listing attributes alone are a genuinely weak predictor of demand, which is itself a useful finding to report back to a business stakeholder who might have expected more.</p>
-<div id="15cede21" class="cell" data-execution_count="11">
+<div id="ac2e0f28" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>feature_names <span class="op">=</span> X_train.columns</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>lr_model <span class="op">=</span> lr_pipeline.named_steps[<span class="st">"regressor"</span>]</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -630,7 +630,7 @@ Test R²:       0.061</code></pre>
 <p>The <strong>intercept</strong> is the model’s predicted <code>demand</code> when every feature equals zero, the baseline that every slope below then adjusts. Since a real listing with zero <code>accommodates</code> and zero <code>distance</code> doesn’t exist, that exact baseline is a mathematical anchor for the line rather than a prediction you’d ever actually use on its own, but it is still required to place the fitted plane correctly.</p>
 <p>The <strong>slopes</strong> are read one at a time, holding everything else in the model fixed. For example, a positive coefficient on <code>superhost</code> means that, for two otherwise identical listings, being a superhost is associated with more booked days per month, on top of whatever the intercept already accounts for. This is what makes linear regression attractive to a business audience: every number in the table above is a direct, additive statement about the outcome, with no translation required.</p>
 <p>Not every coefficient in that table is trustworthy, though. Some of these features may just be adding noise rather than signal, exactly what <code>host_id</code> was included to test for. To find out which, we need the p-values <code>sklearn</code> doesn’t give us:</p>
-<div id="7af192c8" class="cell" data-execution_count="12">
+<div id="901f43da" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>X_train_imputed <span class="op">=</span> lr_pipeline.named_steps[<span class="st">"imputer"</span>].transform(X_train)</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>X_train_with_const <span class="op">=</span> sm.add_constant(X_train_imputed)</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -727,7 +727,7 @@ Test R²:       0.061</code></pre>
 </div>
 </div>
 </div>
-<div id="5ed292cd" class="cell" data-execution_count="13">
+<div id="3d60c55c" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">4</span>))</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> coef_stats[<span class="st">"Significant"</span>].<span class="bu">map</span>({<span class="va">True</span>: <span class="st">"steelblue"</span>, <span class="va">False</span>: <span class="st">"lightcoral"</span>})</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>plt.barh(coef_stats[<span class="st">"Feature"</span>], coef_stats[<span class="st">"Coefficient"</span>], color<span class="op">=</span>colors)</span>
@@ -779,7 +779,7 @@ Test R²:       0.061</code></pre>
 <p>The classical wrapper approach is <strong>stepwise selection</strong>: start from nothing and add the single best predictor at each step (forward selection), start from everything and remove the least useful one at each step (backward selection), or some combination of both. The trouble is what “best” and “least useful” get judged by: a p-value or an AIC score, re-tested again and again on the exact same training data, once per candidate variable at every single step.</p>
 <p>That repeated testing against one fixed dataset is exactly what <strong>data dredging</strong> (also called <strong>p-hacking</strong>) means: the more hypotheses you test on the same data, the more likely you are to find one that exactly matches your preconceptions, not because it reflects a real pattern. A p-value of 0.05 already means a 1-in-20 false-positive rate on a <em>single</em> test; run dozens of these tests along the way, one per candidate predictor at every step, and finding a handful of “significant” variables that are really just noise stops being unlikely and starts being expected. This is why stepwise selection is unstable: run it again on a slightly different sample of the same population, and you will often get a different final set of variables, exactly what you’d expect if some of the original picks were random noise rather than genuine signal in the first place.</p>
 <p><code>sklearn</code> sidesteps this by never testing a candidate feature against the data it was chosen from. <code>SequentialFeatureSelector</code> is a modern equivalent that judges each candidate by cross-validated performance instead of a p-value: every decision is checked against held-out folds the feature had no part in, so a feature can only look good by actually improving out-of-sample predictions, not by getting lucky on the training data.</p>
-<div id="3b6ae140" class="cell" data-execution_count="14">
+<div id="0fc906e3" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> SequentialFeatureSelector</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>sfs_pipeline <span class="op">=</span> Pipeline([</span>
@@ -816,7 +816,7 @@ Test RMSE: 5.497 days (full model: 5.482)</code></pre>
 <p>The parameter <span class="math inline">\(\lambda\)</span> controls how aggressively coefficients are penalized, and it is a direct lever on the bias-variance trade-off from the previous chapter: <span class="math inline">\(\lambda = 0\)</span> recovers ordinary least squares (low bias, potentially high variance), while a very large <span class="math inline">\(\lambda\)</span> shrinks every coefficient toward zero and eventually toward a model that predicts only the mean (high bias, low variance). The right value in between is found the same way any other hyperparameter is, via cross-validation.</p>
 <p>The practical difference between the two penalties matters for interpretation. <strong>Ridge</strong> shrinks every coefficient but essentially never sets one to exactly zero, so all predictors stay in the model, just with smaller weights. <strong>Lasso</strong> can shrink a coefficient all the way to zero, which makes it a built-in variable selection method: whichever predictors survive are the ones the model considers worth keeping.</p>
 <p>There is a simple geometric reason for that difference. Minimizing RSS plus a penalty is mathematically equivalent to minimizing RSS alone subject to a hard budget on the coefficients: a total absolute size for Lasso (a <strong>diamond</strong>-shaped region of allowed coefficient values) or a total squared size for Ridge (a <strong>circular</strong> region). The unconstrained least-squares solution <span class="math inline">\(\hat{\beta}\)</span> usually sits outside that budget, so the regularized solution is whichever point is closest to it.</p>
-<div id="f37a1e32" class="cell" data-execution_count="15">
+<div id="cdb57470" class="cell" data-execution_count="14">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -842,7 +842,7 @@ Test RMSE: 5.497 days (full model: 5.482)</code></pre>
 </div>
 </div>
 <p>Below, Ridge and Lasso both get fit the exact same way: impute, scale, then search a grid of <span class="math inline">\(\lambda\)</span> values (<code>alpha</code> in <code>sklearn</code>) with cross-validation to find the one that minimizes RMSE, and evaluate the winner on the held-out test set. Only the estimator and its hyperparameter grid change between the two, so rather than repeat that recipe twice, the cell below writes it once as a reusable helper function, <code>fit_regularized</code>. Right after defining it, we call it once for Ridge on the Airbnb data.</p>
-<div id="a1ae2106" class="cell" data-execution_count="16">
+<div id="d026ace8" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Ridge, Lasso, ElasticNet</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> GridSearchCV</span>
@@ -873,7 +873,7 @@ Features with a non-zero coefficient: 9 / 9</code></pre>
 </div>
 </div>
 <p>Cross-validation picked a fairly large alpha here, near the top of the range searched, yet Ridge’s test RMSE barely moves from the unregularized model’s. That is consistent with the earlier finding that this basetable isn’t carrying much harmful noise: there’s little overfitting for regularization to fix, so shrinking the coefficients costs essentially nothing, but it doesn’t buy much either. Ridge keeps every feature at a non-zero weight regardless.</p>
-<div id="3d4a402f" class="cell" data-execution_count="17">
+<div id="829246ab" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>lasso_grid, lasso_rmse, lasso_coefs <span class="op">=</span> fit_regularized(</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    Lasso(max_iter<span class="op">=</span><span class="dv">5000</span>), alpha_grid, X_train, y_train, X_test, y_test</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>)</span>
@@ -888,7 +888,7 @@ Dropped: []</code></pre>
 </div>
 <p>The cross-validated alpha for Lasso lands at the <em>smallest</em> value in the search grid, and the “Dropped” list above comes back empty: on this dataset, even Lasso’s built-in variable selection concludes that every feature is worth at least a small, non-zero weight. That is a legitimate result, not a failed demo. It simply means none of the remaining noise here is harmful enough for cross-validated RMSE to reward removing it outright, which is a different, milder conclusion than the p-value test found (<code>host_id</code> and <code>response</code> weren’t statistically significant) or the wrapper method found (it happily dropped four features for a similar RMSE). All three answers are consistent with each other: this basetable has some redundant, low-value features, but no features that actively hurt a plain, unregularized fit.</p>
 <p>Watching the coefficients shrink as <span class="math inline">\(\lambda\)</span> (called <code>alpha</code> in <code>sklearn</code>) increases makes the Ridge-versus-Lasso difference visible directly:</p>
-<div id="9fdaedcd" class="cell" data-execution_count="18">
+<div id="a8aea8a7" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>alphas_path <span class="op">=</span> np.logspace(<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">100</span>)</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler()</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>X_train_scaled <span class="op">=</span> scaler.fit_transform(</span>
@@ -922,7 +922,7 @@ Dropped: []</code></pre>
 </div>
 <p>Every Ridge line bends toward zero but never quite touches it. Several Lasso lines flatten out at exactly zero well before the largest alpha values, and stay there: those are the features Lasso has fully excluded. In general, Lasso tends to work well when there is high variance in the true effect sizes: a small number of predictors have large coefficients while the rest are close to zero (a small “true” model hiding among many candidates). Ridge tends to work well when the effect sizes have low variance instead, i.e.&nbsp;most predictors carry a similar, modest amount of signal. Lasso’s sparser, more selective solutions also make it the more commonly preferred default of the two, especially when interpretability matters as much as raw predictive accuracy.</p>
 <p>Ridge and Lasso aren’t the only two options. <strong>Elastic Net</strong> combines both penalties, controlled by a mixing parameter <code>l1_ratio</code> between 0 (pure Ridge) and 1 (pure Lasso), which is useful when predictors are highly correlated with each other: pure Lasso tends to arbitrarily keep just one variable from a correlated group and drop the rest, while Elastic Net’s Ridge component encourages correlated predictors to be kept or reduced together. Fitting it needs nothing new: it’s the same <code>fit_regularized</code> helper from above, just called a third time with <code>ElasticNet</code> and its own hyperparameter grid.</p>
-<div id="6b3e4927" class="cell" data-execution_count="19">
+<div id="21accaef" class="cell" data-execution_count="18">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>elastic_grid_params <span class="op">=</span> {</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"regressor__alpha"</span>: np.logspace(<span class="op">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">6</span>),</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"regressor__l1_ratio"</span>: [<span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">0.9</span>],</span>
@@ -941,7 +941,7 @@ Dropped: []</code></pre>
 <section id="importance-based-selection-selectfrommodel" class="level3" data-number="7.2.3">
 <h3 data-number="7.2.3" class="anchored" data-anchor-id="importance-based-selection-selectfrommodel"><span class="header-section-number">7.2.3</span> Importance-based selection: SelectFromModel</h3>
 <p>A quicker, less exhaustive alternative to wrapping a model in cross-validation is <code>SelectFromModel</code>: fit an estimator once, then keep whichever features have a coefficient (or, for tree-based models, a feature importance) above some threshold. Passing <code>threshold="median"</code> keeps roughly the stronger half of the features by coefficient magnitude. It is commonly applied right after a Lasso fit, to turn “many small coefficients” into an explicit, smaller feature list.</p>
-<div id="44afe09f" class="cell" data-execution_count="20">
+<div id="40bedb51" class="cell" data-execution_count="19">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> SelectFromModel</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>sfm_pipeline <span class="op">=</span> Pipeline([</span>
@@ -969,7 +969,7 @@ Test RMSE: 5.497</code></pre>
 </section>
 <section id="comparing-the-approaches" class="level3" data-number="7.2.4">
 <h3 data-number="7.2.4" class="anchored" data-anchor-id="comparing-the-approaches"><span class="header-section-number">7.2.4</span> Comparing the approaches</h3>
-<div id="fd55f5c7" class="cell" data-execution_count="21">
+<div id="38e841f6" class="cell" data-execution_count="20">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>comparison <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Method"</span>: [<span class="st">"Full model"</span>, <span class="st">"Sequential selection"</span>, <span class="st">"Ridge"</span>, <span class="st">"Lasso"</span>, <span class="st">"Elastic Net"</span>, <span class="st">"SelectFromModel"</span>],</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Features used"</span>: [</span>
@@ -1045,7 +1045,7 @@ Test RMSE: 5.497</code></pre>
 <section id="why-not-just-use-linear-regression" class="level3" data-number="7.3.1">
 <h3 data-number="7.3.1" class="anchored" data-anchor-id="why-not-just-use-linear-regression"><span class="header-section-number">7.3.1</span> Why not just use linear regression?</h3>
 <p>It’s tempting to just plug a 0/1 target straight into <code>LinearRegression</code> and see what happens.</p>
-<div id="d7b344fa" class="cell" data-execution_count="22">
+<div id="1305b4e0" class="cell" data-execution_count="21">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>basetable <span class="op">=</span> pd.read_csv(<span class="st">"../data/processed/basetable.csv"</span>)</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>X_naive <span class="op">=</span> basetable.drop(columns<span class="op">=</span>[<span class="st">"churn"</span>])</span>
@@ -1059,11 +1059,11 @@ Test RMSE: 5.497</code></pre>
 <pre><code>Predicted values range from -0.153 to 0.898</code></pre>
 </div>
 </div>
-<p>Some of the “predicted probabilities” fall below 0 or above 1, values that make no sense as a probability of churn. Linear regression has no built-in notion that the response should stay between 0 and 1; it just fits the best straight line it can through a cloud of 0s and 1s. <strong>Logistic regression</strong> fixes exactly this by passing the linear combination of predictors through the <strong>logistic/sigmoid</strong> function, which squashes any real number into the <span class="math inline">\((0, 1)\)</span> range:</p>
+<p>In this example, some of the “predicted probabilities” fall below 0 (the lowest is -0.153), a value that makes no sense as a probability of churn. None happens to exceed 1 here (the highest is 0.898), but nothing prevents that: linear regression has no built-in notion that the response should stay between 0 and 1, so predictions above 1 are just as possible with other data or other predictors. It just fits the best straight line it can through a cloud of 0s and 1s. <strong>Logistic regression</strong> fixes exactly this by passing the linear combination of predictors through the <strong>logistic/sigmoid</strong> function, which squashes any real number into the <span class="math inline">\((0, 1)\)</span> range:</p>
 <p><span class="math display">\[
 p(X) = \frac{e^{\beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p}}{1 + e^{\beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p}}
 \]</span></p>
-<div id="dc608bdd" class="cell" data-execution_count="23">
+<div id="97ad6b86" class="cell" data-execution_count="22">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">200</span>)</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> np.exp(z) <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> np.exp(z))</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1115,7 +1115,7 @@ p(X) = \frac{e^{\beta_0 + \beta_1 X_1 + \cdots + \beta_p X_p}}{1 + e^{\beta_0 + 
 <section id="a-worked-example-predicting-churn" class="level3" data-number="7.3.3">
 <h3 data-number="7.3.3" class="anchored" data-anchor-id="a-worked-example-predicting-churn"><span class="header-section-number">7.3.3</span> A worked example: predicting churn</h3>
 <p>We reuse the same churn basetable and train/test split convention as the previous chapter with a stratified split, so the churn rate stays the same in both sets.</p>
-<div id="c592da05" class="cell" data-execution_count="24">
+<div id="6ad904e0" class="cell" data-execution_count="23">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> roc_auc_score, accuracy_score, roc_curve</span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1136,7 +1136,7 @@ Accuracy of always predicting "no churn": 96.231%</code></pre>
 <p>That second line matters for what comes next: only about 4% of customers actually churn, so a classifier that never bothers to learn anything and just predicts “no churn” every time would already be right roughly 96% of the time. Keep that number in mind, since accuracy on its own will be almost useless for judging the models below, exactly the class-imbalance problem covered in the previous chapter.</p>
 <p>Ridge, Lasso, and Elastic Net logistic regression follow the same one-recipe-three-calls pattern as their linear counterparts above, so the cell below again defines a single reusable helper, <code>fit_regularized_logistic</code>, and each of the three techniques just calls it with a different <code>l1_ratio</code>.</p>
 <p>Two things are worth mentioning. First, just like the regularized linear models earlier, regularized logistic regression is scale-sensitive, so the pipeline again includes a <code>StandardScaler</code>. Second, <code>sklearn</code> parameterizes the penalty strength as <code>C</code>, the <em>inverse</em> of <span class="math inline">\(\lambda\)</span>: a <strong>smaller</strong> <code>C</code> means <strong>stronger</strong> regularization, the opposite of how <span class="math inline">\(\lambda\)</span>/<code>alpha</code> worked above, so it is easy to get backwards. The penalty type itself is set through <code>l1_ratio</code>: <code>0</code> for a pure L2 (Ridge) penalty, <code>1</code> for a pure L1 (Lasso) penalty, and anything in between for Elastic Net, all handled by the same <code>"saga"</code> solver.</p>
-<div id="4a97b58f" class="cell" data-execution_count="25">
+<div id="d0b589b1" class="cell" data-execution_count="24">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fit_regularized_logistic(l1_ratio_grid, C_grid<span class="op">=</span><span class="va">None</span>):</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    pipeline <span class="op">=</span> Pipeline([</span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"imputer"</span>, SimpleImputer(strategy<span class="op">=</span><span class="st">"median"</span>)),</span>
@@ -1168,7 +1168,7 @@ Test AUC = 0.774, test accuracy = 0.963</code></pre>
 </div>
 <p>Look at those two numbers side by side, and the trap from the previous chapter shows up immediately: the test accuracy is barely above the “always predict no churn” baseline computed above, roughly a fraction of a percentage point better. Read on its own, that accuracy looks like the model learned almost nothing. The AUC tells a completely different story: at around 0.77, the model is substantially better than random (0.5) at ranking customers by churn risk, it just doesn’t change many predicted <em>labels</em> at the default 0.5 cut-off, because churn is rare enough that most predicted probabilities stay under 0.5 regardless. This is precisely why the previous chapter insisted on threshold-independent metrics for imbalanced targets: accuracy alone would have you conclude this model is worthless, when it’s actually doing real, usable work at separating higher-risk customers from lower-risk ones.</p>
 <p>With the model fit, the odds-ratio interpretation from earlier becomes concrete:</p>
-<div id="8766be69" class="cell" data-execution_count="26">
+<div id="376cdb57" class="cell" data-execution_count="25">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>odds_ratios <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Feature"</span>: X_train.columns,</span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Coefficient"</span>: ridge_log_coefs,</span>
@@ -1221,7 +1221,7 @@ Test AUC = 0.774, test accuracy = 0.963</code></pre>
 </div>
 <p>An odds ratio above 1 increases the odds of churning, below 1 lowers them. Note that because every predictor was standardized first, each odds ratio is “per one standard deviation increase”, not “per one raw unit”, which is the price of the scaling step from earlier: convenient for a fair comparison across coefficients, less convenient for a direct real-world statement like “per extra euro spent.”</p>
 <p><code>recency_score</code> is the only predictor above 1: a standard-deviation increase multiplies the odds of churn by roughly 1.7, so customers who haven’t purchased in a while are noticeably more likely to leave, which matches the intuition behind including recency in the basetable in the first place. <code>Monetary_score</code> sits at the other extreme, an odds ratio near 0.015, an unusually large protective effect: customers who have spent more are less likely to churn. <code>days_customer</code> and <code>Total_quantity</code> also pull the odds down, more moderately. All four line up with a simple business story: recent, frequent, high-spending customers stay, and it took nothing more than a logistic regression to read that off the model directly.</p>
-<div id="81beffde" class="cell" data-execution_count="27">
+<div id="5fd9413e" class="cell" data-execution_count="26">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>lasso_log, lasso_auc, lasso_acc, lasso_log_coefs, lasso_proba <span class="op">=</span> fit_regularized_logistic([<span class="fl">1.0</span>], C_grid)</span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Lasso logistic: best C = </span><span class="sc">{</span>lasso_log<span class="sc">.</span>best_params_[<span class="st">'classifier__C'</span>]<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Test AUC = </span><span class="sc">{</span>lasso_auc<span class="sc">:.3f}</span><span class="ss">, test accuracy = </span><span class="sc">{</span>lasso_acc<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
@@ -1233,7 +1233,7 @@ Non-zero coefficients: 4 / 4</code></pre>
 </div>
 </div>
 <p>With only four predictors to begin with, and all four already carrying predictive value, Lasso keeps every one of them, and AUC and accuracy both come out essentially identical to Ridge’s. There just isn’t a weak predictor here for Lasso to prune.</p>
-<div id="38091e58" class="cell" data-execution_count="28">
+<div id="e721357b" class="cell" data-execution_count="27">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>elastic_log, elastic_auc, elastic_acc, elastic_log_coefs, elastic_proba <span class="op">=</span> fit_regularized_logistic(</span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>    [<span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">0.9</span>], np.logspace(<span class="op">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">6</span>)</span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>)</span>
@@ -1246,7 +1246,7 @@ Test AUC = 0.774, test accuracy = 0.963</code></pre>
 </div>
 </div>
 <p>Cross-validation leans Elastic Net heavily toward the Lasso end (<code>l1_ratio</code> close to 1) but, again, lands on essentially the same AUC as the other two.</p>
-<div id="26d6b3c1" class="cell" data-execution_count="29">
+<div id="c9992a2e" class="cell" data-execution_count="28">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">13</span>, <span class="dv">5</span>))</span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> proba, name <span class="kw">in</span> [(ridge_proba, <span class="st">"Ridge"</span>), (lasso_proba, <span class="st">"Lasso"</span>), (elastic_proba, <span class="st">"Elastic Net"</span>)]:</span>
