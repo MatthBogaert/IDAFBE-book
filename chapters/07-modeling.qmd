@@ -704,9 +704,11 @@ naive_preds = naive_fit.predict(X_naive)
 print(f"Predicted values range from {naive_preds.min():.3f} to {naive_preds.max():.3f}")
 ```
 
-Some of the "predicted probabilities" fall below 0 or above 1, values that make no sense as a
-probability of churn. Linear regression has no built-in notion that the response should stay
-between 0 and 1; it just fits the best straight line it can through a cloud of 0s and 1s.
+In this example, some of the "predicted probabilities" fall below 0 (the lowest is -0.153), a value
+that makes no sense as a probability of churn. None happens to exceed 1 here (the highest is 0.898),
+but nothing prevents that: linear regression has no built-in notion that the response should stay
+between 0 and 1, so predictions above 1 are just as possible with other data or other predictors.
+It just fits the best straight line it can through a cloud of 0s and 1s.
 **Logistic regression** fixes exactly this by passing the linear combination of predictors through
 the **logistic/sigmoid** function, which squashes any real number into the $(0, 1)$ range:
 
