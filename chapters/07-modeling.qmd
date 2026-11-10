@@ -871,11 +871,21 @@ euro spent."
 `recency_score` is the only predictor above 1: a standard-deviation increase multiplies the odds
 of churn by roughly 1.7, so customers who haven't purchased in a while are noticeably more likely
 to leave, which matches the intuition behind including recency in the basetable in the first
-place. `Monetary_score` sits at the other extreme, an odds ratio near 0.015, an unusually large
-protective effect: customers who have spent more are less likely to churn. `days_customer`
-and `Total_quantity` also pull the odds down, more moderately. All four line up with a simple
-business story: recent, frequent, high-spending customers stay, and it took nothing more than a logistic regression to read that off the model 
-directly.
+place. `days_customer` is below 1 (about 0.66): customers with a longer relationship are less
+likely to churn.
+
+Be careful with the other two. `Monetary_score` and `Total_quantity` are correlated at about 0.97,
+so they are almost the same variable measured twice, and the model cannot tell how to split their
+joint effect between them. The individual odds ratios in the table (about 0.0155 and 0.31) are
+therefore not reliable: refitting with a different solver or penalty strength changes them a lot
+(`Total_quantity` can even end up above 1), while the odds ratios of `recency_score` and
+`days_customer` barely move. What stays the same in every fit is their combined effect: when both
+rise together by one standard deviation, the odds of churn fall. This is the multicollinearity
+problem from the linear regression section again: the coefficients of near-duplicate predictors
+are unstable, even when the predictions are fine. The business story that remains is a simple one:
+customers who bought recently, have been around longer and spend more tend to stay, and it took
+nothing more than a logistic regression to read that off the model directly, as long as the two
+spending variables are read as one.
 
 ```{python}
 lasso_log, lasso_auc, lasso_acc, lasso_log_coefs, lasso_proba = fit_regularized_logistic([1.0], C_grid)
